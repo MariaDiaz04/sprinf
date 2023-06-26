@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Pagina no encontrada</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="../public/assets/vendor/css/bootstrap.css">
+  <link rel="stylesheet" href="../public/assets/vendor/fonts/fontawesome.css">
+
+    <!-- Icon -->
+    <!-- Slicknav -->
+
+    <!-- Animate -->
+    <!-- Owl carousel -->
+    <!-- Main Style -->
+    <!-- Responsive Style -->
+
+  </head>
+  <body onload="temporizadorDeRetraso() ">
+
+<div>
+    <!-- Main Style -->
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+    <!-- Start Content -->
+    <div class="error section-padding">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <div class="error-content py-5">
+                <i class="fas fa-exclamation-triangle fa-7x"></i>
+              <div class="error-message pt-5">
+                <h2>Acceso Restringido :(</h2>
+                <h5><span>Ooooops!</span> Lo sentimos, no encontramos la pagina solicitada</h5>
+              </div>
+              <div class="description">
+                <span>Ir de vuelta a <a href="/home">Pagina principal</a></span>
+              </div>
+            </div>
+          </div>
+        </div>      
+      </div>
+    </div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+       <!-- Core scripts -->
+       <script >
+
+let identificadorTiempoDeEspera;
+
+function temporizadorDeRetraso() {
+  identificadorTiempoDeEspera = setTimeout(funcionConRetraso, 1500);
+}
+function funcionConRetraso() {
+           window.location.href='/home'
+}
+       </script>
+    
+      
+  </body>
+</html>
