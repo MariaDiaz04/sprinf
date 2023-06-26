@@ -553,56 +553,6 @@
       </div>
     </div>
   </div>
-  
-  <!--  <div class="row">
-    <div class="col-sm-6 col-xl-3">
-
-     
-
-    </div>
-    <div class="col-sm-6 col-xl-3">
-
-      <div class="card mb-4">
-        <div class="card-body bg-info border-0 text-white" style="border-radius: 25px !important;">
-          <div class="d-flex align-items-center">
-            <div class="lnr lnr-thumbs-up display-4 text-white"></div>
-            <div class="ml-3">
-              <div class="text-white small">Usuarios activos</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-   
-    <div class="col-sm-6 col-xl-3">
-
-      <div class="card mb-4">
-        <div class="card-body bg-primary border-0 text-white" style="border-radius: 25px !important;">
-          <div class="d-flex align-items-center">
-            <div class="lnr lnr-users display-4 "></div>
-            <div class="ml-3">
-              <div class=" small">Usuarios</div>
-              <div class="text-large"><?= $usuarios ?></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 col-lg-6 col-xl-6" id="inmue">
-
-      </div>
-      <div class="col-sm-6 col-lg-6 col-xl-6" id="container">
-
-      </div>
-    </div>
-  </div> -->
-
-
 
 
 </div>
