@@ -55,9 +55,9 @@
                         <div class="col-lg-4">
                           <label class="form-label">Procedencia</label>
                           <select class="custom-select" name="procedencia">
-                            <?php foreach ($procedencia as $procedencias) : ?>
+                            <!--  <?php foreach ($procedencia as $procedencias) : ?>
                               <option value="<?= $procedencias->id ?>"><?= $procedencias->nombre ?></option>
-                            <?php endforeach; ?>
+                            <?php endforeach; ?> -->
 
                           </select>
                         </div>
@@ -68,10 +68,10 @@
                   <hr class="border-light m-0">
                   <div class="text-right mt-3">
                     <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
-                    <?php if ($this->ROL->find($rol)->fillable['id']==2): ?>
-                      <a href="<?= $this->Route('agente') ?>" class="btn btn-outline-primary">Volver</a>
-                        <?php endif ?>
-                        <?php if ($this->ROL->find($rol)->fillable['id']==3): ?>
+                    <?php if ($this->ROL->find($rol)->fillable['id'] == 2) : ?>
+                      <a href="<?= $this->Route('profesor') ?>" class="btn btn-outline-primary">Volver</a>
+                    <?php endif ?>
+                    <?php if ($this->ROL->find($rol)->fillable['id'] == 3) : ?>
                       <a href="<?= $this->Route('analista') ?>" class="btn btn-outline-primary">Volver</a>
                     <?php endif ?>
                   </div>
@@ -82,7 +82,7 @@
           <!-- / Content -->
 
 
-          <style>
+        <!--   <style>
             label.error {
               float: none;
               color: red;
@@ -90,97 +90,99 @@
               vertical-align: middle;
               font-size: 14px;
             }
-          </style>
-
+          </style> -->
+<!-- 
           <script>
-jQuery.validator.addMethod("number",
-           function(value, element) {
-                   return /^[0-9\d=#$%@_ -]+$/.test(value);}, 
-                   "Debe ingresar solo números"
-);
-jQuery.validator.addMethod("alpha", function(value, element) {
-    return /^[a-z A-Z ñÑ]*$/.test(value); },"Debe ingresar solo letras");
+            jQuery.validator.addMethod("number",
+              function(value, element) {
+                return /^[0-9\d=#$%@_ -]+$/.test(value);
+              },
+              "Debe ingresar solo números"
+            );
+            jQuery.validator.addMethod("alpha", function(value, element) {
+              return /^[a-z A-Z ñÑ]*$/.test(value);
+            }, "Debe ingresar solo letras");
 
-            
-$(function() {
-    $( "#usuarioguardar" ).validate({
-      rules: {
-        nombre: {
-                minlength: 3,              
-                required: true,
-                alpha: true,    
-                },
-        apellido:{
-                minlength: 5,               
-                required: true,
-                alpha: true,
-            },
-        cedula:{ 
-                minlength: 7,               
-                required: true,
-                number:true
-                },
-        email:{
-                minlength: 3,              
-                required: true,
 
-            },
-            telefono:{
-                minlength: 3,               
-                number:true,
-                required: true,
+            $(function() {
+              $("#usuarioguardar").validate({
+                rules: {
+                  nombre: {
+                    minlength: 3,
+                    required: true,
+                    alpha: true,
+                  },
+                  apellido: {
+                    minlength: 5,
+                    required: true,
+                    alpha: true,
+                  },
+                  cedula: {
+                    minlength: 7,
+                    required: true,
+                    number: true
+                  },
+                  email: {
+                    minlength: 3,
+                    required: true,
 
-            },
-            nacimiento:{
-                minlength: 3,
-                date:true,               
-                required: true,
-            },
-            contrasena:{
-                minlength: 6,              
-                required: true,
-            },
-            direccion:{
-                minlength: 6,              
-                required: true,
-            },
+                  },
+                  telefono: {
+                    minlength: 3,
+                    number: true,
+                    required: true,
 
-    },
-        messages: {
-          nombre: { 
-                minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),               
-                required: 'Complete este campo porfavor',
+                  },
+                  nacimiento: {
+                    minlength: 3,
+                    date: true,
+                    required: true,
+                  },
+                  contrasena: {
+                    minlength: 6,
+                    required: true,
+                  },
+                  direccion: {
+                    minlength: 6,
+                    required: true,
+                  },
+
                 },
-            apellido: {
-                minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),                
-                required: 'Complete este campo porfavor',
-                },
-            cedula: {
-                minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),                
-                required: 'Complete este campo porfavor',
-                },
-            email:{
-                minlength:jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),                
-                required: 'Complete este campo porfavor',
-            },
-            telefono:{
-                required: 'Complete este campo porfavor',
-                minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),                
-                number:'Solo numeros porfavor',
-            },
-            nacimiento:{
-                required: 'Complete este campo porfavor',
-                minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),                
-            },
-            contrasena:{
-                required: 'Complete este campo porfavor',
-                minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),                
-            },
-            direccion:{
-                minlength:jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),                
-                required: 'Complete este campo porfavor',
-            },
-        }
-    });
-  });
-</script>
+                messages: {
+                  nombre: {
+                    minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),
+                    required: 'Complete este campo porfavor',
+                  },
+                  apellido: {
+                    minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),
+                    required: 'Complete este campo porfavor',
+                  },
+                  cedula: {
+                    minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),
+                    required: 'Complete este campo porfavor',
+                  },
+                  email: {
+                    minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),
+                    required: 'Complete este campo porfavor',
+                  },
+                  telefono: {
+                    required: 'Complete este campo porfavor',
+                    minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),
+                    number: 'Solo numeros porfavor',
+                  },
+                  nacimiento: {
+                    required: 'Complete este campo porfavor',
+                    minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),
+                  },
+                  contrasena: {
+                    required: 'Complete este campo porfavor',
+                    minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),
+                  },
+                  direccion: {
+                    minlength: jQuery.validator.format("Necesitamos por lo menos {0} caracteres"),
+                    required: 'Complete este campo porfavor',
+                  },
+                }
+              });
+            });
+          </script> -->

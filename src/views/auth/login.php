@@ -1,4 +1,12 @@
 <?php
+
+if (isset($_SESSION['token'])) {
+  ob_start(); //this should be first line of your page
+  header('location:/home');
+  ob_end_flush(); //this should be last line of your page
+  exit();
+  
+} 
 ?>
 <!DOCTYPE html>
 <html lang="es">

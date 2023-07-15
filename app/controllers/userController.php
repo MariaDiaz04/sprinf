@@ -18,30 +18,31 @@ class userController extends controller
 
         $this->USUARIO = new usuario();
         $this->ROL = new rol();
-        $this->PERMISOS = new permisos();
+       // $this->PERMISOS = new permisos();
     }
 
 
-
-   /*  public function analista()
+  public function profesor()
     {
 
 
-        $permisos = $this->PERMISOS->consult(2, $_SESSION['usuarios_id']);
+       /*  $permisos = $this->PERMISOS->consult(2, $_SESSION['usuarios_id']);
 
-        $permisos = $this->PERMISOS->consult(7, $_SESSION['usuarios_id']);
+        $permisos = $this->PERMISOS->consult(7, $_SESSION['usuarios_id']); */
 
-        if ($permisos != null) {
+       /*  if ($permisos != null) {
             $newpermisos = $permisos->fillable;
         } elseif ($permisos == null) {
             $newpermisos = $permisos;
-        }
+        } */
 
+        // echo '</br>'.$this->USUARIO->profesor();
 
-        $usuarios = $this->USUARIO->analista();
+        $usuarios = $this->USUARIO->profesor();
+       // return var_dump($usuarios);
 
-        return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '3', 'permisos' => $newpermisos]);
-    } */
+        return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '2']);
+    } 
 
 
 
@@ -60,8 +61,8 @@ class userController extends controller
 
     public function create($request)
     {
-        
-        return $this->view('usuario/crear', ['rol' => $request['rol']]);
+      //  return var_dump($request['rol']);
+        return $this->view('usuario/crear', ['rol' => '2']);
     }
 
 

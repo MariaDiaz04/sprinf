@@ -16,8 +16,8 @@
 
 
 </head>
-
-<body onload="temporizadorDeRetraso() ">
+<!-- onload="temporizadorDeRetraso() " -->
+<body >
 
   <div>
     <!-- Start Content -->
@@ -46,7 +46,7 @@
         icon: 'error',
         title: 'Oops...',
         text: 'Algo esta mal !',
-        footer: '<a href="/pnf-inf/public/?r=home">Lo sentimos, no encontramos la pagina solicitada</a>'
+        footer: '<a href="?r=home">Lo sentimos, no encontramos la pagina solicitada</a>'
       })
 
       let identificadorTiempoDeEspera;
@@ -57,7 +57,7 @@
 
       function funcionConRetraso() {
       
-        window.location.href = '/pnf-inf/public/?r=home'
+        window.location.href = '?r=home'
       }
     </script>
 </body>

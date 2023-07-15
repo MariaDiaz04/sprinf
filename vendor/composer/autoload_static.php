@@ -7,11 +7,12 @@ namespace Composer\Autoload;
 class ComposerStaticInit4450a2dca453010d48ba847454e18d78
 {
     public static $files = array (
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
-        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '6beb3b9beb06c05058ccf93d9932ff2a' => __DIR__ . '/../..' . '/config/config.php',
     );
@@ -19,6 +20,7 @@ class ComposerStaticInit4450a2dca453010d48ba847454e18d78
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
+            'Symfony\\Polyfill\\Php83\\' => 23,
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
@@ -49,6 +51,10 @@ class ComposerStaticInit4450a2dca453010d48ba847454e18d78
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
         ),
+        'B' => 
+        array (
+            'Bcrypt\\' => 7,
+        ),
         'A' => 
         array (
             'Aura\\Session\\_Config\\' => 21,
@@ -58,6 +64,10 @@ class ComposerStaticInit4450a2dca453010d48ba847454e18d78
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Php83\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php83',
+        ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
@@ -125,6 +135,10 @@ class ComposerStaticInit4450a2dca453010d48ba847454e18d78
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'Bcrypt\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/polarising/bcrypt/src',
         ),
         'Aura\\Session\\_Config\\' => 
         array (

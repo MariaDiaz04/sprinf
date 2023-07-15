@@ -2,8 +2,7 @@
 namespace App\controllers;
 
 use App\usuario;
-/* require $_SERVER['APP_URL'].$_SERVER['REQUEST_URI'].'/app/rol.php';
-use app\modulo; */
+
 
 class homeController extends controller{
 

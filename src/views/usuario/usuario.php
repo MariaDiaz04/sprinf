@@ -1,12 +1,4 @@
-<?php if ($permisos == null) : ?>
-    <div class="col-12 text-muted py-5 my-5">
-        <h4 class="text-center my-5">No tiene permisos para ver este modulo (contacte con soporte tecnico)</h4>
-    </div>
-<?php elseif ($permisos->consultar != 1) : ?>
-    <div class="col-12 text-muted py-5 my-5">
-        <h4 class="text-center my-5">No tiene permisos para ver este modulo (contacte con soporte tecnico) </h4>
-    </div>
-<?php elseif ($permisos->consultar == 1) : ?>
+
 
 
 
@@ -16,13 +8,11 @@
             <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
                 <div><span class="text-muted font-weight-light"><?=$this->ROL->find($rol)->fillable['nombre']?> </span>/ </div>
                
-                <?php if ($permisos->crear == 1) : ?>
-                        <form method="POST" action="<?= $this->Route('usuario/crear') ?>">
-                        <input type="hidden" name="rol" value="<?= $rol ?>">
+                        <form method="POST" action="<?= $this->Route('usuarioCrear') ?>">
+                        <input type="hidden" name="rol" value="<?= 2 ?>">
                         <button class="btn btn-outline-primary btn-round d-block">
                         <span class="ion ion-md-add"></span>&nbsp; Nuevo </button>
                         </form>
-                <?php endif; ?>
 
            </h4>
       </div>
@@ -98,7 +88,7 @@
 
   <script>
 
-const swalWithBootstrapButtons = Swal.mixin({
+/* const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',
     cancelButton: 'btn btn-danger'
@@ -198,9 +188,8 @@ $("#dni").on('keyup', function(e) {
 
 $(document).ready(function() {
     $('#tableUser').DataTable();
-} );
+} ); */
   </script>
     
 
 </div>  
-<?php endif; ?>

@@ -81,19 +81,19 @@ class model extends conexion {
 
 // =====================  METODO PARA CONSULTAR  2==================================
 	// =====================  Q U E R Y  ==================================
-/* 	public function query(String $sql = null){
+ 	public function querys(String $sql = null){
 		if (isset($sql)){
-			$req = $this->conexion->query($sql);
+			$req =\PDO::query($sql);
 			$v= array();
 			while ($item = $req->fetch(\PDO::FETCH_ASSOC)) { $v[] = $item; }
 		}
 		return $v;
-} */
+} 
 //finaliza select 
 
 
 public function setted() {
-	return $this->query('SELECT @@identity AS id;')[0]['id'];
+	return $this->querys('SELECT @@identity AS id;')[0]['id'];
 }//finaliza setted
 
 }

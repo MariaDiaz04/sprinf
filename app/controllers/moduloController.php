@@ -31,7 +31,7 @@ use App\modulo;
                 <script> 
                     window.alert("Modulo ya registrado")
                 </script>';
-                header("refresh:1 http://localhost/mbca/public/?r=modulo");
+                header("refresh:1 http://localhost/modulo");
 
 
             }else{

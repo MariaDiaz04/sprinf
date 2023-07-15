@@ -4,6 +4,7 @@ use App\model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Bcrypt\Bcrypt;
 
 use Exception;
 
@@ -14,7 +15,6 @@ class usuario extends model
         'email',
         'contrasena',
         'rol_id',
-        'procedencia_id',
         'nombre',
         'apellido',
         'cedula',
@@ -109,9 +109,9 @@ class usuario extends model
     }
     // ======================== G E T S =======================
 
-    public function agentes()
+    public function profesor()
     {
-        $agentes = $this->query(
+        $profesor = $this->querys(
             'SELECT
                 persona.*,
                 usuarios.email
@@ -121,7 +121,7 @@ class usuario extends model
             WHERE
                 usuarios.id = persona.usuarios_id AND persona.rol_id = 2'
         );
-        return $agentes;
+        return $profesor;
     }
 
     public function analista()

@@ -24,8 +24,6 @@ class authController extends controller
 
         $response = $this->USUARIO->new_session($usuario);
 
-        //return var_dump($response);
-
         switch ($response['estatus']) {
 
             case '0':
@@ -35,8 +33,6 @@ class authController extends controller
             case '1':
                 $_SESSION['response'] = $response;
                 $this->redirect('/home');
-           // return new RedirectResponse('/home', 302);
-
                 break;
             case '2':
                 session_destroy();
@@ -95,7 +91,7 @@ class authController extends controller
         if ($end_session) {
             session_destroy();
         }
-        return  $this->redirect('login');
+        return  $this->redirect('/');
     }
 
     public function inactive()

@@ -1,7 +1,7 @@
 <?php
-namespace App\routes;
 
-$routes_web = [
+
+$web = [
 
 //********************  A U T H  **************************** 
     'login' => [
@@ -50,7 +50,7 @@ $routes_web = [
 // ********************* H O M E ****************************+
     'home' => [
         'type' => 'POST',
-        'name' => 'Home',
+        'name' => 'home',
         'controller' => 'homeController',
         'method' => 'index',
         'middlewares' => [
