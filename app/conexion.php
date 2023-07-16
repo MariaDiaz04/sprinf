@@ -20,7 +20,7 @@ class conexion extends \PDO {
                 die("DataBase Error: Database failed.<br>{$e->getMessage()}");
             } else {
                 $log = new Logger('App');
-                $log->pushHandler(new StreamHandler(__DIR__ . './../../logs/errors.log', Logger::ERROR));
+                $log->pushHandler(new StreamHandler(__DIR__ . '/../../logs/errors.log', Logger::ERROR));
 
                 $log->error($e->getMessage(), $e->getTrace());
             }
