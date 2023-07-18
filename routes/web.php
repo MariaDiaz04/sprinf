@@ -273,4 +273,39 @@ $routes_web = [
     ],
 // ************************** FIN MODULO******************************//
 
+  /* ******************  ESTUDIANTES ************************* */
+   
+'estudiantes/crear' => [    
+    'type' => 'POST',
+    'name' => 'Nuevos estudiantes',
+    'controller' => 'estudiantesController',
+    'method' => 'create',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+
+'estudiantes/editar' => [
+    'type' => 'GET',
+    'controller' => 'estudiantesController',
+    'method' => 'edit',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+
+'estudiantes/guardar' => [
+    'type' => 'POST',
+    'controller' => 'estudiantesController',
+    'method' => 'store',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+// ************************** FIN MODULO******************************//
+
+
 ];
