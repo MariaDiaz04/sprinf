@@ -53,6 +53,29 @@ $routes->add('login', new Route(
         'method' => 'login',
     ]
 ));
+$routes->add('logout', new Route(
+    '/logout',
+    [
+        'controller' => authController::class,
+        'method' => 'logout',
+    ]
+));
+
+$routes->add('inactive', new Route(
+    '/inactive',
+    [
+        'controller' => authController::class,
+        'method' => 'inactive',
+    ]
+));
+
+$routes->add('invalid', new Route(
+    '/invalid',
+    [
+        'controller' => authController::class,
+        'method' => 'invalid',
+    ]
+));
 
 $routes->add('home', new Route(
     
@@ -62,6 +85,22 @@ $routes->add('home', new Route(
        ]
 ));
 
+$routes->add('profesor', new Route(
+    
+    '/profesor',[
+        'controller' => userController::class,
+        'method' => 'profesor',
+       ]
+));
+
+$routes->add('usuarioCrear', new Route(
+    
+    '/usuarioCrear',[
+        'controller' => userController::class,
+        'method' => 'create',
+       ]
+));
+//coment
 try {
     // Get the route matcher from the container ...
     $matcher = new UrlMatcher($routes, $context);
