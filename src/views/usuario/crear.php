@@ -7,7 +7,7 @@
               Agregar nuevo
             </h5>
             <div class="card-body">
-              <form action="<?= $this->Route('usuario/guardar') ?>" method="post" id="usuarioguardar">
+              <form action="<?= $this->Route('usuarioGuardar') ?>" method="post" id="usuarioguardar">
                 <div class="container-fluid">
                   <div class="row pb-2">
                     <div class="col-12">
@@ -54,12 +54,12 @@
                         </div>
                         <div class="col-lg-4">
                           <label class="form-label">Procedencia</label>
-                          <select class="custom-select" name="procedencia">
-                            <!--  <?php foreach ($procedencia as $procedencias) : ?>
+                          <!-- <select class="custom-select" name="procedencia">
+                             <?php foreach ($procedencia as $procedencias) : ?>
                               <option value="<?= $procedencias->id ?>"><?= $procedencias->nombre ?></option>
-                            <?php endforeach; ?> -->
+                            <?php endforeach; ?>
 
-                          </select>
+                          </select> -->
                         </div>
                         <input type="text" name="rol" value="<?= $rol ?>" hidden>
                       </div>

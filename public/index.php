@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . './../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
@@ -100,6 +100,15 @@ $routes->add('usuarioCrear', new Route(
         'method' => 'create',
        ]
 ));
+
+$routes->add('usuarioGuardar', new Route(
+    
+    '/usuarioGuardar',[
+        'controller' => userController::class,
+        'method' => 'store',
+       ]
+));
+
 //coment
 try {
     // Get the route matcher from the container ...
