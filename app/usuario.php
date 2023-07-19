@@ -119,7 +119,7 @@ class usuario extends model
                 `usuarios`,
                 `persona`
             WHERE
-                usuarios.id = persona.usuarios_id AND persona.rol_id = 2'
+                usuarios.id = persona.usuarios_id AND usuarios.rol_id = 2'
         );
         return $profesor;
     }
@@ -222,6 +222,7 @@ class usuario extends model
             $this->set('usuarios', [
                 'email' => '"' . $this->fillable['email'] . '"',
                 'contrasena' => '"' . $this->fillable['contrasena'] . '"',
+                'rol_id' => '"' . $this->fillable['rol_id'] . '"',
             ]);
 
             $usuario = $this->select('usuarios', [['email', '=', "'" . $this->fillable['email'] . "'"]])[0]['id'];
@@ -229,8 +230,6 @@ class usuario extends model
             if ($this->fillable['rol_id'] ==2){
             $this->set('persona', [
                 'usuarios_id' => $usuario,
-                'rol_id' => '"' . $this->fillable['rol_id'] . '"',
-                'procedencia_id' => '"' . $this->fillable['procedencia_id'] . '"',
                 'nombre' => '"' . $this->fillable['nombre'] . '"',
                 'apellido' => '"' . $this->fillable['apellido'] . '"',
                 'cedula' => '"' . $this->fillable['cedula'] . '"',
@@ -240,12 +239,12 @@ class usuario extends model
                 'estatus' => '"' . $this->fillable['estatus'] . '"',
             ]);
 
-            $persona = $this->select('persona', [['cedula', '=', "'" . $this->fillable['cedula'] . "'"]])[0]['id'];
+           /*  $persona = $this->select('persona', [['cedula', '=', "'" . $this->fillable['cedula'] . "'"]])[0]['id'];
                 
             $this->set('agentes', [
                 'persona_id' => $persona,
                 'acronimo' => '"'.$this->fillable['acronimo'] .$persona. '"',
-            ]);
+            ]); */
 
         }else {
             $this->set('persona', [
