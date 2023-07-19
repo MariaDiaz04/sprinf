@@ -119,7 +119,7 @@ class usuario extends model
                 `usuarios`,
                 `persona`
             WHERE
-                usuarios.id = persona.usuarios_id AND persona.rol_id = 2'
+                usuarios.id = persona.usuarios_id AND usuarios.rol_id = 2'
         );
         return $profesor;
     }

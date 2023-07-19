@@ -36,10 +36,7 @@ class userController extends controller
             $newpermisos = $permisos;
         } */
 
-        // echo '</br>'.$this->USUARIO->profesor();
-
         $usuarios = $this->USUARIO->profesor();
-       // return var_dump($usuarios);
 
         return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '2']);
     } 
@@ -61,14 +58,13 @@ class userController extends controller
 
     public function create($request)
     {
-      //  return var_dump($request['rol']);
         return $this->view('usuario/crear', ['rol' => '2']);
     }
 
 
     public function store($usuario)
     {
-        if ($usuario['rol'] == '2') {
+    /*     if ($usuario['rol'] == '2') {
 
             $nombre = substr($usuario['nombre'], 0, 2);
             $apellido = substr($usuario['apellido'], 0, 3);
@@ -86,10 +82,9 @@ class userController extends controller
                 'telefono' => $usuario['telefono'],
                 'nacimiento' => $usuario['nacimiento'],
                 'direccion' => $usuario['direccion'],
-                'acronimo' => $concatenado,
                 'estatus' => 1,
             ])->save();
-        } else {
+        } else { */
             $this->USUARIO->create([
                 'email' => $usuario['email'],
                 'contrasena' => md5($usuario['contrasena']),
@@ -103,11 +98,11 @@ class userController extends controller
                 'direccion' => $usuario['direccion'],
                 'estatus' => 1,
             ])->save();
-        }
+      /*   } */
 
         switch ($usuario['rol']) {
             case '2':
-                return $this->redirect('agente');
+                return $this->redirect('profesor');
                 break;
             case '3':
                 return $this->redirect('analista');
