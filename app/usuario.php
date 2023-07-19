@@ -76,7 +76,7 @@ class usuario extends model
                     'nombre' => '"' .$_SESSION['nombre']  . '"',
                     'apellido' => '"' . $_SESSION['apellido']. '"',
                     'token'=> '"'. $_SESSION['token'].'"',
-                    'idusuario' => '"' . $_SESSION['usuarios_id'] . '"',
+                    'usuario_id' => '"' . $_SESSION['usuarios_id'] . '"',
                 ]);
                 
                 return [
@@ -95,12 +95,19 @@ class usuario extends model
         $guardar_hora=new \DateTime("now", $hora);
        $hora_cierre  = $guardar_hora->format("H:i:s");
       $idusuario= $_SESSION['usuarios_id'];
-       $bitacora = $this->query(
-            'UPDATE bitacora SET 
-            bitacora.hora_cierre="'.$hora_cierre.'"  
-            WHERE 
-            bitacora.idusuario  = "' .$idusuario  . '" AND bitacora.fecha  = "' . Date('Y-m-d'). '"  AND bitacora.token= "'.$_SESSION['token'].'"'
-        );
+
+        try {
+            $bitacora = $this->query(
+                'UPDATE bitacora SET 
+                bitacora.hora_cierre="'.$hora_cierre.'"  
+                WHERE 
+                bitacora.usuario_id  = "' .$idusuario  . '" AND bitacora.fecha  = "' . Date('Y-m-d'). '"  AND bitacora.token= "'.$_SESSION['token'].'"'
+            );
+        } catch (Exception $e) {
+            var_dump($e->getMessage());
+        }
+       
+
 
         foreach ($bitacora as $key => $value) {
             $this->fillable[$key] = $value;

@@ -112,6 +112,18 @@
                 </li> -->
               </ul>
             </li>
+            <!-- ########### INICIO GESTION DE PROYECTO ############## -->
+            <!-- TODO: Verificar que usuario cuente con rol para modificar -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Proyectos</span>
+            </li>
+            <li class="menu-item">
+              <a href="<?= $this->Route('proyectos') ?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-box"></i>
+                <div data-i18n="Analytics">Gestión de Proyectos</div>
+              </a>
+            </li>
+            <!-- ########### FIN GESTION DE PROYECTO ############## -->
 
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>

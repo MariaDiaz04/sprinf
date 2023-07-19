@@ -4,6 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
+use App\controllers\proyectoController;
 use App\controllers\homeController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -109,14 +110,25 @@ $routes->add('usuarioGuardar', new Route(
        ]
 ));
 
+# GESTION DE PROYECTOS
+$routes->add('proyectos', new Route(
+    
+    '/proyectos',[
+        'controller' => proyectoController::class,
+        'method' => 'index',
+       ]
+));
+
+
 //coment
 try {
     // Get the route matcher from the container ...
     $matcher = new UrlMatcher($routes, $context);
     $route = $matcher->match($context->getPathInfo());
-
     // Dispatch the request to the route handler.
+
     $controller = new $route['controller'];
+
     $method = $route['method'];
     $response = $controller->$method($request);
 } catch (ResourceNotFoundException $exception) {
