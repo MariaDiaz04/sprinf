@@ -1,0 +1,62 @@
+h4 class="font-weight-bold py-3 mb-4">
+    <span class="text-muted font-weight-light"> Estudiantes /</span> Agregar
+</h4>
+<!-- Content -->
+<div class="card">
+    <h5 class="card-header bg-primary text-white">
+        Agregar nuevo
+    </h5>
+    <div class="card-body">
+        <form action="<?= $this->Route('estudiantes/guardar') ?>" method="post" id="estudiantesguardar">
+            <div class="container-fluid">
+                <div class="row pb-2">
+                    <div class="col-12">
+                        <div class="row form-group">
+                            <div class="col-lg-4">
+                                <label class="form-label" for="snombre">Nombre</label>
+                                <input type="text" class="form-control nopaste" placeholder="Instagram" id="nombre" name="nombre" minlength="5" required >
+                                <span id="snombre"></span>
+                            </div>
+                       </div>
+                    </div>   
+                </div>
+                <hr class="border-light m-0">
+                <div class="text-right mt-3">
+                    <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
+                    <a href="<?= $this->Route('estudiantes') ?>" class="btn btn-outline-primary">Volver</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- / Content -->
+
+<script type="text/javascript" src="assets/js/validarrrss.js"></script>
+<style>
+    label.error {
+        float: none;
+        color: red;
+        padding-left: .5em;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+</style>
+    
+    <script>
+
+$(document).ready(function(){
+
+    $(".nopaste").on('paste', function(e){
+    e.preventDefault();
+    alert('Esta acción está prohibida');
+  });
+  
+  $(".nocopy").on('copy', function(e){
+    e.preventDefault();
+    alert('Esta acción está prohibida');
+  });
+
+});
+
+
+  </script>
