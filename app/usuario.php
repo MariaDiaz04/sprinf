@@ -76,7 +76,7 @@ class usuario extends model
                     'nombre' => '"' .$_SESSION['nombre']  . '"',
                     'apellido' => '"' . $_SESSION['apellido']. '"',
                     'token'=> '"'. $_SESSION['token'].'"',
-                    'idusuario' => '"' . $_SESSION['usuarios_id'] . '"',
+                    'usuario_id' => '"' . $_SESSION['usuarios_id'] . '"',
                 ]);
                 
                 return [
@@ -99,7 +99,7 @@ class usuario extends model
             'UPDATE bitacora SET 
             bitacora.hora_cierre="'.$hora_cierre.'"  
             WHERE 
-            bitacora.idusuario  = "' .$idusuario  . '" AND bitacora.fecha  = "' . Date('Y-m-d'). '"  AND bitacora.token= "'.$_SESSION['token'].'"'
+            bitacora.usuario_id  = "' .$idusuario  . '" AND bitacora.fecha  = "' . Date('Y-m-d'). '"  AND bitacora.token= "'.$_SESSION['token'].'"'
         );
 
         foreach ($bitacora as $key => $value) {
