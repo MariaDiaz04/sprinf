@@ -15,7 +15,7 @@
     <h6 class="card-header bg-primary text-white">Proyectos</h6>
     <div class="card-body px-0 pt-0">
       <?php if ($proyectos) : ?>
-        <table id="tableUser" class="table table-hover">
+        <table id="tablaProyectos" class="table table-hover">
           <thead class=" thead">
             <tr>
               <th>id</th>
@@ -42,7 +42,20 @@
                   <?php else : ?>
                     <span class="badge badge-pill badge-default ">Inactivo</span>
                   <?php endif ?>
-                  <!-- TODO: CRUD OPTIONS -->
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                      Opciones <box-icon name='cog'></box-icon>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#"><box-icon name='edit'></box-icon> Ver Detalles</a></li>
+                      <li><a class="dropdown-item" href="#"><box-icon name='edit'></box-icon> Editar</a></li>
+
+                    </ul>
+                  </div>
+                </td>
+                <!-- TODO: CRUD OPTIONS -->
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -56,6 +69,9 @@
   </div>
 
   <script>
+    $(document).ready(function() {
+      $('#tablaProyectos').DataTable();
+    });
     /* const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',
