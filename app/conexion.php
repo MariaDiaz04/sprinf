@@ -1,16 +1,19 @@
-<?php 
+<?php
+
 namespace App;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 
-class conexion extends \PDO {
-        
+class conexion extends \PDO
+{
 
-        public $conexion;
 
-     public   function __construct() {
+    public $conexion;
+
+    public   function __construct()
+    {
         $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';
 
         try {
@@ -25,6 +28,5 @@ class conexion extends \PDO {
                 $log->error($e->getMessage(), $e->getTrace());
             }
         }
-
-        }
     }
+}

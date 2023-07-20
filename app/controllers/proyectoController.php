@@ -66,14 +66,16 @@ class proyectoController extends controller
     public function store(Request $usuario)
     {
         try {
+            $estudiantes = $usuario->request->all()['estudiantes'];
             $this->proyecto->setProyectData($usuario->request->all());
-            $result = $this->proyecto->save();
+            $this->proyecto->save();
+            $this->proyecto->saveTeam(1, $estudiantes);
 
             http_response_code(200);
-            echo json_encode($result);
+            echo json_encode($this->proyecto);
         } catch (Exception $e) {
             http_response_code(500);
-            echo json_encode($e);
+            echo json_encode($e->getMessage());
         }
     }
 

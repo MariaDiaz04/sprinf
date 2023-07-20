@@ -22,7 +22,7 @@ class proyecto extends model
         'url',
         'estatus',
     ];
-
+    private int $id;
     public int $tutor_id;
     public int $trayecto_id;
     public string $nombre;
@@ -55,6 +55,18 @@ class proyecto extends model
         }
     }
 
+    public function saveTeam(int $periodo_id, array $participantes)
+    {
+        foreach ($participantes as $value) {
+
+            $this->set('estudiante_proyecto', [
+                'proyecto_id' => $this->id,
+                'periodo_id' => $periodo_id,
+                'estudiante_id' => $value
+            ]);
+        }
+    }
+
     public function save()
     {
         $insertData = [];
@@ -69,7 +81,9 @@ class proyecto extends model
             }
         }
         try {
-            return $this->set('proyecto', $insertData);
+            $this->set('proyecto', $insertData);
+            $this->id = $this->lastInsertId();
+            return $this->id;
         } catch (Exception $e) {
             return $e->getMessage();
         }
