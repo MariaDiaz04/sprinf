@@ -133,18 +133,28 @@ $routes->add('/proyectos/crear', new Route(
     ]
 ));
 
+$routes->add('/proyectos/guardar', new Route(
+
+    '/proyectos/guardar',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'store',
+    ]
+));
 
 //coment
 try {
     // Get the route matcher from the container ...
     $matcher = new UrlMatcher($routes, $context);
     $route = $matcher->match($context->getPathInfo());
+
     // Dispatch the request to the route handler.
     $controller = new $route['controller'];
 
     $method = $route['method'];
     $response = $controller->$method($request);
 } catch (ResourceNotFoundException $exception) {
+
     $response = new Response('Not Found', 404);
 } catch (Throwable $throwable) {
     $response = new Response('An error occurred', 500);

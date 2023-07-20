@@ -164,3 +164,31 @@
     $(`#appenedStudent-${id}`).remove()
   }
 </script>
+
+<script>
+  $(document).ready(function() {
+    $('#proyectoGuardar').submit(function(e) {
+      e.preventDefault()
+
+
+      url = $(this).attr('action');
+      data = $(this).serializeArray();
+
+      console.log(url)
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        error: function(error, status) {
+          console.log(status)
+        },
+        success: function(data, status) {
+          console.log(data)
+        },
+
+      });
+
+    })
+  })
+</script>

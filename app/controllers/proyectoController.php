@@ -2,6 +2,11 @@
 
 namespace App\controllers;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Bcrypt\Bcrypt;
+
 use App\proyecto;
 use App\estudiante;
 use App\tutor;
@@ -55,6 +60,13 @@ class proyectoController extends controller
             'tutores' => $tutores,
             'trayectos' => $trayectos
         ]);
+    }
+
+    public function store(Request $usuario)
+    {
+
+        http_response_code(200);
+        echo json_encode($usuario->request->all());
     }
 
     public function E501()
