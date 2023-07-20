@@ -35,6 +35,8 @@
 
   <!-- Page CSS -->
 
+  <script src="<?= APP_URL ?>js/jquery-3.7.0.slim.min.js"></script>
+
   <!-- Helpers -->
   <script src="<?= APP_URL ?>assets/vendor/js/helpers.js"></script>
 
@@ -42,13 +44,13 @@
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="<?= APP_URL ?>assets/js/config.js"></script>
 
- 
+
 
   <!--   <script src="<?= APP_URL ?>assets/vendor/js/autoComplete.js"></script> -->
 
 
   <!-- JS HOME-->
- 
+
 
 </head>
 
