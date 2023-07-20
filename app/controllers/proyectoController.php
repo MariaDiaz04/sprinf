@@ -82,7 +82,13 @@ class proyectoController extends controller
 
     public function show(Request $request, $id)
     {
-        echo $id;
+        $proyecto = $this->proyecto->find($id);
+        $estudiantes = $this->estudiantes->byProject($id);
+
+        return $this->view('proyectos/show', [
+            'proyecto' => $proyecto,
+            'estudiantes' => $estudiantes
+        ]);
     }
 
     public function E501()

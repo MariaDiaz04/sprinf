@@ -1,5 +1,7 @@
-<?php 
+<?php
+
 namespace App;
+
 use App\model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -40,5 +42,14 @@ class estudiante extends model
             return $th;
         }
     }
-}
 
+    public function byProject($id)
+    {
+        try {
+            $estudiantes = $this->querys("SELECT estudiante_proyecto.id, persona.nombre, persona.apellido, persona.cedula FROM estudiante_proyecto LEFT JOIN estudiante ON estudiante.id = estudiante_proyecto.estudiante_id LEFT JOIN persona ON persona.id = estudiante.persona_id WHERE estudiante_proyecto.proyecto_id = $id");
+            return $estudiantes ? $estudiantes : null;
+        } catch (Exception $th) {
+            return $th;
+        }
+    }
+}
