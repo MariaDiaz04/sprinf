@@ -25,55 +25,31 @@
       <table id="tableUser" class="table table-hover">
               <thead class=" thead">
                 <tr>
-                  <th>Cedula</th>
+                  <th>id</th>
+                  <th>Trayecto</th>
+                  <th>Tutor</th>
                   <th>Nombre</th>
-                  <th>Dirección</th>
-                  <th class="">Contacto</th>
-                  <th class="">Fecha natal</th>
-                  <th class="text-center">Estatus</th>
-                  <th class="text-center">Opciones</th>
+                  <th>area</th>
+                  <th>estatus</th>
+                  <th>Opciones</th>
                 </tr>
               </thead>
             <tbody>
-              <?php foreach ($proyectos as $some): ?>
-                <tr class="CUser CU<?=$some->cedula?>" id="i<?=$some->usuarios_id?>">
-                  <td scope="row"><strong><?=$some->cedula?></strong></td>
-                <td><?=$some->nombre.' '.$some->apellido?></td>
-                  <td><?=$some->direccion?></td>
-                  <td class="py-0">
-                    <small class="d-block"><b><?=$some->email?></b></small>
-                    <small class="d-block"><b><?=$some->telefono?></b></small>
-                  </td>
-                  <td class=""><?=$this->format($some->nacimiento)?></td>
+              <?php foreach ($proyectos as $proyecto): ?>
+                
+                <tr class="item-proyecto ip-<?=$proyecto->id?>" id="i<?=$proyecto->id?>">
+                  <td scope="row"><strong><?=$proyecto->id?></strong></td>
+                  <td><?= $proyecto->trayecto_id ?></td>
+                  <td><?=$proyecto->tutor_id?></td>
+                  <td><?=$proyecto->nombre?></td>
+                  <td><?=$proyecto->area?></td>
                   <td class="text-center">
-                    <?php  if ($some->estatus): ?>
+                    <?php  if ($proyecto->estatus): ?>
                   <span class="badge badge-pill badge-primary  mt-2 py-2">Activo</span>
                    <?php else :?>
                    <span class="badge badge-pill badge-default ">Inactivo</span>
                    <?php endif?>
-                   </td>
-                    <td class="text-center"><button type="button" class="btn btn-outline-primary " data-toggle="dropdown" data-trigger="hover" aria-expanded="false"><i class="fas fa-user-cog"></i> </button>
-                      <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 38px; left: 0px; will-change: top, left;">
-                        <?php if ($permisos->actualizar == 1) : ?>
-                        <a class="dropdown-item" href="<?=$this->Route('usuario/editar', ['usuario' => $some->usuarios_id])?>"><i class="fas fa-user-edit"></i> Editar</a>
-                       <?php endif; ?>
-
-                        <!--<a class="dropdown-item" href="<?//=$this->Route('usuario/permisos', ['usuario' => $some->usuarios_id])?>"><i class="fas fa-user-edit">d</i> Asignar Permisos</a>-->
-                       
-                        <?php if ($this->ROL->find($rol)->fillable['id']==1): ?>
-                        <?php if ($permisos->eliminar == 1) : ?>
-                        <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminaragente(<?=$some->usuarios_id?>)" id='i<?=$some->usuarios_id?>'><i class="fas fa-user-minus"></i>  Eliminar Agente</a>
-                        <?php endif ?>
-                        <?php endif; ?>
-
-                        <?php if ($this->ROL->find($rol)->fillable['id']==1): ?>
-                        <?php if ($permisos->eliminar == 1) : ?>
-                        <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminaranalista(<?=$some->usuarios_id?>)" id='i<?=$some->usuarios_id?>'><i class="fas fa-user-minus"></i>  Eliminar </a>
-                        <?php endif ?>
-                        <?php endif; ?>
-
-                      </div>
-                    </td>
+                   <!-- TODO: CRUD OPTIONS -->
                 </tr>
               <?php endforeach;?>
         </tbody>
