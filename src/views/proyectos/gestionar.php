@@ -49,7 +49,7 @@
                       Opciones <box-icon name='cog'></box-icon>
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#"><box-icon name='edit'></box-icon> Ver Detalles</a></li>
+                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("proyectos/$proyecto->id") ?>"><box-icon name='edit'></box-icon> Ver Detalles</a></li>
                       <li><a class="dropdown-item" href="#"><box-icon name='edit'></box-icon> Editar</a></li>
 
                     </ul>

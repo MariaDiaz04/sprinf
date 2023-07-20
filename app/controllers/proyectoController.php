@@ -80,6 +80,11 @@ class proyectoController extends controller
         }
     }
 
+    public function show(Request $request, $id)
+    {
+        echo $id;
+    }
+
     public function E501()
     {
 

@@ -142,21 +142,36 @@ $routes->add('/proyectos/guardar', new Route(
     ]
 ));
 
+$showRoute = new Route(
+
+    '/proyectos/{id}',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'show',
+    ]
+);
+$routes->add('proyectos_show', $showRoute);
+
 //coment
 try {
     // Get the route matcher from the container ...
     $matcher = new UrlMatcher($routes, $context);
     $route = $matcher->match($context->getPathInfo());
 
+    // OBTENER PARAMETROS DE LA RUTA
+    $parameters = $route;
+    unset($parameters['controller'], $parameters['_route'], $parameters['method']);
+
     // Dispatch the request to the route handler.
     $controller = new $route['controller'];
 
     $method = $route['method'];
-    $response = $controller->$method($request);
+    $response = $controller->$method($request, ...$parameters);
 } catch (ResourceNotFoundException $exception) {
-
+    echo $exception->getMessage();
     $response = new Response('Not Found', 404);
 } catch (Throwable $throwable) {
+    echo $throwable->getMessage();
     $response = new Response('An error occurred', 500);
 }
 //require_once '../config/handler.php';
