@@ -18,6 +18,12 @@
 <!-- Page JS -->
 <script src="<?= APP_URL  ?>assets/js/dashboards-analytics.js"></script>
 
+<!-- Data Tables -->
+
+<script src="https://cdn.datatables.net/v/bs4/dt-1.13.5/datatables.min.js"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>

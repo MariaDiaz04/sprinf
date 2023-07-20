@@ -37,6 +37,8 @@
 
   <script src="<?= APP_URL ?>js/jquery-3.7.0.slim.min.js"></script>
 
+
+  <link href="https://cdn.datatables.net/v/bs4/dt-1.13.5/datatables.min.css" rel="stylesheet" />
   <!-- Helpers -->
   <script src="<?= APP_URL ?>assets/vendor/js/helpers.js"></script>
 
@@ -46,8 +48,8 @@
 
 
 
-  <!--   <script src="<?= APP_URL ?>assets/vendor/js/autoComplete.js"></script> -->
 
+  <!--   <script src="<?= APP_URL ?>assets/vendor/js/autoComplete.js"></script> -->
 
   <!-- JS HOME-->
 
@@ -55,7 +57,6 @@
 </head>
 
 <body class='font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;'>
-  <?php require '../routes/web.php'; ?>
   <div class="page-loader">
     <div class="col">
       <div class="sk-folding-cube sk-primary">
