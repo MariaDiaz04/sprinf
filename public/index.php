@@ -79,44 +79,58 @@ $routes->add('invalid', new Route(
 ));
 
 $routes->add('home', new Route(
-    
-    '/home',[
+
+    '/home',
+    [
         'controller' => homeController::class,
         'method' => 'index',
-       ]
+    ]
 ));
 
 $routes->add('profesor', new Route(
-    
-    '/profesor',[
+
+    '/profesor',
+    [
         'controller' => userController::class,
         'method' => 'profesor',
-       ]
+    ]
 ));
 
 $routes->add('usuarioCrear', new Route(
-    
-    '/usuarioCrear',[
+
+    '/usuarioCrear',
+    [
         'controller' => userController::class,
         'method' => 'create',
-       ]
+    ]
 ));
 
 $routes->add('usuarioGuardar', new Route(
-    
-    '/usuarioGuardar',[
+
+    '/usuarioGuardar',
+    [
         'controller' => userController::class,
         'method' => 'store',
-       ]
+    ]
 ));
 
 # GESTION DE PROYECTOS
 $routes->add('proyectos', new Route(
-    
-    '/proyectos',[
+
+    '/proyectos',
+    [
         'controller' => proyectoController::class,
         'method' => 'index',
-       ]
+    ]
+));
+
+$routes->add('/proyectos/crear', new Route(
+
+    '/proyectos/crear',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'create',
+    ]
 ));
 
 
@@ -126,7 +140,6 @@ try {
     $matcher = new UrlMatcher($routes, $context);
     $route = $matcher->match($context->getPathInfo());
     // Dispatch the request to the route handler.
-
     $controller = new $route['controller'];
 
     $method = $route['method'];
