@@ -37,7 +37,7 @@ class proyecto extends model
     public function all()
     {
         try {
-            $proyectos = $this->select('proyecto');
+            $proyectos = $this->querys("SELECT proyecto.*, CONCAT(persona.nombre, ' ',persona.apellido) as nombre_tutor, trayecto.nombre as nombre_trayecto FROM proyecto INNER JOIN tutor ON tutor.id = proyecto.tutor_id INNER JOIN persona ON persona.id = tutor.persona_id INNER JOIN trayecto ON trayecto.id = proyecto.trayecto_id");
             return $proyectos ? $proyectos : null;
         } catch (Exception $th) {
             return $th;

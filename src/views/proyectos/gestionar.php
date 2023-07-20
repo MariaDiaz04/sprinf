@@ -32,8 +32,8 @@
 
               <tr class="item-proyecto ip-<?= $proyecto->id ?>" id="i<?= $proyecto->id ?>">
                 <td scope="row"><strong><?= $proyecto->id ?></strong></td>
-                <td><?= $proyecto->trayecto_id ?></td>
-                <td><?= $proyecto->tutor_id ?></td>
+                <td><?= $proyecto->nombre_trayecto ?></td>
+                <td><?= $proyecto->nombre_tutor ?></td>
                 <td><?= $proyecto->nombre ?></td>
                 <td><?= $proyecto->area ?></td>
                 <td class="text-center">
