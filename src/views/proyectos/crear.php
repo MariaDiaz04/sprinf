@@ -182,12 +182,12 @@
         url: url,
         data: data,
         error: function(error, status) {
-          console.log(status)
+          alert(error.responseText)
         },
         success: function(data, status) {
-          console.log(data)
+          alert('creado exitosamente')
+          window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
         },
-
       });
 
     })

@@ -66,6 +66,7 @@ class proyectoController extends controller
     public function store(Request $usuario)
     {
         try {
+            if (!array_key_exists('estudiantes', $usuario->request->all())) throw new Exception('No puede crear proyecto sin integrantes');
             $estudiantes = $usuario->request->all()['estudiantes'];
             $this->proyecto->setProyectData($usuario->request->all());
             $this->proyecto->save();

@@ -80,12 +80,8 @@ class proyecto extends model
                 }
             }
         }
-        try {
-            $this->set('proyecto', $insertData);
-            $this->id = $this->lastInsertId();
-            return $this->id;
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+        $this->set('proyecto', $insertData);
+        $this->id = $this->lastInsertId();
+        return $this->id;
     }
 }
