@@ -101,6 +101,7 @@
                     <th scope="col">C.I.</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
+                    <th scope="col">Remover</th>
                   </tr>
                 </thead>
                 <tbody id="cuerpoTablaEstudiantes">
@@ -126,27 +127,40 @@
 
       let studentsAlreadyAppened = document.getElementById("cuerpoTablaEstudiantes").children.length;
 
+
+
       if (studentsAlreadyAppened >= 4) {
         alert('limite de estudiantes alcanzado');
       } else {
         let selectedStudent = $('#selectEstudiante option:selected');
 
         let studentId = $(selectedStudent).val();
+
+        if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
+          alert('Estudiante ya ha sido añadido')
+          return false;
+        }
+
         console.log($(selectedStudent).data('nombre'))
-        let fila = `<tr>
+        let fila = `<tr id="appenedStudent-${studentId}">
                     <th scope="row">
                     <input type="text" name="estudiantes[]" class="form-control-plaintext" value="${studentId}" hidden>
                     ${$(selectedStudent).data('cedula')}
                     </th>
                     <td>${$(selectedStudent).data('nombre')}</td>
                     <td>${$(selectedStudent).data('apellido')}</td>
+                    <td><button class="btn btn-secondary" onClick="removeStudent(${studentId})">Eliminar</button></td>
                   </tr>`;
         $('#cuerpoTablaEstudiantes').append(fila);
 
-        $(`#selectEstudiante option[value='${studentId}']`).remove();
+        //$(`#selectEstudiante option[value='${studentId}']`).remove();
       }
 
 
     })
   })
+
+  function removeStudent(id) {
+    $(`#appenedStudent-${id}`).remove()
+  }
 </script>
