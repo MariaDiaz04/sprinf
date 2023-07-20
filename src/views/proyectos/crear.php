@@ -8,6 +8,7 @@
   </h5>
   <div class="card-body">
     <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardar">
+      <input type="hidden" name="estatus" value="1">
       <div class="container-fluid">
         <div class="row pb-2">
           <div class="col-12">
@@ -18,8 +19,8 @@
               </div>
 
               <div class="col-lg-3">
-                <label class="form-label" for="trayecto">Trayecto *</label>
-                <select class="form-select" name="trayecto">
+                <label class="form-label" for="trayecto_id">Trayecto *</label>
+                <select class="form-select" name="trayecto_id">
 
                   <?php foreach ($trayectos as $trayecto) : ?>
                     <option value="<?= $trayecto->id ?>"><?= $trayecto->nombre ?></option>
@@ -28,8 +29,8 @@
               </div>
 
               <div class="col-lg-3">
-                <label class="form-label" for="tutor">Tutor *</label>
-                <select class="form-select" name="tutor">
+                <label class="form-label" for="tutor_id">Tutor *</label>
+                <select class="form-select" name="tutor_id">
                   <?php foreach ($tutores as $tutor) : ?>
                     <option value="<?= $tutor->id ?>"><?= "$tutor->cedula - $tutor->nombre $tutor->apellido" ?></option>
                   <?php endforeach; ?>
@@ -65,8 +66,8 @@
               </div>
 
               <div class="col-lg-4">
-                <label class="form-label" for="documentacion">Documentación</label>
-                <input type="text" class="form-control mb-1" placeholder="..." name="documentacion">
+                <label class="form-label" for="repositorio_documentacion">Documentación</label>
+                <input type="text" class="form-control mb-1" placeholder="..." name="repositorio_documentacion">
               </div>
 
               <div class="col-lg-4">

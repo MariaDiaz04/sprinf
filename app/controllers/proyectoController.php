@@ -11,11 +11,12 @@ use App\proyecto;
 use App\estudiante;
 use App\tutor;
 use App\trayectos;
+use Exception;
 
 class proyectoController extends controller
 {
 
-    private $proyecto;
+    public $proyecto;
     private $estudiantes;
     private $tutores;
     private $trayectos;
@@ -64,9 +65,16 @@ class proyectoController extends controller
 
     public function store(Request $usuario)
     {
+        try {
+            $this->proyecto->setProyectData($usuario->request->all());
+            $result = $this->proyecto->save();
 
-        http_response_code(200);
-        echo json_encode($usuario->request->all());
+            http_response_code(200);
+            echo json_encode($result);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e);
+        }
     }
 
     public function E501()
