@@ -131,6 +131,22 @@ class proyectoController extends controller
         }
     }
 
+    function delete(Request $proyecto): void
+    {
+        try {
+
+            $idProyecto = $proyecto->request->get('id');
+
+            $this->proyecto->remove($idProyecto);
+
+            http_response_code(200);
+            echo json_encode($this->proyecto);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
     public function E501()
     {
 

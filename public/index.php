@@ -149,6 +149,14 @@ $routes->add('proyectos_update', new Route(
         'method' => 'update',
     ]
 ));
+$routes->add('proyectos_delete', new Route(
+
+    '/proyectos/delete',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'delete',
+    ]
+));
 
 $showRoute = new Route(
 
@@ -167,6 +175,8 @@ $routes->add('proyectos_edit', new Route(
         'method' => 'edit',
     ]
 ));
+
+
 
 
 

@@ -121,4 +121,10 @@ class proyecto extends model
             return $this->id;
         }
     }
+
+    function remove($id): void
+    {
+        $this->delete('estudiante_proyecto', [['proyecto_id', '=', $id]]);
+        $this->delete('proyecto', [['id', '=', $id]]);
+    }
 }

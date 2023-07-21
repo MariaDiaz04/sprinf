@@ -4,7 +4,7 @@
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
         <div><span class="text-muted font-weight-light">Proyectos </span>/ Gestión</div>
 
-        <a class="btn btn-outline-primary btn-round d-block" href="<?= $this->Route('proyectos/crear') ?>">
+        <a class="btn btn-outline-primary btn-round d-block" href="<?= APP_URL . $this->Route('proyectos/crear') ?>">
           <span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
       </h4>
@@ -51,6 +51,12 @@
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("proyectos/$proyecto->id") ?>"><box-icon name='edit'></box-icon> Ver Detalles</a></li>
                       <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("proyectos/edit/$proyecto->id") ?>"><box-icon name='edit'></box-icon> Editar</a></li>
+                      <li>
+                        <form action="<?= APP_URL . $this->Route('proyectos/delete') ?>" method="post" id="eliminarProyecto">
+                          <input type="hidden" name="id" value="<?= $proyecto->id ?>">
+                          <button class="dropdown-item">Eliminar</button>
+                        </form>
+                      </li>
 
                     </ul>
                   </div>
@@ -71,6 +77,33 @@
   <script>
     $(document).ready(function() {
       $('#tablaProyectos').DataTable();
+
+
+      $('#eliminarProyecto').submit(function(e) {
+        e.preventDefault()
+
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        console.log(url)
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            alert('Eliminado exitosamente')
+            window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
+          },
+        });
+
+      })
+
+
     });
     /* const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
