@@ -59,7 +59,7 @@ class userController extends controller
 
     public function create($request)
     {
-        return $this->view('usuario/crear', ['rol' => '2']);
+        return $this->view('usuario/crear', ['rol' => $request->request->get('rol')]);
     }
 
 
@@ -86,7 +86,7 @@ class userController extends controller
                 'estatus' => 1,
             ])->save();
         } else { */
-            $this->USUARIO->create([
+          $user=  $this->USUARIO->create([
                 'email' => $usuario->request->get('email'),
                 'contrasena' => md5($usuario->request->get('contrasena')),
                 'rol_id' => $usuario->request->get('rol'),
@@ -100,12 +100,14 @@ class userController extends controller
             ])->save();
       /*   } */
 
+      //return var_dump($user);
+
         switch ($usuario->request->get('rol')) {
             case '2':
                 return $this->redirect('profesor');
                 break;
             case '3':
-                return $this->redirect('analista');
+                return $this->redirect('estudiante');
                 break;
             default:
                 return $this->redirect('home');

@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-lg-3">
                           <label class="form-label ">Teléfono</label>
-                          <input type="number" class="form-control mb-1" value="" placeholder="0212424655874" name="telefono">
+                          <input type="number" class="form-control mb-1" value="" placeholder="0212424655874" name="telefono" id="html5-tel-input">
                         </div>
                         <div class="col-lg-4">
                           <label class="form-label">Fecha de nacimiento</label>
@@ -52,15 +52,15 @@
                           <label class="form-label">Contraseña</label>
                           <input type="password" class="form-control" value="" placeholder="* * * * *" name="contrasena" required>
                         </div>
-                        <div class="col-lg-4">
+                     <!--    <div class="col-lg-4">
                           <label class="form-label">Procedencia</label>
-                          <!-- <select class="custom-select" name="procedencia">
+                          <select class="custom-select" name="procedencia">
                              <?php foreach ($procedencia as $procedencias) : ?>
                               <option value="<?= $procedencias->id ?>"><?= $procedencias->nombre ?></option>
                             <?php endforeach; ?>
 
-                          </select> -->
-                        </div>
+                          </select> 
+                        </div>-->
                         <input type="text" name="rol" value="<?= $rol ?>" hidden>
                       </div>
                     </div>

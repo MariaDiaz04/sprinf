@@ -23,7 +23,7 @@ class bitacora extends model
 
      public function bitacora_all() {
         try {
-            $bitacoraall= $this->query('SELECT * FROM `bitacora` ORDER BY bitacora.id DESC');
+            $bitacoraall= $this->querys('SELECT * FROM `bitacora` ORDER BY bitacora.id DESC');
             return $bitacoraall ;
 
           } catch (\PDOException $th) {
