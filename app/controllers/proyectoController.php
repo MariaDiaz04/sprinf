@@ -63,12 +63,12 @@ class proyectoController extends controller
         ]);
     }
 
-    public function store(Request $usuario)
+    public function store(Request $nuevoProyecto)
     {
         try {
-            if (!array_key_exists('estudiantes', $usuario->request->all())) throw new Exception('No puede crear proyecto sin integrantes');
-            $estudiantes = $usuario->request->all()['estudiantes'];
-            $this->proyecto->setProyectData($usuario->request->all());
+            if (!array_key_exists('estudiantes', $nuevoProyecto->request->all())) throw new Exception('No puede crear proyecto sin integrantes');
+            $estudiantes = $nuevoProyecto->request->all()['estudiantes'];
+            $this->proyecto->setProyectData($nuevoProyecto->request->all());
             $this->proyecto->save();
             $this->proyecto->saveTeam(1, $estudiantes);
 
@@ -89,6 +89,46 @@ class proyectoController extends controller
             'proyecto' => $proyecto,
             'estudiantes' => $estudiantes
         ]);
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $proyecto = $this->proyecto->find($id);
+        $estudiantesPendientes = $this->estudiantes->listPendingForProject();
+        $estudiantes = $this->estudiantes->byProject($id);
+        $tutores = $this->tutores->all();
+        $trayectos = $this->trayectos->all();
+
+
+        return $this->view('proyectos/edit', [
+            'proyecto' => $proyecto,
+            'estudiantes' => $estudiantes,
+            'estudiantesPendientes' => $estudiantesPendientes ?? [],
+            'tutores' => $tutores,
+            'trayectos' => $trayectos
+        ]);
+    }
+
+    function update(Request $proyecto): void
+    {
+        try {
+            if (!array_key_exists('estudiantes', $proyecto->request->all())) throw new Exception('No puede crear proyecto sin integrantes');
+
+            $estudiantes = $proyecto->request->all()['estudiantes'];
+            $idProyecto = $proyecto->request->get('id');
+
+            $this->proyecto->setProyectData($proyecto->request->all());
+            $this->proyecto->save($idProyecto);
+
+            $estudiantes = $proyecto->request->all()['estudiantes'];
+            $this->proyecto->updateTeam($idProyecto, 1, $estudiantes);
+
+            http_response_code(200);
+            echo json_encode($this->proyecto);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
     }
 
     public function E501()

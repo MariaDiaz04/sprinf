@@ -141,6 +141,14 @@ $routes->add('/proyectos/guardar', new Route(
         'method' => 'store',
     ]
 ));
+$routes->add('proyectos_update', new Route(
+
+    '/proyectos/update',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'update',
+    ]
+));
 
 $showRoute = new Route(
 
@@ -151,6 +159,16 @@ $showRoute = new Route(
     ]
 );
 $routes->add('proyectos_show', $showRoute);
+$routes->add('proyectos_edit', new Route(
+
+    '/proyectos/edit/{id}',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'edit',
+    ]
+));
+
+
 
 //coment
 try {

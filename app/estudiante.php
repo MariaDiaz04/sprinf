@@ -46,7 +46,7 @@ class estudiante extends model
     public function byProject($id)
     {
         try {
-            $estudiantes = $this->querys("SELECT estudiante_proyecto.id, persona.nombre, persona.apellido, persona.cedula FROM estudiante_proyecto LEFT JOIN estudiante ON estudiante.id = estudiante_proyecto.estudiante_id LEFT JOIN persona ON persona.id = estudiante.persona_id WHERE estudiante_proyecto.proyecto_id = $id");
+            $estudiantes = $this->querys("SELECT estudiante_proyecto.id, estudiante_proyecto.estudiante_id, persona.nombre, persona.apellido, persona.cedula FROM estudiante_proyecto LEFT JOIN estudiante ON estudiante.id = estudiante_proyecto.estudiante_id LEFT JOIN persona ON persona.id = estudiante.persona_id WHERE estudiante_proyecto.proyecto_id = $id");
             return $estudiantes ? $estudiantes : null;
         } catch (Exception $th) {
             return $th;

@@ -77,21 +77,48 @@ class proyecto extends model
         }
     }
 
-    public function save()
+    public function updateTeam($idProyecto, int $periodo_id, array $participantes)
     {
-        $insertData = [];
+        $participantesActuales = $this->select('estudiante_proyecto', [['proyecto_id', '=', $idProyecto]]);
+
+        $idParticipantesActuales = array_column($participantesActuales, 'estudiante_id');
+
+        $delete_list = array_diff($idParticipantesActuales, $participantes);
+        $insert_list = array_diff($participantes, $idParticipantesActuales);
+
+        foreach ($delete_list as $item) {
+            $this->delete('estudiante_proyecto', [['estudiante_id', '=', $item], ['proyecto_id', '=', $idProyecto]]);
+            // delete $item from DB
+        }
+
+        foreach ($insert_list as $item) {
+            $this->set('estudiante_proyecto', [
+                'proyecto_id' => $idProyecto,
+                'periodo_id' => $periodo_id,
+                'estudiante_id' => $item
+            ]);
+        }
+    }
+
+    public function save($id = null)
+    {
+        $data = [];
 
         foreach ($this->fillable as $key => $value) {
             if (isset($this->{$value})) {
                 if (is_string($this->{$value})) {
-                    $insertData[$value] = '"' . $this->{$value} . '"';
+                    $data[$value] = '"' . $this->{$value} . '"';
                 } else {
-                    $insertData[$value] =  $this->{$value};
+                    $data[$value] =  $this->{$value};
                 }
             }
         }
-        $this->set('proyecto', $insertData);
-        $this->id = $this->lastInsertId();
-        return $this->id;
+        if ($id) {
+            $this->update('proyecto', $data, [['id', '=', $id]]);
+        } else {
+            $this->set('proyecto', $data);
+            $this->id = $this->lastInsertId();
+            return $this->id;
+        }
     }
 }
