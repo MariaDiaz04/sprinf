@@ -109,6 +109,28 @@ $routes->add('usuarioGuardar', new Route(
        ]
 ));
 
+$routes->add('bitacora', new Route(
+    
+    '/bitacora',[
+        'controller' => bitacoraController::class,
+        'method' => 'index',
+       ]
+));
+
+$routes->add('permisos', new Route(
+    
+    '/permisos',[
+        'controller' => permisosController::class,
+        'method' => 'index',
+       ]
+));
+$routes->add('permisosCrear', new Route(
+    
+    '/permisosCrear',[
+        'controller' => permisosController::class,
+        'method' => 'create',
+       ]
+));
 //coment
 try {
     // Get the route matcher from the container ...
