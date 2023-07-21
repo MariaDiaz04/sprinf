@@ -78,7 +78,7 @@
                              <i class="bx bx-power-off me-2"></i>
                              <span class="align-middle">Cerrar sesión</span>
                          </label>
-                         <form action="  APP_URL . <?= $this->Route('logout') ?>" method="POST" hidden>
+                         <form action="<?= APP_URL .  $this->Route('logout') ?>" method="POST" hidden>
                              <button id="exit" type="submit"></button>
                          </form>
 

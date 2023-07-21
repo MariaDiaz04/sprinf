@@ -186,10 +186,11 @@ try {
     $method = $route['method'];
     $response = $controller->$method($request, ...$parameters);
 } catch (ResourceNotFoundException $exception) {
-    echo $exception->getMessage();
     $response = new Response('Not Found', 404);
+
+    $viewController = new \App\controllers\controller;
+    $viewController->view('errors/404');
 } catch (Throwable $throwable) {
-    echo $throwable->getMessage();
     $response = new Response('An error occurred', 500);
 }
 //require_once '../config/handler.php';
