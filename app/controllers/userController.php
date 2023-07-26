@@ -3,6 +3,7 @@ use App\controllers\controller;
 use App\permisos;
 use App\usuario;
 use App\rol;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class userController extends controller
@@ -66,11 +67,11 @@ class userController extends controller
 
     public function create($request)
     {
-        return $this->view('usuario/crear', ['rol' => '2']);
+        return $this->view('usuario/crear', ['rol' => $request->request->get('rol')]);
     }
 
 
-    public function store($usuario)
+    public function store(Request $usuario)
     {
     /*     if ($usuario['rol'] == '2') {
 
@@ -93,27 +94,28 @@ class userController extends controller
                 'estatus' => 1,
             ])->save();
         } else { */
-            $this->USUARIO->create([
-                'email' => $usuario['email'],
-                'contrasena' => md5($usuario['contrasena']),
-                'rol_id' => $usuario['rol'],
-                'procedencia_id' => $usuario['procedencia'],
-                'nombre' => $usuario['nombre'],
-                'apellido' => $usuario['apellido'],
-                'cedula' => $usuario['cedula'],
-                'telefono' => $usuario['telefono'],
-                'nacimiento' => $usuario['nacimiento'],
-                'direccion' => $usuario['direccion'],
+          $user=  $this->USUARIO->create([
+                'email' => $usuario->request->get('email'),
+                'contrasena' => md5($usuario->request->get('contrasena')),
+                'rol_id' => $usuario->request->get('rol'),
+                'nombre' => $usuario->request->get('nombre'),
+                'apellido' => $usuario->request->get('apellido'),
+                'cedula' => $usuario->request->get('cedula'),
+                'telefono' => $usuario->request->get('telefono'),
+                'nacimiento' =>  $usuario->request->get('nacimiento'),
+                'direccion' => $usuario->request->get('direccion'),
                 'estatus' => 1,
             ])->save();
       /*   } */
 
-        switch ($usuario['rol']) {
+      //return var_dump($user);
+
+        switch ($usuario->request->get('rol')) {
             case '2':
                 return $this->redirect('profesor');
                 break;
             case '3':
-                return $this->redirect('analista');
+                return $this->redirect('estudiante');
                 break;
             default:
                 return $this->redirect('home');

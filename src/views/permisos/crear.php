@@ -14,7 +14,7 @@
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Usuario</label>
-                                <select class="custom-select" name="idusuario" id="idusuario">
+                                <select class="form-select" name="idusuario" id="idusuario">
                                     <?php foreach ($usuarios as $objusuario) : ?>
                                         <option value="<?= $objusuario->id ?>"><?= $objusuario->email ?></option>
                                     <?php endforeach; ?>
@@ -26,7 +26,7 @@
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Módulo</label>
-                                <select class="custom-select" name="idmodulo" id="idmodulo">
+                                <select class="form-select" name="idmodulo" id="idmodulo">
                                     <?php foreach ($modulos as $objmodulo) : ?>
                                         <option value="<?= $objmodulo->idmodulo ?>"><?= $objmodulo->nombre ?></option>
                                     <?php endforeach; ?>
@@ -52,7 +52,7 @@
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Crear</label>
-                                <select class="custom-select" name="crear" id="crear">
+                                <select class="form-select" name="crear" id="crear">
                                     <option value="1"> Si </option>
                                     <option value="2"> No </option>
                                 </select>
@@ -64,7 +64,7 @@
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Consultar</label>
-                                <select class="custom-select" name="consultar" id="consultar">
+                                <select class="form-select" name="consultar" id="consultar">
                                     <option value="1"> Si </option>
                                     <option value="2"> No </option>
                                 </select>
@@ -76,7 +76,7 @@
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Actualizar</label>
-                                <select class="custom-select" name="actualizar" id="actualizar">
+                                <select class="form-select" name="actualizar" id="actualizar">
                                     <option value="1"> Si </option>
                                     <option value="2"> No </option>
                                 </select>
@@ -89,7 +89,7 @@
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Eliminar</label>
-                                <select class="custom-select" name="eliminar" id="eliminar">
+                                <select class="form-select" name="eliminar" id="eliminar">
                                     <option value="1"> Si </option>
                                     <option value="2"> No </option>
                                 </select>

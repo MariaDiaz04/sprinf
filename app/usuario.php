@@ -48,9 +48,6 @@ class usuario extends model
         if (isset($credenciales[0])) {
             
             $usuariopersona = $this->select('persona', [['usuarios_id', '=', $credenciales[0]['id']]])[0];
-
-            
-            
             
             $_SESSION = $usuariopersona;
             
@@ -76,7 +73,7 @@ class usuario extends model
                     'nombre' => '"' .$_SESSION['nombre']  . '"',
                     'apellido' => '"' . $_SESSION['apellido']. '"',
                     'token'=> '"'. $_SESSION['token'].'"',
-                    'idusuario' => '"' . $_SESSION['usuarios_id'] . '"',
+                    'usuario_id' => '"' . $_SESSION['usuarios_id'] . '"',
                 ]);
                 
                 return [
@@ -99,7 +96,7 @@ class usuario extends model
             'UPDATE bitacora SET 
             bitacora.hora_cierre="'.$hora_cierre.'"  
             WHERE 
-            bitacora.idusuario  = "' .$idusuario  . '" AND bitacora.fecha  = "' . Date('Y-m-d'). '"  AND bitacora.token= "'.$_SESSION['token'].'"'
+            bitacora.usuario_id  = "' .$idusuario  . '" AND bitacora.fecha  = "' . Date('Y-m-d'). '"  AND bitacora.token= "'.$_SESSION['token'].'"'
         );
 
         foreach ($bitacora as $key => $value) {
@@ -173,7 +170,7 @@ class usuario extends model
 
     public function users_activos()
     {
-        $users_activos = $this->query(
+        $users_activos = $this->querys(
             'SELECT
                 persona.*,
                 usuarios.email
@@ -187,6 +184,21 @@ class usuario extends model
         return $users_activos;
     }
 
+    public function users_inactivos()
+    {
+        $users_activos = $this->querys(
+            'SELECT
+                persona.*,
+                usuarios.email
+            FROM
+                `usuarios`,
+                `persona`
+            WHERE
+                usuarios.id = persona.usuarios_id AND persona.estatus = 0'
+        );
+
+        return $users_activos;
+    }
 
 
     // ======================== / G E T S =====================
@@ -195,7 +207,7 @@ class usuario extends model
     public function find($id)
     {
         try {
-            $usuarios = $this->query(
+            $usuarios = $this->querys(
                 'SELECT
                         persona.*,
                         usuarios.email
@@ -237,15 +249,15 @@ class usuario extends model
             $this->set('usuarios', [
                 'email' => '"' . $this->fillable['email'] . '"',
                 'contrasena' => '"' . $this->fillable['contrasena'] . '"',
+                'rol_id' => '"' . $this->fillable['rol_id'] . '"',
             ]);
-
+            
             $usuario = $this->select('usuarios', [['email', '=', "'" . $this->fillable['email'] . "'"]])[0]['id'];
+            //return var_dump($usuario);
 
             if ($this->fillable['rol_id'] ==2){
             $this->set('persona', [
                 'usuarios_id' => $usuario,
-                'rol_id' => '"' . $this->fillable['rol_id'] . '"',
-                'procedencia_id' => '"' . $this->fillable['procedencia_id'] . '"',
                 'nombre' => '"' . $this->fillable['nombre'] . '"',
                 'apellido' => '"' . $this->fillable['apellido'] . '"',
                 'cedula' => '"' . $this->fillable['cedula'] . '"',
@@ -255,12 +267,11 @@ class usuario extends model
                 'estatus' => '"' . $this->fillable['estatus'] . '"',
             ]);
 
-            $persona = $this->select('persona', [['cedula', '=', "'" . $this->fillable['cedula'] . "'"]])[0]['id'];
+           $persona_id = $this->lastInsertId();
                 
-            $this->set('agentes', [
-                'persona_id' => $persona,
-                'acronimo' => '"'.$this->fillable['acronimo'] .$persona. '"',
-            ]);
+            $this->set('profesor', [
+                'persona_id' => $persona_id,
+            ]); 
 
         }else {
             $this->set('persona', [

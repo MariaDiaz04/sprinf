@@ -1,5 +1,6 @@
 <?php 
-require '../app/bitacora.php';
+use App\bitacora;
+use App\controllers\controller;
 
 class bitacoraController extends controller
 {
@@ -14,7 +15,6 @@ class bitacoraController extends controller
 	public function index() {
 
 		$bitacora = $this->BITACORA->bitacora_all();
-
 
 		return $this->view('security/bitacora', ['bitacora'=>$bitacora]); 
 

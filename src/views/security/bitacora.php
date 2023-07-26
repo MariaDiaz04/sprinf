@@ -45,12 +45,13 @@
         </div>
     </div>
 
-    <!-- <script>
+   <script>
 
+  document.addEventListener('DOMContentLoaded', function () {
+        $('#tablebitacora').DataTable();
 
-$(document).ready(function() {
-    $('#tablebitacora').DataTable();
-} );
+} ); 
   </script>
- -->
+ 
+
 </div>

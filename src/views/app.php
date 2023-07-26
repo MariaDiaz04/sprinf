@@ -35,6 +35,8 @@
 
   <!-- Page CSS -->
 
+  
+  <link href="https://cdn.datatables.net/v/bs4/dt-1.13.5/datatables.min.css" rel="stylesheet"/>
   <!-- Helpers -->
   <script src="assets/vendor/js/helpers.js"></script>
 
@@ -42,18 +44,16 @@
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="assets/js/config.js"></script>
 
- 
+
 
   <!--   <script src="assets/vendor/js/autoComplete.js"></script> -->
 
-
   <!-- JS HOME-->
- 
+
 
 </head>
 
 <body class='font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;'>
-  <?php require '../routes/web.php'; ?>
   <div class="page-loader">
     <div class="col">
       <div class="sk-folding-cube sk-primary">

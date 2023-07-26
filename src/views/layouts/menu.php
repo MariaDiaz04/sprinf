@@ -2,7 +2,7 @@
 
   <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="<?= $this->Route('home') ?>" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                   width="25"
@@ -71,7 +71,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
-              <a href="index.html" class="menu-link">
+              <a href="<?= $this->Route('home') ?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Inicio</div>
               </a>
@@ -140,7 +140,7 @@
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
             </li>
-            <li class="menu-item">
+           <!--  <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Account Settings</div>
@@ -162,28 +162,28 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications">Authentications</div>
+                <div data-i18n="Authentications">Seguridad</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Login</div>
+                  <a href="<?= $this->Route('bitacora') ?>" class="menu-link" >
+                    <div data-i18n="Basic">Bitacora</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Register</div>
+                  <a href="<?= $this->Route('permisos') ?>" class="menu-link" >
+                    <div data-i18n="Basic">Permisos</div>
                   </a>
                 </li>
-                <li class="menu-item">
+               <!--  <li class="menu-item">
                   <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Forgot Password</div>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <li class="menu-item">
