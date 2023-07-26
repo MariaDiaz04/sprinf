@@ -124,6 +124,21 @@ class usuario extends model
         return $profesor;
     }
 
+    public function estudiantes()
+    {
+        $estudiantes = $this->query(
+            'SELECT
+                persona.*,
+                usuarios.email
+            FROM
+                `usuarios`,
+                `persona`
+            WHERE
+                usuarios.id = persona.usuarios_id AND persona.rol_id = 3'
+        );
+        return $estudiantes;
+    }
+
     public function analista()
     {
         $analista = $this->query(

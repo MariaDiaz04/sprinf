@@ -81,6 +81,18 @@ $web = [
         ],
     ],
 
+    'estudiantes' => [
+        'type' => 'GET',
+        'name' => 'Estudiantes',
+        'controller' => 'userController',
+        'method' => 'estudiantes',
+        'middlewares' => [
+            'logged_out',
+            'root_access',
+        ],
+    ],
+   
+
     'usuario/editar' => [
         'type' => 'GET',
         'controller' => 'userController',
@@ -271,6 +283,199 @@ $web = [
         ],
         
     ],
+// ************************** FIN MODULO******************************//
+
+ /* ******************  MATERIA  ************************* */
+
+ 'materia' => [
+    'type' => 'GET',
+    'controller' => 'materiaController',
+    'method' => 'index',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+    
+'materia/crear' => [
+    'type' => 'GET',
+    'controller' => 'materiaController',
+    'method' => 'create',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+
+'materia/guardar' => [
+    'type' => 'POST',
+    'controller' => 'materiaController',
+    'method' => 'store',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],  
+],
+
+'materia/editar' => [
+    'type' => 'GET',
+    'controller' => 'materiaController',
+    'method' => 'edit',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],  
+],
+
+'materia/actualizar' => [
+    'type' => 'POST',
+    'controller' => 'materiasController',
+    'method' => 'update',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+
+'materia/eliminar' => [
+    'type' => 'GET',
+    'controller' => 'materiaController',
+    'method' => 'delete',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+    
+],
+// ************************** FIN MODULO******************************//
+
+ /* ******************  ESTUDIANTES  ************************* */
+
+ 'estudiantes' => [
+    'type' => 'GET',
+    'controller' => 'estudiantesController',
+    'method' => 'index',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+    
+'estudiantes/crear' => [
+    'type' => 'GET',
+    'controller' => 'estudiantesController',
+    'method' => 'create',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+
+'estudiantes/guardar' => [
+    'type' => 'POST',
+    'controller' => 'estudiantesController',
+    'method' => 'store',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],  
+],
+
+'estudiantes/editar' => [
+    'type' => 'GET',
+    'controller' => 'estudiantesController',
+    'method' => 'edit',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],  
+],
+
+'estudiantes/actualizar' => [
+    'type' => 'POST',
+    'controller' => 'estudiantesController',
+    'method' => 'update',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+
+'estudiantes/eliminar' => [
+    'type' => 'GET',
+    'controller' => 'estudiantesController',
+    'method' => 'delete',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+    
+],
+// ************************** FIN MODULO******************************//
+
+
+/* ******************  SECCION ************************* */
+
+'seccion' => [
+    'type' => 'GET',
+    'controller' => 'seccionController',
+    'method' => 'index',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+    
+'seccion/crear' => [
+    'type' => 'GET',
+    'controller' => 'seccionController',
+    'method' => 'create',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+
+'seccion/guardar' => [
+    'type' => 'POST',
+    'controller' => 'seccionController',
+    'method' => 'store',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],  
+],
+
+'seccion/editar' => [
+    'type' => 'GET',
+    'controller' => 'seccionController',
+    'method' => 'edit',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],  
+],
+
+'seccion/actualizar' => [
+    'type' => 'POST',
+    'controller' => 'seccionController',
+    'method' => 'update',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+],
+
+'seccion/eliminar' => [
+    'type' => 'GET',
+    'controller' => 'seccionController',
+    'method' => 'delete',
+    'middlewares' => [
+        'logged_out',
+        'root_access',
+    ],
+    
+],
 // ************************** FIN MODULO******************************//
 
 ];

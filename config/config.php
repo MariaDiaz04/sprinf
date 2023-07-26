@@ -5,7 +5,7 @@ use Monolog\Logger;
 
 try {
     // Start dotEnv instance.
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . './../');
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
     $dotenv->load();
     // Configuration for Database
     define("DB_HOST", $_ENV['DB_HOST']);
@@ -17,7 +17,7 @@ try {
         die($th->getMessage());
     } else {
         $log = new Logger('App');
-        $log->pushHandler(new StreamHandler(__DIR__ . './../../logs/errors.log', Logger::ERROR));
+        $log->pushHandler(new StreamHandler(__DIR__ . '/../../logs/errors.log', Logger::ERROR));
 
         $log->error($th->getMessage(), $th->getTrace());
     } 
