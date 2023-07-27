@@ -108,6 +108,14 @@
           <div data-i18n="Analytics">Gestión de Baremos</div>
         </a>
       </li>
+
+      <!-- TODO: Verificar que usuario cuente con rol para modificar -->
+      <li class="menu-item">
+        <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-book-content"></i>
+          <div data-i18n="Analytics">Gestión de Dimensiones</div>
+        </a>
+      </li>
       <!-- ########### FIN GESTION DE PROYECTO ############## -->
 
 

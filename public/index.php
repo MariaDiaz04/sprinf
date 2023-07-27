@@ -5,6 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\DashboardController; */
 
 use App\controllers\baremosController;
+use App\controllers\dimensionController;
 use App\controllers\proyectoController;
 use App\controllers\homeController;
 use App\controllers\moduloController;
@@ -200,6 +201,15 @@ $routes->add('baremos_edit', new Route(
     [
         'controller' => baremosController::class,
         'method' => 'edit',
+    ]
+));
+
+$routes->add('dimension_manage', new Route(
+
+    '/dimensiones',
+    [
+        'controller' => dimensionController::class,
+        'method' => 'index',
     ]
 ));
 
