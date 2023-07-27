@@ -183,6 +183,8 @@ $routes->add('proyectos_edit', new Route(
 
 # GESTION DE BAREMOS
 
+
+
 $routes->add('baremos_manage', new Route(
 
     '/baremos',
@@ -191,6 +193,16 @@ $routes->add('baremos_manage', new Route(
         'method' => 'index',
     ]
 ));
+
+$routes->add('baremos_edit', new Route(
+
+    '/baremos/edit/{id}',
+    [
+        'controller' => baremosController::class,
+        'method' => 'edit',
+    ]
+));
+
 
 # FIN DE GESTIÓN DE BAREMOS
 

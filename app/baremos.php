@@ -22,8 +22,18 @@ class baremos extends model
   public function all()
   {
     try {
-      $proyectos = $this->querys("SELECT baremos.*, trayecto.nombre as trayecto FROM baremos INNER JOIN trayecto ON trayecto.id = baremos.trayecto_id WHERE estatus != 0");
-      return $proyectos ? $proyectos : null;
+      $baremos = $this->querys("SELECT baremos.*, trayecto.nombre as trayecto FROM baremos INNER JOIN trayecto ON trayecto.id = baremos.trayecto_id WHERE estatus != 0");
+      return $baremos ? $baremos : null;
+    } catch (Exception $th) {
+      return $th;
+    }
+  }
+
+  public function find($id)
+  {
+    try {
+      $baremos = $this->querys("SELECT baremos.*, trayecto.nombre as trayecto FROM baremos INNER JOIN trayecto ON trayecto.id = baremos.trayecto_id WHERE estatus != 0 AND baremos.id = $id");
+      return $baremos ? reset($baremos) : null;
     } catch (Exception $th) {
       return $th;
     }

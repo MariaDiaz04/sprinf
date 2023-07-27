@@ -17,10 +17,12 @@ class baremosController extends controller
 {
 
   public $baremos;
+  public $trayectos;
 
   function __construct()
   {
     $this->baremos = new baremos();
+    $this->trayectos = new trayectos();
   }
 
   public function index()
@@ -33,6 +35,18 @@ class baremosController extends controller
 
     return $this->view('baremos/gestionar', [
       'baremos' => $baremos,
+    ]);
+  }
+
+  public function edit(Request $request, $id)
+  {
+    $baremos = $this->baremos->find($id);
+    $trayectos = $this->trayectos->all();
+
+
+    return $this->view('baremos/edit', [
+      'baremos' => $baremos,
+      'trayectos' => $trayectos
     ]);
   }
 
