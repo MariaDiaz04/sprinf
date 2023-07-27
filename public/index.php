@@ -4,6 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
+use App\controllers\baremosController;
 use App\controllers\proyectoController;
 use App\controllers\homeController;
 use App\controllers\moduloController;
@@ -178,6 +179,21 @@ $routes->add('proyectos_edit', new Route(
     ]
 ));
 
+# FIN DE GESTIÓN DE PROYECTOS
+
+# GESTION DE BAREMOS
+
+$routes->add('baremos_manage', new Route(
+
+    '/baremos',
+    [
+        'controller' => baremosController::class,
+        'method' => 'index',
+    ]
+));
+
+# FIN DE GESTIÓN DE BAREMOS
+
 $routes->add('bitacora', new Route(
 
     '/bitacora',
@@ -280,10 +296,12 @@ try {
     $response = $controller->$method($request, ...$parameters);
 } catch (ResourceNotFoundException $exception) {
     $response = new Response('Not Found', 404);
+    var_dump($exception->getMessage());
 
     $viewController = new \App\controllers\controller;
     $viewController->view('errors/404');
 } catch (Throwable $throwable) {
+    var_dump($throwable->getMessage());
     $response = new Response('An error occurred', 500);
 }
 //require_once '../config/handler.php';
