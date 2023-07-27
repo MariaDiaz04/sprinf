@@ -91,9 +91,11 @@
       </li>
       <!-- ########### INICIO GESTION DE PROYECTO ############## -->
       <!-- TODO: Verificar que usuario cuente con rol para modificar -->
+
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Proyectos</span>
       </li>
+
       <li class="menu-item">
         <a href="<?= APP_URL .  $this->Route('proyectos') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-code"></i>
@@ -101,29 +103,48 @@
         </a>
       </li>
 
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Baremos</div>
+        </a>
+
+        <ul class="menu-sub">
+
+          <!-- TODO: Verificar que usuario cuente con rol para modificar -->
+          <li class="menu-item">
+            <a href="<?= APP_URL .  $this->Route('baremos') ?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-book-content"></i>
+              <div data-i18n="Analytics">Gestión de Baremos</div>
+            </a>
+          </li>
+
+          <!-- TODO: Verificar que usuario cuente con rol para modificar -->
+          <li class="menu-item">
+            <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-columns"></i>
+              <div data-i18n="Analytics">Gestión de Dimensiones</div>
+            </a>
+          </li>
+      </li>
+
       <!-- TODO: Verificar que usuario cuente con rol para modificar -->
       <li class="menu-item">
-        <a href="<?= APP_URL .  $this->Route('baremos') ?>" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-book-content"></i>
-          <div data-i18n="Analytics">Gestión de Baremos</div>
+        <a href="<?= APP_URL .  $this->Route('aspectos') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
+          <div data-i18n="Analytics">Gestión de Aspectos a Evaluar</div>
         </a>
       </li>
+    </ul>
 
-      <!-- TODO: Verificar que usuario cuente con rol para modificar -->
-      <li class="menu-item">
-        <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-book-content"></i>
-          <div data-i18n="Analytics">Gestión de Dimensiones</div>
-        </a>
-      </li>
-      <!-- ########### FIN GESTION DE PROYECTO ############## -->
+    <!-- ########### FIN GESTION DE PROYECTO ############## -->
 
 
 
-      <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Pages</span>
-      </li>
-      <!--  <li class="menu-item">
+    <li class="menu-header small text-uppercase">
+      <span class="menu-header-text">Pages</span>
+    </li>
+    <!--  <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Account Settings</div>
@@ -146,48 +167,48 @@
                 </li>
               </ul>
             </li> -->
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-          <div data-i18n="Authentications">Seguridad</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
-              <div data-i18n="Basic">Bitacora</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
-              <div data-i18n="Basic">Permisos</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('modulos') ?>" class="menu-link">
-              <div data-i18n="Basic">Modulo</div>
-            </a>
-          </li>
+    <li class="menu-item">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+        <div data-i18n="Authentications">Seguridad</div>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
+            <div data-i18n="Basic">Bitacora</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
+            <div data-i18n="Basic">Permisos</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="<?= APP_URL . $this->Route('modulos') ?>" class="menu-link">
+            <div data-i18n="Basic">Modulo</div>
+          </a>
+        </li>
 
-        </ul>
-      </li>
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-          <div data-i18n="Misc">Misc</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="pages-misc-error.html" class="menu-link">
-              <div data-i18n="Error">Error</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="pages-misc-under-maintenance.html" class="menu-link">
-              <div data-i18n="Under Maintenance">Under Maintenance</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+      </ul>
+    </li>
+    <li class="menu-item">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+        <div data-i18n="Misc">Misc</div>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a href="pages-misc-error.html" class="menu-link">
+            <div data-i18n="Error">Error</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="pages-misc-under-maintenance.html" class="menu-link">
+            <div data-i18n="Under Maintenance">Under Maintenance</div>
+          </a>
+        </li>
+      </ul>
+    </li>
 
     </ul>
   </aside>
