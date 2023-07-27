@@ -96,11 +96,21 @@
       </li>
       <li class="menu-item">
         <a href="<?= APP_URL .  $this->Route('proyectos') ?>" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-box"></i>
+          <i class="menu-icon tf-icons bx bx-code"></i>
           <div data-i18n="Analytics">Gestión de Proyectos</div>
         </a>
       </li>
+
+      <!-- TODO: Verificar que usuario cuente con rol para modificar -->
+      <li class="menu-item">
+        <a href="<?= APP_URL .  $this->Route('baremos') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-book-content"></i>
+          <div data-i18n="Analytics">Gestión de Baremos</div>
+        </a>
+      </li>
       <!-- ########### FIN GESTION DE PROYECTO ############## -->
+
+
 
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Pages</span>
@@ -149,7 +159,7 @@
               <div data-i18n="Basic">Modulo</div>
             </a>
           </li>
-    
+
         </ul>
       </li>
       <li class="menu-item">

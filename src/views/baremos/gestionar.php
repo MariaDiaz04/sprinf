@@ -12,10 +12,10 @@
   </div>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white">Proyectos</h6>
+    <h6 class="card-header bg-primary text-white">Baremos</h6>
     <div class="card-body px-0 pt-0">
       <?php if ($baremos) : ?>
-        <table id="tablaProyectos" class="table table-hover">
+        <table id="tablaBaremos" class="table table-hover">
           <thead class=" thead">
             <tr>
               <th>id</th>
@@ -42,10 +42,10 @@
                       Opciones <box-icon name='cog'></box-icon>
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("proyectos/$baremo->id") ?>"><box-icon name='edit'></box-icon> Ver Detalles</a></li>
-                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("proyectos/edit/$baremo->id") ?>"><box-icon name='edit'></box-icon> Editar</a></li>
+                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("baremos/$baremo->id") ?>"><box-icon name='edit'></box-icon> Ver Detalles</a></li>
+                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("baremos/edit/$baremo->id") ?>"><box-icon name='edit'></box-icon> Editar</a></li>
                       <li>
-                        <form action="<?= APP_URL . $this->Route('proyectos/delete') ?>" method="post" id="eliminarProyecto">
+                        <form action="<?= APP_URL . $this->Route('baremos/delete') ?>" method="post" id="eliminarProyecto">
                           <input type="hidden" name="id" value="<?= $baremo->id ?>">
                           <button class="dropdown-item">Eliminar</button>
                         </form>
