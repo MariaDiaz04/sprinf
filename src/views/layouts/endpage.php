@@ -17,6 +17,7 @@
 
 <!-- Page JS -->
 <script src="<?= APP_URL  ?>assets/js/dashboards-analytics.js"></script>
+<script src="<?= APP_URL  ?>js/sweetalert2.js"></script>
 
 <!-- Data Tables -->
 

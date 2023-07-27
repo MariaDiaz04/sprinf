@@ -1,11 +1,12 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . './../vendor/autoload.php';
 
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
 use App\controllers\proyectoController;
 use App\controllers\homeController;
+use App\controllers\moduloController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -167,6 +168,7 @@ $showRoute = new Route(
     ]
 );
 $routes->add('proyectos_show', $showRoute);
+
 $routes->add('proyectos_edit', new Route(
 
     '/proyectos/edit/{id}',
@@ -175,10 +177,6 @@ $routes->add('proyectos_edit', new Route(
         'method' => 'edit',
     ]
 ));
-
-
-
-
 
 $routes->add('bitacora', new Route(
 
@@ -189,7 +187,7 @@ $routes->add('bitacora', new Route(
     ]
 ));
 
-$routes->add('permisos', new Route(
+$routes->add('/permisos', new Route(
 
     '/permisos',
     [
@@ -197,14 +195,74 @@ $routes->add('permisos', new Route(
         'method' => 'index',
     ]
 ));
-$routes->add('permisosCrear', new Route(
+$routes->add('/permisos/crear', new Route(
 
-    '/permisosCrear',
+    '/permisos/crear',
     [
         'controller' => permisosController::class,
         'method' => 'create',
     ]
 ));
+$routes->add('/permisos/guardar', new Route(
+
+    '/permisos/guardar',
+    [
+        'controller' => permisosController::class,
+        'method' => 'store',
+    ]
+));
+$routes->add('/permisos/eliminar', new Route(
+
+    '/permisos/eliminar',
+    [
+        'controller' => permisosController::class,
+        'method' => 'delete',
+    ]
+));
+$routes->add('/permisos/editar/{id}', new Route(
+
+    '/permisos/editar/{id}',
+    [
+        'controller' => permisosController::class,
+        'method' => 'edit',
+    ]
+));
+$routes->add('/permisos/actualizar/{id}', new Route(
+
+    '/permisos/actualizar/{id}',
+    [
+        'controller' => permisosController::class,
+        'method' => 'update',
+    ]
+));
+$routes->add('modulos', new Route(
+
+    '/modulos',
+    [
+        'controller' => moduloController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('modulos/crear', new Route(
+
+    '/modulos/crear',
+    [
+        'controller' => moduloController::class,
+        'method' => 'create',
+    ]
+));
+
+
+$routes->add('/modulos/guardar', new Route(
+
+    '/modulos/guardar',
+    [
+        'controller' => moduloController::class,
+        'method' => 'store',
+    ]
+));
+
 //coment
 try {
     // Get the route matcher from the container ...

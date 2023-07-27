@@ -144,11 +144,12 @@
               <div data-i18n="Basic">Permisos</div>
             </a>
           </li>
-          <!--  <li class="menu-item">
-                  <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Forgot Password</div>
-                  </a>
-                </li> -->
+          <li class="menu-item">
+            <a href="<?= APP_URL . $this->Route('modulos') ?>" class="menu-link">
+              <div data-i18n="Basic">Modulo</div>
+            </a>
+          </li>
+    
         </ul>
       </li>
       <li class="menu-item">

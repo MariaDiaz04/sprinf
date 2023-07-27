@@ -34,7 +34,7 @@ use App\model;
 
             try {
 
-                $nombre_modulo = $this->query('SELECT modulo.nombre FROM modulo WHERE modulo.nombre = "'.$this->fillable['nombre'].'"');
+                $nombre_modulo = $this->querys('SELECT modulo.nombre FROM modulo WHERE modulo.nombre = "'.$this->fillable['nombre'].'"');
 
                 if (!$nombre_modulo) {
 
