@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Bcrypt\Bcrypt;
 
 use App\baremos;
+use App\materias;
 use App\estudiante;
 use App\tutor;
 use App\trayectos;
@@ -18,10 +19,12 @@ class baremosController extends controller
 
   public $baremos;
   public $trayectos;
+  public $materias;
 
   function __construct()
   {
     $this->baremos = new baremos();
+    $this->materias = new materias();
     $this->trayectos = new trayectos();
   }
 
@@ -42,11 +45,13 @@ class baremosController extends controller
   {
     $baremos = $this->baremos->find($id);
     $trayectos = $this->trayectos->all();
+    $materias = $this->materias->all();
 
 
     return $this->view('baremos/edit', [
       'baremos' => $baremos,
-      'trayectos' => $trayectos
+      'trayectos' => $trayectos,
+      'materias' => $materias,
     ]);
   }
 
