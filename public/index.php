@@ -4,6 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
+use App\controllers\aspectosController;
 use App\controllers\baremosController;
 use App\controllers\dimensionController;
 use App\controllers\proyectoController;
@@ -213,6 +214,15 @@ $routes->add('dimension_manage', new Route(
     ]
 ));
 
+
+$routes->add('aspectos_manage', new Route(
+
+    '/aspectos',
+    [
+        'controller' => aspectosController::class,
+        'method' => 'index',
+    ]
+));
 
 # FIN DE GESTIÓN DE BAREMOS
 
