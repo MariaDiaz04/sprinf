@@ -5,6 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\DashboardController; */
 
 use App\controllers\homeController;
+use App\seccion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -93,6 +94,64 @@ $routes->add('profesor', new Route(
        ]
 ));
 
+$routes->add('estudiante', new Route(
+    
+    '/estudiante',[
+        'controller' => userController::class,
+        'method' => 'estudiante',
+       ]
+));
+
+$routes->add('seccion', new Route(
+    
+   //  var_dump('asa'),
+    '/seccion',[
+        'controller' => seccionController::class,
+        'method' => 'index',
+       ]
+));
+$routes->add('seccionCrear', new Route(
+    
+    
+     '/seccionCrear',[
+         'controller' => seccionController::class,
+         'method' => 'create',
+        ]
+ ));
+
+ $routes->add('seccionGuardar', new Route(
+    
+    '/seccionGuardar',[
+        'controller' => seccionController::class,
+        'method' => 'store',
+       ]
+));
+
+
+ $routes->add('materias', new Route(
+    
+    
+    '/materias',[
+        'controller' => materiasController::class,
+        'method' => 'index',
+       ]
+));
+$routes->add('materiasCrear', new Route(
+    
+    
+    '/materiasCrear',[
+        'controller' => materiasController::class,
+        'method' => 'create',
+       ]
+));
+
+$routes->add('materiasGuardar', new Route(
+   
+   '/materiasGuardar',[
+       'controller' => materiasController::class,
+       'method' => 'store',
+      ]
+));
 $routes->add('usuarioCrear', new Route(
     
     '/usuarioCrear',[
@@ -142,8 +201,10 @@ try {
     $method = $route['method'];
     $response = $controller->$method($request);
 } catch (ResourceNotFoundException $exception) {
+    var_dump($exception);
     $response = new Response('Not Found', 404);
 } catch (Throwable $throwable) {
+    //var_dump($throwable->getMessage());
     $response = new Response('An error occurred', 500);
 }
 //require_once '../config/handler.php';

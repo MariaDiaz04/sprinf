@@ -13,6 +13,7 @@ class seccion extends model
 
     public $fillable = [
         'nombre',
+        'cant_estudiantes',
         'estatus',
     ];
 
@@ -39,13 +40,15 @@ class seccion extends model
 
     try {
 
-        $nombre = $this->query('seccion.nombre FROM seccion WHERE seccion.nombre = "'.$this->fillable['nombre'].'"');
+        $nombre = $this->querys('seccion.nombre FROM seccion WHERE seccion.nombre = "'.$this->fillable['nombre'].'"');
 
         if (!$nombre) {
 
             $this->set('seccion', [
                 'nombre'=>'"'.$this->fillable['nombre'].'"',
-                'estatus'=>1,
+                //'trayecto_id '=>'"'.$this->fillable['trayecto_id '].'"',
+                'cant_estudiantes'=>'"'.$this->fillable['cant_estudiantes'].'"',
+                'estatus'=>'"'.$this->fillable['estatus'].'"',
             ]);
             return $this;
             
@@ -65,9 +68,8 @@ public function allstatus() {
     
     $allstatus = $this->query(
         'SELECT
-            seccion.idseccion AS idseccion,
-            seccion.nombre AS nombre,
-            seccion.estatus AS estatus
+            
+            seccion.*
         FROM
             
             `seccion`
@@ -82,9 +84,9 @@ public function allstatus() {
 }
 
 //=========================FIND==========================
-public function find($idseccion){
+public function find($id){
 try {
-    $seccion = $this->select('seccion',[['idseccion','=', $idseccion]]);
+    $seccion = $this->select('seccion',[['id','=', $id]]);
 if($seccion){
     foreach ($seccion[0] as $key => $value) {
         $this->fillable[$key] = $value;
@@ -93,19 +95,19 @@ if($seccion){
     }else{
         return null;
     }
-} catch (PDOException $th) {
+} catch (\PDOException $th) {
     return $th;
 }
-}
+} 
 //=========================/FIND==========================
 
 
 // ======================== / UPDATE=========================
 
-
+/* 
 public function actualizar($seccion) {
 
-$this->update('seccion', $seccion, [['idseccion', '=', $this->fillable['idseccion'] ]]);
+$this->update('seccion', $seccion, [['id', '=', $this->fillable['id'] ]]);
 return $this;
 
 }
@@ -115,7 +117,7 @@ public function eliminar()
 
     try {
 
-        $this->delete('seccion', [['idseccion', '=',  $this->fillable['idseccion']]]);
+        $this->delete('seccion', [['id', '=',  $this->fillable['id']]]);
         
         return $this;
         
@@ -154,7 +156,8 @@ public function seccionInactivas() {
        '
     );
     return $seccion_inactivas;
-}
+} */
+
 
 }
 ?>

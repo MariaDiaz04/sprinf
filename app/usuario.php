@@ -121,9 +121,9 @@ class usuario extends model
         return $profesor;
     }
 
-    public function estudiantes()
+    public function estudiante()
     {
-        $estudiantes = $this->query(
+        $estudiante = $this->query(
             'SELECT
                 persona.*,
                 usuarios.email
@@ -131,9 +131,9 @@ class usuario extends model
                 `usuarios`,
                 `persona`
             WHERE
-                usuarios.id = persona.usuarios_id AND persona.rol_id = 3'
+                usuarios.id = persona.usuarios_id AND persona.rol_id = 4'
         );
-        return $estudiantes;
+        return $estudiante;
     }
 
     public function analista()
@@ -273,7 +273,7 @@ class usuario extends model
                 'persona_id' => $persona_id,
             ]); 
 
-        }else {
+        }elseif ($this->fillable['rol_id'] ==4) {
             $this->set('persona', [
                 'usuarios_id' => $usuario,
                 'rol_id' => '"' . $this->fillable['rol_id'] . '"',

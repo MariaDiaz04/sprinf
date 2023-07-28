@@ -42,12 +42,12 @@ class userController extends controller
         return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '2']);
     } 
 
-  public function estudiantes()
+  public function estudiante()
   {
+  
+     $usuarios = $this->USUARIO->estudiante();
 
-     $usuarios = $this->USUARIO->estudiantes();
-
-     return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '3']);
+     return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '4']);
  } 
 
 

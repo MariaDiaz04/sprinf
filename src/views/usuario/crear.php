@@ -71,8 +71,8 @@
                     <?php if ($this->ROL->find($rol)->fillable['id'] == 2) : ?>
                       <a href="<?= $this->Route('profesor') ?>" class="btn btn-outline-primary">Volver</a>
                     <?php endif ?>
-                    <?php if ($this->ROL->find($rol)->fillable['id'] == 3) : ?>
-                      <a href="<?= $this->Route('analista') ?>" class="btn btn-outline-primary">Volver</a>
+                    <?php if ($this->ROL->find($rol)->fillable['id'] == 4) : ?>
+                      <a href="<?= $this->Route('estudiante') ?>" class="btn btn-outline-primary">Volver</a>
                     <?php endif ?>
                   </div>
                 </div>

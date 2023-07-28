@@ -91,8 +91,8 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                <a href="<?= $this->Route('Estudiantes') ?>" class="menu-link">
-                    <div data-i18n="Without menu">Estudiantes</div>
+                <a href="<?= $this->Route('estudiante') ?>" class="menu-link">
+                    <div data-i18n="Without menu">Estudiante</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -125,12 +125,12 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                <a href="<?= $this->Route('seccion') ?>" class="menu-link">
+                <a href="<?= $this->Route('/seccion') ?>" class="menu-link">
                     <div data-i18n="Without menu">Sección </div>
                   </a>
               </li>
               <li class="menu-item">
-                <a href="<?= $this->Route('Materias') ?>" class="menu-link">
+                <a href="<?= $this->Route('materias') ?>" class="menu-link">
                     <div data-i18n="Without menu">Materias</div>
                   </a>
                 </li>

@@ -7,15 +7,32 @@
               Agregar nuevo
             </h5>
             <div class="card-body">
-              <form action="<?= $this->Route('seccion/guardar') ?>" method="post" id="seccionguardar">
+              <form action="<?= $this->Route('seccionGuardar') ?>" method="post" id="seccionGuardar">
                 <div class="container-fluid">
                   <div class="row pb-2">
                     <div class="col-12">
                       <div class="row form-group">
-                        <div class="col-lg-5">
+                        <div class="col-lg-2">
                           <label class="form-label ">Nombre</label>
                           <input type="text" class="form-control mb-1" placeholder="INF0001" name="nombre" minlength="5" required >
                           <span id="nombre"></span>
+                        </div>
+                        <div class="col-lg-2">
+                          <label class="form-label ">Cantidad de Estudiantes</label>
+                          <input type="text" class="form-control mb-1" placeholder="20" name="cant_estudiantes" minlength="2" required >
+                          <span id="cant_estudiantes"></span>
+                        </div>
+                        <div class="col-lg-4">
+                          <label class="form-label ">Trayecto</label>
+                          <br>
+                          <select class="custom-select  form-select" name="id" id="codigo">
+                                <option disabled selected>Seleccione el Trayecto</option>
+                                    <?php foreach ($trayecto as $objtrayecto) : ?>
+                                    <option value="<?= $objtrayecto->id ?>"><?= $objtrayecto->nombre ?></option>
+                                    <?php endforeach;?>
+                            </select>
+
+                            </select>
                         </div>
                        </div>
                      </div>
@@ -34,7 +51,7 @@
           <!-- / Content -->
 
 
-        <!--   <style>
+           <style>
             label.error {
               float: none;
               color: red;
@@ -42,8 +59,8 @@
               vertical-align: middle;
               font-size: 14px;
             }
-          </style> -->
-<!-- 
+          </style> 
+
           <script>
             jQuery.validator.addMethod("number",
               function(value, element) {
@@ -137,4 +154,4 @@
                 }
               });
             });
-          </script> -->
+          </script> 

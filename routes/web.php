@@ -81,17 +81,7 @@ $web = [
         ],
     ],
 
-    'estudiantes' => [
-        'type' => 'GET',
-        'name' => 'Estudiantes',
-        'controller' => 'userController',
-        'method' => 'estudiantes',
-        'middlewares' => [
-            'logged_out',
-            'root_access',
-        ],
-    ],
-   
+
 
     'usuario/editar' => [
         'type' => 'GET',
@@ -414,68 +404,7 @@ $web = [
 // ************************** FIN MODULO******************************//
 
 
-/* ******************  SECCION ************************* */
 
-'seccion' => [
-    'type' => 'GET',
-    'controller' => 'seccionController',
-    'method' => 'index',
-    'middlewares' => [
-        'logged_out',
-        'root_access',
-    ],
-],
-    
-'seccion/crear' => [
-    'type' => 'GET',
-    'controller' => 'seccionController',
-    'method' => 'create',
-    'middlewares' => [
-        'logged_out',
-        'root_access',
-    ],
-],
-
-'seccion/guardar' => [
-    'type' => 'POST',
-    'controller' => 'seccionController',
-    'method' => 'store',
-    'middlewares' => [
-        'logged_out',
-        'root_access',
-    ],  
-],
-
-'seccion/editar' => [
-    'type' => 'GET',
-    'controller' => 'seccionController',
-    'method' => 'edit',
-    'middlewares' => [
-        'logged_out',
-        'root_access',
-    ],  
-],
-
-'seccion/actualizar' => [
-    'type' => 'POST',
-    'controller' => 'seccionController',
-    'method' => 'update',
-    'middlewares' => [
-        'logged_out',
-        'root_access',
-    ],
-],
-
-'seccion/eliminar' => [
-    'type' => 'GET',
-    'controller' => 'seccionController',
-    'method' => 'delete',
-    'middlewares' => [
-        'logged_out',
-        'root_access',
-    ],
-    
-],
 // ************************** FIN MODULO******************************//
 
 ];

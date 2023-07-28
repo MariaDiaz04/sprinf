@@ -793,7 +793,9 @@ class ComposerStaticInit4450a2dca453010d48ba847454e18d78
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'authController' => __DIR__ . '/../..' . '/app/controllers/authController.php',
         'bitacoraController' => __DIR__ . '/../..' . '/app/controllers/bitacoraController.php',
+        'materiasController' => __DIR__ . '/../..' . '/app/controllers/materiasController.php',
         'permisosController' => __DIR__ . '/../..' . '/app/controllers/permisosController.php',
+        'seccionController' => __DIR__ . '/../..' . '/app/controllers/seccionController.php',
         'userController' => __DIR__ . '/../..' . '/app/controllers/userController.php',
     );
 

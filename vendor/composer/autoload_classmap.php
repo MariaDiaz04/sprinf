@@ -644,6 +644,8 @@ return array(
     'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     'authController' => $baseDir . '/app/controllers/authController.php',
     'bitacoraController' => $baseDir . '/app/controllers/bitacoraController.php',
+    'materiasController' => $baseDir . '/app/controllers/materiasController.php',
     'permisosController' => $baseDir . '/app/controllers/permisosController.php',
+    'seccionController' => $baseDir . '/app/controllers/seccionController.php',
     'userController' => $baseDir . '/app/controllers/userController.php',
 );

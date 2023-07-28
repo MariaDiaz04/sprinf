@@ -13,7 +13,8 @@ class materias extends model
 
     public $fillable = [
         'nombre',
-        'estatus',
+        'trayecto_id',
+        'tipo',
     ];
 
     public function all()
@@ -45,7 +46,9 @@ class materias extends model
 
             $this->set('materias', [
                 'nombre'=>'"'.$this->fillable['nombre'].'"',
-                'estatus'=>1,
+                'trayecto_id'=>'"'.$this->fillable['trayecto_id'].'"',
+                'tipo'=>'"'.$this->fillable['tipo'].'"',
+           
             ]);
             return $this;
             
@@ -60,31 +63,27 @@ class materias extends model
 
 }
 
-// funcion para traer estatus 1 
-public function allstatus() {
-    
-    $allstatus = $this->query(
+public function Selectcod(){
+        
+    $codigo = $this->query(  
         'SELECT
-            materias.idmaterias AS idmaterias,
-            materias.nombre AS nombre,
-            materias.estatus AS estatus
-        FROM
-            
-            `materias`
-        WHERE
-             nombre NOT in
-            (
-             select nombre from materias
-                where estatus = 0
-                                        )'
+                trayecto.id AS id,
+                trayecto.nombre AS nombre
+            FROM
+                
+                `trayecto`;'
     );
-    return $allstatus;
-}
+    return $codigo;
+
+    }
+
+
+
 
 //=========================FIND==========================
-public function find($idmaterias){
+public function find($id){
 try {
-    $materias = $this->select('materias',[['idmaterias','=', $idmaterias]]);
+    $materias = $this->select('materias',[['id','=', $id]]);
 if($materias){
     foreach ($materias[0] as $key => $value) {
         $this->fillable[$key] = $value;
@@ -105,7 +104,7 @@ if($materias){
 
 public function actualizar($materias) {
 
-$this->update('materias', $materias, [['idmaterias', '=', $this->fillable['idmaterias'] ]]);
+$this->update('materias', $materias, [['idmaterias', '=', $this->fillable['id'] ]]);
 return $this;
 
 }
@@ -115,7 +114,7 @@ public function eliminar()
 
     try {
 
-        $this->delete('materias', [['idmaterias', '=',  $this->fillable['idmaterias']]]);
+        $this->delete('materias', [['id', '=',  $this->fillable['id']]]);
         
         return $this;
         
@@ -124,37 +123,6 @@ public function eliminar()
     }
 }
 
-
-    public function materiasactivas() {
-    
-    $materias_activas = $this->query(
-        'SELECT
-            
-            materias.estatus
-        FROM
-            
-            `materias`
-            WHERE materias.estatus=1
-       '
-    );
-    return $materias_activas;
-}
-
-
-public function materiasInactivas() {
-    
-    $materias_inactivas = $this->query(
-        'SELECT
-            
-            materias.estatus
-        FROM
-            
-            `materias`
-            WHERE materias.estatus=0
-       '
-    );
-    return $materias_inactivas;
-}
 
 }
 ?>
