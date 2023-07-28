@@ -124,6 +124,21 @@ class usuario extends model
         return $profesor;
     }
 
+    public function estudiante()
+    {
+        $estudiante = $this->query(
+            'SELECT
+                persona.*,
+                usuarios.email
+            FROM
+                `usuarios`,
+                `persona`
+            WHERE
+                usuarios.id = persona.usuarios_id AND persona.rol_id = 4'
+        );
+        return $estudiante;
+    }
+
     public function analista()
     {
         $analista = $this->query(
@@ -241,37 +256,28 @@ class usuario extends model
             ]);
 
             $usuario = $this->select('usuarios', [['email', '=', "'" . $this->fillable['email'] . "'"]])[0]['id'];
-            //return var_dump($usuario);
+
+            $this->set('persona', [
+                'usuarios_id' => $usuario,
+                'nombre' => '"' . $this->fillable['nombre'] . '"',
+                'apellido' => '"' . $this->fillable['apellido'] . '"',
+                'cedula' => '"' . $this->fillable['cedula'] . '"',
+                'telefono' => '"' . $this->fillable['telefono'] . '"',
+                'nacimiento' => '"' . $this->fillable['nacimiento'] . '"',
+                'direccion' => '"' . $this->fillable['direccion'] . '"',
+                'estatus' => '"' . $this->fillable['estatus'] . '"',
+            ]);
+
+            $persona_id = $this->lastInsertId();
 
             if ($this->fillable['rol_id'] == 2) {
-                $this->set('persona', [
-                    'usuarios_id' => $usuario,
-                    'nombre' => '"' . $this->fillable['nombre'] . '"',
-                    'apellido' => '"' . $this->fillable['apellido'] . '"',
-                    'cedula' => '"' . $this->fillable['cedula'] . '"',
-                    'telefono' => '"' . $this->fillable['telefono'] . '"',
-                    'nacimiento' => '"' . $this->fillable['nacimiento'] . '"',
-                    'direccion' => '"' . $this->fillable['direccion'] . '"',
-                    'estatus' => '"' . $this->fillable['estatus'] . '"',
-                ]);
-
-                $persona_id = $this->lastInsertId();
 
                 $this->set('profesor', [
                     'persona_id' => $persona_id,
                 ]);
-            } else {
-                $this->set('persona', [
-                    'usuarios_id' => $usuario,
-                    'rol_id' => '"' . $this->fillable['rol_id'] . '"',
-                    'procedencia_id' => '"' . $this->fillable['procedencia_id'] . '"',
-                    'nombre' => '"' . $this->fillable['nombre'] . '"',
-                    'apellido' => '"' . $this->fillable['apellido'] . '"',
-                    'cedula' => '"' . $this->fillable['cedula'] . '"',
-                    'telefono' => '"' . $this->fillable['telefono'] . '"',
-                    'nacimiento' => '"' . $this->fillable['nacimiento'] . '"',
-                    'direccion' => '"' . $this->fillable['direccion'] . '"',
-                    'estatus' => '"' . $this->fillable['estatus'] . '"',
+            } elseif ($this->fillable['rol_id'] == 4) {
+                $this->set('estudiante', [
+                    'persona_id' => $persona_id,
                 ]);
             }
 

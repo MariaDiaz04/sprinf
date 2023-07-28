@@ -3,10 +3,6 @@
 namespace App;
 
 use App\model;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Bcrypt\Bcrypt;
 
 use Exception;
 
@@ -16,6 +12,8 @@ class materias extends model
     public $fillable = [
         'nombre',
         'estatus',
+        'trayecto_id',
+        'tipo',
     ];
 
     public function all()
@@ -155,5 +153,20 @@ class materias extends model
        '
         );
         return $materias_inactivas;
+    }
+
+
+    public function Selectcod()
+    {
+
+        $codigo = $this->query(
+            'SELECT
+                trayecto.id AS id,
+                trayecto.nombre AS nombre
+            FROM
+                
+                `trayecto`;'
+        );
+        return $codigo;
     }
 }

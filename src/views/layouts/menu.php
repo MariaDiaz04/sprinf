@@ -142,6 +142,28 @@
 
 
     <li class="menu-header small text-uppercase">
+      <span class="menu-header-text">Unidades Curriculares</span>
+    </li>
+    <li class="menu-item">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-layout"></i>
+        <div data-i18n="Layouts">Registro de Materias</div>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a href="<?= $this->Route('/seccion') ?>" class="menu-link">
+            <div data-i18n="Without menu">Sección </div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="<?= $this->Route('materias') ?>" class="menu-link">
+            <div data-i18n="Without menu">Materias</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="menu-header small text-uppercase">
       <span class="menu-header-text">Pages</span>
     </li>
     <!--  <li class="menu-item">

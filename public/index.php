@@ -10,6 +10,7 @@ use App\controllers\dimensionController;
 use App\controllers\proyectoController;
 use App\controllers\homeController;
 use App\controllers\moduloController;
+use App\seccion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -100,6 +101,71 @@ $routes->add('profesor', new Route(
     ]
 ));
 
+$routes->add('estudiante', new Route(
+
+    '/estudiante',
+    [
+        'controller' => userController::class,
+        'method' => 'estudiante',
+    ]
+));
+
+$routes->add('seccion', new Route(
+
+    //  var_dump('asa'),
+    '/seccion',
+    [
+        'controller' => seccionController::class,
+        'method' => 'index',
+    ]
+));
+$routes->add('seccionCrear', new Route(
+
+
+    '/seccionCrear',
+    [
+        'controller' => seccionController::class,
+        'method' => 'create',
+    ]
+));
+
+$routes->add('seccionGuardar', new Route(
+
+    '/seccionGuardar',
+    [
+        'controller' => seccionController::class,
+        'method' => 'store',
+    ]
+));
+
+
+$routes->add('materias', new Route(
+
+
+    '/materias',
+    [
+        'controller' => materiasController::class,
+        'method' => 'index',
+    ]
+));
+$routes->add('materiasCrear', new Route(
+
+
+    '/materiasCrear',
+    [
+        'controller' => materiasController::class,
+        'method' => 'create',
+    ]
+));
+
+$routes->add('materiasGuardar', new Route(
+
+    '/materiasGuardar',
+    [
+        'controller' => materiasController::class,
+        'method' => 'store',
+    ]
+));
 $routes->add('usuarioCrear', new Route(
 
     '/usuarioCrear',
@@ -327,8 +393,8 @@ try {
     $method = $route['method'];
     $response = $controller->$method($request, ...$parameters);
 } catch (ResourceNotFoundException $exception) {
-    $response = new Response('Not Found', 404);
     var_dump($exception->getMessage());
+    $response = new Response('Not Found', 404);
 
     $viewController = new \App\controllers\controller;
     $viewController->view('errors/404');

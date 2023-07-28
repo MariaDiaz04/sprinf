@@ -61,9 +61,9 @@
                             <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarprofesor(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar Agente</a>
                         <?php endif; ?>
 
-                        <!-- <?php if ($this->ROL->find($rol)->fillable['id'] != 2 ||$this->ROL->find($rol)->fillable['id'] !=3) : ?>
-                            <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminaranalista(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar </a>
-                        <?php endif; ?> -->
+                        <?php if ($this->ROL->find($rol)->fillable['id'] != 4 ||$this->ROL->find($rol)->fillable['id'] !=3) : ?>
+                            <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarestudiante(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar </a>
+                        <?php endif; ?>
                       </li>
                     
                     </ul>

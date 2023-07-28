@@ -42,6 +42,14 @@ class userController extends controller
         return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '2']);
     } 
 
+  public function estudiante()
+  {
+  
+     $usuarios = $this->USUARIO->estudiante();
+
+     return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '4']);
+ } 
+
 
 
     public function perfil($request)
