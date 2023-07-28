@@ -41,15 +41,19 @@ class usuario extends model
         $email = $request->request->get('email');
         $contrasena = $request->request->get('contrasena');
 
-        $credenciales = $this->select('usuarios', [
-            ['email', '=', '"' . $email . '"'],
-            ['contrasena', '=', '"' . md5($contrasena)  . '"']
+        $credenciales = $this->selectOne('usuarios', [
+            ['email', '=', '"' . $email . '"']
         ]);
 
+        if (!password_verify($contrasena, $credenciales['contrasena'])) {
+            return [
+                'estatus' => '0',
+            ];
+        }
 
-        if (isset($credenciales[0])) {
+        if (isset($credenciales)) {
 
-            $usuariopersona = $this->select('persona', [['usuarios_id', '=', $credenciales[0]['id']]])[0];
+            $usuariopersona = $this->select('persona', [['usuarios_id', '=', $credenciales['id']]])[0];
 
             $_SESSION = $usuariopersona;
 

@@ -32,6 +32,23 @@ class model extends conexion
 		return $v;
 	} //finaliza select
 
+	public function selectOne(String $table, array $wheres = null, $fields = null)
+	{
+		$fields ? $sql = 'SELECT ' . $fields . ' FROM `' . $table . '` ' : $sql = 'SELECT * FROM `' . $table . '` ';
+		if (isset($wheres)) {
+			$sql = $sql . ' WHERE ';
+			foreach ($wheres as $where) {
+				$sql = $sql . ' `' . $where['0'] . '` ' . $where['1'] . ' ' . $where['2'] . ' ' . ' AND ';
+			}
+			$sql = substr($sql, 0, -5);
+			$sql = $sql . ';';
+		} else {
+			$sql = $sql . ';';
+		}
+		$req = \PDO::query($sql);
+		return $req->fetch(\PDO::FETCH_ASSOC);
+	}
+
 	// =====================  U P D A T E  ==================================
 	// =====================  METODO PARA ACTUALIZAR ==================================
 
