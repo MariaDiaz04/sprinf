@@ -13,19 +13,19 @@ class seccion extends model
 
     public $fillable = [
         'nombre',
-        'cant_estudiantes',
-        'estatus',
+        'trayecto_id',
+        
     ];
 
     public function all()
     {
         try {
-            $seccion = $this->select('seccion');
-            return $seccion ? $seccion : null;
+          $seccion = $this->querys("SELECT seccion.*, trayecto.nombre as trayecto FROM seccion INNER JOIN trayecto ON trayecto.id = seccion.trayecto_id ");
+          return $seccion ? $seccion : null;
         } catch (Exception $th) {
-            return $th;
+          return $th;
         }
-    }
+      }
 
     public function create ($seccion) {
         foreach ($seccion as $key => $value) {
@@ -38,50 +38,41 @@ class seccion extends model
 
    public function save() {
 
-    try {
+    {
 
-        $nombre = $this->querys('seccion.nombre FROM seccion WHERE seccion.nombre = "'.$this->fillable['nombre'].'"');
+        try {
 
-        if (!$nombre) {
-
-            $this->set('seccion', [
-                'nombre'=>'"'.$this->fillable['nombre'].'"',
-                //'trayecto_id '=>'"'.$this->fillable['trayecto_id '].'"',
-                'cant_estudiantes'=>'"'.$this->fillable['cant_estudiantes'].'"',
-                'estatus'=>'"'.$this->fillable['estatus'].'"',
-            ]);
-            return $this;
+                $this->set('seccion', [
+                    'nombre' => '"' . $this->fillable['nombre'] . '"',
+                    'trayecto_id' => '"' . $this->fillable['trayecto_id'] . '"',
+                    
+                ]);
+                return $this;
             
-        }else{
-            return null;
+        } catch (Exception $th) {
+            return $th;
         }
-
-        
-    } catch (PDOException $th) {
-        return $th;
     }
-
 }
-
 // funcion para traer estatus 1 
-public function allstatus() {
+// public function allstatus() {
     
-    $allstatus = $this->query(
-        'SELECT
+//     $allstatus = $this->query(
+//         'SELECT
             
-            seccion.*
-        FROM
+//             seccion.*
+//         FROM
             
-            `seccion`
-        WHERE
-             nombre NOT in
-            (
-             select nombre from seccion
-                where estatus = 0
-                                        )'
-    );
-    return $allstatus;
-}
+//             `seccion`
+//         WHERE
+//              nombre NOT in
+//             (
+//              select nombre from seccion
+//                 where estatus = 0
+//                                         )'
+//     );
+//     return $allstatus;
+// }
 
 //=========================FIND==========================
 public function find($id){

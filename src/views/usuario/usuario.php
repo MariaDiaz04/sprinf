@@ -5,7 +5,7 @@
         <div><span class="text-muted font-weight-light"><?= $this->ROL->find($rol)->fillable['nombre'] ?> </span>/ </div>
 
         <form method="POST" action="<?= $this->Route('usuarioCrear') ?>">
-          <input type="hidden" name="rol" value="<?= 2 ?>">
+          <input type="hidden" name="rol" value="<?= $this->ROL->find($rol)->fillable['id']?>">
           <button class="btn btn-outline-primary btn-round d-block">
             <span class="ion ion-md-add"></span>&nbsp; Nuevo </button>
         </form>

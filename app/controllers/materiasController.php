@@ -22,8 +22,8 @@ class materiasController extends controller
     {
 
         $materias = $this->MATERIAS->all();
-        $trayectos = $this->TRAYECTO->all();
-        return $this->view('materias/materias', ['materias' => $materias, 'trayectos' => $trayectos]);
+       
+        return $this->view('materias/materias', ['materias' => $materias]);
     }
 
     public function create($request)
@@ -37,11 +37,12 @@ class materiasController extends controller
     {
 
         $guardar = $this->MATERIAS->create([
-            'nombre' => $materias['nombre'],
-            'trayecto_id' => $materias['trayecto_id'],
-            'tipo' => $materias['tipo'],
-
+            'nombre' => $materias->request->get('nombre'),
+            'trayecto_id' => $materias->request->get('trayecto_id'),
+            'tipo' => $materias->request->get('tipo'),
         ])->save();
+
+       // return var_dump($guardar);
 
         if ($guardar == null) {
             echo '

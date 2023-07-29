@@ -77,16 +77,21 @@
               <div data-i18n="Without menu">Profesor</div>
             </a>
           </li>
-          <!--  <li class="menu-item">
-            <a href="layouts-without-navbar.html" class="menu-link">
-              <div data-i18n="Without navbar">Without navbar</div>
+          <li class="menu-item">
+            <a href="<?= APP_URL . $this->Route('estudiante') ?>" class="menu-link">
+              <div data-i18n="Without navbar">Estudiantes</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="layouts-container.html" class="menu-link">
-              <div data-i18n="Container">Container</div>
+            <a href="<?= APP_URL . $this->Route('coordinador') ?>" class="menu-link">
+              <div data-i18n="Container">Coordinador</div>
             </a>
-          </li> -->
+          </li>
+          <li class="menu-item">
+            <a href="<?= APP_URL . $this->Route('tutor') ?>" class="menu-link">
+              <div data-i18n="Container">Tutor</div>
+            </a>
+          </li>
         </ul>
       </li>
       <!-- ########### INICIO GESTION DE PROYECTO ############## -->

@@ -11,7 +11,6 @@ class materias extends model
 
     public $fillable = [
         'nombre',
-        'estatus',
         'trayecto_id',
         'tipo',
     ];
@@ -19,12 +18,12 @@ class materias extends model
     public function all()
     {
         try {
-            $materias = $this->select('materias');
-            return $materias ? $materias : null;
+          $materias = $this->querys("SELECT materias.*, trayecto.nombre as trayecto FROM materias INNER JOIN trayecto ON trayecto.id = materias.trayecto_id ");
+          return $materias ? $materias : null;
         } catch (Exception $th) {
-            return $th;
+          return $th;
         }
-    }
+      }
 
     public function create($materias)
     {
@@ -39,18 +38,14 @@ class materias extends model
 
         try {
 
-            $nombre = $this->query('materias.nombre FROM materias WHERE materias.nombre = "' . $this->fillable['nombre'] . '"');
-
-            if (!$nombre) {
-
                 $this->set('materias', [
                     'nombre' => '"' . $this->fillable['nombre'] . '"',
-                    'estatus' => 1,
+                    'trayecto_id' => '"' . $this->fillable['trayecto_id'] . '"',
+                    'tipo' => '"' . $this->fillable['tipo'] . '"',
+                    
                 ]);
                 return $this;
-            } else {
-                return null;
-            }
+            
         } catch (Exception $th) {
             return $th;
         }

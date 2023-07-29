@@ -28,26 +28,25 @@ class seccionController extends controller
 
     public function create($request)
     {
+        $seccion = $this->SECCION->all();
         $trayectos = $this->TRAYECTO->all();
-        return $this->view('seccion/crear', ['trayecto' => $trayectos]);
+        return $this->view('seccion/crear', ['seccion' => $seccion, 'trayecto' => $trayectos]);
     }
 
     public function store($seccion)
     {
 
-
         $guardar = $this->SECCION->create([
-            'nombre' => $seccion['nombre'],
-            //'trayecto_id'=>$seccion['trayecto_id'],
-            'cant_estudiantes' => $seccion['cant_estudiantes'],
-            'estatus' => 1,
-
+            'nombre' => $seccion->request->get('nombre'),
+            'trayecto_id' => $seccion->request->get('trayecto_id'),
         ])->save();
+
+       // return var_dump($guardar);
 
         if ($guardar == null) {
             echo '
         <script> 
-            window.alert(" La Sección  ya esta registrada")
+            window.alert(" La Seccion  ya esta registrada")
         </script>';
             header("refresh:1 http://localhost/sprinfbd/public/?r=seccion");
         } else {

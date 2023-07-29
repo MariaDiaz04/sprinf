@@ -21,15 +21,15 @@
                 <label class="form-label ">Tipo</label>
                 <br>
                 <select class="custom-select form-select" name="tipo">
-                  <option value="<?= 'Anual' ?>">Anual</option>
-                  <option value="<?= 'Fase 1' ?>">Fase 1</option>
-                  <option value="<?= 'Fase 2' ?>">Fase 2</option>
+                  <option value="<?= 'anual' ?>">Anual</option>
+                  <option value="<?= 'fase1' ?>">Fase 1</option>
+                  <option value="<?= 'fase2' ?>">Fase 2</option>
                 </select>
               </div>
               <div class="col-lg-3">
                 <label class="form-label ">Trayecto</label>
                 <br>
-                <select class="custom-select form-select" name="id" id="codigo">
+                <select class="custom-select form-select" name="trayecto_id" id="codigo">
                   <option value="">Seleccionar uno</option>
                   <?php foreach ($trayectos as $trayecto) : ?>
                     <option value="<?php echo $trayecto->id; ?>"><?php echo $trayecto->nombre; ?></option>
@@ -44,7 +44,7 @@
       <hr class="border-light m-0">
       <div class="text-right mt-3">
         <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
-        <a href="<?= $this->Route('materias') ?>" class="btn btn-outline-primary">Volver</a>
+        <a href="<?=APP_URL.$this->Route('materias') ?>" class="btn btn-outline-primary">Volver</a>
       </div>
   </div>
   </form>

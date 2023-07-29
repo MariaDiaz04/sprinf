@@ -130,7 +130,7 @@ class usuario extends model
 
     public function estudiante()
     {
-        $estudiante = $this->query(
+        $estudiante = $this->querys(
             'SELECT
                 persona.*,
                 usuarios.email
@@ -138,42 +138,11 @@ class usuario extends model
                 `usuarios`,
                 `persona`
             WHERE
-                usuarios.id = persona.usuarios_id AND persona.rol_id = 4'
+                usuarios.id = persona.usuarios_id AND usuarios.rol_id = 4'
         );
         return $estudiante;
     }
 
-    public function analista()
-    {
-        $analista = $this->query(
-            'SELECT
-                persona.*,
-                usuarios.email
-            FROM
-                `usuarios`,
-                `persona`
-            WHERE
-                usuarios.id = persona.usuarios_id AND persona.rol_id = 3'
-        );
-
-        return $analista;
-    }
-
-    public function vendedor_comprador()
-    {
-        $users_activos = $this->query(
-            'SELECT
-            persona.*,
-            usuarios.email
-            FROM
-            `usuarios`,
-            `persona`
-            WHERE
-            (usuarios.id = persona.usuarios_id AND persona.rol_id = 4) OR (usuarios.id = persona.usuarios_id AND persona.rol_id = 5)'
-        );
-
-        return $users_activos;
-    }
 
     public function users_activos()
     {
