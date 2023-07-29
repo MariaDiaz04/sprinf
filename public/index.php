@@ -317,7 +317,7 @@ try {
     $response = new Response('Not Found', 404);
 
     $viewController = new \App\controllers\controller;
-    $viewController->view('errors/404');
+    $viewController->page('errors/404');
 } catch (Throwable $throwable) {
     $response = new Response('An error occurred', 500);
 }
