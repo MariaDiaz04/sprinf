@@ -40,7 +40,7 @@
                 <h5><span>Ooooops!</span> Lo sentimos, este usuario se encuentra inactivo</h5>
               </div>
               <div class="description">
-                <span>Ir de vuelta a <a href="<?=$this->Route('home')?>">Pagina principal</a></span>
+                <span>Ir de vuelta a <a href="<?=$this->Route('')?>">Pagina principal</a></span>
               </div>
             </div>
           </div>

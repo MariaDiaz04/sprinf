@@ -184,6 +184,24 @@ $routes->add('usuarioGuardar', new Route(
     ]
 ));
 
+$routes->add('/usuario/editar/{id}', new Route(
+
+    '/usuario/editar/{id}',
+    [
+        'controller' => userController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/usuario/actualizar/{id}', new Route(
+
+    '/usuario/actualizar/{id}',
+    [
+        'controller' => userController::class,
+        'method' => 'update',
+    ]
+));
+
 # GESTION DE PROYECTOS
 $routes->add('proyectos', new Route(
 
@@ -377,6 +395,23 @@ $routes->add('/modulos/guardar', new Route(
     ]
 ));
 
+$routes->add('modulos/editar/{id}', new Route(
+
+    '/modulos/editar/{id}',
+    [
+        'controller' => moduloController::class,
+        'method' => 'edit',
+    ]
+));
+$routes->add('modulos/actualizar/{id}', new Route(
+
+    '/modulos/actualizar/{id}',
+    [
+        'controller' => moduloController::class,
+        'method' => 'update',
+    ]
+));
+
 //coment
 try {
     // Get the route matcher from the container ...
@@ -397,7 +432,7 @@ try {
     $response = new Response('Not Found', 404);
 
     $viewController = new \App\controllers\controller;
-    $viewController->view('errors/404');
+    $viewController->page('errors/404');
 } catch (Throwable $throwable) {
     var_dump($throwable->getMessage());
     $response = new Response('An error occurred', 500);

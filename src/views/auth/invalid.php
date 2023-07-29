@@ -7,23 +7,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>Pagina no encontrada</title>
+ <!-- Fonts -->
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/vendor/css/bootstrap-material.css	">
-  <!-- Icon -->
-  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/line-icons.css">
-  <!-- Slicknav -->
-  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/slicknav.css">
 
-  <!-- Animate -->
-  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/animate.css">
-  <!-- Owl carousel -->
-  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/owl.carousel.css">
-  <!-- Main Style -->
-  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/main.css">
-  <!-- Responsive Style -->
-  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/responsive.css">
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/fonts/boxicons.css" />
 
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/css/demo.css" />
+
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/apex-charts/apex-charts.css" />
 </head>
 
 <body>
@@ -31,13 +32,11 @@
   <div>
     <!-- Main Style -->
     <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/demo.css">
-    <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/vendor/css/appwork.css">
-    <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/vendor/css/appwork-material.css">
     <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/vendor/css/bootstrap.css">
     <!-- Start Content -->
     <div class="error section-padding">
       <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-5 pt-5">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <div class="error-content">
               <div class="error-message">
@@ -45,21 +44,14 @@
                 <h5><span>Ooooops!</span> Lo sentimos, no encontramos tus credenciales</h5>
               </div>
               <div class="description">
-                <span>Volver a intentarlo <a href="<?= $this->Route('home') ?>">Pagina principal</a></span>
+                <span>Volver a intentarlo <a href="<?=$_SESSION ? APP_URL. $this->Route('home') : APP_URL. $this->Route('') ?>">Pagina principal</a></span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- Core scripts -->
-    <script src="assets/vendor/libs/popper/popper.js"></script>
-
-    <script src="assets/vendor/js/sidenav.js"></script>
-
-    <!-- Libs -->
-    <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
 </body>
 
 </html>

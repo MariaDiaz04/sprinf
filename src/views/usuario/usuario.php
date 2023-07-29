@@ -49,23 +49,21 @@
                   <?php endif ?>
                 </td>
                 <td class="text-center">
-                  <!-- <button type="button" class="btn btn-outline-primary " data-toggle="dropdown" data-trigger="hover" aria-expanded="false"></button> -->
                   <div class="btn-group">
-                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                      Opciones <box-icon name='cog'></box-icon>
+                    <button type="button" class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow " data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
-                    <ul class="dropdown-menu" style="">
-                      <li><a class="dropdown-item" href="<?= $this->Route('usuario/editar', ['usuario' => $some->usuarios_id]) ?>"><box-icon name='edit'></box-icon> Editar</a></li>
-                      <li> 
-                        <?php if ($this->ROL->find($rol)->fillable['id'] != 2 && $this->ROL->find($rol)->fillable['id'] !=3 ) : ?>
-                            <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarprofesor(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar Agente</a>
+                    <ul class="dropdown-menu dropdown-menu-end " data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 41px);">
+                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("usuario/editar/$some->usuarios_id") ?>"><box-icon name='edit'></box-icon> Editar</a></li>
+                      <li>
+                        <?php if ($this->ROL->find($rol)->fillable['id'] != 2 && $this->ROL->find($rol)->fillable['id'] != 3) : ?>
+                          <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarprofesor(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar Agente</a>
                         <?php endif; ?>
-
-                        <?php if ($this->ROL->find($rol)->fillable['id'] != 4 ||$this->ROL->find($rol)->fillable['id'] !=3) : ?>
-                            <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarestudiante(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar </a>
-                        <?php endif; ?>
+                        <!-- <?php if ($this->ROL->find($rol)->fillable['id'] != 2 || $this->ROL->find($rol)->fillable['id'] != 3) : ?>
+                            <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminaranalista(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar </a>
+                        <?php endif; ?> -->
                       </li>
-                    
+
                     </ul>
                   </div>
                 </td>
@@ -182,10 +180,10 @@ $("#dni").on('keyup', function(e) {
     }
 });*/
 
-  document.addEventListener('DOMContentLoaded', function () {
-    $('#tableUser').DataTable();
-} ); 
-  </script> 
+    document.addEventListener('DOMContentLoaded', function() {
+      $('#tableUser').DataTable();
+    });
+  </script>
 
 
 </div>
