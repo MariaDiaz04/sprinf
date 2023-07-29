@@ -18,38 +18,33 @@
   <h6 class="card-header bg-primary text-white">Sección</h6>
   <div class="card-body px-0 pt-0">
   <?php if ($seccion): ?>
-      <table id="tableUser" class="table table-hover">
+      <table id="tableSeccion" class="table table-hover">
               <thead class=" thead">
                 <tr>
                   <th>Código</th>
                   <th>Nombre</th>
                   <th>Trayecto</th>
-                  <th>Cantidad de Estudiantes</th>
-                  <th>Estatus</th>
                 </tr>
               </thead>
             <tbody>
-              <?php foreach ($seccion as $some): ?>
-                <tr class="CUser CU<?=$some->id?>" id="i<?=$some->id?>">
-                  <td scope="row"><strong><?=$some->id?></strong></td>     
-                  <td class="text-center">
-                    <?php  if ($some->estatus): ?>
-                  <span class="badge badge-pill badge-primary  mt-2 py-2">Activo</span>
-                   <?php else :?>
-                   <span class="badge badge-pill badge-default ">Inactivo</span>
-                   <?php endif?>
-                   </td>
-                   
-                    <td class="text-center"><button type="button" class="btn btn-outline-primary " data-toggle="dropdown" data-trigger="hover" aria-expanded="false"><i class="fas fa-user-cog"></i> </button>
-                      <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 38px; left: 0px; will-change: top, left;">
-                        <?php if ($permisos->actualizar == 1) : ?>
-                        <a class="dropdown-item" href="<?=$this->Route('seccion/editar', ['seccion' => $some->id])?>"><i class="fas fa-user-edit"></i> Editar</a>
-                       <?php endif; ?>
+              <?php foreach ($seccion as $objseccion): ?>
+                <tr class="CUser CU<?=$objseccion->id?>" id="i<?=$objseccion->id?>">
+                <td><?=$objseccion->id?></td>
+                <td><?=$objseccion->nombre?></td>
+                <td><?=$objseccion->trayecto?></td>
+                <td>      <div class="btn-group">
+                      <button type="button" class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow " data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end " data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 41px);">
+                        <li><a class="dropdown-item" href="<?=APP_URL.$this->Route("seccion/editar/$objseccion->idseccion") ?>"><i class="fas fa-user-edit"></i> Editar</a></li>
+                        <li><a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarpermisos(<?= $objseccion->idseccion ?>)" id='<?= $objseccion->idseccion ?>'><i class="fas fa-user-minus"></i> Eliminar </a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </td>
 
-                        <!--<a class="dropdown-item" href="<?//=$this->Route('usuario/permisos', ['usuario' => $some->usuarios_id])?>"><i class="fas fa-user-edit">d</i> Asignar Permisos</a>-->
-             
-                      </div>
-                    </td>
+                   
                 </tr>
               <?php endforeach;?>
         </tbody>
@@ -61,3 +56,9 @@
     </table>
   </div>
  </div>
+
+<script>
+      document.addEventListener('DOMContentLoaded', function () {
+    $('#tableSeccion').DataTable();
+} ); 
+</script>

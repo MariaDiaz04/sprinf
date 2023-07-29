@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Pagina no encontrada</title>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/vendor/css/bootstrap-material.css	">
-    <!-- Icon -->
-    <link rel="stylesheet" type="text/css" href="assets/css/line-icons.css">
-    <!-- Slicknav -->
-    <link rel="stylesheet" type="text/css" href="assets/css/slicknav.css">
+  <title>Pagina no encontrada</title>
 
-    <!-- Animate -->
-    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
-    <!-- Owl carousel -->
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/vendor/css/bootstrap-material.css	">
+  <!-- Icon -->
+  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/line-icons.css">
+  <!-- Slicknav -->
+  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/slicknav.css">
+
+  <!-- Animate -->
+  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/animate.css">
+  <!-- Owl carousel -->
+  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/owl.carousel.css">
+  <!-- Main Style -->
+  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/main.css">
+  <!-- Responsive Style -->
+  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/responsive.css">
+
+</head>
+
+<body>
+
+  <div>
     <!-- Main Style -->
-    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
-    <!-- Responsive Style -->
-    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-
-  </head>
-  <body>
-
-<div>
-    <!-- Main Style -->
-    <link rel="stylesheet" type="text/css" href="assets/css/demo.css">
-    <link rel="stylesheet" type="text/css" href="assets/vendor/css/appwork.css">
-    <link rel="stylesheet" type="text/css" href="assets/vendor/css/appwork-material.css">
-    <link rel="stylesheet" type="text/css" href="assets/vendor/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/css/demo.css">
+    <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/vendor/css/appwork.css">
+    <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/vendor/css/appwork-material.css">
+    <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/vendor/css/bootstrap.css">
     <!-- Start Content -->
     <div class="error section-padding">
       <div class="container">
@@ -43,20 +45,21 @@
                 <h5><span>Ooooops!</span> Lo sentimos, no encontramos tus credenciales</h5>
               </div>
               <div class="description">
-                <span>Volver a intentarlo <a href="<?=$this->Route('home')?>">Pagina principal</a></span>
+                <span>Volver a intentarlo <a href="<?= $this->Route('home') ?>">Pagina principal</a></span>
               </div>
             </div>
           </div>
-        </div>      
+        </div>
       </div>
     </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-       <!-- Core scripts -->
-       <script src="assets/vendor/libs/popper/popper.js"></script>
-    
-       <script src="assets/vendor/js/sidenav.js"></script>
-   
-       <!-- Libs -->
-       <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-  </body>
+    <!-- Core scripts -->
+    <script src="assets/vendor/libs/popper/popper.js"></script>
+
+    <script src="assets/vendor/js/sidenav.js"></script>
+
+    <!-- Libs -->
+    <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+</body>
+
 </html>

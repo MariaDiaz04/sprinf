@@ -4,7 +4,12 @@ require __DIR__ . '/../vendor/autoload.php';
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
+use App\controllers\aspectosController;
+use App\controllers\baremosController;
+use App\controllers\dimensionController;
+use App\controllers\proyectoController;
 use App\controllers\homeController;
+use App\controllers\moduloController;
 use App\seccion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,132 +84,322 @@ $routes->add('invalid', new Route(
 ));
 
 $routes->add('home', new Route(
-    
-    '/home',[
+
+    '/home',
+    [
         'controller' => homeController::class,
         'method' => 'index',
-       ]
+    ]
 ));
 
 $routes->add('profesor', new Route(
-    
-    '/profesor',[
+
+    '/profesor',
+    [
         'controller' => userController::class,
         'method' => 'profesor',
-       ]
+    ]
 ));
 
 $routes->add('estudiante', new Route(
-    
-    '/estudiante',[
+
+    '/estudiante',
+    [
         'controller' => userController::class,
         'method' => 'estudiante',
-       ]
+    ]
 ));
 
 $routes->add('seccion', new Route(
-    
-   //  var_dump('asa'),
-    '/seccion',[
+
+    //  var_dump('asa'),
+    '/seccion',
+    [
         'controller' => seccionController::class,
         'method' => 'index',
-       ]
+    ]
 ));
 $routes->add('seccionCrear', new Route(
-    
-    
-     '/seccionCrear',[
-         'controller' => seccionController::class,
-         'method' => 'create',
-        ]
- ));
 
- $routes->add('seccionGuardar', new Route(
-    
-    '/seccionGuardar',[
+
+    '/seccionCrear',
+    [
+        'controller' => seccionController::class,
+        'method' => 'create',
+    ]
+));
+
+$routes->add('seccionGuardar', new Route(
+
+    '/seccionGuardar',
+    [
         'controller' => seccionController::class,
         'method' => 'store',
-       ]
+    ]
 ));
 
 
- $routes->add('materias', new Route(
-    
-    
-    '/materias',[
+$routes->add('materias', new Route(
+
+
+    '/materias',
+    [
         'controller' => materiasController::class,
         'method' => 'index',
-       ]
+    ]
 ));
 $routes->add('materiasCrear', new Route(
-    
-    
-    '/materiasCrear',[
+
+
+    '/materiasCrear',
+    [
         'controller' => materiasController::class,
         'method' => 'create',
-       ]
+    ]
 ));
 
 $routes->add('materiasGuardar', new Route(
-   
-   '/materiasGuardar',[
-       'controller' => materiasController::class,
-       'method' => 'store',
-      ]
+
+    '/materiasGuardar',
+    [
+        'controller' => materiasController::class,
+        'method' => 'store',
+    ]
 ));
 $routes->add('usuarioCrear', new Route(
-    
-    '/usuarioCrear',[
+
+    '/usuarioCrear',
+    [
         'controller' => userController::class,
         'method' => 'create',
-       ]
+    ]
 ));
 
 $routes->add('usuarioGuardar', new Route(
-    
-    '/usuarioGuardar',[
+
+    '/usuarioGuardar',
+    [
         'controller' => userController::class,
         'method' => 'store',
-       ]
+    ]
 ));
+
+# GESTION DE PROYECTOS
+$routes->add('proyectos', new Route(
+
+    '/proyectos',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('/proyectos/crear', new Route(
+
+    '/proyectos/crear',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'create',
+    ]
+));
+
+$routes->add('/proyectos/guardar', new Route(
+
+    '/proyectos/guardar',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'store',
+    ]
+));
+$routes->add('proyectos_update', new Route(
+
+    '/proyectos/update',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'update',
+    ]
+));
+$routes->add('proyectos_delete', new Route(
+
+    '/proyectos/delete',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'delete',
+    ]
+));
+
+$showRoute = new Route(
+
+    '/proyectos/{id}',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'show',
+    ]
+);
+$routes->add('proyectos_show', $showRoute);
+
+$routes->add('proyectos_edit', new Route(
+
+    '/proyectos/edit/{id}',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'edit',
+    ]
+));
+
+# FIN DE GESTIÓN DE PROYECTOS
+
+# GESTION DE BAREMOS
+
+
+
+$routes->add('baremos_manage', new Route(
+
+    '/baremos',
+    [
+        'controller' => baremosController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('baremos_edit', new Route(
+
+    '/baremos/edit/{id}',
+    [
+        'controller' => baremosController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('dimension_manage', new Route(
+
+    '/dimensiones',
+    [
+        'controller' => dimensionController::class,
+        'method' => 'index',
+    ]
+));
+
+
+$routes->add('aspectos_manage', new Route(
+
+    '/aspectos',
+    [
+        'controller' => aspectosController::class,
+        'method' => 'index',
+    ]
+));
+
+# FIN DE GESTIÓN DE BAREMOS
 
 $routes->add('bitacora', new Route(
-    
-    '/bitacora',[
+
+    '/bitacora',
+    [
         'controller' => bitacoraController::class,
         'method' => 'index',
-       ]
+    ]
 ));
 
-$routes->add('permisos', new Route(
-    
-    '/permisos',[
+$routes->add('/permisos', new Route(
+
+    '/permisos',
+    [
         'controller' => permisosController::class,
         'method' => 'index',
-       ]
+    ]
 ));
-$routes->add('permisosCrear', new Route(
-    
-    '/permisosCrear',[
+$routes->add('/permisos/crear', new Route(
+
+    '/permisos/crear',
+    [
         'controller' => permisosController::class,
         'method' => 'create',
-       ]
+    ]
 ));
+$routes->add('/permisos/guardar', new Route(
+
+    '/permisos/guardar',
+    [
+        'controller' => permisosController::class,
+        'method' => 'store',
+    ]
+));
+$routes->add('/permisos/eliminar', new Route(
+
+    '/permisos/eliminar',
+    [
+        'controller' => permisosController::class,
+        'method' => 'delete',
+    ]
+));
+$routes->add('/permisos/editar/{id}', new Route(
+
+    '/permisos/editar/{id}',
+    [
+        'controller' => permisosController::class,
+        'method' => 'edit',
+    ]
+));
+$routes->add('/permisos/actualizar/{id}', new Route(
+
+    '/permisos/actualizar/{id}',
+    [
+        'controller' => permisosController::class,
+        'method' => 'update',
+    ]
+));
+$routes->add('modulos', new Route(
+
+    '/modulos',
+    [
+        'controller' => moduloController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('modulos/crear', new Route(
+
+    '/modulos/crear',
+    [
+        'controller' => moduloController::class,
+        'method' => 'create',
+    ]
+));
+
+
+$routes->add('/modulos/guardar', new Route(
+
+    '/modulos/guardar',
+    [
+        'controller' => moduloController::class,
+        'method' => 'store',
+    ]
+));
+
 //coment
 try {
     // Get the route matcher from the container ...
     $matcher = new UrlMatcher($routes, $context);
     $route = $matcher->match($context->getPathInfo());
 
+    // OBTENER PARAMETROS DE LA RUTA
+    $parameters = $route;
+    unset($parameters['controller'], $parameters['_route'], $parameters['method']);
+
     // Dispatch the request to the route handler.
     $controller = new $route['controller'];
+
     $method = $route['method'];
-    $response = $controller->$method($request);
+    $response = $controller->$method($request, ...$parameters);
 } catch (ResourceNotFoundException $exception) {
-    var_dump($exception);
+    var_dump($exception->getMessage());
     $response = new Response('Not Found', 404);
+
+    $viewController = new \App\controllers\controller;
+    $viewController->view('errors/404');
 } catch (Throwable $throwable) {
-    //var_dump($throwable->getMessage());
+    var_dump($throwable->getMessage());
     $response = new Response('An error occurred', 500);
 }
 //require_once '../config/handler.php';

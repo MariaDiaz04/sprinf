@@ -7,7 +7,7 @@
         Agregar nuevo
     </h5>
     <div class="card-body">
-        <form action="<?= $this->Route('modulo/guardar') ?>" method="post" id="moduloguardar">
+        <form action="<?= APP_URL .$this->Route('modulos/guardar') ?>" method="post" id="moduloguardar">
             <div class="container-fluid">
                 <div class="row pb-2">
                     <div class="col-12">
@@ -22,7 +22,7 @@
                 <hr class="border-light m-0">
                 <div class="text-right mt-3">
                     <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
-                    <a href="<?= $this->Route('modulo') ?>" class="btn btn-outline-primary">Volver</a>
+                    <a href="<?= $this->Route('modulos') ?>" class="btn btn-outline-primary">Volver</a>
                 </div>
             </div>
         </form>

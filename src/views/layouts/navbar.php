@@ -40,8 +40,8 @@
                                      </div>
                                  </div>
                                  <div class="flex-grow-1">
-                                     <span class="fw-semibold d-block"><?=$_SESSION['nombre'].' '.$_SESSION['apellido']?></span>
-                                    <!--  <small class="text-muted">Admin</small> -->
+                                     <span class="fw-semibold d-block"><?= $_SESSION['nombre'] . ' ' . $_SESSION['apellido'] ?></span>
+                                     <!--  <small class="text-muted">Admin</small> -->
                                  </div>
                              </div>
                          </a>
@@ -55,13 +55,13 @@
                              <span class="align-middle">Mi Perfil</span>
                          </a>
                      </li>
-                    <!--  <li>
+                     <!--  <li>
                          <a class="dropdown-item" href="#">
                              <i class="bx bx-cog me-2"></i>
                              <span class="align-middle">Settings</span>
                          </a>
                      </li> -->
-                   <!--   <li>
+                     <!--   <li>
                          <a class="dropdown-item" href="#">
                              <span class="d-flex align-items-center align-middle">
                                  <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
@@ -78,7 +78,7 @@
                              <i class="bx bx-power-off me-2"></i>
                              <span class="align-middle">Cerrar sesión</span>
                          </label>
-                         <form action="<?= $this->Route('logout') ?>" method="POST" hidden>
+                         <form action="<?= APP_URL .  $this->Route('logout') ?>" method="POST" hidden>
                              <button id="exit" type="submit"></button>
                          </form>
 

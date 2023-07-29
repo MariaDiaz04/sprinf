@@ -87,6 +87,7 @@ class authController extends controller
     }
     public function logout()
     {
+        
         $end_session =   $this->USUARIO->end_session();
         if ($end_session) {
             session_destroy();

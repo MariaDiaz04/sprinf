@@ -114,7 +114,7 @@ class userController extends controller
             case '2':
                 return $this->redirect('profesor');
                 break;
-            case '3':
+            case '4':
                 return $this->redirect('estudiante');
                 break;
             default:

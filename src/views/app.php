@@ -21,32 +21,37 @@
 
 
   <!-- Icons. Uncomment required icon fonts -->
-  <link rel="stylesheet" href="assets/vendor/fonts/boxicons.css" />
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/fonts/boxicons.css" />
 
   <!-- Core CSS -->
-  <link rel="stylesheet" href="assets/vendor/css/core.css" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-  <link rel="stylesheet" href="assets/css/demo.css" />
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/css/demo.css" />
 
   <!-- Vendors CSS -->
-  <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-  <link rel="stylesheet" href="assets/vendor/libs/apex-charts/apex-charts.css" />
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/apex-charts/apex-charts.css" />
 
   <!-- Page CSS -->
 
-  
-  <link href="https://cdn.datatables.net/v/bs4/dt-1.13.5/datatables.min.css" rel="stylesheet"/>
+  <!-- <script src="<?= APP_URL ?>js/jquery-3.7.0.slim.min.js"></script> -->
+  <script src="<?= APP_URL ?>js/jquery-4.4.0.min.js"></script>
+
+
+  <link href="https://cdn.datatables.net/v/bs4/dt-1.13.5/datatables.min.css" rel="stylesheet" />
   <!-- Helpers -->
-  <script src="assets/vendor/js/helpers.js"></script>
+  <script src="<?= APP_URL ?>assets/vendor/js/helpers.js"></script>
 
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-  <script src="assets/js/config.js"></script>
+  <script src="<?= APP_URL ?>assets/js/config.js"></script>
+  <script src="<?= APP_URL ?>assets/css/sweetalert.css"></script>
 
 
 
-  <!--   <script src="assets/vendor/js/autoComplete.js"></script> -->
+
+  <!--   <script src="<?= APP_URL ?>assets/vendor/js/autoComplete.js"></script> -->
 
   <!-- JS HOME-->
 

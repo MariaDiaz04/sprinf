@@ -18,7 +18,7 @@
   <h6 class="card-header bg-primary text-white">Materias</h6>
   <div class="card-body px-0 pt-0">
   <?php if ($materias): ?>
-      <table id="tableUser" class="table table-hover">
+      <table id="tableMaterias" class="table table-hover">
               <thead class=" thead">
                 <tr>
                   <th>Código</th>
@@ -33,27 +33,37 @@
                 <td><?=$objmaterias->id?></td>
                 <td><?=$objmaterias->nombre?></td>
                 <td><?=$objmaterias->tipo?></td>
-                 <!-- <?=$objmaterias->trayecto?></td> -->
-                
-                   
-                    
-                      <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 38px; left: 0px; will-change: top, left;">
-                        <?php if ($permisos->actualizar == 1) : ?>
-                        <a class="dropdown-item" href="<?=$this->Route('materias/editar', ['materias' => $some->id])?>"><i class="fas fa-user-edit"></i> Editar</a>
-                       <?php endif; ?>
+                <td><?=$objmaterias->trayecto?></td>
+                <td>      <div class="btn-group">
+                      <button type="button" class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow " data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end " data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 41px);">
+                        <li><a class="dropdown-item" href="<?=APP_URL.$this->Route("materias/editar/$objmaterias->idmaterias") ?>"><i class="fas fa-user-edit"></i> Editar</a></li>
+                        <li><a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarpermisos(<?= $objmaterias->idmaterias ?>)" id='<?= $objmaterias->idmaterias ?>'><i class="fas fa-user-minus"></i> Eliminar </a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </td>
 
-                        <!--<a class="dropdown-item" href="<?//=$this->Route('usuario/permisos', ['usuario' => $some->usuarios_id])?>"><i class="fas fa-user-edit">d</i> Asignar Permisos</a>-->
-             
-                      </div>
                     </td>
                 </tr>
+
               <?php endforeach;?>
         </tbody>
         <?php else: ?>
           <div class="col-12 mt-4 text-muted">
             <h4 class="text-center">No hay ningun <?=$this->ROL->find($rol)->fillable['nombre']?> registrado</h4>
           </div>
+
         <?php endif;?>
     </table>
   </div>
  </div>
+ <div class="demo-inline-spacing">
+                  
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    $('#tableMaterias').DataTable();
+} ); 
+ </script>

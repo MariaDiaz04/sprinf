@@ -2,88 +2,109 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light"><?= $this->ROL->find($rol)->fillable['nombre'] ?> </span>/ </div>
+        <div><span class="text-muted font-weight-light">Proyectos </span>/ Gestión</div>
 
-        <form method="POST" action="<?= $this->Route('usuarioCrear') ?>">
-          <input type="hidden" name="rol" value="<?= $this->ROL->find($rol)->fillable['id']?>">
-          <button class="btn btn-outline-primary btn-round d-block">
-            <span class="ion ion-md-add"></span>&nbsp; Nuevo </button>
-        </form>
+        <a class="btn btn-outline-primary btn-round d-block" href="<?= APP_URL . $this->Route('proyectos/crear') ?>">
+          <span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
       </h4>
     </div>
   </div>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white">Usuarios</h6>
+    <h6 class="card-header bg-primary text-white">Proyectos</h6>
     <div class="card-body px-0 pt-0">
-      <?php if ($persona) : ?>
-        <table id="tableUser" class="table table-hover">
+      <?php if ($proyectos) : ?>
+        <table id="tablaProyectos" class="table table-hover">
           <thead class=" thead">
             <tr>
-              <th>Cedula</th>
+              <th>id</th>
+              <th>Trayecto</th>
+              <th>Tutor</th>
               <th>Nombre</th>
-              <th>Dirección</th>
-              <th class="">Contacto</th>
-              <th class="">Fecha natal</th>
-              <th class="text-center">Estatus</th>
-              <th class="text-center">Opciones</th>
+              <th>area</th>
+              <th>estatus</th>
+              <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($persona as $some) : ?>
-              <tr class="CUser CU<?= $some->cedula ?>" id="i<?= $some->usuarios_id ?>">
-                <td scope="row"><strong><?= $some->cedula ?></strong></td>
-                <td><?= $some->nombre . ' ' . $some->apellido ?></td>
-                <td><?= $some->direccion ?></td>
-                <td class="py-0">
-                  <small class="d-block"><b><?= $some->email ?></b></small>
-                  <small class="d-block"><b><?= $some->telefono ?></b></small>
-                </td>
-                <td class=""><?= $this->format($some->nacimiento) ?></td>
+            <?php foreach ($proyectos as $proyecto) : ?>
+
+              <tr class="item-proyecto ip-<?= $proyecto->id ?>" id="i<?= $proyecto->id ?>">
+                <td scope="row"><strong><?= $proyecto->id ?></strong></td>
+                <td><?= $proyecto->nombre_trayecto ?></td>
+                <td><?= $proyecto->nombre_tutor ?></td>
+                <td><?= $proyecto->nombre ?></td>
+                <td><?= $proyecto->area ?></td>
                 <td class="text-center">
-                  <?php if ($some->estatus) : ?>
+                  <?php if ($proyecto->estatus) : ?>
                     <span class="badge bg-label-primary  mt-2 py-2">Activo</span>
                   <?php else : ?>
                     <span class="badge bg-label-dark ">Inactivo</span>
                   <?php endif ?>
                 </td>
-                <td class="text-center">
-                  <!-- <button type="button" class="btn btn-outline-primary " data-toggle="dropdown" data-trigger="hover" aria-expanded="false"></button> -->
+                <td>
                   <div class="btn-group">
                     <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                       Opciones <box-icon name='cog'></box-icon>
                     </button>
-                    <ul class="dropdown-menu" style="">
-                      <li><a class="dropdown-item" href="<?= $this->Route('usuario/editar', ['usuario' => $some->usuarios_id]) ?>"><box-icon name='edit'></box-icon> Editar</a></li>
-                      <li> 
-                        <?php if ($this->ROL->find($rol)->fillable['id'] != 2 && $this->ROL->find($rol)->fillable['id'] !=3 ) : ?>
-                            <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarprofesor(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar Agente</a>
-                        <?php endif; ?>
-
-                        <?php if ($this->ROL->find($rol)->fillable['id'] != 4 ||$this->ROL->find($rol)->fillable['id'] !=3) : ?>
-                            <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarestudiante(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar </a>
-                        <?php endif; ?>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("proyectos/$proyecto->id") ?>"><box-icon name='edit'></box-icon> Ver Detalles</a></li>
+                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("proyectos/edit/$proyecto->id") ?>"><box-icon name='edit'></box-icon> Editar</a></li>
+                      <li>
+                        <form action="<?= APP_URL . $this->Route('proyectos/delete') ?>" method="post" id="eliminarProyecto">
+                          <input type="hidden" name="id" value="<?= $proyecto->id ?>">
+                          <button class="dropdown-item">Eliminar</button>
+                        </form>
                       </li>
-                    
+
                     </ul>
                   </div>
                 </td>
+                <!-- TODO: CRUD OPTIONS -->
               </tr>
             <?php endforeach; ?>
           </tbody>
         <?php else : ?>
           <div class="col-12 mt-4 text-muted">
-            <h4 class="text-center">No hay ningun <?= $this->ROL->find($rol)->fillable['nombre'] ?> registrado</h4>
+            <h4 class="text-center">No hay ningun Proyecto registrado</h4>
           </div>
         <?php endif; ?>
         </table>
     </div>
   </div>
 
-
-
   <script>
+    $(document).ready(function() {
+      $('#tablaProyectos').DataTable();
+
+
+      $('#eliminarProyecto').submit(function(e) {
+        e.preventDefault()
+
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        console.log(url)
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            alert('Eliminado exitosamente')
+            window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
+          },
+        });
+
+      })
+
+
+    });
     /* const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',
@@ -180,12 +201,12 @@ $("#dni").on('keyup', function(e) {
     if (e.keyCode==8 && $("#dni").val().length==0) {
         $('.CUser').removeAttr('hidden');
     }
-});*/
+});
 
-  document.addEventListener('DOMContentLoaded', function () {
+$(document).ready(function() {
     $('#tableUser').DataTable();
-} ); 
-  </script> 
+} ); */
+  </script>
 
 
 </div>

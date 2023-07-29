@@ -7,16 +7,16 @@
         Agregar nuevo
     </h5>
     <div class="card-body">
-        <form action="<?= $this->Route('permisos/guardar') ?>" method="post" id="permisosguardar">
+        <form action="<?= APP_URL.$this->Route('permisos/guardar') ?>" method="post" id="permisosguardar">
             <div class="container-fluid">
                 <div class="row pb-2">
                     <div class="col-4">
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Usuario</label>
-                                <select class="form-select" name="idusuario" id="idusuario">
-                                    <?php foreach ($usuarios as $objusuario) : ?>
-                                        <option value="<?= $objusuario->id ?>"><?= $objusuario->email ?></option>
+                                <select class="form-select" name="rol_id" id="rol_id">
+                                    <?php foreach ($roles as $rol) : ?>
+                                        <option value="<?= $rol->id ?>"><?= $rol->nombre ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -26,9 +26,9 @@
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Módulo</label>
-                                <select class="form-select" name="idmodulo" id="idmodulo">
+                                <select class="form-select" name="modulo_id" id="modulo_id">
                                     <?php foreach ($modulos as $objmodulo) : ?>
-                                        <option value="<?= $objmodulo->idmodulo ?>"><?= $objmodulo->nombre ?></option>
+                                        <option value="<?= $objmodulo->modulo_id ?>"><?= $objmodulo->nombre ?></option>
                                     <?php endforeach; ?>
                                 </select>
 
