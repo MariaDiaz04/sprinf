@@ -77,7 +77,7 @@
               <div data-i18n="Without menu">Profesor</div>
             </a>
           </li>
-          <li class="menu-item">
+         <!--  <li class="menu-item">
             <a href="layouts-without-navbar.html" class="menu-link">
               <div data-i18n="Without navbar">Without navbar</div>
             </a>
@@ -86,7 +86,7 @@
             <a href="layouts-container.html" class="menu-link">
               <div data-i18n="Container">Container</div>
             </a>
-          </li>
+          </li> -->
         </ul>
       </li>
       <!-- ########### INICIO GESTION DE PROYECTO ############## -->
@@ -103,31 +103,9 @@
       <!-- ########### FIN GESTION DE PROYECTO ############## -->
 
       <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Pages</span>
+        <span class="menu-header-text">Seguridad</span>
       </li>
-      <!--  <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Account Settings</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
-                    <div data-i18n="Account">Account</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
-                    <div data-i18n="Notifications">Notifications</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-connections.html" class="menu-link">
-                    <div data-i18n="Connections">Connections</div>
-                  </a>
-                </li>
-              </ul>
-            </li> -->
+      
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
@@ -152,7 +130,7 @@
     
         </ul>
       </li>
-      <li class="menu-item">
+      <!-- <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cube-alt"></i>
           <div data-i18n="Misc">Misc</div>
@@ -169,7 +147,7 @@
             </a>
           </li>
         </ul>
-      </li>
+      </li> -->
 
     </ul>
   </aside>

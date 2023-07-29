@@ -115,6 +115,24 @@ $routes->add('usuarioGuardar', new Route(
     ]
 ));
 
+$routes->add('/usuario/editar/{id}', new Route(
+
+    '/usuario/editar/{id}',
+    [
+        'controller' => userController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/usuario/actualizar/{id}', new Route(
+
+    '/usuario/actualizar/{id}',
+    [
+        'controller' => userController::class,
+        'method' => 'update',
+    ]
+));
+
 # GESTION DE PROYECTOS
 $routes->add('proyectos', new Route(
 
@@ -260,6 +278,23 @@ $routes->add('/modulos/guardar', new Route(
     [
         'controller' => moduloController::class,
         'method' => 'store',
+    ]
+));
+
+$routes->add('modulos/editar/{id}', new Route(
+
+    '/modulos/editar/{id}',
+    [
+        'controller' => moduloController::class,
+        'method' => 'edit',
+    ]
+));
+$routes->add('modulos/actualizar/{id}', new Route(
+
+    '/modulos/actualizar/{id}',
+    [
+        'controller' => moduloController::class,
+        'method' => 'update',
     ]
 ));
 

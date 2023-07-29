@@ -3,6 +3,8 @@
 namespace App\controllers;
 
 use App\modulo;
+use Symfony\Component\HttpFoundation\Request;
+
 use Exception;
 
 class moduloController extends controller
@@ -38,9 +40,9 @@ class moduloController extends controller
                 <script> 
                     window.alert("Modulo ya registrado")
                 </script>';
-                header('refresh:1 '.APP_URL.'modulos');
+                header('refresh:1 ' . APP_URL . 'modulos');
             } else {
-                return $this->redirect(APP_URL.'modulos');
+                return $this->redirect(APP_URL . 'modulos');
             }
             http_response_code(200);
             echo json_encode($this->MODULO);
@@ -50,9 +52,9 @@ class moduloController extends controller
         }
     }
 
-    public function edit($request)
+    public function edit(Request $request, $id)
     {
-        $modulo = $this->MODULO->find($request['modulo']);
+        $modulo = $this->MODULO->find($id);
         if ($modulo) {
             return $this->view('modulo/editar', ['modulo' => $modulo->fillable]);
         } else {
@@ -60,15 +62,15 @@ class moduloController extends controller
         }
     }
 
-    public function update($request)
+    public function update($request, $id)
     {
-        if (!$modulo = $this->MODULO->find($_GET['idmodulo'])) {
+        if (!$modulo = $this->MODULO->find($id)) {
             return $this->page('errors/404');
         }
         $modulo->actualizar([
-            'nombre' => '"' . $request['nombre'] . '"',
+            'nombre' => '"' .  $request->request->get('nombre') . '"',
         ]);
-        return $this->redirect('modulo');
+        return $this->redirect(APP_URL . 'modulos');
     }
 
     public function delete($request)

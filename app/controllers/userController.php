@@ -100,7 +100,6 @@ class userController extends controller
             ])->save();
       /*   } */
 
-      //return var_dump($user);
 
         switch ($usuario->request->get('rol')) {
             case '2':
@@ -116,31 +115,28 @@ class userController extends controller
     }
 
 
-    public function edit($request)
+    public function edit(Request $request, $id)
     {
 
-        $usuario = $this->USUARIO->find($request['usuario']);
-
+        $usuario = $this->USUARIO->find($id);
+       // return var_dump($usuario);
         if ($usuario) {
-
-
             return $this->view('usuario/editar', ['usuario' => $usuario->fillable]);
         } else {
-
             return $this->page('errors/404');
         }
     }
-    public function update($response)
+
+    public function update($response,$id)
     {
 
-        $usuario = $this->USUARIO->find($_GET['usuario']);
+        $usuario = $this->USUARIO->find($id);
 
         if ($usuario) {
-            $usuario->actualizar($response);
-
+           $usuario->actualizar($response->request);
             switch ($usuario->fillable['rol_id']) {
                 case '2':
-                    return $this->redirect('agente');
+                    return $this->redirect(APP_URL.'profesor');
                     break;
                 case '3':
                     return $this->redirect('analista');

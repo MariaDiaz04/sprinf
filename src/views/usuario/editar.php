@@ -10,7 +10,7 @@
       Editar usuario
     </h5>
     <div class="card-body">
-      <form action="<?= $this->Route('usuario/actualizar', ['usuario' => $usuario->usuarios_id]) ?>" method="POST" id="usuarioeditar">
+      <form action="<?=APP_URL. $this->Route("usuario/actualizar/$usuario->usuarios_id") ?>" method="POST" id="usuarioeditar">
         <div class="container-fluid">
           <div class="row pb-2">
             <div class="col-12">
@@ -60,16 +60,8 @@
 
                 <div class="col-12">
                   <div class="row form-group">
-                    <div class="col-lg-8">
-                      <label class="form-label">Procedencia</label>
-                      <select class="custom-select" name="procedencia_id">
-                        <?php foreach ($procedencia as $procedencias) : ?>
-                          <option <?php if ($usuario->procedencia_id == $procedencias->id) echo "selected"; ?> value="<?= $procedencias->id ?>"><?= $procedencias->nombre ?></option>
-                        <?php endforeach; ?>
-
-                      </select>
-                    </div>
-                    <div class="col-lg-4 ">
+               
+                    <div class="col-lg-8 ">
                       <label class="form-label">Dirección </label>
                       <input type="text" class="form-control" name="direccion" value="<?= $usuario->direccion ?>">
                     </div>

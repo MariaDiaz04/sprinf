@@ -102,7 +102,7 @@
                 <hr class="border-light m-0">
                 <div class="text-right mt-3">
                     <input type="submit" class="btn btn-primary" value='Guardar Configuración' />&nbsp;
-                    <a href="<?= $this->Route('permisos') ?>" class="btn btn-outline-primary">Volver</a>
+                    <a href="<?=APP_URL. $this->Route('permisos') ?>" class="btn btn-outline-primary">Volver</a>
                 </div>
             </div>
         </form>

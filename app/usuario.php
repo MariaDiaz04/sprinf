@@ -124,37 +124,6 @@ class usuario extends model
         return $profesor;
     }
 
-    public function analista()
-    {
-        $analista = $this->query(
-            'SELECT
-                persona.*,
-                usuarios.email
-            FROM
-                `usuarios`,
-                `persona`
-            WHERE
-                usuarios.id = persona.usuarios_id AND persona.rol_id = 3'
-        );
-
-        return $analista;
-    }
-
-    public function vendedor_comprador()
-    {
-        $users_activos = $this->query(
-            'SELECT
-            persona.*,
-            usuarios.email
-            FROM
-            `usuarios`,
-            `persona`
-            WHERE
-            (usuarios.id = persona.usuarios_id AND persona.rol_id = 4) OR (usuarios.id = persona.usuarios_id AND persona.rol_id = 5)'
-        );
-
-        return $users_activos;
-    }
 
     public function users_activos()
     {
@@ -198,7 +167,8 @@ class usuario extends model
             $usuarios = $this->querys(
                 'SELECT
                         persona.*,
-                        usuarios.email
+                        usuarios.email,
+                        usuarios.rol_id
                     FROM
                         `usuarios`,
                         `persona`
@@ -241,7 +211,6 @@ class usuario extends model
             ]);
 
             $usuario = $this->select('usuarios', [['email', '=', "'" . $this->fillable['email'] . "'"]])[0]['id'];
-            //return var_dump($usuario);
 
             if ($this->fillable['rol_id'] == 2) {
                 $this->set('persona', [
@@ -315,178 +284,25 @@ class usuario extends model
     }
 
 
-    /* 
-   DELETE usuarios.* FROM usuarios INNER JOIN persona ON usuarios.id = persona.usuarios_id INNER JOIN agentes ON agentes.persona_id = persona.id WHERE usuarios.id = 4 AND persona.rol_id = 2;
-   
-   */
-
 
     // ======================== / UPDATE=========================
     public function actualizar($usuario)
     {
 
         $this->update('persona', [
-            'procedencia_id' => '"' . $usuario['procedencia_id'] . '"',
-            'nombre' => '"' . $usuario['nombre'] . '"',
-            'apellido' => '"' . $usuario['apellido'] . '"',
-            'cedula' => '"' . $usuario['cedula'] . '"',
-            'telefono' => '"' . $usuario['telefono'] . '"',
-            'nacimiento' => '"' . $usuario['nacimiento'] . '"',
-            'direccion' => '"' . $usuario['direccion'] . '"',
-            'estatus' => '"' . $usuario['estatus'] . '"',
+            'nombre' => '"' . $usuario->get('nombre') . '"',
+            'apellido' => '"' . $usuario->get('apellido') . '"',
+            'cedula' => '"' .  $usuario->get('cedula') . '"',
+            'telefono' => '"' .  $usuario->get('telefono'). '"',
+            'nacimiento' => '"' . $usuario->get('nacimiento') . '"',
+            'direccion' => '"' . $usuario->get('direccion') . '"',
+            'estatus' => '"' . $usuario->get('estatus') . '"',
         ], [['id', '=', $this->fillable['id']]]);
 
         $this->create($usuario);
         return $this;
     }
 
-    public function selectAgentesexepto($id)
-    {
-        $tip = $this->query(
-            'SELECT persona.id as i, persona.nombre as n, persona.rol_id, roles.id
-                FROM persona INNER JOIN roles ON persona.rol_id = roles.id
-                WHERE persona.rol_id = 2 AND persona.id !=' . $id
-        );
-        if ($tip) {
-            foreach ($tip as $key => $value) {
-                echo '<option value="' . $value['i'] . '">' . $value['n'] . '</option>';
-            }
-            return $this;
-        } else {
-            $N = '<option style="display:none" value="0">VACIO</option>';
-            return $N;
-        }
-    }
-
-    public function selectAgentes()
-    {
-        $tip = $this->query(
-            'SELECT persona.id as i, persona.nombre as n, persona.rol_id, roles.id
-                FROM persona INNER JOIN roles ON persona.rol_id = roles.id
-                WHERE persona.rol_id = 2'
-        );
-        if ($tip) {
-            foreach ($tip as $key => $value) {
-                echo '<option value="' . $value['i'] . '">' . $value['n'] . '</option>';
-            }
-            return $this;
-        } else {
-            $N = '<option style="display:none" value="0">VACIO</option>';
-            return $N;
-        }
-    }
-
-    public function ClienteVendedores()
-    {
-        $sql = $this->query('SELECT inmueble.idinmueble AS idinm, inmueble.nombre_inmueble AS nombinm, (SELECT persona.id FROM persona INNER JOIN vendedor_inmueble ON persona.id = vendedor_inmueble.vendedor_id INNER JOIN inmueble ON vendedor_inmueble.inmueble_id = inmueble.idinmueble WHERE inmueble.idinmueble = idinm AND persona.estatus >= 1) AS idclientev, (SELECT persona.nombre FROM persona INNER JOIN vendedor_inmueble ON persona.id = vendedor_inmueble.vendedor_id INNER JOIN inmueble ON vendedor_inmueble.inmueble_id = inmueble.idinmueble WHERE inmueble.idinmueble = idinm AND persona.estatus >= 1) AS nombagentev FROM inmueble WHERE inmueble.estatus >= 1');
-        if ($sql) {
-            foreach ($sql as $key => $value) {
-                echo '<option value="' . $value['idclientev'] . '">' . $value['idinm'] . ' | ' . $value['nombinm'] . '</option>';
-            }
-            return $this;
-        } else {
-            $N = '<option style="display:none" value="0">VACIO</option>';
-            return $N;
-        }
-    }
-
-
-    public function selectclientsvende($id)
-    {
-        $tip = $this->query(
-            'SELECT inmueble.idinmueble AS idinm,
-                    (SELECT persona.id FROM persona INNER JOIN persona_inmueble ON persona_id = persona_inmueble.persona_id INNER JOIN inmueble ON inmueble.idinmueble = persona_inmueble.inmueble_idinmueble WHERE persona.rol_id = 2 AND inmueble.idinmueble = idinm) AS agid,
-                    (SELECT persona.id FROM persona INNER JOIN persona_inmueble ON persona_id = persona_inmueble.persona_id INNER JOIN inmueble ON inmueble.idinmueble = persona_inmueble.inmueble_idinmueble WHERE persona.rol_id = 3 AND inmueble.idinmueble = idinm) AS cliid,
-                    (SELECT persona.nombre FROM persona WHERE persona.id = agid) AS agnombre,
-                    (SELECT persona.nombre FROM persona WHERE persona.id = cliid) AS clinombre
-                FROM inmueble WHERE inmueble.idinmueble =' . $id
-        );
-        if ($tip) {
-            foreach ($tip as $key => $value) {
-                echo '<option value="' . $value['cliid'] . '">' . $value['clinombre'] . '</option>';
-            }
-            return $this;
-        } else {
-            $N = '<option style="display:none" value="0">VACIO</option>';
-            return $N;
-        }
-    }
-
-    public function selectclientscompra()
-    {
-        $tip = $this->query(
-            'SELECT persona.id AS id, persona.nombre AS nombre, persona.cedula AS cedula FROM persona INNER JOIN cliente_comprador ON persona.id = cliente_comprador.persona_id'
-        );
-        if ($tip) {
-            foreach ($tip as $key => $value) {
-                echo '<option value="' . $value['id'] . '">' . $value['nombre'] . ' - ' . $value['cedula'] . '</option>';
-            }
-            return $this;
-        } else {
-            $N = '<option style="display:none" value="0">VACIO</option>';
-            return $N;
-        }
-    }
-
-    public function clientven($id)
-    {
-        $cli = $this->query(
-            'SELECT inmueble.idinmueble AS idinm,
-                    (SELECT persona.id FROM persona INNER JOIN persona_inmueble ON persona_id = persona_inmueble.persona_id INNER JOIN inmueble ON inmueble.idinmueble = persona_inmueble.inmueble_idinmueble WHERE persona.rol_id = 2 AND inmueble.idinmueble = idinm) AS agid,
-                    (SELECT persona.id FROM persona INNER JOIN persona_inmueble ON persona_id = persona_inmueble.persona_id INNER JOIN inmueble ON inmueble.idinmueble = persona_inmueble.inmueble_idinmueble WHERE persona.rol_id = 3 AND inmueble.idinmueble = idinm) AS cliid,
-                    (SELECT persona.nombre FROM persona WHERE persona.id = agid) AS agnombre,
-                    (SELECT persona.nombre FROM persona WHERE persona.id = cliid) AS clinombre
-                FROM inmueble WHERE inmueble.idinmueble =' . $id
-        );
-        if ($cli) {
-            foreach ($cli as $key => $value) {
-                $c = $this->find($value['cliid']);
-            }
-            return $c;
-        } else {
-            $N = '<option style="display:none" value="0">VACIO</option>';
-            return $N;
-        }
-    }
-
-    /*     public function clientvend($id){
-        $cli = $this->query(
-                'SELECT persona.id as cliid, inmueble.idinmueble FROM persona INNER JOIN persona_inmueble ON persona.id = persona_inmueble.persona_id INNER JOIN roles ON persona.rol_id = roles.id INNER JOIN inmueble ON persona_inmueble.inmueble_idinmueble = inmueble.idinmueble WHERE persona.rol_id = 3 AND inmueble.idinmueble = '.$id);
-        if ($cli != "") {
-                
-            $c = $value['cliid'];
-                
-            return $c;
-        }
-    } */
-
-
-    /*     public function Agent(){
-        try {
-             $ag = $this->query('SELECT persona.id AS idpersona, persona.cedula AS cedula, persona.nombre AS nombre, persona.apellido AS apellido, persona.rol_id AS rol, persona.estatus AS estatus FROM persona INNER JOIN roles ON persona.rol_id = roles.id WHERE persona.rol_id = 2 AND persona.estatus = 1;');
-            return $ag ? $ag : null;
-        } catch (\PDOException $e) {
-            return $e;
-        }
-    } */
-
-    /*  public function Comprador(){
-        try {
-             $ven = $this->query('SELECT persona.id AS idpersona, persona.cedula AS cedula, persona.nombre AS nombre, persona.apellido AS apellido, persona.rol_id AS rol, persona.estatus AS estatus FROM persona INNER JOIN roles ON persona.rol_id = roles.id WHERE persona.rol_id = 5 AND persona.estatus = 1;');
-            return $ven ? $ven : null;
-        } catch (\PDOException $e) {
-            return $e;
-        }
-    }
-
-    public function Vendedor(){
-        try {
-             $com = $this->query('SELECT persona.id AS idpersona, persona.cedula AS cedula, persona.nombre AS nombre, persona.apellido AS apellido, persona.rol_id AS rol, persona.estatus AS estatus FROM persona INNER JOIN roles ON persona.rol_id = roles.id WHERE persona.rol_id = 4 AND persona.estatus = 1;');
-            return $com ? $com : null;
-        } catch (\PDOException $e) {
-            return $e;
-        }
-    } */
 
     public function usersname()
     {

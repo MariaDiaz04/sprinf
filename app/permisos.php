@@ -73,7 +73,6 @@ use App\model;
         // ======================== UPDATE=========================
         public function actualizar($permisos) {
             $this->update('permisos', $permisos, [['idpermisos', '=', $this->fillable['idpermisos'] ]]);
-          //  return var_dump($this);
             return $this;
 
         }
