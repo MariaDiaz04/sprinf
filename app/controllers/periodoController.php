@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use App\periodo;
 use Exception;
+use Utils\DateValidator;
+use Utils\Sanitizer;
 
 class periodoController extends controller
 {
@@ -25,6 +27,23 @@ class periodoController extends controller
     return $this->view('periodos/gestionar', [
       'periodos' => $periodos,
     ]);
+  }
+
+  public function store(Request $periodo)
+  {
+    try {
+      DateValidator::checkPeriodDates($periodo->get('fecha_inicial'), $periodo->get('fecha_final'));
+
+      $this->periodo->setData($periodo->request->all());
+
+      $id = $this->periodo->save();
+
+      http_response_code(200);
+      echo json_encode($id);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
+    }
   }
 
   function ssp(Request $query): void

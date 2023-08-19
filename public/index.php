@@ -222,6 +222,15 @@ $routes->add('periodo_edit', new Route(
     ]
 ));
 
+$routes->add('/periodos/guardar', new Route(
+
+    '/periodos/guardar',
+    [
+        'controller' => periodoController::class,
+        'method' => 'store',
+    ]
+));
+
 $routes->add('periodo_ssp', new Route(
 
     '/periodos/ssp',

@@ -34,7 +34,7 @@
           <h5 class="modal-title" id="crearLabel">Nuevo Periodo</h5>
 
         </div>
-        <form action="<?= APP_URL . $this->Route('periodo/guardar') ?>" method="post" id="guardar">
+        <form action="<?= APP_URL . $this->Route('periodos/guardar') ?>" method="post" id="guardar">
           <div class="modal-body">
             <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
             <input type="hidden" name="estatus" value="1">
@@ -118,7 +118,6 @@
       console.log(url);
       console.log(data)
 
-      throw Exception('not implemented');
 
       $.ajax({
         type: "POST",
