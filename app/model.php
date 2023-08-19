@@ -3,6 +3,9 @@
 namespace App;
 
 use App\conexion;
+use BadMethodCallException;
+use Exception;
+use Utils\SSP;
 
 class model extends conexion
 {
@@ -138,4 +141,30 @@ class model extends conexion
 		return $this->querys('SELECT @@identity AS id;')[0]['id'];
 	} //finaliza setted
 
+
+	// =====================  DATATABLE SELECT  ==================================
+
+
+	/**
+	 * getSSP
+	 * 
+	 * Función para inicializar clase de Server Side Processing
+	 * tomando en cuenta la conexión a nuestra BD
+	 *
+	 * @param string $table
+	 * @param string $primaryKey
+	 * @param array $columns
+	 * @return array
+	 */
+	public function getSSP(string $table, string $primaryKey, array $columns): array
+	{
+		$sql_details = array(
+			'user' => $this->user,
+			'pass' => $this->pass,
+			'db'   => $this->db,
+			'host' => $this->host
+			// ,'charset' => 'utf8' // Depending on your PHP and MySQL config, you may need this
+		);
+		return SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns);
+	}
 }

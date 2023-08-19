@@ -12,6 +12,11 @@ class conexion extends \PDO
 
     public $conexion;
 
+    public $host = DB_HOST;
+    public $db = DB_NAME;
+    public $user = DB_USER;
+    public $pass = DB_PASS;
+
     public   function __construct()
     {
         $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';

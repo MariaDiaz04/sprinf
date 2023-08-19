@@ -7,11 +7,13 @@
                   document.write(new Date().getFullYear());
               </script>
               , made with ❤️ Sprinf
-           <!--    <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a> -->
+              <!--    <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a> -->
           </div>
           <div>
-     
+
           </div>
       </div>
   </footer>
   <!-- / Footer -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

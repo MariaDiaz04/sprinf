@@ -94,6 +94,22 @@
           </li>
         </ul>
       </li>
+      <!-- ########### INICIO GESTION DE PERIODOS ############## -->
+
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">PERIODOS</span>
+      </li>
+
+      <li class="menu-item">
+        <a href="<?= APP_URL .  $this->Route('periodos') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-code"></i>
+          <div data-i18n="Analytics">Gestión de Periodos</div>
+        </a>
+      </li>
+
+
+      <!-- ########### FIN DE GESTION DE PERIODOS ############## -->
+
       <!-- ########### INICIO GESTION DE PROYECTO ############## -->
       <!-- TODO: Verificar que usuario cuente con rol para modificar -->
 

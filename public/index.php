@@ -4,6 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
+use App\controllers\periodoController;
 use App\controllers\aspectosController;
 use App\controllers\baremosController;
 use App\controllers\dimensionController;
@@ -201,6 +202,36 @@ $routes->add('/usuario/actualizar/{id}', new Route(
         'method' => 'update',
     ]
 ));
+
+# GESTION DE PERIODOS
+$routes->add('periodo_manage', new Route(
+
+    '/periodos',
+    [
+        'controller' => periodoController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('periodo_edit', new Route(
+
+    '/periodos/edit/{id}',
+    [
+        'controller' => periodoController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('periodo_ssp', new Route(
+
+    '/periodos/ssp',
+    [
+        'controller' => periodoController::class,
+        'method' => 'ssp',
+    ]
+));
+
+
 
 # GESTION DE PROYECTOS
 $routes->add('proyectos', new Route(
