@@ -184,6 +184,19 @@ CREATE TABLE `config_sistema` (
 ALTER TABLE `config_sistema` ADD FOREIGN KEY (`periodo_actual`) REFERENCES `periodo` (`id`);
 
 
+CREATE TABLE `materias` (
+  `codigo` varchar(255) UNIQUE PRIMARY KEY,
+  `nombre` varchar(255),
+  `trayecto` int,
+  `periodo` ENUM ('fase_1', 'fase_2', 'anual'),
+  `vinculacion` int,
+  `htasist` int,
+  `htind` int,
+  `ucredito` int,
+  `hrs_acad` int,
+  `eje` varchar(255)
+);
+
 
 
 -- #####################################################################################

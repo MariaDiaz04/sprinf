@@ -22,8 +22,8 @@ class materiasController extends controller
     {
 
         $materias = $this->MATERIAS->all();
-       
-        return $this->view('materias/materias', ['materias' => $materias]);
+
+        return $this->view('materias/gestionar', ['materias' => $materias]);
     }
 
     public function create($request)
@@ -42,7 +42,7 @@ class materiasController extends controller
             'tipo' => $materias->request->get('tipo'),
         ])->save();
 
-       // return var_dump($guardar);
+        // return var_dump($guardar);
 
         if ($guardar == null) {
             echo '
@@ -77,6 +77,17 @@ class materiasController extends controller
             'estatus' => '"' . $request['estatus'] . '"',
         ]);
         return $this->redirect('materias');
+    }
+
+    function ssp(): void
+    {
+        try {
+            http_response_code(200);
+            echo json_encode($this->MATERIAS->generarSSP());
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
     }
 
 

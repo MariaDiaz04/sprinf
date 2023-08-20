@@ -10,20 +10,38 @@ class materias extends model
 {
 
     public $fillable = [
+        'codigo',
         'nombre',
-        'trayecto_id',
-        'tipo',
+        'trayecto',
+        'periodo',
+        'vinculacion',
+        'htasist',
+        'htind',
+        'ucredito',
+        'hrs_acad',
+        'eje',
     ];
+
+    private $codigo;
+    private $nombre;
+    private $trayecto;
+    private $periodo;
+    private $vinculacion;
+    private $htasist;
+    private $htind;
+    private $ucredito;
+    private $hrs_acad;
+    private $eje;
 
     public function all()
     {
         try {
-          $materias = $this->querys("SELECT materias.*, trayecto.nombre as trayecto FROM materias INNER JOIN trayecto ON trayecto.id = materias.trayecto_id ");
-          return $materias ? $materias : null;
+            $materias = $this->querys("SELECT materias.*, trayecto.nombre as trayecto FROM materias INNER JOIN trayecto ON trayecto.id = materias.trayecto_id ");
+            return $materias ? $materias : null;
         } catch (Exception $th) {
-          return $th;
+            return $th;
         }
-      }
+    }
 
     public function create($materias)
     {
@@ -38,14 +56,13 @@ class materias extends model
 
         try {
 
-                $this->set('materias', [
-                    'nombre' => '"' . $this->fillable['nombre'] . '"',
-                    'trayecto_id' => '"' . $this->fillable['trayecto_id'] . '"',
-                    'tipo' => '"' . $this->fillable['tipo'] . '"',
-                    
-                ]);
-                return $this;
-            
+            $this->set('materias', [
+                'nombre' => '"' . $this->fillable['nombre'] . '"',
+                'trayecto_id' => '"' . $this->fillable['trayecto_id'] . '"',
+                'tipo' => '"' . $this->fillable['tipo'] . '"',
+
+            ]);
+            return $this;
         } catch (Exception $th) {
             return $th;
         }
@@ -163,5 +180,39 @@ class materias extends model
                 `trayecto`;'
         );
         return $codigo;
+    }
+
+    /**
+     * generarSSP
+     * 
+     * Generar SSP proveniente de la función de data table
+     *
+     * @return array
+     */
+    public function generarSSP(): array
+    {
+        $columns = array(
+            array(
+                'db'        => 'codigo',
+                'dt'        => 0
+            ),
+            array(
+                'db'        => 'nombre',
+                'dt'        => 1
+            ),
+            array(
+                'db'        => 'trayecto',
+                'dt'        => 2
+            ),
+            array(
+                'db'        => 'periodo',
+                'dt'        => 3
+            ),
+            array(
+                'db'        => 'vinculacion',
+                'dt'        => 4
+            ),
+        );
+        return $this->getSSP('materias', 'codigo', $columns);
     }
 }

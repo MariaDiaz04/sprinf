@@ -168,6 +168,15 @@ $routes->add('materiasGuardar', new Route(
         'method' => 'store',
     ]
 ));
+
+$routes->add('materia_ssp', new Route(
+
+    '/materias/ssp',
+    [
+        'controller' => materiasController::class,
+        'method' => 'ssp',
+    ]
+));
 $routes->add('usuarioCrear', new Route(
 
     '/usuarioCrear',
