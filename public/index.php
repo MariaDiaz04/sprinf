@@ -11,6 +11,7 @@ use App\controllers\dimensionController;
 use App\controllers\proyectoController;
 use App\controllers\homeController;
 use App\controllers\moduloController;
+use App\controllers\trayectosController;
 use App\seccion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -241,6 +242,42 @@ $routes->add('periodo_ssp', new Route(
 ));
 
 
+# GESTION DE TRAYECTOS
+$routes->add('trayecto_manage', new Route(
+
+    '/trayectos',
+    [
+        'controller' => trayectosController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('trayecto_edit', new Route(
+
+    '/trayectos/edit/{id}',
+    [
+        'controller' => trayectosController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/trayectos/guardar', new Route(
+
+    '/trayectos/guardar',
+    [
+        'controller' => trayectosController::class,
+        'method' => 'store',
+    ]
+));
+
+$routes->add('trayecto_ssp', new Route(
+
+    '/trayectos/ssp',
+    [
+        'controller' => trayectosController::class,
+        'method' => 'ssp',
+    ]
+));
 
 # GESTION DE PROYECTOS
 $routes->add('proyectos', new Route(

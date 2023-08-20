@@ -21,7 +21,7 @@ class periodo extends model
   public function all()
   {
     try {
-      $periodos = $this->select('periodo');
+      $periodos = $this->select('periodos');
       return $periodos ? $periodos : null;
     } catch (Exception $th) {
       return $th;
@@ -44,7 +44,7 @@ class periodo extends model
     foreach ($data as $prop => $value) {
 
       if (property_exists($this, $prop) && in_array($prop, $this->fillable)) {
-        $this->{$prop} = Sanitizer::sanitize($value);
+        $this->{$prop} = $value;
       }
     }
   }
@@ -65,7 +65,7 @@ class periodo extends model
     foreach ($this->fillable as $key => $value) {
       if (isset($this->{$value})) {
         if (is_string($this->{$value})) {
-          $data[$value] = '"' . $this->{$value} . '"';
+          $data[$value] = '"' . Sanitizer::sanitize($this->{$value}) . '"';
         } else {
           $data[$value] =  $this->{$value};
         }
