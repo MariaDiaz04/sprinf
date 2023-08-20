@@ -107,6 +107,13 @@
         </a>
       </li>
 
+      <li class="menu-item">
+        <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-code"></i>
+          <div data-i18n="Analytics">Gestión de Trayectos</div>
+        </a>
+      </li>
+
 
       <!-- ########### FIN DE GESTION DE PERIODOS ############## -->
 
