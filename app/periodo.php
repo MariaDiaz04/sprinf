@@ -101,14 +101,14 @@ class periodo extends model
         'db'        => 'fecha_inicial',
         'dt'        => 1,
         'formatter' => function ($d, $row) {
-          return date('jS M y', strtotime($d));
+          return date('d/m/Y', strtotime($d));
         }
       ),
       array(
         'db'        => 'fecha_final',
         'dt'        => 2,
         'formatter' => function ($d, $row) {
-          return date('jS M y', strtotime($d));
+          return date('d/m/Y', strtotime($d));
         }
       )
     );

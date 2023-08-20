@@ -106,39 +106,41 @@
           edit(data[0])
         }
       });
+
+      $('#guardar').submit(function(e) {
+        e.preventDefault()
+
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        console.log(url);
+        console.log(data)
+
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("guardar").reset();
+            // actualizar tabla
+          },
+        });
+
+      })
+
+      function edit(id) {
+        alert(`Editing ${id}`)
+      }
+
+      function remove(id) {
+        alert(`Removing ${id}`)
+      }
     })
-
-    $('#guardar').submit(function(e) {
-      e.preventDefault()
-
-
-      url = $(this).attr('action');
-      data = $(this).serializeArray();
-
-      console.log(url);
-      console.log(data)
-
-
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        error: function(error, status) {
-          alert(error.responseText)
-        },
-        success: function(data, status) {
-          alert('creado exitosamente') // usar sweetalerts
-          // actualizar tabla
-        },
-      });
-
-    })
-
-    function edit(id) {
-      alert(`Editing ${id}`)
-    }
-
-    function remove(id) {
-      alert(`Removing ${id}`)
-    }
   </script>
