@@ -59,7 +59,12 @@
           <!-- footer de acciones -->
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Guardar">
+            <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
+            <div id="guardarLoading">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -69,6 +74,8 @@
 
   <script>
     $(document).ready(() => {
+
+      toggleLoading(false)
 
       // DATATABLE CRUD
 
@@ -110,6 +117,8 @@
       $('#guardar').submit(function(e) {
         e.preventDefault()
 
+        toggleLoading(true);
+
 
         url = $(this).attr('action');
         data = $(this).serializeArray();
@@ -123,6 +132,7 @@
           url: url,
           data: data,
           error: function(error, status) {
+            toggleLoading(false)
             alert(error.responseText)
           },
           success: function(data, status) {
@@ -130,6 +140,7 @@
             // usar sweetalerts
             document.getElementById("guardar").reset();
             // actualizar tabla
+            toggleLoading(false)
           },
         });
 
@@ -141,6 +152,18 @@
 
       function remove(id) {
         alert(`Removing ${id}`)
+      }
+
+      // TOGGLE BUTTON AND SPINNER
+      function toggleLoading(show) {
+        if (show) {
+          $('#guardarLoading').show();
+          $('#guardarSubmit').hide();
+        } else {
+          $('#guardarLoading').hide();
+          $('#guardarSubmit').show();
+        }
+
       }
     })
   </script>
