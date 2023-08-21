@@ -386,6 +386,34 @@ $routes->add('dimension_manage', new Route(
 ));
 
 
+$routes->add('dimension_edit', new Route(
+
+    '/dimension/edit/{id}',
+    [
+        'controller' => dimensionController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/dimensiones/guardar', new Route(
+
+    '/dimensiones/guardar',
+    [
+        'controller' => dimensionController::class,
+        'method' => 'store',
+    ]
+));
+
+$routes->add('dimension_ssp', new Route(
+
+    '/dimensiones/ssp',
+    [
+        'controller' => dimensionController::class,
+        'method' => 'ssp',
+    ]
+));
+
+
 $routes->add('aspectos_manage', new Route(
 
     '/aspectos',

@@ -3,22 +3,28 @@
 namespace App;
 
 use App\model;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Bcrypt\Bcrypt;
-
+use Utils\Sanitizer;
 use Exception;
 
 class dimension extends model
 {
 
   public $fillable = [
-    'baremos_id',
+    'evaluador',
     'nombre',
-    'porcentaje',
-    'esTutor'
+    'trayecto',
+    'fase',
+    'individual',
+    'estatus'
   ];
+
+  private $id;
+  private $evaluador;
+  private $nombre;
+  private $trayecto;
+  private $fase;
+  private $individual;
+  private $estatus;
 
   public function all()
   {
@@ -28,5 +34,113 @@ class dimension extends model
     } catch (Exception $th) {
       return $th;
     }
+  }
+
+
+  /**
+   * setData
+   * 
+   * Se encarga de asignar los valores en los campos
+   * definidos en la variable "fillable", tambien se 
+   * encarga de sanitizar cada uno de estos valores
+   *
+   * @param array $data
+   * @return void
+   */
+  public function setData(array $data)
+  {
+    foreach ($data as $prop => $value) {
+
+      if (property_exists($this, $prop) && in_array($prop, $this->fillable)) {
+        $this->{$prop} = $value;
+      }
+    }
+  }
+
+  /**
+   * save
+   * 
+   * Se encarga de tomar los valores que fueron asignados al modelo
+   * previamente y realizar la consulta SQL
+   *
+   * @param [type] $id
+   * @return integer ID de elemento creado o actualizado
+   */
+  public function save($id = null): int
+  {
+    $data = [];
+
+    foreach ($this->fillable as $key => $value) {
+      if (isset($this->{$value})) {
+        if (is_string($this->{$value})) {
+          $data[$value] = '"' . Sanitizer::sanitize($this->{$value}) . '"';
+        } else {
+          $data[$value] =  $this->{$value};
+        }
+      }
+    }
+    if ($id) {
+      $this->update('periodos', $data, [['id', '=', $id]]);
+      return $id;
+    } else {
+      $this->set('periodos', $data);
+      $this->id = $this->lastInsertId();
+      return $this->id;
+    }
+  }
+
+
+
+  /**
+   * generarSSP
+   * 
+   * Generar SSP proveniente de la función de data table
+   *
+   * @return array
+   */
+  public function generarSSP(): array
+  {
+    $columns = array(
+      array(
+        'db'        => 'id',
+        'dt'        => 0
+      ),
+      array(
+        'db'        => 'evaluador',
+        'dt'        => 1,
+        'formatter' => function ($d, $row) {
+          return date('d/m/Y', strtotime($d));
+        }
+      ),
+      array(
+        'db'        => 'nombre',
+        'dt'        => 2,
+        'formatter' => function ($d, $row) {
+          return date('d/m/Y', strtotime($d));
+        }
+      ),
+      array(
+        'db'        => 'trayecto',
+        'dt'        => 3,
+        'formatter' => function ($d, $row) {
+          return date('d/m/Y', strtotime($d));
+        }
+      ),
+      array(
+        'db'        => 'fase',
+        'dt'        => 4,
+        'formatter' => function ($d, $row) {
+          return date('d/m/Y', strtotime($d));
+        }
+      ),
+      array(
+        'db'        => 'individual',
+        'dt'        => 5,
+        'formatter' => function ($d, $row) {
+          return date('d/m/Y', strtotime($d));
+        }
+      )
+    );
+    return $this->getSSP('dimension', 'id', $columns);
   }
 }

@@ -198,6 +198,23 @@ CREATE TABLE `materias` (
 );
 
 
+CREATE TABLE `dimension` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `evaluador` varchar(255),
+  `nombre` varchar(255),
+  `trayecto` int,
+  `fase` ENUM ('1', '2'),
+  `individual` bool
+);
+
+CREATE TABLE `items` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `dimension_id` int,
+  `ponderacion` float
+);
+ALTER TABLE `items` ADD FOREIGN KEY (`dimension_id`) REFERENCES `dimension` (`id`);
+
+
 
 -- #####################################################################################
 -- DATA DUMP
