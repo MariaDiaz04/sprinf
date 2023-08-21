@@ -46,12 +46,68 @@
                   <div class="row form-group">
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Inicial *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_inicial" id="fecha_inicial">
+                      <label class="form-label" for="nombre">Código *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="codigo" id="codigo">
                     </div>
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Final *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_final" id="fecha_final">
+                      <label class="form-label" for="nombre">Nombre *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="trayecto">Trayecto *</label>
+                      <select class="form-select" id="trayecto" name="trayecto">
+                        <option value="1">Trayecto I</option>
+                        <option value="2">Trayecto II</option>
+                        <option value="3">Trayecto III</option>
+                        <option value="4">Trayecto IV</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="periodo">Periodo *</label>
+                      <select class="form-select" id="periodo" name="periodo">
+                        <option value="fase_1">Fase 1</option>
+                        <option value="fase_2">Fase 2</option>
+                        <option value="anual">Anual</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <!-- horas -->
+                    <div class="col-lg-4">
+                      <label class="form-label" for="htasist">Horas Total Asist *</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="htasist" id="htasist">
+                    </div>
+                    <div class="col-lg-4">
+                      <label class="form-label" for="htind">Horas Total ind *</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="htind" id="htind">
+                    </div>
+
+                    <div class="col-lg-4">
+                      <label class="form-label" for="ucredito">Horas Academicas *</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="ucredito" id="ucredito">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="hrs_acad">UCredito *</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="hrs_acad" id="hrs_acad">
+                    </div>
+
+                    <div class="col-lg-6">
+                      <label class="form-label" for="eje">Eje *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="eje" id="eje">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1" id="vinculacion" name="vinculacion">
+                        <label class="form-check-label" for="vinculacion">
+                          Vinculado a Proyecto
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>

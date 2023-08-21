@@ -5,6 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\DashboardController; */
 
 use App\controllers\periodoController;
+use App\controllers\materiasController;
 use App\controllers\aspectosController;
 use App\controllers\baremosController;
 use App\controllers\dimensionController;
@@ -160,15 +161,15 @@ $routes->add('materiasCrear', new Route(
     ]
 ));
 
-$routes->add('materiasGuardar', new Route(
 
-    '/materiasGuardar',
+$routes->add('materia_guardar', new Route(
+
+    '/materias/guardar',
     [
         'controller' => materiasController::class,
         'method' => 'store',
     ]
 ));
-
 $routes->add('materia_ssp', new Route(
 
     '/materias/ssp',

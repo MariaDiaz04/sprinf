@@ -3,6 +3,7 @@
 namespace App;
 
 use App\model;
+use Utils\Sanitizer;
 
 use Exception;
 
@@ -49,23 +50,6 @@ class materias extends model
             $this->fillable[$key] = $value;
         }
         return $this;
-    }
-
-    public function save()
-    {
-
-        try {
-
-            $this->set('materias', [
-                'nombre' => '"' . $this->fillable['nombre'] . '"',
-                'trayecto_id' => '"' . $this->fillable['trayecto_id'] . '"',
-                'tipo' => '"' . $this->fillable['tipo'] . '"',
-
-            ]);
-            return $this;
-        } catch (Exception $th) {
-            return $th;
-        }
     }
 
     // funcion para traer estatus 1 
@@ -180,6 +164,59 @@ class materias extends model
                 `trayecto`;'
         );
         return $codigo;
+    }
+
+
+    /**
+     * setData
+     * 
+     * Se encarga de asignar los valores en los campos
+     * definidos en la variable "fillable", tambien se 
+     * encarga de sanitizar cada uno de estos valores
+     *
+     * @param array $data
+     * @return void
+     */
+    public function setData(array $data)
+    {
+        foreach ($data as $prop => $value) {
+
+            if (property_exists($this, $prop) && in_array($prop, $this->fillable)) {
+                $this->{$prop} = $value;
+            }
+        }
+    }
+
+    /**
+     * save
+     * 
+     * Se encarga de tomar los valores que fueron asignados al modelo
+     * previamente y realizar la consulta SQL
+     *
+     * @param [type] $id
+     * @return integer ID de elemento creado o actualizado
+     */
+    public function save($codigo = null): int
+    {
+        $data = [];
+
+        foreach ($this->fillable as $key => $value) {
+            if (isset($this->{$value})) {
+                if (is_string($this->{$value})) {
+                    $data[$value] = '"' . Sanitizer::sanitize($this->{$value}) . '"';
+                } else {
+                    $data[$value] =  $this->{$value};
+                }
+            }
+        }
+        if ($codigo) {
+            $this->update('materias', $data, [['codigo', '=', $codigo]]);
+            return $codigo;
+        } else {
+            $this->set('materias', $data);
+            $this->codigo = $this->lastInsertId();
+            return $this->codigo;
+        }
     }
 
     /**
