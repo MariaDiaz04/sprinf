@@ -29,7 +29,7 @@ class trayectosController extends controller
 
     return $this->view('trayectos/gestionar', [
       'trayectos' => $trayectos,
-      'periodos' => $periodos,
+      'periodo' => $periodos,
     ]);
   }
 

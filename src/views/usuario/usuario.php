@@ -5,7 +5,7 @@
         <div><span class="text-muted font-weight-light"><?= $this->ROL->find($rol)->fillable['nombre'] ?> </span>/ </div>
 
         <form method="POST" action="<?= $this->Route('usuarioCrear') ?>">
-          <input type="hidden" name="rol" value="<?= $this->ROL->find($rol)->fillable['id']?>">
+          <input type="hidden" name="rol" value="<?= $this->ROL->find($rol)->fillable['id'] ?>">
           <button class="btn btn-outline-primary btn-round d-block">
             <span class="ion ion-md-add"></span>&nbsp; Nuevo </button>
         </form>
@@ -32,7 +32,7 @@
           </thead>
           <tbody>
             <?php foreach ($persona as $some) : ?>
-              <tr class="CUser CU<?= $some->cedula ?>" id="i<?= $some->usuarios_id ?>">
+              <tr class="CUser CU<?= $some->cedula ?>" id="i<?= $some->usuario_id ?>">
                 <td scope="row"><strong><?= $some->cedula ?></strong></td>
                 <td><?= $some->nombre . ' ' . $some->apellido ?></td>
                 <td><?= $some->direccion ?></td>
@@ -54,13 +54,13 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end " data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 41px);">
-                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("usuario/editar/$some->usuarios_id") ?>"><box-icon name='edit'></box-icon> Editar</a></li>
+                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("usuario/editar/$some->usuario_id") ?>"><box-icon name='edit'></box-icon> Editar</a></li>
                       <li>
                         <?php if ($this->ROL->find($rol)->fillable['id'] != 2 && $this->ROL->find($rol)->fillable['id'] != 3) : ?>
-                          <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarprofesor(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar Agente</a>
+                          <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarprofesor(<?= $some->usuario_id ?>)" id='i<?= $some->usuario_id ?>'><i class="fas fa-user-minus"></i> Eliminar Agente</a>
                         <?php endif; ?>
                         <!-- <?php if ($this->ROL->find($rol)->fillable['id'] != 2 || $this->ROL->find($rol)->fillable['id'] != 3) : ?>
-                            <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminaranalista(<?= $some->usuarios_id ?>)" id='i<?= $some->usuarios_id ?>'><i class="fas fa-user-minus"></i> Eliminar </a>
+                            <a class="dropdown-item " href="javascript:void(0)" onClick="return eliminaranalista(<?= $some->usuario_id ?>)" id='i<?= $some->usuario_id ?>'><i class="fas fa-user-minus"></i> Eliminar </a>
                         <?php endif; ?> -->
                       </li>
 

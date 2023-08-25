@@ -45,11 +45,11 @@
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Fecha Inicial *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_inicial" id="fecha_inicial">
+                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_inicio" id="fecha_inicio">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Fecha Final *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_final" id="fecha_final">
+                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_cierre" id="fecha_cierre">
                     </div>
                   </div>
                 </div>

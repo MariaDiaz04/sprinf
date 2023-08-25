@@ -11,17 +11,17 @@ class periodo extends model
 {
 
   public $fillable = [
-    'fecha_inicial',
-    'fecha_final',
+    'fecha_inicio',
+    'fecha_cierre',
   ];
   private $id;
-  private $fecha_inicial;
-  private $fecha_final;
+  private $fecha_inicio;
+  private $fecha_cierre;
 
   public function all()
   {
     try {
-      $periodos = $this->select('periodos');
+      $periodos = $this->select('periodo');
       return $periodos ? $periodos : null;
     } catch (Exception $th) {
       return $th;
@@ -72,10 +72,10 @@ class periodo extends model
       }
     }
     if ($id) {
-      $this->update('periodos', $data, [['id', '=', $id]]);
+      $this->update('periodo', $data, [['id', '=', $id]]);
       return $id;
     } else {
-      $this->set('periodos', $data);
+      $this->set('periodo', $data);
       $this->id = $this->lastInsertId();
       return $this->id;
     }
@@ -98,20 +98,20 @@ class periodo extends model
         'dt'        => 0
       ),
       array(
-        'db'        => 'fecha_inicial',
+        'db'        => 'fecha_inicio',
         'dt'        => 1,
         'formatter' => function ($d, $row) {
           return date('d/m/Y', strtotime($d));
         }
       ),
       array(
-        'db'        => 'fecha_final',
+        'db'        => 'fecha_cierre',
         'dt'        => 2,
         'formatter' => function ($d, $row) {
           return date('d/m/Y', strtotime($d));
         }
       )
     );
-    return $this->getSSP('periodos', 'id', $columns);
+    return $this->getSSP('periodo', 'id', $columns);
   }
 }

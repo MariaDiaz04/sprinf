@@ -53,7 +53,7 @@
                       <select class="form-select" id="selectPeriodo" name="periodo_id">
                         <?php if ($periodos) : ?>
                           <?php foreach ($periodos as $periodo) : ?>
-                            <option value="<?= $periodo->id ?>"><?= $periodo->fecha_inicial ?> /<?= $periodo->fecha_final ?></option>
+                            <option value="<?= $periodo->id ?>"><?= $periodo->fecha_inicio ?> /<?= $periodo->fecha_cierre ?></option>
                           <?php endforeach; ?>
                         <?php endif; ?>
                       </select>

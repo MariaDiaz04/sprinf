@@ -28,9 +28,9 @@ class userController extends controller
     {
 
 
-        /*  $permisos = $this->PERMISOS->consult(2, $_SESSION['usuarios_id']);
+        /*  $permisos = $this->PERMISOS->consult(2, $_SESSION['usuario_id']);
 
-        $permisos = $this->PERMISOS->consult(7, $_SESSION['usuarios_id']); */
+        $permisos = $this->PERMISOS->consult(7, $_SESSION['usuario_id']); */
 
         /*  if ($permisos != null) {
             $newpermisos = $permisos->fillable;

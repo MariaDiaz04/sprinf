@@ -25,14 +25,14 @@ class periodoController extends controller
     $periodos = $this->periodo->all();
 
     return $this->view('periodos/gestionar', [
-      'periodos' => $periodos,
+      'periodo' => $periodos,
     ]);
   }
 
   public function store(Request $periodo)
   {
     try {
-      DateValidator::checkPeriodDates($periodo->get('fecha_inicial'), $periodo->get('fecha_final'));
+      DateValidator::checkPeriodDates($periodo->get('fecha_inicio'), $periodo->get('fecha_cierre'));
 
       $this->periodo->setData($periodo->request->all());
 

@@ -36,7 +36,7 @@ CREATE TABLE `permisos` (
 
 -- hace referencia a roles
 
-CREATE TABLE `usuarios` (
+CREATE TABLE `usuario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rol_id` int(11) DEFAULT NULL,
   `email` varchar(80) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE `bitacora` (
   `token` varchar(85) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_bitacora_usuario1_idx` (`usuario_id`),
-  CONSTRAINT `fk_bitacora_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_bitacora_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -72,10 +72,10 @@ CREATE TABLE `pregunta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pregunta` varchar(75) DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
-  `usuarios_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `usuarios_id` (`usuarios_id`),
-  CONSTRAINT `usuarios_id` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `usuario_id` (`usuario_id`),
+  CONSTRAINT `usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Hace referencia a pregunta
@@ -95,7 +95,7 @@ CREATE TABLE `respuesta` (
 
 CREATE TABLE `persona` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usuarios_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
   `cedula` varchar(45) DEFAULT NULL,
   `nombre` varchar(45) DEFAULT NULL,
   `apellido` varchar(45) DEFAULT NULL,
@@ -104,8 +104,8 @@ CREATE TABLE `persona` (
   `nacimiento` varchar(45) DEFAULT NULL,
   `estatus` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_persona_usuarios1_idx` (`usuarios_id`),
-  CONSTRAINT `fk_persona_usuarios1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_persona_usuarios1_idx` (`usuario_id`),
+  CONSTRAINT `fk_persona_usuarios1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -151,8 +151,8 @@ CREATE TABLE `estudiante` (
 -- PERIODOS
 CREATE TABLE `periodos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha_inicial` date DEFAULT NULL,
-  `fecha_final` date DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_cierre` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -268,7 +268,7 @@ INSERT INTO sprinf_bd.usuarios (rol_id,email,contrasena,token) VALUES
 
 -- PERSONA
 
-   INSERT INTO sprinf_bd.persona (usuarios_id,cedula,nombre,apellido,direccion,telefono,nacimiento,estatus) VALUES
+   INSERT INTO sprinf_bd.persona (usuario_id,cedula,nombre,apellido,direccion,telefono,nacimiento,estatus) VALUES
 	 (1,'548745','Root','root','uptaeb','424555555','01-01-2000','1'),
 	 (2,'454851','Ligia','','uptaeb','424555555','01-01-2000','1'),
 	 (3,'454851','Lisset','','uptaeb','424555555','01-01-2000','1'),
@@ -279,7 +279,7 @@ INSERT INTO sprinf_bd.usuarios (rol_id,email,contrasena,token) VALUES
 	 (8,'454851','Jose','Figeroa','uptaeb','424555555','01-01-2000','1'),
 	 (9,'454851','Carlos','Figeroa','uptaeb','424555555','01-01-2000','1'),
 	 (10,'454851','Maria','Figeroa','uptaeb','424555555','01-01-2000','1');
-INSERT INTO sprinf_bd.persona (usuarios_id,cedula,nombre,apellido,direccion,telefono,nacimiento,estatus) VALUES
+INSERT INTO sprinf_bd.persona (usuario_id,cedula,nombre,apellido,direccion,telefono,nacimiento,estatus) VALUES
 	 (11,'454851','Pedro','Figeroa','uptaeb','424555555','01-01-2000','1'),
 	 (12,'454851','Pablo','Figeroa','uptaeb','424555555','01-01-2000','1'),
 	 (13,'454851','Jesus','Figeroa','uptaeb','424555555','01-01-2000','1'),

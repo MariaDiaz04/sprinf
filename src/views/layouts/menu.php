@@ -101,7 +101,7 @@
       </li>
 
       <li class="menu-item">
-        <a href="<?= APP_URL .  $this->Route('periodos') ?>" class="menu-link">
+        <a href="<?= APP_URL .  $this->Route('periodo') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-code"></i>
           <div data-i18n="Analytics">Gestión de Periodos</div>
         </a>
