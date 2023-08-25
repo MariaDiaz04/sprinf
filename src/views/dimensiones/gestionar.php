@@ -31,7 +31,7 @@
 
   <!-- MODAL CREAR -->
   <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="crearLabel">Nueva Dimension</h5>
@@ -44,17 +44,79 @@
             <div class="container-fluid">
               <div class="row pb-2">
                 <div class="col-12">
-                  <div class="row form-group">
+                  <div class="row form-group mb-3">
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Inicial *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_inicial" id="fecha_inicial">
+                      <label class="form-label" for="nombre">Nombre *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
                     </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Final *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_final" id="fecha_final">
+                    <div class="col-lg-3">
+                      <label class="form-label" for="trayecto">Trayecto *</label>
+                      <select class="form-select" id="trayecto" name="trayecto">
+                        <option value="1">Trayecto I</option>
+                        <option value="2">Trayecto II</option>
+                        <option value="3">Trayecto III</option>
+                        <option value="4">Trayecto IV</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-3">
+                      <label class="form-label" for="trayecto">Fase *</label>
+                      <select class="form-select" id="trayecto" name="trayecto">
+                        <option value="fase_1">Fase I</option>
+                        <option value="fase_2">Fase II</option>
+                      </select>
                     </div>
                   </div>
+                  <div class="row form-group mb-3">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="trayecto">Evaluador *</label>
+                      <select class="form-select" id="trayecto" name="trayecto">
+                        <option value="fase_1">Base de datos</option>
+                        <option value="fase_1">Base de datos II</option>
+                        <option value="fase_2">Proyecto Sociotecnologico</option>
+                        <option value="fase_2">Algoritmica y Programación I</option>
+                        <option value="fase_2">Proyecto Sociotecnologico</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-6 d-flex justify-content-start align-items-end">
+                      <div class="form-check ">
+                        <input class="form-check-input" type="checkbox" value="1" id="vinculacion" name="vinculacion">
+                        <label class="form-check-label" for="vinculacion">
+                          Evaluación Grupal
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row form-group align-items-end">
+                    <div class="col-lg-5">
+                      <label class="form-label" for="nombreItem">Nombre *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." id="nombreItem">
+                    </div>
+                    <div class="col-lg-4">
+                      <label class="form-label" for="ponderacionItem">Ponderación *</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." id="ponderacionItem">
+                    </div>
+                    <div class="col-lg-3 align-middle">
+                      <button class="btn btn-primary" id="anadirItem">Añadir</button>
+                    </div>
+                  </div>
+
+                  <div class="row form-group justify-content-center">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Ponderación</th>
+                          <th scope="col">Remover</th>
+                        </tr>
+                      </thead>
+                      <tbody id="cuerpoTablaItems">
+
+                      </tbody>
+                    </table>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -77,6 +139,35 @@
 
   <script>
     $(document).ready(() => {
+
+      $('#anadirItem').click(function(e) {
+        e.preventDefault();
+
+
+        let nombreItem = $('#nombreItem').val();
+        let ponderacionItem = $('#ponderacionItem').val();
+
+
+        if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
+          alert('Estudiante ya ha sido añadido')
+          return false;
+        }
+
+        console.log($(selectedStudent).data('nombre'))
+        let fila = `<tr id="appenedStudent-${studentId}">
+                    <th scope="row">
+                    <input type="text" name="estudiantes[]" class="form-control-plaintext" value="${studentId}" hidden>
+                    ${$(selectedStudent).data('cedula')}
+                    </th>
+                    <td>${$(selectedStudent).data('nombre')}</td>
+                    <td>${$(selectedStudent).data('apellido')}</td>
+                    <td><button class="btn btn-secondary" onClick="removeStudent(${studentId})">Eliminar</button></td>
+                  </tr>`;
+        $('#cuerpoTablaEstudiantes').append(fila);
+
+        //$(`#selectEstudiante option[value='${studentId}']`).remove();
+
+      })
 
       toggleLoading(false)
 

@@ -44,6 +44,8 @@ class dimensionController extends controller
 
       $this->dimension->setData($dimension->request->all());
 
+      var_dump($dimension->request->all());
+
       $id = $this->dimension->save();
 
       http_response_code(200);

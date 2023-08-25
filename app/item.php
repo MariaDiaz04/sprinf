@@ -10,21 +10,13 @@ class dimension extends model
 {
 
   public $fillable = [
-    'evaluador',
-    'nombre',
-    'trayecto',
-    'fase',
-    'individual',
-    'estatus'
+    'dimension_id',
+    'ponderacion'
   ];
 
   private $id;
-  private $evaluador;
-  private $nombre;
-  private $trayecto;
-  private $fase;
-  private $individual;
-  private $estatus;
+  private $dimension_id;
+  private $ponderacion;
 
   public function all()
   {
@@ -33,18 +25,6 @@ class dimension extends model
       return $materias ? $materias : null;
     } catch (Exception $th) {
       return $th;
-    }
-  }
-
-  function saveItems(array $items): void
-  {
-
-    foreach ($items as $value) {
-
-      $this->set('items', [
-        'dimension_id' => $this->id,
-        'items' => $value,
-      ]);
     }
   }
 
@@ -92,10 +72,10 @@ class dimension extends model
       }
     }
     if ($id) {
-      $this->update('dimension', $data, [['id', '=', $id]]);
+      $this->update('items', $data, [['id', '=', $id]]);
       return $id;
     } else {
-      $this->set('dimension', $data);
+      $this->set('items', $data);
       $this->id = $this->lastInsertId();
       return $this->id;
     }
@@ -118,41 +98,20 @@ class dimension extends model
         'dt'        => 0
       ),
       array(
-        'db'        => 'evaluador',
+        'db'        => 'dimension_id',
         'dt'        => 1,
         'formatter' => function ($d, $row) {
           return date('d/m/Y', strtotime($d));
         }
       ),
       array(
-        'db'        => 'nombre',
+        'db'        => 'ponderacion',
         'dt'        => 2,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
-      ),
-      array(
-        'db'        => 'trayecto',
-        'dt'        => 3,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
-      ),
-      array(
-        'db'        => 'fase',
-        'dt'        => 4,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
-      ),
-      array(
-        'db'        => 'individual',
-        'dt'        => 5,
         'formatter' => function ($d, $row) {
           return date('d/m/Y', strtotime($d));
         }
       )
     );
-    return $this->getSSP('dimension', 'id', $columns);
+    return $this->getSSP('items', 'id', $columns);
   }
 }
