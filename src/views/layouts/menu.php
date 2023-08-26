@@ -64,61 +64,123 @@
         </a>
       </li>
 
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Administrar</span>
+      </li>
       <!-- Layouts -->
+
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+          <div data-i18n="Authentications">Seguridad</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
+              <div data-i18n="Basic">Bitacora</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
+              <div data-i18n="Basic">Permisos</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="<?= APP_URL . $this->Route('modulos') ?>" class="menu-link">
+              <div data-i18n="Basic">Modulo</div>
+            </a>
+          </li>
+
+        </ul>
+      </li>
       <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Personal</div>
+          <div data-i18n="Layouts">Configuración</div>
         </a>
 
         <ul class="menu-sub">
           <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('profesor') ?>" class="menu-link">
-              <div data-i18n="Without menu">Profesor</div>
+            <a href="<?= APP_URL . $this->Route('periodos') ?>" class="menu-link">
+              <div data-i18n="Without menu">Periodos</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('estudiante') ?>" class="menu-link">
-              <div data-i18n="Without navbar">Estudiantes</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('coordinador') ?>" class="menu-link">
-              <div data-i18n="Container">Coordinador</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('tutor') ?>" class="menu-link">
-              <div data-i18n="Container">Tutor</div>
+            <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
+              <div data-i18n="Analytics">Gestión de Trayectos</div>
             </a>
           </li>
         </ul>
       </li>
-      <!-- ########### INICIO GESTION DE PERIODOS ############## -->
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Org. Docente</span>
+      </li>
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Org. Docente</div>
+        </a>
+
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="<?= APP_URL .  $this->Route('profesores') ?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-code"></i>
+              <div data-i18n="Analytics">Docentes</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="<?= APP_URL .  $this->Route('seccion') ?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-code"></i>
+              <div data-i18n="Analytics">Secciones</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="<?= APP_URL .  $this->Route('clases') ?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-code"></i>
+              <div data-i18n="Analytics">Clases</div>
+            </a>
+          </li>
+        </ul>
+      </li>
 
       <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">PERIODOS</span>
+        <span class="menu-header-text">Unidades Curriculares</span>
       </li>
-
-      <li class="menu-item">
-        <a href="<?= APP_URL .  $this->Route('periodos') ?>" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-code"></i>
-          <div data-i18n="Analytics">Gestión de Periodos</div>
-        </a>
-      </li>
-
       <li class="menu-item">
         <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-code"></i>
-          <div data-i18n="Analytics">Gestión de Trayectos</div>
+          <div data-i18n="Analytics">Materias</div>
         </a>
       </li>
 
 
-      <!-- ########### FIN DE GESTION DE PERIODOS ############## -->
 
-      <!-- ########### INICIO GESTION DE PROYECTO ############## -->
-      <!-- TODO: Verificar que usuario cuente con rol para modificar -->
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Estudiantes</span>
+      </li>
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Gestionar Estudiantes</div>
+        </a>
+
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="<?= APP_URL .  $this->Route('estudiantes') ?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-code"></i>
+              <div data-i18n="Analytics">Estudiantes</div>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-code"></i>
+              <div data-i18n="Analytics">Inscripciones</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+
 
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Proyectos</span>
@@ -138,105 +200,13 @@
         </a>
 
         <ul class="menu-sub">
-
-          <!-- TODO: Verificar que usuario cuente con rol para modificar -->
-          <li class="menu-item">
-            <a href="<?= APP_URL .  $this->Route('baremos') ?>" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-book-content"></i>
-              <div data-i18n="Analytics">Gestión de Baremos</div>
-            </a>
-          </li>
-
-          <!-- TODO: Verificar que usuario cuente con rol para modificar -->
           <li class="menu-item">
             <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
               <i class="menu-icon tf-icons bx bx-columns"></i>
               <div data-i18n="Analytics">Gestión de Dimensiones</div>
             </a>
           </li>
-      </li>
-
-      <!-- TODO: Verificar que usuario cuente con rol para modificar -->
-      <li class="menu-item">
-        <a href="<?= APP_URL .  $this->Route('aspectos') ?>" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
-          <div data-i18n="Analytics">Gestión de Aspectos a Evaluar</div>
-        </a>
-      </li>
-    </ul>
-
-    <!-- ########### FIN GESTION DE PROYECTO ############## -->
-
-
-
-    <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">Unidades Curriculares</span>
-    </li>
-    <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons bx bx-layout"></i>
-        <div data-i18n="Layouts">Registro de Materias</div>
-      </a>
-      <ul class="menu-sub">
-        <li class="menu-item">
-          <a href="<?= $this->Route('/seccion') ?>" class="menu-link">
-            <div data-i18n="Without menu">Sección </div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="<?= $this->Route('materias') ?>" class="menu-link">
-            <div data-i18n="Without menu">Materias</div>
-          </a>
-        </li>
-      </ul>
-    </li>
-    <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">Seguridad</span>
-    </li>
-
-    <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-        <div data-i18n="Authentications">Seguridad</div>
-      </a>
-      <ul class="menu-sub">
-        <li class="menu-item">
-          <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
-            <div data-i18n="Basic">Bitacora</div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
-            <div data-i18n="Basic">Permisos</div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="<?= APP_URL . $this->Route('modulos') ?>" class="menu-link">
-            <div data-i18n="Basic">Modulo</div>
-          </a>
-        </li>
-
-      </ul>
-    </li>
-    <!-- <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-          <div data-i18n="Misc">Misc</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="pages-misc-error.html" class="menu-link">
-              <div data-i18n="Error">Error</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="pages-misc-under-maintenance.html" class="menu-link">
-              <div data-i18n="Under Maintenance">Under Maintenance</div>
-            </a>
-          </li>
         </ul>
-      </li> -->
 
     </ul>
   </aside>
-  <!-- / Menu -->
