@@ -127,4 +127,42 @@ class proyecto extends model
         $this->delete('estudiante_proyecto', [['proyecto_id', '=', $id]]);
         $this->delete('proyecto', [['id', '=', $id]]);
     }
+
+    /**
+     * generarSSP
+     * 
+     * Generar SSP proveniente de la función de data table
+     *
+     * @return array
+     */
+    public function generarSSP(): array
+    {
+        $columns = array(
+            array(
+                'db'        => 'id',
+                'dt'        => 0
+            ),
+            array(
+                'db'        => 'nombre',
+                'dt'        => 1
+            ),
+            array(
+                'db'        => 'comunidad',
+                'dt'        => 2
+            ),
+            array(
+                'db'        => 'nombre_trayecto',
+                'dt'        => 3
+            ),
+            array(
+                'db'        => 'nombre_fase',
+                'dt'        => 4
+            ),
+            array(
+                'db'        => 'integrantes',
+                'dt'        => 5
+            ),
+        );
+        return $this->getSSP('detalles_proyecto', 'id', $columns);
+    }
 }

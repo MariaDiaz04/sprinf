@@ -147,6 +147,17 @@ class proyectoController extends controller
         }
     }
 
+    function ssp(Request $query): void
+    {
+        try {
+            http_response_code(200);
+            echo json_encode($this->proyecto->generarSSP());
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
     public function E501()
     {
 

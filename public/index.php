@@ -412,6 +412,15 @@ $routes->add('proyectos_delete', new Route(
     ]
 ));
 
+$routes->add('proyectos_ssp', new Route(
+
+    '/proyectos/ssp',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'ssp',
+    ]
+));
+
 $showRoute = new Route(
 
     '/proyectos/{id}',
