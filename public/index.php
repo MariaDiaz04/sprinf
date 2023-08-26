@@ -5,6 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\DashboardController; */
 
 use App\controllers\periodoController;
+use App\controllers\estudianteController;
 use App\controllers\materiasController;
 use App\controllers\aspectosController;
 use App\controllers\baremosController;
@@ -104,14 +105,45 @@ $routes->add('profesor', new Route(
     ]
 ));
 
-$routes->add('estudiante', new Route(
 
-    '/estudiante',
+// GESTION DE ESTUDIANTES
+$routes->add('estudiante_manage', new Route(
+
+    '/estudiantes',
     [
-        'controller' => userController::class,
-        'method' => 'estudiante',
+        'controller' => estudianteController::class,
+        'method' => 'index',
     ]
 ));
+
+$routes->add('estudiante_edit', new Route(
+
+    '/estudiantes/edit/{id}',
+    [
+        'controller' => estudianteController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/estudiantes/guardar', new Route(
+
+    '/estudiantes/guardar',
+    [
+        'controller' => estudianteController::class,
+        'method' => 'store',
+    ]
+));
+
+$routes->add('estudiante_ssp', new Route(
+
+    '/estudiantes/ssp',
+    [
+        'controller' => estudianteController::class,
+        'method' => 'ssp',
+    ]
+));
+
+
 
 $routes->add('seccion', new Route(
 

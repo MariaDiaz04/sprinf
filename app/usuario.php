@@ -117,13 +117,12 @@ class usuario extends model
     {
         $profesor = $this->querys(
             'SELECT
-                persona.*,
-                usuario.email
+                persona.*
             FROM
-                `usuario`,
+                profesor,   
                 `persona`
             WHERE
-                usuario.id = persona.usuario_id AND usuario.rol_id = 2'
+                profesor.persona_id = persona.cedula'
         );
         return $profesor;
     }
@@ -132,13 +131,12 @@ class usuario extends model
     {
         $estudiante = $this->querys(
             'SELECT
-                persona.*,
-                usuario.email
+                persona.*
             FROM
-                `usuario`,
-                `persona`
+                `persona`,
+                `estudiante`
             WHERE
-                usuario.id = persona.usuario_id AND usuario.rol_id = 4'
+                estudiante.persona_id = persona.cedula'
         );
         return $estudiante;
     }
