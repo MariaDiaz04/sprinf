@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Secciones </span>/ Gestión</div>
+        <div><span class="text-muted font-weight-light">Seccion </span>/ Gestión</div>
 
         <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
@@ -11,14 +11,14 @@
   </div>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white">Secciones</h6>
+    <h6 class="card-header bg-primary text-white">Seccion</h6>
     <div class="card-body px-3 pt-3">
       <table id="example" class="display" style="width:100%">
         <thead>
           <tr>
-            <th>Código</th>
-            <th>Trayecto</th>
-            <th>Observación</th>
+            <th>codigo</th>
+            <th>trayecto</th>
+            <th>observacion</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -31,10 +31,10 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nueva Seccion</h5>
+          <h5 class="modal-title" id="crearLabel">Nuevo Periodo</h5>
 
         </div>
-        <form action="<?= APP_URL . $this->Route('trayectos/guardar') ?>" method="post" id="guardar">
+        <form action="<?= APP_URL . $this->Route('seccion/guardar') ?>" method="post" id="guardar">
           <div class="modal-body">
             <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
             <input type="hidden" name="estatus" value="1">
@@ -44,18 +44,12 @@
                   <div class="row form-group">
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Número * </label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="numero_trayecto" id="numero_trayecto">
+                      <label class="form-label" for="nombre">Fecha Inicial *</label>
+                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_inicio" id="fecha_inicio">
                     </div>
                     <div class="col-lg-6">
-                      <label class="form-label">Periodo *</label>
-                      <select class="form-select" id="selectPeriodo" name="periodo_id">
-                        <?php if ($periodos) : ?>
-                          <?php foreach ($periodos as $periodo) : ?>
-                            <option value="<?= $periodo->id ?>"><?= $periodo->fecha_inicio ?> /<?= $periodo->fecha_cierre ?></option>
-                          <?php endforeach; ?>
-                        <?php endif; ?>
-                      </select>
+                      <label class="form-label" for="nombre">Fecha Final *</label>
+                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_cierre" id="fecha_cierre">
                     </div>
                   </div>
                 </div>
@@ -101,7 +95,7 @@
         columnDefs: [{
           data: null,
           defaultContent: `${editBtn} ${deleteBtn}`, // combino los botons de acción
-          targets: 4 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          targets: 3 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
 

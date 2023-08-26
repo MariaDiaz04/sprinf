@@ -1,87 +1,64 @@
 <?php
 
-use App\permisos;
-use App\trayectos;
+namespace App\controllers;
+
+use Symfony\Component\HttpFoundation\Request;
+
 use App\seccion;
-use App\controllers\controller;
+use Exception;
 
 class seccionController extends controller
 {
-    public $SECCION;
-    public $PERMISOS;
-    public $TRAYECTO;
 
+    private $seccion;
 
     function __construct()
     {
-        $this->SECCION = new seccion();
-        $this->PERMISOS = new permisos();
-        $this->TRAYECTO = new trayectos();
+        $this->seccion = new seccion();
     }
 
     public function index()
     {
 
-        $seccion = $this->SECCION->all();
-        return $this->view('seccion/seccion', ['seccion' => $seccion]);
-    }
-
-    public function create($request)
-    {
-        $seccion = $this->SECCION->all();
-        $trayectos = $this->TRAYECTO->all();
-        return $this->view('seccion/crear', ['seccion' => $seccion, 'trayecto' => $trayectos]);
-    }
-
-    public function store($seccion)
-    {
-
-        $guardar = $this->SECCION->create([
-            'nombre' => $seccion->request->get('nombre'),
-            'trayecto_id' => $seccion->request->get('trayecto_id'),
-        ])->save();
-
-       // return var_dump($guardar);
-
-        if ($guardar == null) {
-            echo '
-        <script> 
-            window.alert(" La Seccion  ya esta registrada")
-        </script>';
-            header("refresh:1 http://localhost/sprinfbd/public/?r=seccion");
-        } else {
-            return $this->redirect('seccion');
-        }
-    }
-
-    public function edit($request)
-    {
-        $seccion = $this->SECCION->find($request['seccion']);
-        if ($seccion) {
-            return $this->view('seccion/editar', ['seccion' => $seccion->fillable]);
-        } else {
-
-            return $this->page('errors/404');
-        }
-    }
-    public function update($request)
-    {
+        $seccion = $this->seccion->all();
 
 
-        if (!$seccion = $this->SECCION->find($_GET['id'])) {
-            return $this->page('errors/404');
-        }
-        $seccion->actualizar([
-            'nombre' => '"' . $request['nombre'] . '"',
-            'estatus' => '"' . $request['estatus'] . '"',
+        return $this->view('seccion/gestionar', [
+            'seccion' => $seccion,
         ]);
-        return $this->redirect('seccion');
     }
 
-
-    public function delete($request)
+    public function store(Request $seccion)
     {
-        $seccion = $this->SECCION->find($request['id']);
-        return $seccion ? $seccion->eliminar() : $this->page('errors/404');
+        try {
+
+
+            // $this->seccion->setData($seccion->request->all());
+
+            // $id = $this->seccion->save();
+
+            http_response_code(200);
+            // echo json_encode($id);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    function ssp(Request $query): void
+    {
+        try {
+            http_response_code(200);
+            echo json_encode($this->seccion->generarSSP());
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    public function E501()
+    {
+
+        return $this->page('errors/501');
     }
 }

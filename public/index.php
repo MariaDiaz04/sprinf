@@ -5,6 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\DashboardController; */
 
 use App\controllers\periodoController;
+use App\controllers\seccionController;
 use App\controllers\profesorController;
 use App\controllers\estudianteController;
 use App\controllers\materiasController;
@@ -184,36 +185,42 @@ $routes->add('profesor_ssp', new Route(
 ));
 
 
+# GESTION DE Secciones
+$routes->add('seccion_manage', new Route(
 
-$routes->add('seccion', new Route(
-
-    //  var_dump('asa'),
     '/seccion',
     [
         'controller' => seccionController::class,
         'method' => 'index',
     ]
 ));
-$routes->add('seccionCrear', new Route(
 
+$routes->add('seccion_edit', new Route(
 
-    '/seccionCrear',
+    '/seccion/edit/{id}',
     [
         'controller' => seccionController::class,
-        'method' => 'create',
+        'method' => 'edit',
     ]
 ));
 
-$routes->add('seccionGuardar', new Route(
+$routes->add('/seccion/guardar', new Route(
 
-    '/seccionGuardar',
+    '/seccion/guardar',
     [
         'controller' => seccionController::class,
         'method' => 'store',
     ]
 ));
 
+$routes->add('seccion_ssp', new Route(
 
+    '/seccion/ssp',
+    [
+        'controller' => seccionController::class,
+        'method' => 'ssp',
+    ]
+));
 $routes->add('materias', new Route(
 
 

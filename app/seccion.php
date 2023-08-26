@@ -147,4 +147,30 @@ public function seccionInactivas() {
     );
     return $seccion_inactivas;
 } */
+
+    /**
+     * generarSSP
+     * 
+     * Generar SSP proveniente de la función de data table
+     *
+     * @return array
+     */
+    public function generarSSP(): array
+    {
+        $columns = array(
+            array(
+                'db'        => 'codigo',
+                'dt'        => 0
+            ),
+            array(
+                'db'        => 'trayecto',
+                'dt'        => 1
+            ),
+            array(
+                'db'        => 'observacion',
+                'dt'        => 2
+            )
+        );
+        return $this->getSSP('detalles_seccion', 'codigo', $columns);
+    }
 }
