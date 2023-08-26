@@ -238,18 +238,18 @@ class materias extends model
                 'dt'        => 1
             ),
             array(
-                'db'        => 'trayecto',
+                'db'        => 'nombre_trayecto',
                 'dt'        => 2
             ),
             array(
-                'db'        => 'periodo',
+                'db'        => 'nombre_fase',
                 'dt'        => 3
             ),
             array(
-                'db'        => 'vinculacion',
+                'db'        => 'dimensiones_proyecto',
                 'dt'        => 4
             ),
         );
-        return $this->getSSP('materias', 'codigo', $columns);
+        return $this->getSSP('detalles_materias', 'codigo', $columns);
     }
 }

@@ -16,11 +16,11 @@
       <table id="example" class="display" style="width:100%">
         <thead>
           <tr>
-            <th>codigo</th>
-            <th>nombre</th>
-            <th>trayecto</th>
-            <th>periodo</th>
-            <th>vinculacion</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Trayecto</th>
+            <th>Fase</th>
+            <th>Dimensiones</th>
             <th>Acción</th>
           </tr>
         </thead>

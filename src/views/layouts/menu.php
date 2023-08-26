@@ -147,7 +147,7 @@
         <span class="menu-header-text">Unidades Curriculares</span>
       </li>
       <li class="menu-item">
-        <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
+        <a href="<?= APP_URL .  $this->Route('materias') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-code"></i>
           <div data-i18n="Analytics">Materias</div>
         </a>
