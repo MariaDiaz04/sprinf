@@ -17,11 +17,11 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Evaluador</th>
-            <th>nombre</th>
-            <th>Trayecto</th>
+            <th>Nombre</th>
+            <th>Materia</th>
             <th>Fase</th>
-            <th>Individual</th>
+            <th>Trayecto</th>
+            <th>Grupal</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -189,7 +189,7 @@
         columnDefs: [{
           data: null,
           defaultContent: `${editBtn} ${deleteBtn}`, // combino los botons de acción
-          targets: 3 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          targets: 6 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
 

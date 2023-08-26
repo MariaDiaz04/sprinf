@@ -118,41 +118,26 @@ class dimension extends model
         'dt'        => 0
       ),
       array(
-        'db'        => 'evaluador',
-        'dt'        => 1,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
-      ),
-      array(
         'db'        => 'nombre',
-        'dt'        => 2,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
+        'dt'        => 1
       ),
       array(
-        'db'        => 'trayecto',
-        'dt'        => 3,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
+        'db'        => 'nombre_materia',
+        'dt'        => 2
       ),
       array(
-        'db'        => 'fase',
-        'dt'        => 4,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
+        'db'        => 'nombre_fase',
+        'dt'        => 3
       ),
       array(
-        'db'        => 'individual',
-        'dt'        => 5,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
+        'db'        => 'nombre_trayecto',
+        'dt'        => 4
+      ),
+      array(
+        'db'        => 'grupal',
+        'dt'        => 5
       )
     );
-    return $this->getSSP('dimension', 'id', $columns);
+    return $this->getSSP('detalles_dimension', 'id', $columns);
   }
 }
