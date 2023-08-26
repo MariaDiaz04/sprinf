@@ -95,22 +95,22 @@ class trayectos extends model
   {
     $columns = array(
       array(
-        'db'        => 'id',
+        'db'        => 'codigo',
         'dt'        => 0
       ),
       array(
-        'db'        => 'periodo_id',
+        'db'        => 'nombre',
         'dt'        => 1
       ),
       array(
-        'db'        => 'numero_trayecto',
+        'db'        => 'fecha_inicio',
         'dt'        => 2
       ),
       array(
-        'db'        => 'estatus',
+        'db'        => 'fecha_cierre',
         'dt'        => 3
       )
     );
-    return $this->getSSP('trayecto', 'id', $columns);
+    return $this->getSSP('detalles_trayecto', 'codigo', $columns);
   }
 }

@@ -17,9 +17,9 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>ID periodo</th>
-            <th>Trayecto</th>
-            <th>Estatus</th>
+            <th>Nombre</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Cierre</th>
             <th>Acción</th>
           </tr>
         </thead>

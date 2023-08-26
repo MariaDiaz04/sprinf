@@ -1,4 +1,4 @@
-DROP VIEW detalles_profesores;
+DROP VIEW IF EXISTS detalles_profesores;
 CREATE VIEW detalles_profesores AS
 SELECT persona.*, usuario.email
 FROM persona
