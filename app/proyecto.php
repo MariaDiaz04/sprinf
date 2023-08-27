@@ -129,6 +129,18 @@ class proyecto extends model
     }
 
     /**
+     * Obtiene los integrantes de un proyecto
+     *
+     * @param [int] $id - ID de proyecto
+     * @return array retorna vacio si no tiene integrantes
+     */
+    function obtenerIntegrantes(int $id): array
+    {
+        $integrantes = $this->select('detalles_integrantes', [['proyecto_id', '=', $id]]);
+        return !$integrantes ? [] : $integrantes;
+    }
+
+    /**
      * generarSSP
      * 
      * Generar SSP proveniente de la función de data table

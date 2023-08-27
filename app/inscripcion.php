@@ -81,6 +81,19 @@ class inscripcion extends model
     }
   }
 
+  /**
+   * Verifica si un usuario está inscrito a una materia
+   *
+   * @param string $idEstudiante
+   * @param string $idUnidadCurricular
+   * @return array es vacio si no consigue la inscripcion
+   */
+  function usuarioCursaMateria(string $idEstudiante, string $idUnidadCurricular): array
+  {
+    $inscripcion = $this->selectOne('detalles_inscripciones', [['id', '=', "'" . $idEstudiante . "'"], ['unidad_curricular_id', '=', "'" . $idUnidadCurricular . "'"]]);
+    return !$inscripcion ? [] : $inscripcion;
+  }
+
 
 
   /**

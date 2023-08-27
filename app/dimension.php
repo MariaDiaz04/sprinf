@@ -100,6 +100,18 @@ class dimension extends model
       return $this->id;
     }
   }
+  /**
+   * Retorna un array de las materias que se están cursando por baremos
+   *
+   * @param string En este  parametro se define la fase del baremos
+   * @return array
+   */
+  function materiasDeBaremos(string $codFase): array
+  {
+    $materias = $this->select('detalles_materias', [['codigo_fase', '=', '"' . $codFase . '"'], ['dimensiones_proyecto', '>', 0]]);
+
+    return $materias;
+  }
 
 
 
