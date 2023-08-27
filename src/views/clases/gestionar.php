@@ -110,14 +110,12 @@
           targets: 7, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
           render: function(data, type, row, meta) {
             return `<div class="dropdown show">
-                      <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
+                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
-
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>
                     </div>`;
           }
@@ -183,14 +181,6 @@
 
       })
 
-      function edit(id) {
-        alert(`Editing ${id}`)
-      }
-
-      function remove(id) {
-        alert(`Removing ${id}`)
-      }
-
       // TOGGLE BUTTON AND SPINNER
       function toggleLoading(show) {
         if (show) {
@@ -203,4 +193,12 @@
 
       }
     })
+
+    function edit(id) {
+      alert(`Editing ${id}`)
+    }
+
+    function remove(id) {
+      alert(`Removing ${id}`)
+    }
   </script>
