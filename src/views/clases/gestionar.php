@@ -31,41 +31,84 @@
 
   <!-- MODAL CREAR -->
   <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="crearLabel">Nueva Clase</h5>
 
         </div>
-        <form action="<?= APP_URL . $this->Route('clases/guardar') ?>" method="post" id="guardar">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
-            <div class="container-fluid">
-              <div class="row pb-2">
-                <div class="col-12">
-                  <div class="row form-group">
-                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Inicial *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_inicio" id="fecha_inicio">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Final *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_cierre" id="fecha_cierre">
-                    </div>
+        <form action="<?= APP_URL . $this->Route('clases/guardar') ?>" method="post" id="clasesGuardar">
+          <div class="container-fluid">
+            <div class="row pb-2">
+              <div class="col-12">
+                <div class="row form-group mb-2">
+                  <div class="col-lg-6">
+                    <label class="form-label" for="trayecto_id">Profesor *</label>
+                    <select class="form-select" name="trayecto_id">
+
+                      <?php foreach ($profesores as $profesor) : ?>
+                        <option value="<?= $profesor->id ?>"><?= $profesor->nombre ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <label class="form-label" for="tutor_id">Sección *</label>
+                    <select class="form-select" name="tutor_id">
+                      <?php foreach ($tutores as $seccion) : ?>
+                        <option value="<?= $seccion->id ?>"><?= "$tutor->nombre_trayecto - $seccion->nombre_fase - $tutor->nombre" ?></option>
+                      <?php endforeach; ?>
+                    </select>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
-            <div id="guardarLoading">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
+              <div class="row form-group mb-2">
+                <div class="col-lg-12">
+                  <label class="form-label" for="trayecto_id">Unidad Curricular *</label>
+                  <select class="form-select" name="trayecto_id">
+
+                    <?php foreach ($unidades as $unidad) : ?>
+                      <option value="<?= $unidad->id ?>"><?= $unidad->nombre ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+              </div>
+
+              <hr class="border-light my-3">
+
+              <div class="row form-group align-items-end">
+                <div class="col-lg-10">
+                  <label class="form-label" for="estudiantes">Estudiantes</label>
+                  <select class="form-select" id="estudiantes">
+
+                    <?php foreach ($estudiantes as $estudiante) : ?>
+                      <option value="<?= $estudiante->id ?>"><?= $estudiante->nombre ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+
+                <div class="col-lg-2 align-middle">
+                  <button class="btn btn-primary" id="anadirEstudiante">Añadir</button>
+                </div>
+              </div>
+
+              <div class="row form-group justify-content-center">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cedula</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Apellido</th>
+                      <th scope="col">Remover</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cuerpoTablaEstudiantes">
+
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-right mt-3">
+                <input type="submit" class="btn btn-primary" value='Abrir Clase' />&nbsp;
               </div>
             </div>
           </div>
@@ -86,27 +129,12 @@
       // si necesito editar, le añado la clase "edit"
       // luego en la función table.on(). verifico si la clase del boton en el que hice click
       // contiene el nombre de alguna acción que haya definido
-      let options = `
-      <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
-                    
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="">Edit</a></li>
-          <li><a href="">Delete</a></li>
-          <li class="divider"></li>
-          <li><a href="">Separated link</a></li>
-      
-  </ul>
-      `
-      let editBtn = "<button class=\"btn btn-outline-secondary btn-color btn-bg-color col-xs-6 mx-2 edit\">Editar</button>";
-      let deleteBtn = "<button class=\"btn btn-outline-danger btn-color btn-bg-color col-xs-6 mx-2 remove\">Eliminar</button>";
-
 
       let table = new DataTable('#example', {
         ajax: '<?= $this->Route('clases/ssp') ?>',
         processing: true,
         serverSide: true,
         columnDefs: [{
-          // defaultContent: `${options}`, // combino los botons de acción
           targets: 7, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
           render: function(data, type, row, meta) {
             return `<div class="dropdown show">
