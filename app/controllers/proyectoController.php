@@ -15,6 +15,7 @@ use App\dimension;
 use App\tutor;
 use App\trayectos;
 use Exception;
+use PDOException;
 
 class proyectoController extends controller
 {
@@ -91,31 +92,52 @@ class proyectoController extends controller
 
     public function show(Request $request, $id)
     {
-        $proyecto = $this->proyecto->find($id);
-        $estudiantes = $this->estudiantes->byProject($id);
+        try {
+            $proyecto = $this->proyecto->find($id);
+            $estudiantes = $this->estudiantes->byProject($id);
 
-        return $this->view('proyectos/show', [
-            'proyecto' => $proyecto,
-            'estudiantes' => $estudiantes
-        ]);
+            return $this->view('proyectos/show', [
+                'proyecto' => $proyecto,
+                'estudiantes' => $estudiantes
+            ]);
+        } catch (PDOException $pdoe) {
+            return $this->view('errors/501', [
+                'message' => 'Error inesperado',
+            ]);
+        } catch (Exception $e) {
+            return $this->view('errors/501', [
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     public function edit(Request $request, $id)
     {
-        $proyecto = $this->proyecto->find($id);
-        $estudiantesPendientes = $this->estudiantes->listPendingForProject();
-        $estudiantes = $this->estudiantes->byProject($id);
-        $tutores = $this->tutores->all();
-        $trayectos = $this->trayectos->all();
+        try {
+
+            $proyecto = $this->proyecto->find($id);
+            $estudiantesPendientes = $this->estudiantes->listPendingForProject();
+            $estudiantes = $this->estudiantes->byProject($id);
+            $tutores = $this->tutores->all();
+            $trayectos = $this->trayectos->all();
 
 
-        return $this->view('proyectos/edit', [
-            'proyecto' => $proyecto,
-            'estudiantes' => $estudiantes,
-            'estudiantesPendientes' => $estudiantesPendientes ?? [],
-            'tutores' => $tutores,
-            'trayectos' => $trayectos
-        ]);
+            return $this->view('proyectos/edit', [
+                'proyecto' => $proyecto,
+                'estudiantes' => $estudiantes,
+                'estudiantesPendientes' => $estudiantesPendientes ?? [],
+                'tutores' => $tutores,
+                'trayectos' => $trayectos
+            ]);
+        } catch (PDOException $pdoe) {
+            return $this->view('errors/501', [
+                'message' => 'Error inesperado',
+            ]);
+        } catch (Exception $e) {
+            return $this->view('errors/501', [
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     function update(Request $proyecto): void
@@ -163,18 +185,19 @@ class proyectoController extends controller
         try {
             $proyecto = $this->proyecto->find($id);
             $integrantes = $this->proyecto->obtenerIntegrantes($id);
-            $fase = $this->fase->find($proyecto['codigo_fase']);
-            $materiasDeDimension = $this->dimension->materiasDeBaremos($proyecto['codigo_fase']);
-
-            $baremos = [];
-            $indicadoresIndividuales = [];
 
             if (empty($proyecto)) {
                 throw new Exception('Proyecto no existe');
             }
-            if (empty($proyecto)) {
+            if (empty($integrantes)) {
                 throw new Exception('Proyecto no cuenta con estudiantes');
             }
+
+            $fase = $this->fase->find($proyecto['codigo_fase']);
+            $materiasDeDimension = $this->dimension->materiasDeBaremos($proyecto['codigo_fase']);
+            $baremos = [];
+            $indicadoresIndividuales = [];
+
             if (empty($materiasDeDimension)) {
                 throw new Exception('Baremos no cuenta con dimensiones');
             }
@@ -227,8 +250,9 @@ class proyectoController extends controller
                 'errors' => $errors,
             ]);
         } catch (Exception $e) {
-            echo $e->getMessage();
-            // TODO: pantalla de error
+            return $this->view('errors/501', [
+                'message' => $e->getMessage(),
+            ]);
         }
     }
 
