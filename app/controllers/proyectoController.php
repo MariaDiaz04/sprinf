@@ -165,9 +165,8 @@ class proyectoController extends controller
             $integrantes = $this->proyecto->obtenerIntegrantes($id);
             $fase = $this->fase->find($proyecto['codigo_fase']);
             $materiasDeDimension = $this->dimension->materiasDeBaremos($proyecto['codigo_fase']);
-            $dimensiones = $this->dimension->findByFase($proyecto['codigo_fase']);
 
-            $indicadoresGrupales = [];
+            $baremos = [];
             $indicadoresIndividuales = [];
 
             if (empty($proyecto)) {
@@ -196,30 +195,35 @@ class proyectoController extends controller
                 }
             }
 
-            foreach ($dimensiones as $key => $dimension) {
+            foreach ($materiasDeDimension as $key => $materia) {
+                $dimensiones = $this->dimension->findBySubject($materia['codigo']);
 
-                $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
+                $baremos[$materia['codigo']]['nombre'] = $materia['nombre'];
 
-                if (empty($indicadores)) {
-                    $errors[] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
-                } else {
-                    // configurar informacion de indicador
-                    $data = ['dimension' => $dimension['nombre'], 'materia' => $dimension['nombre_materia'], 'indicadores' => $indicadores];
-                    if ($dimension['grupal'] == 1) {
-                        $indicadoresGrupales[] = $data;
+                foreach ($dimensiones as $key => $dimension) {
+
+                    $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
+
+                    if (empty($indicadores)) {
+                        $errors[] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
                     } else {
-                        $indicadoresIndividuales[] = $data;
+                        // configurar informacion de indicador
+                        if ($dimension['grupal'] == 1) {
+                            $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['nombre'] = $dimension['nombre'];
+                            $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['indicadores'] = $indicadores;
+                        } else {
+                            $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['nombre'] = $dimension['nombre'];
+                            $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['indicadores'] = $indicadores;
+                        }
                     }
                 }
             }
 
 
-
             return $this->view('proyectos/assessment', [
                 'fase' => $fase,
                 'integrantes' => $integrantes,
-                'indicadoresGrupales' => $indicadoresGrupales,
-                'indicadoresIndividuales' => $indicadoresIndividuales,
+                'baremos' => $baremos,
             ]);
         } catch (Exception $e) {
             echo $e->getMessage();

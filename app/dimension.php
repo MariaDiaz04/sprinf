@@ -49,6 +49,18 @@ class dimension extends model
   }
 
   /**
+   * Obtener las dimensiones por materia
+   *
+   * @param string $codMateria
+   * @return array
+   */
+  function findBySubject(string $codMateria): array
+  {
+    $dimensiones = $this->select('detalles_dimension', [['unidad_id', '=', "'" . $codMateria . "'"]]);
+    return !$dimensiones ? [] : $dimensiones;
+  }
+
+  /**
    * Obtiene los indicadores pertenecientes a una dimension
    *
    * @param integer $dimensionId

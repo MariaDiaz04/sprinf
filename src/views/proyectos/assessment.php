@@ -2,73 +2,79 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Proyectos </span>/ Evaluar</div>
+        <div>Baremos <?= $fase->nombre_trayecto . ' - ' . $fase->nombre_fase . ' - ' . $fase->fecha_inicio . '/' . $fase->fecha_cierre ?></div>
 
 
       </h4>
     </div>
   </div>
 
-  <div class="card">
-    <h6 class="card-header bg-primary text-white">Baremos <?= $fase->nombre_trayecto . ' - ' . $fase->nombre_fase . ' - ' . $fase->fecha_inicio . '/' . $fase->fecha_cierre ?></h6>
-    <div class="card-body px-3 pt-3">
-      <table id="example" class="display" style="width:100%">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Comunidad</th>
-            <th>Trayecto</th>
-            <th>Fase</th>
-            <th>Integrantes</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-  </div>
+  <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardar">
 
-  <!-- MODAL CREAR -->
-  <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nuevo Proyecto</h5>
+    <?php foreach ($baremos as $materia) : ?>
+      <div class="card mb-3">
+        <h6 class="card-header bg-primary text-white"><?= $materia->nombre ?></h6>
+        <div class="card-body px-3 pt-3">
+          <input type="hidden" name="estatus" value="1">
 
-        </div>
-        <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="guardar">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
-            <div class="container-fluid">
-              <div class="row pb-2">
+          <?php foreach ($materia->dimension->grupal as $dimension) : ?>
+            <div class="container">
+              <div class="row">
                 <div class="col-12">
-                  <div class="row form-group">
-                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Inicial *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_inicio" id="fecha_inicio">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Final *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_cierre" id="fecha_cierre">
-                    </div>
+                  <strong>GRUPAL - <?= $dimension->nombre ?></strong>
+                </div>
+                <hr>
+                <?php foreach ($dimension->indicadores as $indicador) : ?>
+
+                  <div class="col-6">
+                    <label class="form-label" for="repositorio_documentacion"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
+                    <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." name="repositorio_documentacion">
+
                   </div>
+                <?php endforeach; ?>
+
+              </div>
+            </div>
+          <?php endforeach; ?>
+
+
+
+          <?php if (property_exists($materia->dimension, 'individual') && !empty($materia->dimension->individual)) : ?>
+            <div class="my-5"></div>
+            <hr>
+            <div class="my-5"></div>
+
+            <?php foreach ($integrantes as $integrante) : ?>
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <strong>INDIVIDUAL - <?= $integrante->nombre ?> - C.I. <?= $integrante->cedula ?> </strong>
+                  </div>
+                  <hr>
+                  <?php foreach ($materia->dimension->individual as $dimension) : ?>
+                    <div class="col-6">
+                      <label class="form-label" for="repositorio_documentacion"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
+                      <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." name="repositorio_documentacion">
+
+                    </div>
+                  <?php endforeach; ?>
+
                 </div>
               </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
-            <div id="guardarLoading">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
-              </div>
-            </div>
-          </div>
-        </form>
+            <?php endforeach; ?>
+
+
+          <?php endif; ?>
+
+
+
+
+        </div>
       </div>
+    <?php endforeach; ?>
+    <hr class="border-light m-0">
+    <div class="text-end mt-3">
+      <input type="submit" class="btn btn-primary" value='Evaluar' />&nbsp;
     </div>
-  </div>
+  </form>
+</div>
