@@ -57,7 +57,7 @@
     <ul class="menu-inner py-1">
 
       <!-- Dashboard -->
-      <li class="menu-item active">
+      <li class="menu-item <?= $this->currentPath() == 'home' ? 'active' : '' ?>">
         <a href="<?= APP_URL . $this->Route('home') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Inicio</div>
@@ -69,23 +69,23 @@
       </li>
       <!-- Layouts -->
 
-      <li class="menu-item">
+      <li class="menu-item <?= in_array($this->currentPath(), ['bitacora', 'permisos', 'modulos']) ? 'open' : '' ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
           <div data-i18n="Authentications">Seguridad</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'bitacora' ? 'active' : '' ?>">
             <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
               <div data-i18n="Basic">Bitacora</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'permisos' ? 'active' : '' ?>">
             <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
               <div data-i18n="Basic">Permisos</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'modulos' ? 'active' : '' ?>">
             <a href="<?= APP_URL . $this->Route('modulos') ?>" class="menu-link">
               <div data-i18n="Basic">Modulo</div>
             </a>
@@ -93,19 +93,19 @@
 
         </ul>
       </li>
-      <li class="menu-item">
+      <li class="menu-item <?= in_array($this->currentPath(), ['periodos', 'trayectos']) ? 'open' : '' ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">Configuración</div>
         </a>
 
         <ul class="menu-sub">
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'periodos' ? 'active' : '' ?>">
             <a href="<?= APP_URL . $this->Route('periodos') ?>" class="menu-link">
               <div data-i18n="Without menu">Periodos</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'trayectos' ? 'active' : '' ?>">
             <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
               <div data-i18n="Analytics">Gestión de Trayectos</div>
             </a>
@@ -115,26 +115,26 @@
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Org. Docente</span>
       </li>
-      <li class="menu-item">
+      <li class="menu-item <?= in_array($this->currentPath(), ['profesores', 'seccion', 'clases']) ? 'open' : '' ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">Org. Docente</div>
         </a>
 
         <ul class="menu-sub">
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'profesores' ? 'active' : '' ?>">
             <a href="<?= APP_URL .  $this->Route('profesores') ?>" class="menu-link">
               <i class="menu-icon tf-icons bx bx-code"></i>
               <div data-i18n="Analytics">Docentes</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'seccion' ? 'active' : '' ?>">
             <a href="<?= APP_URL .  $this->Route('seccion') ?>" class="menu-link">
               <i class="menu-icon tf-icons bx bx-code"></i>
               <div data-i18n="Analytics">Secciones</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'clases' ? 'active' : '' ?>">
             <a href="<?= APP_URL .  $this->Route('clases') ?>" class="menu-link">
               <i class="menu-icon tf-icons bx bx-code"></i>
               <div data-i18n="Analytics">Clases</div>
@@ -146,7 +146,7 @@
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Unidades Curriculares</span>
       </li>
-      <li class="menu-item">
+      <li class="menu-item <?= $this->currentPath() == 'materias' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('materias') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-code"></i>
           <div data-i18n="Analytics">Materias</div>
@@ -158,21 +158,21 @@
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Estudiantes</span>
       </li>
-      <li class="menu-item">
+      <li class="menu-item <?= in_array($this->currentPath(), ['estudiantes', 'trayectos']) ? 'open' : '' ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">Gestionar Estudiantes</div>
         </a>
 
         <ul class="menu-sub">
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'estudiantes' ? 'active' : '' ?>">
             <a href="<?= APP_URL .  $this->Route('estudiantes') ?>" class="menu-link">
               <i class="menu-icon tf-icons bx bx-code"></i>
               <div data-i18n="Analytics">Estudiantes</div>
             </a>
           </li>
 
-          <li class="menu-item">
+          <li class="menu-item <?= $this->currentPath() == 'trayectos' ? 'active' : '' ?>">
             <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
               <i class="menu-icon tf-icons bx bx-code"></i>
               <div data-i18n="Analytics">Inscripciones</div>
@@ -186,21 +186,21 @@
         <span class="menu-header-text">Proyectos</span>
       </li>
 
-      <li class="menu-item">
+      <li class="menu-item <?= $this->currentPath() == 'proyectos' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('proyectos') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-code"></i>
           <div data-i18n="Analytics">Gestión de Proyectos</div>
         </a>
       </li>
 
-      <li class="menu-item">
+      <li class="menu-item <?= $this->currentPath() == 'dimensiones' ? 'open' : '' ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">Baremos</div>
         </a>
 
-        <ul class="menu-sub">
-          <li class="menu-item">
+        <ul class="menu-sub ">
+          <li class="menu-item <?= $this->currentPath() == 'dimensiones' ? 'active' : '' ?>">
             <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
               <i class="menu-icon tf-icons bx bx-columns"></i>
               <div data-i18n="Analytics">Gestión de Dimensiones</div>
