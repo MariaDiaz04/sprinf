@@ -1,6 +1,6 @@
 DROP VIEW IF EXISTS detalles_dimension;
 CREATE VIEW detalles_dimension AS
-SELECT dimension.*, materias.nombre as nombre_materia, fase.nombre as nombre_fase, trayecto.nombre as nombre_trayecto
+SELECT dimension.*, materias.nombre as nombre_materia, fase.nombre as nombre_fase, fase.codigo as codigo_fase, trayecto.nombre as nombre_trayecto, trayecto.codigo as codigo_trayecto
 FROM dimension
 INNER JOIN malla_curricular ON malla_curricular.codigo = dimension.unidad_id
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id 
