@@ -36,6 +36,30 @@ class dimension extends model
     }
   }
 
+  /**
+   * Obtener las dimensiones por fase
+   *
+   * @param string $codFase
+   * @return array es vacio si no consigue ninguna
+   */
+  function findByFase(string $codFase): array
+  {
+    $dimensiones = $this->select('detalles_dimension', [['codigo_fase', '=', "'" . $codFase . "'"]]);
+    return !$dimensiones ? [] : $dimensiones;
+  }
+
+  /**
+   * Obtiene los indicadores pertenecientes a una dimension
+   *
+   * @param integer $dimensionId
+   * @return array es vacio si no consigue ningun indicador
+   */
+  function obtenerIndicadores(int $dimensionId): array
+  {
+    $indicadores = $this->select('indicadores', [['dimension_id', '=', "'" . $dimensionId . "'"]]);
+    return !$indicadores ? [] : $indicadores;
+  }
+
   function saveItems(array $items): void
   {
 

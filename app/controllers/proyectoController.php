@@ -9,6 +9,9 @@ use Bcrypt\Bcrypt;
 
 use App\proyecto;
 use App\estudiante;
+use App\inscripcion;
+use App\fase;
+use App\dimension;
 use App\tutor;
 use App\trayectos;
 use Exception;
@@ -18,15 +21,21 @@ class proyectoController extends controller
 
     public $proyecto;
     private $estudiantes;
+    private $dimension;
     private $tutores;
+    private $fase;
     private $trayectos;
+    private $inscripcion;
 
     function __construct()
     {
         $this->proyecto = new proyecto();
         $this->estudiantes = new estudiante();
+        $this->dimension = new dimension();
         $this->tutores = new tutor();
         $this->trayectos = new trayectos();
+        $this->fase = new fase();
+        $this->inscripcion = new inscripcion();
     }
 
     public function index()
@@ -144,6 +153,77 @@ class proyectoController extends controller
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());
+        }
+    }
+
+    function assessment(Request $request, $id)
+    {
+        // verificacion de datos de usuario
+        $errors = [];
+        try {
+            $proyecto = $this->proyecto->find($id);
+            $integrantes = $this->proyecto->obtenerIntegrantes($id);
+            $fase = $this->fase->find($proyecto['codigo_fase']);
+            $materiasDeDimension = $this->dimension->materiasDeBaremos($proyecto['codigo_fase']);
+            $dimensiones = $this->dimension->findByFase($proyecto['codigo_fase']);
+
+            $indicadoresGrupales = [];
+            $indicadoresIndividuales = [];
+
+            if (empty($proyecto)) {
+                throw new Exception('Proyecto no existe');
+            }
+            if (empty($proyecto)) {
+                throw new Exception('Proyecto no cuenta con estudiantes');
+            }
+            if (empty($materiasDeDimension)) {
+                throw new Exception('Baremos no cuenta con dimensiones');
+            }
+
+            foreach ($integrantes as $key => $integrante) {
+                foreach ($materiasDeDimension as $key => $materia) {
+                    $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['estudiante_id'], $materia['codigo']);
+
+                    if (empty($inscripcion)) {
+                        $errors[] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "";
+                    } else {
+
+                        if ($inscripcion['calificacion'] == null) {
+                            // usuario no cuenta con calificación suficiente como para ser evaluado
+                            $errors[] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no ha sido evaluado en la unidad curricular: " . $materia['nombre'] . "";
+                        }
+                    }
+                }
+            }
+
+            foreach ($dimensiones as $key => $dimension) {
+
+                $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
+
+                if (empty($indicadores)) {
+                    $errors[] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
+                } else {
+                    // configurar informacion de indicador
+                    $data = ['dimension' => $dimension['nombre'], 'materia' => $dimension['nombre_materia'], 'indicadores' => $indicadores];
+                    if ($dimension['grupal'] == 1) {
+                        $indicadoresGrupales[] = $data;
+                    } else {
+                        $indicadoresIndividuales[] = $data;
+                    }
+                }
+            }
+
+
+
+            return $this->view('proyectos/assessment', [
+                'fase' => $fase,
+                'integrantes' => $integrantes,
+                'indicadoresGrupales' => $indicadoresGrupales,
+                'indicadoresIndividuales' => $indicadoresIndividuales,
+            ]);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            // TODO: pantalla de error
         }
     }
 

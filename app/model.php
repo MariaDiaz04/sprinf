@@ -27,7 +27,6 @@ class model extends conexion
 		} else {
 			$sql = $sql . ';';
 		}
-		var_dump($sql);
 		$req = \PDO::query($sql);
 		$v = array();
 		while ($item = $req->fetch(\PDO::FETCH_ASSOC)) {

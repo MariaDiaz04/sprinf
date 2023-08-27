@@ -44,14 +44,16 @@ class proyecto extends model
         }
     }
 
-    public function find($id)
+    /**
+     * Retorna los datos del proyecto
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function find($id): array
     {
-        try {
-            $proyectos = $this->querys("SELECT proyecto.*, CONCAT(persona.nombre, ' ',persona.apellido) as nombre_tutor, trayecto.nombre as nombre_trayecto FROM proyecto INNER JOIN tutor ON tutor.id = proyecto.tutor_id INNER JOIN persona ON persona.id = tutor.persona_id INNER JOIN trayecto ON trayecto.id = proyecto.trayecto_id WHERE proyecto.id = $id");
-            return $proyectos ? reset($proyectos) : null;
-        } catch (Exception $th) {
-            return $th;
-        }
+        $proyectos = $this->selectOne("detalles_proyecto", [['id', '=', $id]]);
+        return !$proyectos ? [] : $proyectos;
     }
 
 

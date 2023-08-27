@@ -479,6 +479,15 @@ $routes->add('proyectos_edit', new Route(
     ]
 ));
 
+$routes->add('proyectos_evaluar', new Route(
+
+    '/proyectos/assessment/{id}',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'assessment',
+    ]
+));
+
 # FIN DE GESTIÓN DE PROYECTOS
 
 # GESTION DE BAREMOS
