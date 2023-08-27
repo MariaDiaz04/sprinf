@@ -184,12 +184,12 @@ class proyectoController extends controller
                     $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['estudiante_id'], $materia['codigo']);
 
                     if (empty($inscripcion)) {
-                        $errors[] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "";
+                        $errors['warning'][] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "";
                     } else {
 
                         if ($inscripcion['calificacion'] == null) {
                             // usuario no cuenta con calificación suficiente como para ser evaluado
-                            $errors[] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no ha sido evaluado en la unidad curricular: " . $materia['nombre'] . "";
+                            $errors['danger'][] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no ha sido evaluado en la unidad curricular: " . $materia['nombre'] . "";
                         }
                     }
                 }
@@ -205,7 +205,7 @@ class proyectoController extends controller
                     $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
 
                     if (empty($indicadores)) {
-                        $errors[] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
+                        $errors['danger'][] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
                     } else {
                         // configurar informacion de indicador
                         if ($dimension['grupal'] == 1) {
@@ -224,6 +224,7 @@ class proyectoController extends controller
                 'fase' => $fase,
                 'integrantes' => $integrantes,
                 'baremos' => $baremos,
+                'errors' => $errors,
             ]);
         } catch (Exception $e) {
             echo $e->getMessage();

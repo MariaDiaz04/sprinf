@@ -8,6 +8,30 @@
       </h4>
     </div>
   </div>
+  <?php if ($errors->danger) : ?>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Atención!</strong> Han ocurrido algunos errores críticos al generar baremos:
+      <ul>
+        <?php foreach ($errors->danger as $error) : ?>
+          <li><?= $error ?></li>
+        <?php endforeach; ?>
+
+      </ul>
+    </div>
+  <?php endif; ?>
+  <?php if ($errors->warning) : ?>
+
+    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+      <strong>Atención!</strong> El equipo de proyecto cuenta con las siguientes caracteristicas:
+      <ul>
+        <?php foreach ($errors->warning as $error) : ?>
+          <li><?= $error ?></li>
+        <?php endforeach; ?>
+
+      </ul>
+    </div>
+  <?php endif; ?>
 
   <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardar">
 
@@ -73,8 +97,16 @@
       </div>
     <?php endforeach; ?>
     <hr class="border-light m-0">
-    <div class="text-end mt-3">
-      <input type="submit" class="btn btn-primary" value='Evaluar' />&nbsp;
-    </div>
+    <?php if ($errors->danger) : ?>
+      <p>
+        No se podrá evaluar baremos hasta que se resuelvan los conflictos críticos
+      </p>
+    <?php else : ?>
+
+      <div class="text-end mt-3">
+        <input type="submit" class="btn btn-primary" value='Evaluar' />&nbsp;
+      </div>
+
+    <?php endif; ?>
   </form>
 </div>
