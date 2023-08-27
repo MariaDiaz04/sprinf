@@ -9,7 +9,6 @@
       </h4>
     </div>
   </div>
-
   <div class="card">
     <h6 class="card-header bg-primary text-white">Clases</h6>
     <div class="card-body px-3 pt-3">
@@ -87,7 +86,17 @@
       // si necesito editar, le añado la clase "edit"
       // luego en la función table.on(). verifico si la clase del boton en el que hice click
       // contiene el nombre de alguna acción que haya definido
-
+      let options = `
+      <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+                    
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="">Edit</a></li>
+          <li><a href="">Delete</a></li>
+          <li class="divider"></li>
+          <li><a href="">Separated link</a></li>
+      
+  </ul>
+      `
       let editBtn = "<button class=\"btn btn-outline-secondary btn-color btn-bg-color col-xs-6 mx-2 edit\">Editar</button>";
       let deleteBtn = "<button class=\"btn btn-outline-danger btn-color btn-bg-color col-xs-6 mx-2 remove\">Eliminar</button>";
 
@@ -97,16 +106,40 @@
         processing: true,
         serverSide: true,
         columnDefs: [{
-          data: null,
-          defaultContent: `${editBtn} ${deleteBtn}`, // combino los botons de acción
-          targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          // defaultContent: `${options}`, // combino los botons de acción
+          targets: 7, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          render: function(data, type, row, meta) {
+            return `<div class="dropdown show">
+                      <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                      </button>
+
+                      <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                      </div>
+                    </div>`;
+          }
         }]
       });
 
+
+      // table.on('click', 'tbody td', function() {
+      //   editor.inline(this);
+      // });
+
       table.on('click', 'button', function(e) {
         var action = this.className;
+        let id = this.id
         var data = table.row($(this).parents('tr')).data();
-
+        if (action.includes('dropdown-toggle')) {
+          console.log('arbrir dropdown')
+          console.log(id)
+          $(`#${id}`).dropdown();
+          console.log($(`#${id}`))
+          console.log($(`#${id}`).dropdown())
+        }
         if (action.includes('remove')) {
           // ejecutar función que se encarge de borrar el elemento
           remove(data[0])

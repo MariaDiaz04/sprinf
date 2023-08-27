@@ -42,7 +42,6 @@
 
 
 
-
   <link href="https://cdn.datatables.net/v/bs4/dt-1.13.5/datatables.min.css" rel="stylesheet" />
   <!-- Helpers -->
   <script src="<?= APP_URL ?>assets/vendor/js/helpers.js"></script>
@@ -50,7 +49,7 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="<?= APP_URL ?>assets/js/config.js"></script>
-  <script src="<?= APP_URL ?>assets/css/sweetalert.css"></script>
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/css/sweetalert.css">
 
 
 
