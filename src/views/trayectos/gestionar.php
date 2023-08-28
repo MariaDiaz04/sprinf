@@ -4,7 +4,6 @@
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
         <div><span class="text-muted font-weight-light">Trayectos </span>/ Gestión</div>
 
-        <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
       </h4>
     </div>
@@ -20,63 +19,12 @@
             <th>Nombre</th>
             <th>Fecha Inicio</th>
             <th>Fecha Cierre</th>
-            <th>Acción</th>
           </tr>
         </thead>
       </table>
     </div>
   </div>
 
-  <!-- MODAL CREAR -->
-  <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nuevo Periodo</h5>
-
-        </div>
-        <form action="<?= APP_URL . $this->Route('trayectos/guardar') ?>" method="post" id="guardar">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
-            <div class="container-fluid">
-              <div class="row pb-2">
-                <div class="col-12">
-                  <div class="row form-group">
-                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Número * </label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="numero_trayecto" id="numero_trayecto">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label">Periodo *</label>
-                      <select class="form-select" id="selectPeriodo" name="periodo_id">
-                        <?php if ($periodos) : ?>
-                          <?php foreach ($periodos as $periodo) : ?>
-                            <option value="<?= $periodo->id ?>"><?= $periodo->fecha_inicio ?> /<?= $periodo->fecha_cierre ?></option>
-                          <?php endforeach; ?>
-                        <?php endif; ?>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
-            <div id="guardarLoading">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
 
   <script>
@@ -99,21 +47,6 @@
         ajax: '<?= $this->Route('trayectos/ssp') ?>',
         processing: true,
         serverSide: true,
-        columnDefs: [{
-          data: null,
-          render: function(data, type, row, meta) {
-            return `<div class="dropdown show">
-                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="bx bx-dots-vertical-rounded"></i>
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
-                        <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
-                      </div>
-                    </div>`;
-          }, // combino los botons de acción
-          targets: 4 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
-        }]
       });
 
       table.on('click', 'button', function(e) {

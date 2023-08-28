@@ -30,7 +30,7 @@
 
   <!-- MODAL CREAR -->
   <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="crearLabel">Nueva Materia</h5>
@@ -98,16 +98,6 @@
                     <div class="col-lg-6">
                       <label class="form-label" for="eje">Eje *</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="eje" id="eje">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" id="vinculacion" name="vinculacion">
-                        <label class="form-check-label" for="vinculacion">
-                          Vinculado a Proyecto
-                        </label>
-                      </div>
                     </div>
                   </div>
                 </div>

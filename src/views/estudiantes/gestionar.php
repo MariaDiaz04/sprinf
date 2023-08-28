@@ -44,14 +44,29 @@
               <div class="row pb-2">
                 <div class="col-12">
                   <div class="row form-group">
-                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Inicial *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_inicio" id="fecha_inicio">
+                      <label class="form-label" for="nombre">Nombre *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
                     </div>
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Final *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_cierre" id="fecha_cierre">
+                      <label class="form-label" for="apellido">Apellido *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="direccion">Dirección</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="direccion" id="direccion">
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="telefono">Teléfono</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="email">Correo Electronico</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="email" id="email">
                     </div>
                   </div>
                 </div>
