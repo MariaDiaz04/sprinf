@@ -203,20 +203,7 @@
         }]
       });
 
-      table.on('click', 'button', function(e) {
-        var action = this.className;
-        var data = table.row($(this).parents('tr')).data();
 
-        if (action.includes('remove')) {
-          // ejecutar función que se encarge de borrar el elemento
-          remove(data[0])
-        }
-
-        if (action.includes('edit')) {
-          // ejecutar función que se encarge de editar el elemento
-          edit(data[0])
-        }
-      });
 
       $('#guardar').submit(function(e) {
         e.preventDefault()
@@ -227,8 +214,7 @@
         url = $(this).attr('action');
         data = $(this).serializeArray();
 
-        console.log(url);
-        console.log(data)
+
 
 
         $.ajax({

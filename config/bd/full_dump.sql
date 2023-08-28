@@ -1,3 +1,217 @@
+DROP SCHEMA IF EXISTS `sprinf_bd`;
+CREATE SCHEMA `sprinf_bd`;
+
+CREATE TABLE `sprinf_bd`.`periodo` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `fecha_inicio` date,
+  `fecha_cierre` date
+);
+
+CREATE TABLE `sprinf_bd`.`trayecto` (
+  `codigo` varchar(255) UNIQUE PRIMARY KEY,
+  `periodo_id` int,
+  `nombre` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`fase` (
+  `codigo` varchar(255) UNIQUE PRIMARY KEY,
+  `trayecto_id` varchar(255),
+  `nombre` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`seccion` (
+  `codigo` varchar(255) UNIQUE PRIMARY KEY,
+  `trayecto_id` varchar(255),
+  `observacion` int
+);
+
+CREATE TABLE `sprinf_bd`.`malla_curricular` (
+  `codigo` varchar(255) UNIQUE PRIMARY KEY,
+  `fase_id` varchar(255),
+  `materia_id` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`materias` (
+  `codigo` varchar(255) UNIQUE PRIMARY KEY,
+  `nombre` varchar(255),
+  `htasist` int,
+  `htind` int,
+  `ucredito` int,
+  `hrs_acad` int,
+  `eje` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`profesor` (
+  `codigo` varchar(255) UNIQUE PRIMARY KEY,
+  `persona_id` int
+);
+
+CREATE TABLE `sprinf_bd`.`clase` (
+  `codigo` varchar(255) UNIQUE PRIMARY KEY,
+  `profesor_id` varchar(255),
+  `seccion_id` varchar(255),
+  `unidad_curricular_id` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`dimension` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `unidad_id` varchar(255),
+  `nombre` varchar(255),
+  `grupal` bool
+);
+
+CREATE TABLE `sprinf_bd`.`indicadores` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `dimension_id` int,
+  `nombre` varchar(255),
+  `ponderacion` float
+);
+
+CREATE TABLE `sprinf_bd`.`estudiante` (
+  `id` varchar(255) UNIQUE PRIMARY KEY,
+  `persona_id` int
+);
+
+CREATE TABLE `sprinf_bd`.`inscripcion` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `clase_id` varchar(255),
+  `estudiante_id` varchar(255),
+  `calificacion` float
+);
+
+CREATE TABLE `sprinf_bd`.`proyecto` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `fase_id` varchar(255),
+  `nombre` varchar(255),
+  `comunidad` varchar(255),
+  `area` varchar(255),
+  `motor_productivo` varchar(255),
+  `resumen` varchar(255),
+  `direccion` varchar(255),
+  `municipio` varchar(255),
+  `parroquia` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`integrante_proyecto` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `estudiante_id` varchar(255),
+  `proyecto_id` int
+);
+
+CREATE TABLE `sprinf_bd`.`notas_integrante_proyecto` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `indicador_id` int,
+  `integrante_id` int
+);
+
+CREATE TABLE `sprinf_bd`.`persona` (
+  `cedula` int UNIQUE PRIMARY KEY,
+  `usuario_id` int,
+  `nombre` varchar(255),
+  `apellido` varchar(255),
+  `direccion` varchar(255),
+  `telefono` int,
+  `estatus` bool
+);
+
+CREATE TABLE `sprinf_bd`.`usuario` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `email` varchar(255),
+  `contrasena` varchar(255),
+  `token` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`roles_usuarios` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `rol_id` int,
+  `usuario_id` int
+);
+
+CREATE TABLE `sprinf_bd`.`roles` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `nombre` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`modulo` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `nombre` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`permisos` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `rol_id` int,
+  `modulo_id` int,
+  `crear` bool,
+  `consultar` bool,
+  `actualizar` bool,
+  `eliminar` bool
+);
+
+CREATE TABLE `sprinf_bd`.`bitacora` (
+  `id` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `navegador` varchar(105) NOT NULL,
+  `hora_inicio` time NOT NULL,
+  `hora_cierre` time DEFAULT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `apellido` varchar(80) NOT NULL,
+  `token` varchar(85) NOT NULL,
+  `usuario_id` int(11) NOT NULL
+) ;
+
+ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`periodo_id`) REFERENCES `sprinf_bd`.`periodo` (`id`);
+
+ALTER TABLE `sprinf_bd`.`fase` ADD FOREIGN KEY (`trayecto_id`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`seccion` ADD FOREIGN KEY (`trayecto_id`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`malla_curricular` ADD FOREIGN KEY (`fase_id`) REFERENCES `sprinf_bd`.`fase` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`malla_curricular` ADD FOREIGN KEY (`materia_id`) REFERENCES `sprinf_bd`.`materias` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`profesor` ADD FOREIGN KEY (`persona_id`) REFERENCES `sprinf_bd`.`persona` (`cedula`);
+
+ALTER TABLE `sprinf_bd`.`clase` ADD FOREIGN KEY (`profesor_id`) REFERENCES `sprinf_bd`.`profesor` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`clase` ADD FOREIGN KEY (`seccion_id`) REFERENCES `sprinf_bd`.`seccion` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`clase` ADD FOREIGN KEY (`unidad_curricular_id`) REFERENCES `sprinf_bd`.`malla_curricular` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`dimension` ADD FOREIGN KEY (`unidad_id`) REFERENCES `sprinf_bd`.`malla_curricular` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`indicadores` ADD FOREIGN KEY (`dimension_id`) REFERENCES `sprinf_bd`.`dimension` (`id`);
+
+ALTER TABLE `sprinf_bd`.`estudiante` ADD FOREIGN KEY (`persona_id`) REFERENCES `sprinf_bd`.`persona` (`cedula`);
+
+ALTER TABLE `sprinf_bd`.`inscripcion` ADD FOREIGN KEY (`clase_id`) REFERENCES `sprinf_bd`.`clase` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`inscripcion` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
+
+ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`fase_id`) REFERENCES `sprinf_bd`.`fase` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
+
+ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`proyecto_id`) REFERENCES `sprinf_bd`.`proyecto` (`id`);
+
+ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`indicador_id`) REFERENCES `sprinf_bd`.`indicadores` (`id`);
+
+ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`integrante_id`) REFERENCES `sprinf_bd`.`integrante_proyecto` (`id`);
+
+ALTER TABLE `sprinf_bd`.`persona` ADD FOREIGN KEY (`usuario_id`) REFERENCES `sprinf_bd`.`usuario` (`id`);
+
+ALTER TABLE `sprinf_bd`.`roles_usuarios` ADD FOREIGN KEY (`rol_id`) REFERENCES `sprinf_bd`.`roles` (`id`);
+
+ALTER TABLE `sprinf_bd`.`roles_usuarios` ADD FOREIGN KEY (`usuario_id`) REFERENCES `sprinf_bd`.`usuario` (`id`);
+
+ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`rol_id`) REFERENCES `sprinf_bd`.`roles` (`id`);
+
+ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`modulo_id`) REFERENCES `sprinf_bd`.`modulo` (`id`);
+
+ALTER TABLE `sprinf_bd`.`bitacora` ADD FOREIGN KEY (`usuario_id`) REFERENCES `sprinf_bd`.`usuario` (`id`);
+
+
+
+use sprinf_bd;
 -- 1_usuarios
 delete from permisos where true;
 delete from modulo where true;
@@ -17,10 +231,10 @@ insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo
 
 
 -- usuarios
-insert into usuario (email, contrasena, token) values ('carlos@gmail.com',"$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72", 'fsadfsadfsadf');
+insert into usuario (email, contrasena, token) values ('root@gmail.com',"$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72", 'fsadfsadfsadf');
 
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
-values (1, '28566432', 'Carlos', 'Ramirez', 'Urb. La Concordia', '04247777777', 1);
+values (1, '28566432', 'Admin', 'admin', 'Urb. La Concordia', '04247777777', 1);
 
 -- usuarios roles
 insert into roles_usuarios (rol_id, usuario_id) values (1,1);
@@ -1005,44 +1219,44 @@ delete from inscripcion where true;
 delete from clase where true;
 -- actividades acrediables fase 1
 -- prof: hermes 
-insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-PIACA078303_1','p-23154875','IN4301', 'PIACA078303_1');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIACA078303_1', 'e-15408');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIACA078303_1', 'e-63578');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIACA078303_1', 'e-39263');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIACA078303_1', 'e-60621');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIACA078303_1', 'e-61587');
+insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-IN4301PIACA078303_1','p-23154875','IN4301', 'PIACA078303_1');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIACA078303_1', 'e-15408');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIACA078303_1', 'e-63578');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIACA078303_1', 'e-39263');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIACA078303_1', 'e-60621');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIACA078303_1', 'e-61587');
 
 -- administración de base de datos
-insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-PIABD078303_1', 'p-654854354','IN4301', 'PIABD078303_1');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIABD078303_1', 'e-15408');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIABD078303_1', 'e-63578');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIABD078303_1', 'e-39263');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIABD078303_1', 'e-60621');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIABD078303_1', 'e-61587');
+insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-IN4301PIABD078303_1', 'p-654854354','IN4301', 'PIABD078303_1');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIABD078303_1', 'e-15408');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIABD078303_1', 'e-63578');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIABD078303_1', 'e-39263');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIABD078303_1', 'e-60621');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIABD078303_1', 'e-61587');
 
 -- gestión de proyecto informatico
-insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-PIGPI078303_1', 'p-234565423','IN4301', 'PIGPI078303_1');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIGPI078303_1', 'e-15408');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIGPI078303_1', 'e-63578');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIGPI078303_1', 'e-39263');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIGPI078303_1', 'e-60621');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIGPI078303_1', 'e-61587');
+insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-IN4301PIGPI078303_1', 'p-234565423','IN4301', 'PIGPI078303_1');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIGPI078303_1', 'e-15408');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIGPI078303_1', 'e-63578');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIGPI078303_1', 'e-39263');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIGPI078303_1', 'e-60621');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIGPI078303_1', 'e-61587');
 
 -- idiomas II
-insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-PIIDI078303_1', 'p-52213548','IN4301', 'PIIDI078303_1');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIIDI078303_1', 'e-15408');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIIDI078303_1', 'e-63578');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIIDI078303_1', 'e-39263');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIIDI078303_1', 'e-60621');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PIIDI078303_1', 'e-61587');
+insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-IN4301PIIDI078303_1', 'p-52213548','IN4301', 'PIIDI078303_1');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIIDI078303_1', 'e-15408');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIIDI078303_1', 'e-63578');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIIDI078303_1', 'e-39263');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIIDI078303_1', 'e-60621');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PIIDI078303_1', 'e-61587');
 
 -- Seguridad Informatica
-insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-PISEI078303_1', 'p-5428468','IN4301', 'PISEI078303_1');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PISEI078303_1', 'e-15408');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PISEI078303_1', 'e-63578');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PISEI078303_1', 'e-39263');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PISEI078303_1', 'e-60621');
-insert into inscripcion (clase_id, estudiante_id) values ('c-PISEI078303_1', 'e-61587');
+insert into clase (codigo, profesor_id, seccion_id, unidad_curricular_id) values ('c-IN4301PISEI078303_1', 'p-5428468','IN4301', 'PISEI078303_1');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PISEI078303_1', 'e-15408');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PISEI078303_1', 'e-63578');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PISEI078303_1', 'e-39263');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PISEI078303_1', 'e-60621');
+insert into inscripcion (clase_id, estudiante_id) values ('c-IN4301PISEI078303_1', 'e-61587');
 
 -- 10_proyectos.sql
 delete from integrante_proyecto where true;
@@ -1059,3 +1273,98 @@ insert into proyecto (id, fase_id, nombre, comunidad, area, motor_productivo, re
 values (2,'TR4_1', 'La Roca', 'Iglesia', '','','','','','');
 insert into integrante_proyecto (proyecto_id, estudiante_id) values (2,'e-60621');
 insert into integrante_proyecto (proyecto_id, estudiante_id) values (2,'e-61587');
+
+-- vistas
+DROP VIEW IF EXISTS detalles_estudiantes;
+CREATE VIEW detalles_estudiantes AS
+SELECT persona.*, usuario.email
+FROM persona
+INNER JOIN estudiante ON estudiante.persona_id = persona.cedula
+LEFT JOIN usuario ON usuario.id = persona.usuario_id;
+
+DROP VIEW IF EXISTS detalles_profesores;
+CREATE VIEW detalles_profesores AS
+SELECT persona.*, usuario.email
+FROM persona
+INNER JOIN profesor ON profesor.persona_id = persona.cedula
+LEFT JOIN usuario ON usuario.id = persona.usuario_id;
+
+DROP VIEW IF EXISTS detalles_trayecto;
+CREATE VIEW detalles_trayecto AS
+SELECT trayecto.*, periodo.fecha_inicio, periodo.fecha_cierre
+FROM trayecto
+INNER JOIN periodo ON periodo.id = trayecto.periodo_id;
+
+DROP VIEW IF EXISTS detalles_seccion;
+CREATE VIEW detalles_seccion AS
+SELECT seccion.*, trayecto.nombre as trayecto
+FROM seccion
+INNER JOIN trayecto ON trayecto.codigo = seccion.trayecto_id;
+
+DROP VIEW IF EXISTS detalles_dimension;
+CREATE VIEW detalles_dimension AS
+SELECT dimension.*, materias.codigo as codigo_materia,materias.nombre as nombre_materia, fase.nombre as nombre_fase, fase.codigo as codigo_fase, trayecto.nombre as nombre_trayecto, trayecto.codigo as codigo_trayecto
+FROM dimension
+INNER JOIN malla_curricular ON malla_curricular.codigo = dimension.unidad_id
+INNER JOIN fase ON fase.codigo = malla_curricular.fase_id 
+INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
+INNER JOIN materias ON  materias.codigo = malla_curricular.materia_id;
+
+DROP VIEW IF EXISTS detalles_proyecto;
+CREATE VIEW detalles_proyecto AS
+SELECT proyecto.*, trayecto.nombre as nombre_trayecto,trayecto.codigo as codigo_trayecto, fase.nombre as nombre_fase, fase.codigo as codigo_fase, count(integrante_proyecto.id) as integrantes
+FROM proyecto
+INNER JOIN fase ON fase.codigo = proyecto.fase_id 
+INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
+LEFT OUTER JOIN integrante_proyecto ON integrante_proyecto.proyecto_id = proyecto.id
+GROUP BY proyecto_id;
+
+DROP VIEW IF EXISTS detalles_materias;
+CREATE VIEW detalles_materias AS
+SELECT malla_curricular.codigo,materias.nombre, trayecto.nombre as nombre_trayecto, trayecto.codigo as codigo_trayecto, fase.nombre as nombre_fase, fase.codigo as codigo_fase, count(dimension.id) as dimensiones_proyecto
+FROM materias
+LEFT JOIN malla_curricular on malla_curricular.materia_id = materias.codigo
+INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
+INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
+LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+GROUP BY malla_curricular.codigo;
+
+DROP VIEW IF EXISTS detalles_clases;
+CREATE VIEW detalles_clases AS
+SELECT clase.*, persona.nombre as profesor,detalles_materias.nombre, detalles_materias.nombre_fase, detalles_materias.nombre_trayecto, count(inscripcion.id) as estudiantes
+FROM clase
+INNER JOIN profesor ON profesor.codigo = clase.profesor_id
+INNER JOIN persona ON persona.cedula = profesor.persona_id
+INNER JOIN detalles_materias ON detalles_materias.codigo = clase.unidad_curricular_id
+LEFT OUTER JOIN inscripcion ON inscripcion.clase_id = clase.codigo
+GROUP BY clase.codigo;
+
+DROP VIEW IF EXISTS detalles_inscripciones;
+CREATE VIEW detalles_inscripciones AS
+SELECT estudiante.id, persona.nombre as nombre_estudiante,clase.codigo, clase.unidad_curricular_id, materias.nombre as nombre_materia, inscripcion.calificacion
+FROM `estudiante`
+INNER JOIN persona ON persona.cedula = estudiante.persona_id 
+INNER JOIN inscripcion ON inscripcion.estudiante_id = estudiante.id 
+INNER JOIN clase ON clase.codigo = inscripcion.clase_id
+INNER JOIN malla_curricular on malla_curricular.codigo = clase.unidad_curricular_id
+INNER JOIN materias ON materias.codigo = malla_curricular.materia_id;
+
+DROP VIEW IF EXISTS detalles_integrantes;
+CREATE VIEW detalles_integrantes AS
+SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.cedula
+FROM integrante_proyecto
+INNER JOIN estudiante ON estudiante.id = integrante_proyecto.estudiante_id
+INNER JOIN persona on persona.cedula = estudiante.persona_id
+INNER JOIN proyecto on proyecto.id = integrante_proyecto.proyecto_id;
+
+DROP VIEW IF EXISTS detalles_fase;
+CREATE VIEW detalles_fase AS
+SELECT 
+  fase.codigo as codigo_fase, 
+  fase.nombre as nombre_fase, 
+  trayecto.codigo as codigo_trayecto, 
+  trayecto.nombre as nombre_trayecto, 
+  periodo.fecha_inicio, periodo.fecha_cierre 
+FROM `fase` 
+INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
+INNER JOIN periodo ON periodo.id = trayecto.periodo_id; 

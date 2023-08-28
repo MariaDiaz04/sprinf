@@ -87,8 +87,7 @@
       // luego en la función table.on(). verifico si la clase del boton en el que hice click
       // contiene el nombre de alguna acción que haya definido
 
-      let editBtn = "<button class=\"btn btn-outline-secondary btn-color btn-bg-color col-xs-6 mx-2 edit\">Editar</button>";
-      let deleteBtn = "<button class=\"btn btn-outline-danger btn-color btn-bg-color col-xs-6 mx-2 remove\">Eliminar</button>";
+
 
 
       let table = new DataTable('#example', {
@@ -113,20 +112,7 @@
         }]
       });
 
-      table.on('click', 'button', function(e) {
-        var action = this.className;
-        var data = table.row($(this).parents('tr')).data();
 
-        if (action.includes('remove')) {
-          // ejecutar función que se encarge de borrar el elemento
-          remove(data[0])
-        }
-
-        if (action.includes('edit')) {
-          // ejecutar función que se encarge de editar el elemento
-          edit(data[0])
-        }
-      });
 
       $('#guardar').submit(function(e) {
         e.preventDefault()
@@ -137,8 +123,7 @@
         url = $(this).attr('action');
         data = $(this).serializeArray();
 
-        console.log(url);
-        console.log(data)
+
 
 
         $.ajax({

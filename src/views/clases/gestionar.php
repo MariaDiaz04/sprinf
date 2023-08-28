@@ -186,8 +186,7 @@
         url = $(this).attr('action');
         data = $(this).serializeArray();
 
-        console.log(url);
-        console.log(data)
+
 
 
         $.ajax({
