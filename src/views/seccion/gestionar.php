@@ -31,7 +31,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nuevo Periodo</h5>
+          <h5 class="modal-title" id="crearLabel">Nueva Sección</h5>
 
         </div>
         <form action="<?= APP_URL . $this->Route('seccion/guardar') ?>" method="post" id="guardar">
@@ -44,12 +44,24 @@
                   <div class="row form-group">
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Inicial *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_inicio" id="fecha_inicio">
+                      <label class="form-label" for="trayecto_id">Trayecto *</label>
+                      <select class="form-select" name="trayecto_id">
+
+                        <?php foreach ($trayectos as $trayecto) : ?>
+                          <option value="<?= $trayecto->codigo ?>"><?= $trayecto->nombre ?></option>
+                        <?php endforeach; ?>
+                      </select>
                     </div>
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Fecha Final *</label>
-                      <input type="date" class="form-control mb-1" placeholder="..." name="fecha_cierre" id="fecha_cierre">
+                      <label class="form-label" for="nombre">Código *</label>
+                      <input type="text" class="form-control mb-1" placeholder="IN...." pattern="/^([A-Z]{2,3})([1-9]){4}/" name="codigo" id="codigo">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
+                    <div class="col-lg-12">
+                      <label class="form-label" for="nombre">Observación</label>
+                      <input type="textarea" class="form-control mb-1" name="observacion" id="observacion">
                     </div>
                   </div>
                 </div>
@@ -73,6 +85,7 @@
 
 
   <script>
+    let regexSeccion = /^([A-Z]{2,3})([1-9]){4}/;
     $(document).ready(() => {
 
       toggleLoading(false)
