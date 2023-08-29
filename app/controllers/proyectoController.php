@@ -9,24 +9,34 @@ use Bcrypt\Bcrypt;
 
 use App\proyecto;
 use App\estudiante;
+use App\inscripcion;
+use App\fase;
+use App\dimension;
 use App\tutor;
 use App\trayectos;
 use Exception;
+use PDOException;
 
 class proyectoController extends controller
 {
 
     public $proyecto;
     private $estudiantes;
+    private $dimension;
     private $tutores;
+    private $fase;
     private $trayectos;
+    private $inscripcion;
 
     function __construct()
     {
         $this->proyecto = new proyecto();
         $this->estudiantes = new estudiante();
+        $this->dimension = new dimension();
         $this->tutores = new tutor();
         $this->trayectos = new trayectos();
+        $this->fase = new fase();
+        $this->inscripcion = new inscripcion();
     }
 
     public function index()
@@ -82,31 +92,52 @@ class proyectoController extends controller
 
     public function show(Request $request, $id)
     {
-        $proyecto = $this->proyecto->find($id);
-        $estudiantes = $this->estudiantes->byProject($id);
+        try {
+            $proyecto = $this->proyecto->find($id);
+            $estudiantes = $this->estudiantes->byProject($id);
 
-        return $this->view('proyectos/show', [
-            'proyecto' => $proyecto,
-            'estudiantes' => $estudiantes
-        ]);
+            return $this->view('proyectos/show', [
+                'proyecto' => $proyecto,
+                'estudiantes' => $estudiantes
+            ]);
+        } catch (PDOException $pdoe) {
+            return $this->view('errors/501', [
+                'message' => 'Error inesperado',
+            ]);
+        } catch (Exception $e) {
+            return $this->view('errors/501', [
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     public function edit(Request $request, $id)
     {
-        $proyecto = $this->proyecto->find($id);
-        $estudiantesPendientes = $this->estudiantes->listPendingForProject();
-        $estudiantes = $this->estudiantes->byProject($id);
-        $tutores = $this->tutores->all();
-        $trayectos = $this->trayectos->all();
+        try {
+
+            $proyecto = $this->proyecto->find($id);
+            $estudiantesPendientes = $this->estudiantes->listPendingForProject();
+            $estudiantes = $this->estudiantes->byProject($id);
+            $tutores = $this->tutores->all();
+            $trayectos = $this->trayectos->all();
 
 
-        return $this->view('proyectos/edit', [
-            'proyecto' => $proyecto,
-            'estudiantes' => $estudiantes,
-            'estudiantesPendientes' => $estudiantesPendientes ?? [],
-            'tutores' => $tutores,
-            'trayectos' => $trayectos
-        ]);
+            return $this->view('proyectos/edit', [
+                'proyecto' => $proyecto,
+                'estudiantes' => $estudiantes,
+                'estudiantesPendientes' => $estudiantesPendientes ?? [],
+                'tutores' => $tutores,
+                'trayectos' => $trayectos
+            ]);
+        } catch (PDOException $pdoe) {
+            return $this->view('errors/501', [
+                'message' => 'Error inesperado',
+            ]);
+        } catch (Exception $e) {
+            return $this->view('errors/501', [
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     function update(Request $proyecto): void
@@ -141,6 +172,95 @@ class proyectoController extends controller
 
             http_response_code(200);
             echo json_encode($this->proyecto);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    function assessment(Request $request, $id)
+    {
+        // verificacion de datos de usuario
+        $errors = [];
+        try {
+            $proyecto = $this->proyecto->find($id);
+            $integrantes = $this->proyecto->obtenerIntegrantes($id);
+
+            if (empty($proyecto)) {
+                throw new Exception('Proyecto no existe');
+            }
+            if (empty($integrantes)) {
+                throw new Exception('Proyecto no cuenta con estudiantes');
+            }
+
+            $fase = $this->fase->find($proyecto['codigo_fase']);
+            $materiasDeDimension = $this->dimension->materiasDeBaremos($proyecto['codigo_fase']);
+            $baremos = [];
+            $indicadoresIndividuales = [];
+
+            if (empty($materiasDeDimension)) {
+                throw new Exception('Baremos no cuenta con dimensiones');
+            }
+
+            foreach ($integrantes as $key => $integrante) {
+                foreach ($materiasDeDimension as $key => $materia) {
+                    $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['estudiante_id'], $materia['codigo']);
+
+                    if (empty($inscripcion)) {
+                        $errors['warning'][] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "";
+                    } else {
+
+                        if ($inscripcion['calificacion'] == null) {
+                            // usuario no cuenta con calificación suficiente como para ser evaluado
+                            $errors['danger'][] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no ha sido evaluado en la unidad curricular: " . $materia['nombre'] . "";
+                        }
+                    }
+                }
+            }
+
+            foreach ($materiasDeDimension as $key => $materia) {
+                $dimensiones = $this->dimension->findBySubject($materia['codigo']);
+
+                $baremos[$materia['codigo']]['nombre'] = $materia['nombre'];
+
+                foreach ($dimensiones as $key => $dimension) {
+
+                    $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
+
+                    if (empty($indicadores)) {
+                        $errors['danger'][] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
+                    } else {
+                        // configurar informacion de indicador
+                        if ($dimension['grupal'] == 1) {
+                            $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['nombre'] = $dimension['nombre'];
+                            $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['indicadores'] = $indicadores;
+                        } else {
+                            $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['nombre'] = $dimension['nombre'];
+                            $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['indicadores'] = $indicadores;
+                        }
+                    }
+                }
+            }
+
+
+            return $this->view('proyectos/assessment', [
+                'fase' => $fase,
+                'integrantes' => $integrantes,
+                'baremos' => $baremos,
+                'errors' => $errors,
+            ]);
+        } catch (Exception $e) {
+            return $this->view('errors/501', [
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    function ssp(Request $query): void
+    {
+        try {
+            http_response_code(200);
+            echo json_encode($this->proyecto->generarSSP());
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());

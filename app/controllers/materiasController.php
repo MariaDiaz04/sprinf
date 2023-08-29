@@ -1,9 +1,14 @@
 <?php
 
+namespace App\controllers;
+
 use App\permisos;
 use App\materias;
 use App\trayectos;
 use App\controllers\controller;
+use Exception;
+
+use Symfony\Component\HttpFoundation\Request;
 
 class materiasController extends controller
 {
@@ -22,8 +27,8 @@ class materiasController extends controller
     {
 
         $materias = $this->MATERIAS->all();
-       
-        return $this->view('materias/materias', ['materias' => $materias]);
+
+        return $this->view('materias/gestionar', ['materias' => $materias]);
     }
 
     public function create($request)
@@ -33,25 +38,19 @@ class materiasController extends controller
         return $this->view('materias/crear', ['materias' => $materias, 'trayectos' => $trayectos]);
     }
 
-    public function store($materias)
+    public function store(Request $materia)
     {
+        try {
+            // chequear vinculacion a proyecto
+            $this->MATERIAS->setData($materia->request->all());
 
-        $guardar = $this->MATERIAS->create([
-            'nombre' => $materias->request->get('nombre'),
-            'trayecto_id' => $materias->request->get('trayecto_id'),
-            'tipo' => $materias->request->get('tipo'),
-        ])->save();
+            $id = $this->MATERIAS->save();
 
-       // return var_dump($guardar);
-
-        if ($guardar == null) {
-            echo '
-        <script> 
-            window.alert(" La Materia  ya esta registrada")
-        </script>';
-            header("refresh:1 http://localhost/sprinfbd/public/?r=materias");
-        } else {
-            return $this->redirect('materias');
+            http_response_code(200);
+            echo json_encode($id);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
         }
     }
 
@@ -77,6 +76,17 @@ class materiasController extends controller
             'estatus' => '"' . $request['estatus'] . '"',
         ]);
         return $this->redirect('materias');
+    }
+
+    function ssp(): void
+    {
+        try {
+            http_response_code(200);
+            echo json_encode($this->MATERIAS->generarSSP());
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
     }
 
 

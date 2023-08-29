@@ -4,12 +4,19 @@ require __DIR__ . '/../vendor/autoload.php';
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
+use App\controllers\periodoController;
+use App\controllers\clasesController;
+use App\controllers\seccionController;
+use App\controllers\profesorController;
+use App\controllers\estudianteController;
+use App\controllers\materiasController;
 use App\controllers\aspectosController;
 use App\controllers\baremosController;
 use App\controllers\dimensionController;
 use App\controllers\proyectoController;
 use App\controllers\homeController;
 use App\controllers\moduloController;
+use App\controllers\trayectosController;
 use App\seccion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -101,12 +108,15 @@ $routes->add('profesor', new Route(
     ]
 ));
 
-$routes->add('estudiante', new Route(
 
-    '/estudiante',
+
+// GESTION DE ESTUDIANTES
+$routes->add('estudiante_manage', new Route(
+
+    '/estudiantes',
     [
-        'controller' => userController::class,
-        'method' => 'estudiante',
+        'controller' => estudianteController::class,
+        'method' => 'index',
     ]
 ));
 
@@ -135,37 +145,108 @@ $routes->add('orgdoc', new Route(
         'method' => 'orgdoc',
     ]
 ));
+$routes->add('estudiante_edit', new Route(
+
+    '/estudiantes/edit/{id}',
+    [
+        'controller' => estudianteController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/estudiantes/guardar', new Route(
+
+    '/estudiantes/guardar',
+    [
+        'controller' => estudianteController::class,
+        'method' => 'store',
+    ]
+));
+
+$routes->add('estudiante_ssp', new Route(
+
+    '/estudiantes/ssp',
+    [
+        'controller' => estudianteController::class,
+        'method' => 'ssp',
+    ]
+));
 
 
-$routes->add('seccion', new Route(
+// GESTION DE PROFESORES
+$routes->add('profesor_manage', new Route(
 
-    //  var_dump('asa'),
+    '/profesores',
+    [
+        'controller' => profesorController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('profesor_edit', new Route(
+
+    '/profesores/edit/{id}',
+    [
+        'controller' => profesorController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/profesores/guardar', new Route(
+
+    '/profesores/guardar',
+    [
+        'controller' => profesorController::class,
+        'method' => 'store',
+    ]
+));
+
+$routes->add('profesor_ssp', new Route(
+
+    '/profesores/ssp',
+    [
+        'controller' => profesorController::class,
+        'method' => 'ssp',
+    ]
+));
+
+
+# GESTION DE Secciones
+$routes->add('seccion_manage', new Route(
+
     '/seccion',
     [
         'controller' => seccionController::class,
         'method' => 'index',
     ]
 ));
-$routes->add('seccionCrear', new Route(
 
+$routes->add('seccion_edit', new Route(
 
-    '/seccionCrear',
+    '/seccion/edit/{id}',
     [
         'controller' => seccionController::class,
-        'method' => 'create',
+        'method' => 'edit',
     ]
 ));
 
-$routes->add('seccionGuardar', new Route(
+$routes->add('/seccion/guardar', new Route(
 
-    '/seccionGuardar',
+    '/seccion/guardar',
     [
         'controller' => seccionController::class,
         'method' => 'store',
     ]
 ));
 
+$routes->add('seccion_ssp', new Route(
 
+    '/seccion/ssp',
+    [
+        'controller' => seccionController::class,
+        'method' => 'ssp',
+    ]
+));
 $routes->add('materias', new Route(
 
 
@@ -185,12 +266,21 @@ $routes->add('materiasCrear', new Route(
     ]
 ));
 
-$routes->add('materiasGuardar', new Route(
 
-    '/materiasGuardar',
+$routes->add('materia_guardar', new Route(
+
+    '/materias/guardar',
     [
         'controller' => materiasController::class,
         'method' => 'store',
+    ]
+));
+$routes->add('materia_ssp', new Route(
+
+    '/materias/ssp',
+    [
+        'controller' => materiasController::class,
+        'method' => 'ssp',
     ]
 ));
 $routes->add('usuarioCrear', new Route(
@@ -208,6 +298,137 @@ $routes->add('usuarioGuardar', new Route(
     [
         'controller' => userController::class,
         'method' => 'store',
+    ]
+));
+
+$routes->add('/usuario/editar/{id}', new Route(
+
+    '/usuario/editar/{id}',
+    [
+        'controller' => userController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/usuario/actualizar/{id}', new Route(
+
+    '/usuario/actualizar/{id}',
+    [
+        'controller' => userController::class,
+        'method' => 'update',
+    ]
+));
+
+# GESTION DE PERIODOS
+$routes->add('periodo_manage', new Route(
+
+    '/periodos',
+    [
+        'controller' => periodoController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('periodo_edit', new Route(
+
+    '/periodos/edit/{id}',
+    [
+        'controller' => periodoController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/periodos/guardar', new Route(
+
+    '/periodos/guardar',
+    [
+        'controller' => periodoController::class,
+        'method' => 'store',
+    ]
+));
+
+$routes->add('periodo_ssp', new Route(
+
+    '/periodos/ssp',
+    [
+        'controller' => periodoController::class,
+        'method' => 'ssp',
+    ]
+));
+
+
+# GESTION DE clases
+$routes->add('clases_manage', new Route(
+
+    '/clases',
+    [
+        'controller' => clasesController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('clases_edit', new Route(
+
+    '/clases/edit/{id}',
+    [
+        'controller' => clasesController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/clases/guardar', new Route(
+
+    '/clases/guardar',
+    [
+        'controller' => clasesController::class,
+        'method' => 'store',
+    ]
+));
+
+$routes->add('clases_ssp', new Route(
+
+    '/clases/ssp',
+    [
+        'controller' => clasesController::class,
+        'method' => 'ssp',
+    ]
+));
+
+
+# GESTION DE TRAYECTOS
+$routes->add('trayecto_manage', new Route(
+
+    '/trayectos',
+    [
+        'controller' => trayectosController::class,
+        'method' => 'index',
+    ]
+));
+
+$routes->add('trayecto_edit', new Route(
+
+    '/trayectos/edit/{id}',
+    [
+        'controller' => trayectosController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/trayectos/guardar', new Route(
+
+    '/trayectos/guardar',
+    [
+        'controller' => trayectosController::class,
+        'method' => 'store',
+    ]
+));
+
+$routes->add('trayecto_ssp', new Route(
+
+    '/trayectos/ssp',
+    [
+        'controller' => trayectosController::class,
+        'method' => 'ssp',
     ]
 ));
 
@@ -255,6 +476,15 @@ $routes->add('proyectos_delete', new Route(
     ]
 ));
 
+$routes->add('proyectos_ssp', new Route(
+
+    '/proyectos/ssp',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'ssp',
+    ]
+));
+
 $showRoute = new Route(
 
     '/proyectos/{id}',
@@ -271,6 +501,15 @@ $routes->add('proyectos_edit', new Route(
     [
         'controller' => proyectoController::class,
         'method' => 'edit',
+    ]
+));
+
+$routes->add('proyectos_evaluar', new Route(
+
+    '/proyectos/assessment/{id}',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'assessment',
     ]
 ));
 
@@ -304,6 +543,34 @@ $routes->add('dimension_manage', new Route(
     [
         'controller' => dimensionController::class,
         'method' => 'index',
+    ]
+));
+
+
+$routes->add('dimension_edit', new Route(
+
+    '/dimension/edit/{id}',
+    [
+        'controller' => dimensionController::class,
+        'method' => 'edit',
+    ]
+));
+
+$routes->add('/dimensiones/guardar', new Route(
+
+    '/dimensiones/guardar',
+    [
+        'controller' => dimensionController::class,
+        'method' => 'store',
+    ]
+));
+
+$routes->add('dimension_ssp', new Route(
+
+    '/dimensiones/ssp',
+    [
+        'controller' => dimensionController::class,
+        'method' => 'ssp',
     ]
 ));
 
@@ -404,6 +671,23 @@ $routes->add('/modulos/guardar', new Route(
     ]
 ));
 
+$routes->add('modulos/editar/{id}', new Route(
+
+    '/modulos/editar/{id}',
+    [
+        'controller' => moduloController::class,
+        'method' => 'edit',
+    ]
+));
+$routes->add('modulos/actualizar/{id}', new Route(
+
+    '/modulos/actualizar/{id}',
+    [
+        'controller' => moduloController::class,
+        'method' => 'update',
+    ]
+));
+
 //coment
 try {
     // Get the route matcher from the container ...
@@ -424,7 +708,7 @@ try {
     $response = new Response('Not Found', 404);
 
     $viewController = new \App\controllers\controller;
-    $viewController->view('errors/404');
+    $viewController->page('errors/404');
 } catch (Throwable $throwable) {
     var_dump($throwable->getMessage());
     $response = new Response('An error occurred', 500);

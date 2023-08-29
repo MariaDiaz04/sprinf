@@ -10,7 +10,7 @@
         Editar Modulo
       </h5>
       <div class="card-body">
-        <form action="<?=$this->Route('modulo/actualizar',['idmodulo'=> $modulo->idmodulo])?>" method="POST" id="moduloeditar">
+        <form action="<?=APP_URL.$this->Route("modulos/actualizar/$modulo->modulo_id")?>" method="POST" id="moduloeditar">
           <div class="container-fluid">               
             <div class="row pb-2">
                 <div class="col-12">
@@ -26,7 +26,7 @@
           <hr class="border-light m-0">
           <div class="text-right mt-3">
             <button type="submit" class="btn btn-primary">Guardar Registro</button>&nbsp;   
-            <a href="<?= $this->Route('modulo') ?>" class="btn btn-outline-primary">Volver</a>  
+            <a href="<?=APP_URL. $this->Route('modulos') ?>" class="btn btn-outline-primary">Volver</a>  
           </div>   
         </form>
       </div>

@@ -3,6 +3,9 @@
 namespace App;
 
 use App\conexion;
+use BadMethodCallException;
+use Exception;
+use Utils\SSP;
 
 class model extends conexion
 {
@@ -31,6 +34,23 @@ class model extends conexion
 		}
 		return $v;
 	} //finaliza select
+
+	public function selectOne(String $table, array $wheres = null, $fields = null)
+	{
+		$fields ? $sql = 'SELECT ' . $fields . ' FROM `' . $table . '` ' : $sql = 'SELECT * FROM `' . $table . '` ';
+		if (isset($wheres)) {
+			$sql = $sql . ' WHERE ';
+			foreach ($wheres as $where) {
+				$sql = $sql . ' `' . $where['0'] . '` ' . $where['1'] . ' ' . $where['2'] . ' ' . ' AND ';
+			}
+			$sql = substr($sql, 0, -5);
+			$sql = $sql . ';';
+		} else {
+			$sql = $sql . ';';
+		}
+		$req = \PDO::query($sql);
+		return $req->fetch(\PDO::FETCH_ASSOC);
+	}
 
 	// =====================  U P D A T E  ==================================
 	// =====================  METODO PARA ACTUALIZAR ==================================
@@ -121,4 +141,30 @@ class model extends conexion
 		return $this->querys('SELECT @@identity AS id;')[0]['id'];
 	} //finaliza setted
 
+
+	// =====================  DATATABLE SELECT  ==================================
+
+
+	/**
+	 * getSSP
+	 * 
+	 * Función para inicializar clase de Server Side Processing
+	 * tomando en cuenta la conexión a nuestra BD
+	 *
+	 * @param string $table
+	 * @param string $primaryKey
+	 * @param array $columns
+	 * @return array
+	 */
+	public function getSSP(string $table, string $primaryKey, array $columns): array
+	{
+		$sql_details = array(
+			'user' => $this->user,
+			'pass' => $this->pass,
+			'db'   => $this->db,
+			'host' => $this->host
+			// ,'charset' => 'utf8' // Depending on your PHP and MySQL config, you may need this
+		);
+		return SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns);
+	}
 }

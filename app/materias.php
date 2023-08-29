@@ -3,6 +3,7 @@
 namespace App;
 
 use App\model;
+use Utils\Sanitizer;
 
 use Exception;
 
@@ -10,20 +11,38 @@ class materias extends model
 {
 
     public $fillable = [
+        'codigo',
         'nombre',
-        'trayecto_id',
-        'tipo',
+        'trayecto',
+        'periodo',
+        'vinculacion',
+        'htasist',
+        'htind',
+        'ucredito',
+        'hrs_acad',
+        'eje',
     ];
+
+    private $codigo;
+    private $nombre;
+    private $trayecto;
+    private $periodo;
+    private $vinculacion;
+    private $htasist;
+    private $htind;
+    private $ucredito;
+    private $hrs_acad;
+    private $eje;
 
     public function all()
     {
         try {
-          $materias = $this->querys("SELECT materias.*, trayecto.nombre as trayecto FROM materias INNER JOIN trayecto ON trayecto.id = materias.trayecto_id ");
-          return $materias ? $materias : null;
+            $materias = $this->querys("SELECT materias.*, trayecto.nombre as trayecto FROM materias INNER JOIN trayecto ON trayecto.id = materias.trayecto_id ");
+            return $materias ? $materias : null;
         } catch (Exception $th) {
-          return $th;
+            return $th;
         }
-      }
+    }
 
     public function create($materias)
     {
@@ -31,24 +50,6 @@ class materias extends model
             $this->fillable[$key] = $value;
         }
         return $this;
-    }
-
-    public function save()
-    {
-
-        try {
-
-                $this->set('materias', [
-                    'nombre' => '"' . $this->fillable['nombre'] . '"',
-                    'trayecto_id' => '"' . $this->fillable['trayecto_id'] . '"',
-                    'tipo' => '"' . $this->fillable['tipo'] . '"',
-                    
-                ]);
-                return $this;
-            
-        } catch (Exception $th) {
-            return $th;
-        }
     }
 
     // funcion para traer estatus 1 
@@ -163,5 +164,92 @@ class materias extends model
                 `trayecto`;'
         );
         return $codigo;
+    }
+
+
+    /**
+     * setData
+     * 
+     * Se encarga de asignar los valores en los campos
+     * definidos en la variable "fillable", tambien se 
+     * encarga de sanitizar cada uno de estos valores
+     *
+     * @param array $data
+     * @return void
+     */
+    public function setData(array $data)
+    {
+        foreach ($data as $prop => $value) {
+
+            if (property_exists($this, $prop) && in_array($prop, $this->fillable)) {
+                $this->{$prop} = $value;
+            }
+        }
+    }
+
+    /**
+     * save
+     * 
+     * Se encarga de tomar los valores que fueron asignados al modelo
+     * previamente y realizar la consulta SQL
+     *
+     * @param [type] $id
+     * @return integer ID de elemento creado o actualizado
+     */
+    public function save($codigo = null): int
+    {
+        $data = [];
+
+        foreach ($this->fillable as $key => $value) {
+            if (isset($this->{$value})) {
+                if (is_string($this->{$value})) {
+                    $data[$value] = '"' . Sanitizer::sanitize($this->{$value}) . '"';
+                } else {
+                    $data[$value] =  $this->{$value};
+                }
+            }
+        }
+        if ($codigo) {
+            $this->update('materias', $data, [['codigo', '=', $codigo]]);
+            return $codigo;
+        } else {
+            $this->set('materias', $data);
+            $this->codigo = $this->lastInsertId();
+            return $this->codigo;
+        }
+    }
+
+    /**
+     * generarSSP
+     * 
+     * Generar SSP proveniente de la función de data table
+     *
+     * @return array
+     */
+    public function generarSSP(): array
+    {
+        $columns = array(
+            array(
+                'db'        => 'codigo',
+                'dt'        => 0
+            ),
+            array(
+                'db'        => 'nombre',
+                'dt'        => 1
+            ),
+            array(
+                'db'        => 'nombre_trayecto',
+                'dt'        => 2
+            ),
+            array(
+                'db'        => 'nombre_fase',
+                'dt'        => 3
+            ),
+            array(
+                'db'        => 'dimensiones_proyecto',
+                'dt'        => 4
+            ),
+        );
+        return $this->getSSP('detalles_materias', 'codigo', $columns);
     }
 }

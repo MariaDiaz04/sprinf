@@ -44,14 +44,16 @@ class proyecto extends model
         }
     }
 
-    public function find($id)
+    /**
+     * Retorna los datos del proyecto
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function find($id): array
     {
-        try {
-            $proyectos = $this->querys("SELECT proyecto.*, CONCAT(persona.nombre, ' ',persona.apellido) as nombre_tutor, trayecto.nombre as nombre_trayecto FROM proyecto INNER JOIN tutor ON tutor.id = proyecto.tutor_id INNER JOIN persona ON persona.id = tutor.persona_id INNER JOIN trayecto ON trayecto.id = proyecto.trayecto_id WHERE proyecto.id = $id");
-            return $proyectos ? reset($proyectos) : null;
-        } catch (Exception $th) {
-            return $th;
-        }
+        $proyectos = $this->selectOne("detalles_proyecto", [['id', '=', $id]]);
+        return !$proyectos ? [] : $proyectos;
     }
 
 
@@ -126,5 +128,55 @@ class proyecto extends model
     {
         $this->delete('estudiante_proyecto', [['proyecto_id', '=', $id]]);
         $this->delete('proyecto', [['id', '=', $id]]);
+    }
+
+    /**
+     * Obtiene los integrantes de un proyecto
+     *
+     * @param [int] $id - ID de proyecto
+     * @return array retorna vacio si no tiene integrantes
+     */
+    function obtenerIntegrantes(int $id): array
+    {
+        $integrantes = $this->select('detalles_integrantes', [['proyecto_id', '=', $id]]);
+        return !$integrantes ? [] : $integrantes;
+    }
+
+    /**
+     * generarSSP
+     * 
+     * Generar SSP proveniente de la función de data table
+     *
+     * @return array
+     */
+    public function generarSSP(): array
+    {
+        $columns = array(
+            array(
+                'db'        => 'id',
+                'dt'        => 0
+            ),
+            array(
+                'db'        => 'nombre',
+                'dt'        => 1
+            ),
+            array(
+                'db'        => 'comunidad',
+                'dt'        => 2
+            ),
+            array(
+                'db'        => 'nombre_trayecto',
+                'dt'        => 3
+            ),
+            array(
+                'db'        => 'nombre_fase',
+                'dt'        => 4
+            ),
+            array(
+                'db'        => 'integrantes',
+                'dt'        => 5
+            ),
+        );
+        return $this->getSSP('detalles_proyecto', 'id', $columns);
     }
 }

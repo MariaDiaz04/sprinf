@@ -63,7 +63,6 @@ class permisosController extends controller
         $roles = $this->ROL->all();
         $permisos = $this->PERMISOS->find($id);
         $modulos = $this->MODULO->all();
-       // return var_dump($modulos);
 
         if ($permisos) {
             return $this->view('permisos/editar', ['permisos' => $permisos->fillable, 'roles' => $roles, 'modulos'=>$modulos]);
