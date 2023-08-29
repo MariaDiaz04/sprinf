@@ -26,7 +26,7 @@
                   <option value="<?= 'fase2' ?>">Fase 2</option>
                 </select>
               </div>
-              <div class="col-lg-3">
+              <!-- <div class="col-lg-3">
                 <label class="form-label ">Trayecto</label>
                 <br>
                 <select class="custom-select form-select" name="trayecto_id" id="codigo">
@@ -35,7 +35,7 @@
                     <option value="<?php echo $trayecto->id; ?>"><?php echo $trayecto->nombre; ?></option>
                   <?php endforeach; ?>
                 </select>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

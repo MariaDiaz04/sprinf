@@ -74,6 +74,15 @@
                     <?php if ($this->ROL->find($rol)->fillable['id'] == 4) : ?>
                       <a href="<?= $this->Route('estudiante') ?>" class="btn btn-outline-primary">Volver</a>
                     <?php endif ?>
+                    <?php if ($this->ROL->find($rol)->fillable['id'] == 1) : ?>
+                      <a href="<?= $this->Route('tutor') ?>" class="btn btn-outline-primary">Volver</a>
+                    <?php endif ?>
+                    <?php if ($this->ROL->find($rol)->fillable['id'] == 3) : ?>
+                      <a href="<?= $this->Route('coordinador') ?>" class="btn btn-outline-primary">Volver</a>
+                    <?php endif ?>
+                    <?php if ($this->ROL->find($rol)->fillable['id'] == 5) : ?>
+                      <a href="<?= $this->Route('orgdoc') ?>" class="btn btn-outline-primary">Volver</a>
+                    <?php endif ?>
                   </div>
                 </div>
               </form>

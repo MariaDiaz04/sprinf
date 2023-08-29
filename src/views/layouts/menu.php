@@ -78,6 +78,11 @@
             </a>
           </li>
           <li class="menu-item">
+            <a href="<?= APP_URL . $this->Route('tutor')?>" class="menu-link">
+              <div data-i18n="Container">Tutor</div>
+            </a>
+          </li>
+          <li class="menu-item">
             <a href="<?= APP_URL . $this->Route('estudiante') ?>" class="menu-link">
               <div data-i18n="Without navbar">Estudiantes</div>
             </a>
@@ -87,9 +92,10 @@
               <div data-i18n="Container">Coordinador</div>
             </a>
           </li>
+
           <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('tutor')?>" class="menu-link">
-              <div data-i18n="Container">Tutor</div>
+            <a href="<?= APP_URL . $this->Route('orgdoc')?>" class="menu-link">
+            <div data-i18n="Container">Organización Docente</div>
             </a>
           </li>
         </ul>

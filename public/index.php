@@ -110,6 +110,33 @@ $routes->add('estudiante', new Route(
     ]
 ));
 
+$routes->add('tutor', new Route(
+
+    '/tutor',
+    [
+        'controller' => userController::class,
+        'method' => 'tutor',
+    ]
+));
+
+$routes->add('coordinador', new Route(
+
+    '/coordinador',
+    [
+        'controller' => userController::class,
+        'method' => 'coordinador',
+    ]
+));
+$routes->add('orgdoc', new Route(
+
+    '/orgdoc',
+    [
+        'controller' => userController::class,
+        'method' => 'orgdoc',
+    ]
+));
+
+
 $routes->add('seccion', new Route(
 
     //  var_dump('asa'),

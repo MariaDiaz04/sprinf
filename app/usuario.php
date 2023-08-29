@@ -139,6 +139,48 @@ class usuario extends model
         return $estudiante;
     }
 
+    public function tutor()
+    {
+        $tutor = $this->querys(
+            'SELECT
+                persona.*,
+                usuarios.email
+            FROM
+                `usuarios`,
+                `persona`
+            WHERE
+                usuarios.id = persona.usuarios_id AND usuarios.rol_id = 4'
+        );
+        return $tutor;
+    }
+    public function coordinador()
+    {
+        $coordinador = $this->querys(
+            'SELECT
+                persona.*,
+                usuarios.email
+            FROM
+                `usuarios`,
+                `persona`
+            WHERE
+                usuarios.id = persona.usuarios_id AND usuarios.rol_id = 4'
+        );
+        return $coordinador;
+    }
+    public function orgdoc()
+    {
+        $orgdoc = $this->querys(
+            'SELECT
+                persona.*,
+                usuarios.email
+            FROM
+                `usuarios`,
+                `persona`
+            WHERE
+                usuarios.id = persona.usuarios_id AND usuarios.rol_id = 4'
+        );
+        return $orgdoc;
+    }
 
     public function users_activos()
     {

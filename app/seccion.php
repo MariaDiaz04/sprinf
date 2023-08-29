@@ -95,7 +95,7 @@ if($seccion){
 
 // ======================== / UPDATE=========================
 
-/* 
+
 public function actualizar($seccion) {
 
 $this->update('seccion', $seccion, [['id', '=', $this->fillable['id'] ]]);
@@ -105,6 +105,7 @@ return $this;
 
 public function eliminar()
 {
+
 
     try {
 
@@ -134,20 +135,6 @@ public function eliminar()
 }
 
 
-public function seccionInactivas() {
-    
-    $seccion_inactivas = $this->query(
-        'SELECT
-            
-            seccion.estatus
-        FROM
-            
-            `seccion`
-            WHERE seccion.estatus=0
-       '
-    );
-    return $seccion_inactivas;
-} */
 
 
 }

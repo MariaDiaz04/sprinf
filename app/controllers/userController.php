@@ -50,6 +50,30 @@ class userController extends controller
      return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '4']);
  } 
 
+ public function tutor()
+ {
+ 
+    $usuarios = $this->USUARIO->tutor();
+
+    return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '3']);
+} 
+
+public function coordinador()
+{
+
+   $usuarios = $this->USUARIO->coordinador();
+
+   return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '1']);
+} 
+
+public function orgdoc()
+{
+
+   $usuarios = $this->USUARIO->orgdoc();
+
+   return $this->view('usuario/usuario', ['persona' => $usuarios, 'rol' => '5']);
+} 
+
 
 
     public function perfil($request)
