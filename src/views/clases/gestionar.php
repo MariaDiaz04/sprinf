@@ -43,18 +43,18 @@
               <div class="col-12">
                 <div class="row form-group mb-2">
                   <div class="col-lg-6">
-                    <label class="form-label" for="trayecto_id">Profesor *</label>
-                    <select class="form-select" name="trayecto_id">
+                    <label class="form-label" for="profesor_id">Profesor *</label>
+                    <select class="form-select" name="profesor_id">
 
                       <?php foreach ($profesores as $profesor) : ?>
-                        <option value="<?= $profesor->id ?>"><?= $profesor->nombre ?></option>
+                        <option value="<?= $profesor->codigo ?>"><?= "$profesor->nombre $profesor->apellido" ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
 
                   <div class="col-lg-6">
-                    <label class="form-label" for="tutor_id">Sección *</label>
-                    <select class="form-select" name="tutor_id">
+                    <label class="form-label" for="seccion_id">Sección *</label>
+                    <select class="form-select" name="seccion_id">
                       <?php foreach ($secciones as $seccion) : ?>
                         <option value="<?= $seccion->codigo ?>"><?= "$seccion->trayecto - $seccion->codigo" ?></option>
                       <?php endforeach; ?>
@@ -64,8 +64,8 @@
               </div>
               <div class="row form-group mb-2">
                 <div class="col-lg-12">
-                  <label class="form-label" for="trayecto_id">Unidad Curricular *</label>
-                  <select class="form-select" name="trayecto_id">
+                  <label class="form-label" for="unidad_curricular_id">Unidad Curricular *</label>
+                  <select class="form-select" name="unidad_curricular_id">
 
                     <?php foreach ($materias as $unidad) : ?>
                       <option value="<?= $unidad->codigo ?>"><?= "$unidad->nombre_trayecto - $unidad->nombre_fase - $unidad->nombre" ?></option>
@@ -82,7 +82,7 @@
                   <select class="form-select" id="estudiantes">
 
                     <?php foreach ($estudiantes as $estudiante) : ?>
-                      <option value="<?= $estudiante->id ?>"><?= "$estudiante->nombre $estudiante->apellido - C.I. $estudiante->cedula" ?></option>
+                      <option value="<?= $estudiante->id ?>" data-cedula="<?= $estudiante->cedula ?>" data-nombre="<?= $estudiante->nombre ?>" data-apellido="<?= $estudiante->apellido ?>"><?= "$estudiante->nombre $estudiante->apellido - C.I. $estudiante->cedula" ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>
@@ -219,6 +219,66 @@
         }
 
       }
+
+      // logica para añadir estudiante a tabla de creación de clase
+
+      $('#anadirEstudiante').click(function(e) {
+        e.preventDefault();
+
+        let studentsAlreadyAppened = document.getElementById("cuerpoTablaEstudiantes").children.length;
+
+
+
+
+        let selectedStudent = $('#estudiantes option:selected');
+        console.log(selectedStudent)
+
+        let studentId = $(selectedStudent).val();
+
+        if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
+          alert('Estudiante ya ha sido añadido')
+          return false;
+        }
+
+        console.log($(selectedStudent).data('nombre'))
+        let fila = `<tr id="appenedStudent-${studentId}">
+                    <th scope="row">
+                    <input type="text" name="estudiantes[]" class="form-control-plaintext" value="${studentId}" hidden>
+                    ${$(selectedStudent).data('cedula')}
+                    </th>
+                    <td>${$(selectedStudent).data('nombre')}</td>
+                    <td>${$(selectedStudent).data('apellido')}</td>
+                    <td><button class="btn btn-secondary" onClick="removeStudent(${studentId})">Eliminar</button></td>
+                  </tr>`;
+        $('#cuerpoTablaEstudiantes').append(fila);
+
+      })
+
+      $('#clasesGuardar').submit(function(e) {
+        e.preventDefault()
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        console.log(url)
+        console.log(data)
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("clasesGuardar").reset();
+            // actualizar tabla
+            toggleLoading(false)
+          },
+        });
+      })
     })
 
     function edit(id) {

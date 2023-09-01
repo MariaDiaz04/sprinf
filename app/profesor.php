@@ -26,7 +26,7 @@ class profesor extends model
   public function all()
   {
     try {
-      $estudiantes = $this->querys('SELECT profesor.*, persona.nombre, persona.apellido, persona.cedula FROM profesor INNER JOIN persona ON persona.cedula = profesor.persona_id');
+      $estudiantes = $this->select('detalles_profesores');
       return $estudiantes ? $estudiantes : null;
     } catch (Exception $th) {
       return $th;

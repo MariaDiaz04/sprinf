@@ -55,11 +55,8 @@ class clasesController extends controller
   public function store(Request $clases)
   {
     try {
-      DateValidator::checkPeriodDates($clases->get('fecha_inicio'), $clases->get('fecha_cierre'));
 
-      $this->clases->setData($clases->request->all());
-
-      $id = $this->clases->save();
+      throw new Exception('Not Implemented');
 
       http_response_code(200);
       echo json_encode($id);
