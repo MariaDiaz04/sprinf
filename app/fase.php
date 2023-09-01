@@ -18,6 +18,23 @@ class fase extends model
   private $fecha_inicio;
   private $fecha_cierre;
 
+  public function all()
+  {
+    try {
+      $estudiantes = $this->select('detalles_fase');
+      return $estudiantes ? $estudiantes : null;
+    } catch (Exception $th) {
+      return $th;
+    }
+  }
+
+
+  function getPrimerFaseDeTrayectos(): array
+  {
+    $estudiantes = $this->select('detalles_fase', [['codigo_fase', 'like', '"%_1"']]);
+    return $estudiantes ? $estudiantes : [];
+  }
+
   /**
    * Obtener informacion de fase
    *

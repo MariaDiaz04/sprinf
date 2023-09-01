@@ -46,11 +46,14 @@ class proyectoController extends controller
 
         $tutores = $this->tutores->all();
 
+        $fases = $this->fase->getPrimerFaseDeTrayectos();
+
         $estudiantes = $this->estudiantes->listPendingForProject();
 
 
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
+            'fases' => $fases,
             'estudiantes' => $estudiantes,
             'tutores' => $tutores
         ]);

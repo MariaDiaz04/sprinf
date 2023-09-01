@@ -26,7 +26,7 @@ class estudiante extends model
     public function all()
     {
         try {
-            $estudiantes = $this->querys('SELECT estudiante.*, persona.nombre, persona.apellido, persona.cedula FROM estudiante INNER JOIN persona ON persona.cedula = estudiante.persona_id');
+            $estudiantes = $this->select('detalles_estudiantes');
             return $estudiantes ? $estudiantes : null;
         } catch (Exception $th) {
             return $th;
@@ -36,7 +36,7 @@ class estudiante extends model
     public function listPendingForProject()
     {
         try {
-            $estudiantes = $this->querys('SELECT estudiante.*, persona.nombre, persona.apellido, persona.cedula FROM estudiante INNER JOIN persona ON persona.cedula = estudiante.persona_id WHERE estudiante.id NOT IN (SELECT estudiante_id FROM estudiante_proyecto)');
+            $estudiantes = $this->select('detalles_estudiantes', [['id', 'NOT IN', '(SELECT estudiante_id FROM integrante_proyecto)']]);
             return $estudiantes ? $estudiantes : null;
         } catch (Exception $th) {
             return $th;
