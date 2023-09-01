@@ -47,38 +47,21 @@
                   <div class="row form-group mb-3">
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
+                      <label class="form-label" for="unidad_id">Unidad Curricular *</label>
+                      <select class="form-select" name="unidad_id">
+                        <?php foreach ($materias as $unidad) : ?>
+                          <option value="<?= $unidad->codigo ?>"><?= "$unidad->nombre_trayecto - $unidad->nombre_fase - $unidad->nombre" ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                    <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre *</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
                     </div>
-                    <div class="col-lg-3">
-                      <label class="form-label" for="trayecto">Trayecto *</label>
-                      <select class="form-select" id="trayecto" name="trayecto">
-                        <option value="1">Trayecto I</option>
-                        <option value="2">Trayecto II</option>
-                        <option value="3">Trayecto III</option>
-                        <option value="4">Trayecto IV</option>
-                      </select>
-                    </div>
-                    <div class="col-lg-3">
-                      <label class="form-label" for="trayecto">Fase *</label>
-                      <select class="form-select" id="trayecto" name="trayecto">
-                        <option value="fase_1">Fase I</option>
-                        <option value="fase_2">Fase II</option>
-                      </select>
-                    </div>
                   </div>
                   <div class="row form-group mb-3">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="trayecto">Evaluador *</label>
-                      <select class="form-select" id="trayecto" name="trayecto">
-                        <option value="fase_1">Base de datos</option>
-                        <option value="fase_1">Base de datos II</option>
-                        <option value="fase_2">Proyecto Sociotecnologico</option>
-                        <option value="fase_2">Algoritmica y Programación I</option>
-                        <option value="fase_2">Proyecto Sociotecnologico</option>
-                      </select>
-                    </div>
-                    <div class="col-lg-6 d-flex justify-content-start align-items-end">
+
+                    <div class="col-lg-12 d-flex justify-content-start align-items-end">
                       <div class="form-check ">
                         <input class="form-check-input" type="checkbox" value="1" id="vinculacion" name="vinculacion">
                         <label class="form-check-label" for="vinculacion">
@@ -139,35 +122,6 @@
 
   <script>
     $(document).ready(() => {
-
-      $('#anadirItem').click(function(e) {
-        e.preventDefault();
-
-
-        let nombreItem = $('#nombreItem').val();
-        let ponderacionItem = $('#ponderacionItem').val();
-
-
-        if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
-          alert('Estudiante ya ha sido añadido')
-          return false;
-        }
-
-        console.log($(selectedStudent).data('nombre'))
-        let fila = `<tr id="appenedStudent-${studentId}">
-                    <th scope="row">
-                    <input type="text" name="estudiantes[]" class="form-control-plaintext" value="${studentId}" hidden>
-                    ${$(selectedStudent).data('cedula')}
-                    </th>
-                    <td>${$(selectedStudent).data('nombre')}</td>
-                    <td>${$(selectedStudent).data('apellido')}</td>
-                    <td><button class="btn btn-secondary" onClick="removeStudent(${studentId})">Eliminar</button></td>
-                  </tr>`;
-        $('#cuerpoTablaEstudiantes').append(fila);
-
-        //$(`#selectEstudiante option[value='${studentId}']`).remove();
-
-      })
 
       toggleLoading(false)
 
@@ -255,5 +209,34 @@
         }
 
       }
+
+      $('#anadirItem').click(function(e) {
+        e.preventDefault();
+
+        let length = document.getElementById("cuerpoTablaItems").children.length;
+
+
+
+
+        let nombreItem = $('#nombreItem').val();
+        let ponderacionItem = $('#ponderacionItem').val()
+
+        let fila = `<tr id="appenedItem-${length}">
+                    <th scope="row">
+                    <input type="text" name="indicadores[${length}][nombre]" class="form-control-plaintext" value="${nombreItem}" hidden>
+                    <input type="text" name="indicadores[${length}][ponderacion]" class="form-control-plaintext" value="${ponderacionItem}" hidden>
+                    ${nombreItem}
+                    </th>
+                    <td>${ponderacionItem}</td>
+                    <td><a href="#" class="btn btn-secondary" onClick="removeItem(${length})">Eliminar</a href="javascript:void(0)"></td>
+                  </tr>`;
+        $('#cuerpoTablaItems').append(fila);
+
+      })
+
     })
+
+    function removeItem(id) {
+      $(`#appenedItem-${id}`).remove()
+    }
   </script>

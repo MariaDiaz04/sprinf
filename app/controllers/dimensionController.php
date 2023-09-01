@@ -9,6 +9,7 @@ use Bcrypt\Bcrypt;
 
 use App\baremos;
 use App\dimension;
+use App\materias;
 use App\estudiante;
 use App\tutor;
 use App\trayectos;
@@ -20,20 +21,24 @@ class dimensionController extends controller
   public $baremos;
   public $trayectos;
   public $dimension;
+  public $materias;
 
   function __construct()
   {
     $this->baremos = new baremos();
     $this->dimension = new dimension();
     $this->trayectos = new trayectos();
+    $this->materias = new materias();
   }
 
   public function index()
   {
     $dimensiones = $this->dimension->all();
+    $materias = $this->materias->all();
 
     return $this->view('dimensiones/gestionar', [
       'dimensiones' => $dimensiones,
+      'materias' => $materias,
     ]);
   }
 
