@@ -37,7 +37,7 @@ class materias extends model
     public function all()
     {
         try {
-            $materias = $this->querys("SELECT materias.*, trayecto.nombre as trayecto FROM materias INNER JOIN trayecto ON trayecto.id = materias.trayecto_id ");
+            $materias = $this->select("detalles_materias");
             return $materias ? $materias : null;
         } catch (Exception $th) {
             return $th;

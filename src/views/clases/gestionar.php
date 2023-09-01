@@ -55,8 +55,8 @@
                   <div class="col-lg-6">
                     <label class="form-label" for="tutor_id">Sección *</label>
                     <select class="form-select" name="tutor_id">
-                      <?php foreach ($tutores as $seccion) : ?>
-                        <option value="<?= $seccion->id ?>"><?= "$tutor->nombre_trayecto - $seccion->nombre_fase - $tutor->nombre" ?></option>
+                      <?php foreach ($secciones as $seccion) : ?>
+                        <option value="<?= $seccion->codigo ?>"><?= "$seccion->trayecto - $seccion->codigo" ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
@@ -67,8 +67,8 @@
                   <label class="form-label" for="trayecto_id">Unidad Curricular *</label>
                   <select class="form-select" name="trayecto_id">
 
-                    <?php foreach ($unidades as $unidad) : ?>
-                      <option value="<?= $unidad->id ?>"><?= $unidad->nombre ?></option>
+                    <?php foreach ($materias as $unidad) : ?>
+                      <option value="<?= $unidad->codigo ?>"><?= "$unidad->nombre_trayecto - $unidad->nombre_fase - $unidad->nombre" ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>
@@ -82,7 +82,7 @@
                   <select class="form-select" id="estudiantes">
 
                     <?php foreach ($estudiantes as $estudiante) : ?>
-                      <option value="<?= $estudiante->id ?>"><?= $estudiante->nombre ?></option>
+                      <option value="<?= $estudiante->id ?>"><?= "$estudiante->nombre $estudiante->apellido - C.I. $estudiante->cedula" ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>
