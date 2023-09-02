@@ -44,24 +44,12 @@
               <div class="row pb-2">
                 <div class="col-12">
                   <div class="row form-group">
-                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Código *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="codigo" id="codigo">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="trayecto">Trayecto *</label>
-                      <select class="form-select" id="trayecto" name="trayecto">
-                        <option value="1">Trayecto I</option>
-                        <option value="2">Trayecto II</option>
-                        <option value="3">Trayecto III</option>
-                        <option value="4">Trayecto IV</option>
+                      <label class="form-label" for="trayecto_id">Trayectos *</label>
+                      <select class="form-select" name="trayecto_id">
+                        <?php foreach ($trayectos as $trayecto) : ?>
+                          <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre - $trayecto->fecha_inicio / $trayecto->fecha_cierre" ?></option>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                     <div class="col-lg-6">
@@ -73,6 +61,18 @@
                       </select>
                     </div>
                   </div>
+                  <div class="row form-group">
+                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
+                    <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Código *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="codigo" id="codigo">
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Nombre *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
+                    </div>
+                  </div>
+
                   <div class="row form-group">
                     <!-- horas -->
                     <div class="col-lg-4">
@@ -166,9 +166,6 @@
 
         url = $(this).attr('action');
         data = $(this).serializeArray();
-
-
-
 
         $.ajax({
           type: "POST",

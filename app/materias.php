@@ -3,6 +3,7 @@
 namespace App;
 
 use App\model;
+use App\malla;
 use Utils\Sanitizer;
 
 use Exception;
@@ -14,8 +15,6 @@ class materias extends model
         'codigo',
         'nombre',
         'trayecto',
-        'periodo',
-        'vinculacion',
         'htasist',
         'htind',
         'ucredito',
@@ -26,13 +25,12 @@ class materias extends model
     private $codigo;
     private $nombre;
     private $trayecto;
-    private $periodo;
-    private $vinculacion;
     private $htasist;
     private $htind;
     private $ucredito;
     private $hrs_acad;
     private $eje;
+    private $malla = [];
 
     public function all()
     {
@@ -167,6 +165,18 @@ class materias extends model
     }
 
 
+    function setMalla(array $data): void
+    {
+        foreach ($data as $values) {
+            $malla = new malla();
+
+            $malla->setData($values);
+
+            $this->malla[] = $malla;
+        }
+    }
+
+
     /**
      * setData
      * 
@@ -184,6 +194,24 @@ class materias extends model
             if (property_exists($this, $prop) && in_array($prop, $this->fillable)) {
                 $this->{$prop} = $value;
             }
+        }
+    }
+
+    function insertTransaction(): bool
+    {
+        try {
+
+            parent::beginTransaction();
+            // almacenar materia
+            $this->save();
+
+            parent::commit();
+            return true;
+        } catch (Exception $e) {
+            parent::rollBack();
+            print($e->getMessage());
+            print('rollback so subject was not created');
+            return false;
         }
     }
 
@@ -214,7 +242,13 @@ class materias extends model
             return $codigo;
         } else {
             $this->set('materias', $data);
+
             $this->codigo = $this->lastInsertId();
+
+            foreach ($this->malla as $malla) {
+                $this->set('malla_curricular', $malla->getQuery());
+            }
+
             return $this->codigo;
         }
     }

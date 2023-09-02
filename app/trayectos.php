@@ -24,7 +24,7 @@ class trayectos extends model
   public function all()
   {
     try {
-      $trayectos = $this->select('trayecto');
+      $trayectos = $this->select('detalles_trayecto');
       return $trayectos ? $trayectos : null;
     } catch (Exception $th) {
       return $th;

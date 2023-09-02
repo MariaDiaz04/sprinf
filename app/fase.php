@@ -35,6 +35,12 @@ class fase extends model
     return $estudiantes ? $estudiantes : [];
   }
 
+  function getFaseDeTrayecto($fase, $trayecto): array
+  {
+    $estudiantes = $this->selectOne('detalles_fase', [['codigo_fase', 'like', '"%_' . $fase . '"'], ['codigo_trayecto', '=', '"' . $trayecto . '"']]);
+    return $estudiantes ? $estudiantes : [];
+  }
+
   /**
    * Obtener informacion de fase
    *
