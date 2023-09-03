@@ -165,6 +165,12 @@ class materias extends model
     }
 
 
+    /**
+     * recorre las fases en las que está presente la materia
+     *
+     * @param array $data
+     * @return void
+     */
     function setMalla(array $data): void
     {
         foreach ($data as $values) {
@@ -197,21 +203,24 @@ class materias extends model
         }
     }
 
-    function insertTransaction(): bool
+    /**
+     * Transaccion para inserción de materias
+     *
+     * @return String - código de materia creada
+     */
+    function insertTransaction(): String
     {
         try {
 
             parent::beginTransaction();
             // almacenar materia
-            $this->save();
+            $codigo = $this->save();
 
             parent::commit();
-            return true;
+            return $codigo;
         } catch (Exception $e) {
             parent::rollBack();
-            print($e->getMessage());
-            print('rollback so subject was not created');
-            return false;
+            return '';
         }
     }
 
@@ -222,9 +231,9 @@ class materias extends model
      * previamente y realizar la consulta SQL
      *
      * @param [type] $id
-     * @return integer ID de elemento creado o actualizado
+     * @return string Código de materia
      */
-    public function save($codigo = null): int
+    public function save($codigo = null): string
     {
         $data = [];
 
@@ -243,7 +252,6 @@ class materias extends model
         } else {
             $this->set('materias', $data);
 
-            $this->codigo = $this->lastInsertId();
 
             foreach ($this->malla as $malla) {
                 $this->set('malla_curricular', $malla->getQuery());

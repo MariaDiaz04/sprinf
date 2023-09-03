@@ -49,69 +49,54 @@ class materiasController extends controller
         return $this->view('materias/crear', ['materias' => $materias, 'trayectos' => $trayectos]);
     }
 
+    /**
+     * Creacion o actualización de materias y de su malla [fase1, fase2 o anual]
+     *
+     * @param Request $materia
+     * @return void
+     */
     public function store(Request $materia)
     {
         try {
             $malla = [];
             $codigo_materia = $materia->get('codigo');
+            $periodo = $materia->get('periodo');
 
             $fase1 = $this->FASE->getFaseDeTrayecto('1', $materia->get('trayecto_id'));
             $fase2 = $this->FASE->getFaseDeTrayecto('2', $materia->get('trayecto_id'));
 
-            switch ($materia->get('periodo')) {
-                case 'anual':
-                    $mallaFase1 = [
-                        'codigo' => $codigo_materia . '_1',
-                        'fase_id' => $fase1['codigo_fase'],
-                        'materia_id' => $codigo_materia
-                    ];
-                    $mallaFase2 = [
-                        'codigo' => $codigo_materia . '_2',
-                        'fase_id' => $fase2['codigo_fase'],
-                        'materia_id' => $codigo_materia
-                    ];
+            if ($periodo == 'fase_1' || $periodo == 'anual') {
 
-                    $malla[] = $mallaFase1;
-                    $malla[] = $mallaFase2;
+                $malla[] = [
+                    'codigo' => $codigo_materia . '_1',
+                    'fase_id' => $fase1['codigo_fase'],
+                    'materia_id' => $codigo_materia
+                ];
+            } else if ($periodo == 'fase_2' || $periodo == 'anual') {
 
-                    break;
-
-                case 'fase_1':
-                    $mallaFase1 = [
-                        'codigo' => $materia->get('codigo') . '_1',
-                        'fase_id' => $fase1['codigo_fase'],
-                        'materia_id' => $materia->get('codigo')
-                    ];
-                    $malla[] = $mallaFase1;
-                    break;
-
-                case 'fase_2':
-                    $mallaFase2 = [
-                        'codigo' => $materia->get('codigo') . '_2',
-                        'fase_id' => $fase2['codigo_fase'],
-                        'materia_id' => $materia->get('codigo')
-                    ];
-                    $malla[] = $mallaFase2;
-                    break;
-
-                default:
-                    throw new Exception('Error al generar malla de unidad curricular');
-                    break;
+                $malla[] = [
+                    'codigo' => $codigo_materia . '_2',
+                    'fase_id' => $fase2['codigo_fase'],
+                    'materia_id' => $codigo_materia
+                ];
             }
 
+            // en caso de que no se hayan cumplido condiciones que generen mallas a la materia
+            if (empty($malla)) throw new Exception('Error inesperado al crear malla de unidad curricular.');
 
-            // chequear vinculacion a proyecto
+
+            // asignar valores de materia
             $this->MATERIAS->setData($materia->request->all());
+            // asignar valores de malla asignada a esa materia
             $this->MATERIAS->setMalla($malla);
 
-            $this->MATERIAS->insertTransaction();
+            // ejecutar transacción de insert
+            $codigo = $this->MATERIAS->insertTransaction();
 
-            throw new Exception('Unimplemented Error');
-
-            $id = $this->MATERIAS->save();
+            if (empty($codigo)) throw new Exception('Error inesperado al crear materia.');
 
             http_response_code(200);
-            echo json_encode($id);
+            echo json_encode($codigo);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());
