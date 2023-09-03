@@ -28,6 +28,19 @@ class clases extends model
     }
   }
 
+  /**
+   * Obtiene las clases de cualquier fase y seccion
+   * perteneciente a una materia
+   *
+   * @param string $codigoMateria
+   * @return array
+   */
+  function getAllBySubject(string $codigoMateria): array
+  {
+    $clases = $this->select('detalles_clases', [['materia_id', '=', '"' . $codigoMateria . '"']]);
+    return $clases ? $clases : [];
+  }
+
 
   /**
    * setData

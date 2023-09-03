@@ -72,23 +72,19 @@ class materias extends model
         return $allstatus;
     }
 
-    //=========================FIND==========================
-    public function find($idmaterias)
+    /**
+     * Obtener los detalles de una materia
+     * por su código
+     *
+     * @param string $codigo
+     * @return array - es un array vacio en caso de que no consiga alguna coincidencia
+     */
+    public function find(string $codigo)
     {
-        try {
-            $materias = $this->select('materias', [['idmaterias', '=', $idmaterias]]);
-            if ($materias) {
-                foreach ($materias[0] as $key => $value) {
-                    $this->fillable[$key] = $value;
-                }
-                return $this;
-            } else {
-                return null;
-            }
-        } catch (Exception $th) {
-            return $th;
-        }
+        $materias = $this->selectOne('detalles_materias', [['codigo', '=', $codigo]]);
+        return !$materias ? [] : $materias;
     }
+
     //=========================/FIND==========================
 
 
@@ -225,6 +221,50 @@ class materias extends model
     }
 
     /**
+     * Transaccion para la actualizacion de materias
+     *
+     * @return String
+     */
+    function updateTransaction(): String
+    {
+        try {
+            parent::beginTransaction();
+            // actualizar tabla materia
+            $codigo = $this->save($this->codigo);
+
+
+
+            parent::commit();
+            return $codigo;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return '';
+        }
+    }
+
+    /**
+     * Transaccion para el borrado de materias
+     *
+     * @return String
+     */
+    function deleteTransaction(string $codigo): bool
+    {
+        try {
+            parent::beginTransaction();
+            // actualizar tabla materia
+            // borramos su antigua malla
+            $this->delete('malla_curricular', [['materia_id', '=', '"' . $codigo . '"']]);
+            $this->delete('materias', [['codigo', '=', '"' . $codigo . '"']]);
+
+            parent::commit();
+            return true;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return false;
+        }
+    }
+
+    /**
      * save
      * 
      * Se encarga de tomar los valores que fueron asignados al modelo
@@ -247,11 +287,26 @@ class materias extends model
             }
         }
         if ($codigo) {
+
+            // eliminamos el valor de codigo de la información a actualizar ya que es un campo que
+            // no se debe de actualizar
+            unset($data['codigo']);
+
+            // actualizamos la materia con la nueva informacion
             $this->update('materias', $data, [['codigo', '=', $codigo]]);
+
+
+            // borramos su antigua malla
+            $this->delete('malla_curricular', [['materia_id', '=', '"' . $codigo . '"']]);
+
+            // creamos su nueva malla
+            foreach ($this->malla as $malla) {
+                $this->set('malla_curricular', $malla->getQuery());
+            }
+
             return $codigo;
         } else {
             $this->set('materias', $data);
-
 
             foreach ($this->malla as $malla) {
                 $this->set('malla_curricular', $malla->getQuery());
