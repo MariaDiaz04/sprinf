@@ -73,7 +73,7 @@ class model extends conexion
 			$sql = $sql . ';';
 		}
 
-		// return $sql;
+		// echo $sql;
 		return \PDO::query($sql);
 	} //finaliza update
 

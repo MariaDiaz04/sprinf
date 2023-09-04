@@ -250,6 +250,30 @@ $routes->add('materia_guardar', new Route(
         'method' => 'store',
     ]
 ));
+$routes->add('materia_editar', new Route(
+
+    '/materias/edit',
+    [
+        'controller' => materiasController::class,
+        'method' => 'edit',
+    ]
+));
+$routes->add('materia_update', new Route(
+
+    '/materias/update',
+    [
+        'controller' => materiasController::class,
+        'method' => 'update',
+    ]
+));
+$routes->add('materia_delete', new Route(
+
+    '/materias/delete',
+    [
+        'controller' => materiasController::class,
+        'method' => 'delete',
+    ]
+));
 $routes->add('materia_ssp', new Route(
 
     '/materias/ssp',

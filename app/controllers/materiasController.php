@@ -86,6 +86,35 @@ class materiasController extends controller
         }
     }
 
+    /**
+     * Obtiene la informacion necesaria para crear
+     * formulario de update retornado en formato JSON
+     *
+     * @param [type] $request
+     * @return void
+     */
+    function edit($request): void
+    {
+        try {
+            $data = [];
+            $codigo = $request->get('codigo');
+
+            $this->checkMateria($codigo, 'actualizar');
+
+            $materia = $this->MATERIAS->find($codigo);
+            $malla = $this->MATERIAS->findMalla($codigo);
+
+            $data['materia'] = $materia;
+            $data['malla'] = $malla;
+
+            http_response_code(200);
+            echo json_encode($data);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
     public function update($request)
     {
         try {
@@ -101,7 +130,6 @@ class materiasController extends controller
 
             $malla = $this->obtenerMallasDePeriodo($codigo_materia, $periodo, $trayectoId);
             // en caso de que no se hayan cumplido condiciones que generen mallas a la materia
-
 
             // asignar valores de materia
             $this->MATERIAS->setData($request->request->all());
@@ -154,7 +182,7 @@ class materiasController extends controller
      * @param integer $trayectoId
      * @return array
      */
-    private function obtenerMallasDePeriodo(string $codigo_materia, string $periodo, int $trayectoId): array
+    private function obtenerMallasDePeriodo(string $codigo_materia, string $periodo, string $trayectoId): array
     {
         $malla = [];
 
@@ -168,7 +196,9 @@ class materiasController extends controller
                 'fase_id' => $fase1['codigo_fase'],
                 'materia_id' => $codigo_materia
             ];
-        } else if ($periodo == 'fase_2' || $periodo == 'anual') {
+        }
+
+        if ($periodo == 'fase_2' || $periodo == 'anual') {
 
             $malla[] = [
                 'codigo' => $codigo_materia . '_2',
@@ -176,7 +206,6 @@ class materiasController extends controller
                 'materia_id' => $codigo_materia
             ];
         }
-
         if (empty($malla)) throw new Exception('Error inesperado al crear malla de unidad curricular.');
 
         return $malla;
@@ -197,9 +226,12 @@ class materiasController extends controller
         if (!empty($clases)) throw new Exception("No puede $action datos de materia que cuenta con clases ya creadas");
 
         // verificar que no cuente con dimensiones
-        $detallesMateria = $this->MATERIAS->find($codigo);
+        $detallesMallas = $this->MATERIAS->findMalla($codigo);
 
-        if (intval($detallesMateria['dimensiones_proyecto']) > 0) throw new Exception("No puede $action datos de materia que cuenta dimensiones de proyecto");
+        foreach ($detallesMallas as $malla) {
+            if (intval($malla['dimensiones_proyecto']) > 0) throw new Exception("No puede $action datos de materia que cuenta dimensiones de proyecto");
+        }
+
 
         return true;
     }

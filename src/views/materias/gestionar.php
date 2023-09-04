@@ -106,9 +106,100 @@
           </div>
           <!-- footer de acciones -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
-            <div id="guardarLoading">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <input type="submit" class="btn btn-primary" value="Guardar" id="submit">
+            <div id="loading">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ACTUALIZAR -->
+  <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearLabel">Actualizar Materia</h5>
+
+        </div>
+        <form action="<?= APP_URL . $this->Route('materias/update') ?>" method="post" id="actualizar">
+          <div class="modal-body">
+            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
+            <input type="hidden" name="estatus" value="1">
+            <div class="container-fluid">
+              <div class="row pb-2">
+                <div class="col-12">
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="trayecto_id">Trayectos *</label>
+                      <select class="form-select" name="trayecto_id">
+                        <?php foreach ($trayectos as $trayecto) : ?>
+                          <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre - $trayecto->fecha_inicio / $trayecto->fecha_cierre" ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="periodo">Periodo *</label>
+                      <select class="form-select" id="periodo" name="periodo">
+                        <option value="fase_1">Fase 1</option>
+                        <option value="fase_2">Fase 2</option>
+                        <option value="anual">Anual</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
+                    <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Código *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="codigo" id="codigo" readonly>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Nombre *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <!-- horas -->
+                    <div class="col-lg-4">
+                      <label class="form-label" for="htasist">Horas Total Asist *</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="htasist" id="htasist">
+                    </div>
+                    <div class="col-lg-4">
+                      <label class="form-label" for="htind">Horas Total ind *</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="htind" id="htind">
+                    </div>
+
+                    <div class="col-lg-4">
+                      <label class="form-label" for="ucredito">Horas Academicas *</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="ucredito" id="ucredito">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="hrs_acad">UCredito *</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="hrs_acad" id="hrs_acad">
+                    </div>
+
+                    <div class="col-lg-6">
+                      <label class="form-label" for="eje">Eje *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="eje" id="eje">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- footer de acciones -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <input type="submit" class="btn btn-primary" value="Guardar" id="submit">
+            <div id="loading">
               <div class="spinner-border text-primary" role="status">
                 <span class="sr-only"></span>
               </div>
@@ -121,6 +212,9 @@
 
 
   <script>
+    let updateUrl = "<?= APP_URL . $this->Route('materias/edit') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('materias/delete') ?>";
+
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -131,9 +225,6 @@
       // si necesito editar, le añado la clase "edit"
       // luego en la función table.on(). verifico si la clase del boton en el que hice click
       // contiene el nombre de alguna acción que haya definido
-
-
-
 
       let table = new DataTable('#example', {
         ajax: '<?= $this->Route('materias/ssp') ?>',
@@ -148,7 +239,7 @@
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="#">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -161,7 +252,7 @@
       $('#guardar').submit(function(e) {
         e.preventDefault()
 
-        toggleLoading(true);
+        toggleLoading(true, '#guardar');
 
 
         url = $(this).attr('action');
@@ -172,7 +263,7 @@
           url: url,
           data: data,
           error: function(error, status) {
-            toggleLoading(false)
+            toggleLoading(false, '#guardar')
             alert(error.responseText)
           },
           success: function(data, status) {
@@ -180,30 +271,104 @@
             // usar sweetalerts
             document.getElementById("guardar").reset();
             // actualizar tabla
-            toggleLoading(false)
+            toggleLoading(false, '#guardar')
           },
         });
 
       })
 
-      function edit(id) {
-        alert(`Editing ${id}`)
-      }
+      $('#actualizar').submit(function(e) {
+        e.preventDefault()
 
-      function remove(id) {
-        alert(`Removing ${id}`)
-      }
+        toggleLoading(true, '#actualizar');
+
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false, '#actualizar')
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // actualizar tabla
+            toggleLoading(false, '#actualizar')
+
+            $('#editar').modal('hide')
+          },
+        });
+
+      })
 
       // TOGGLE BUTTON AND SPINNER
-      function toggleLoading(show) {
+      function toggleLoading(show, form = '') {
         if (show) {
-          $('#guardarLoading').show();
-          $('#guardarSubmit').hide();
+          $(`${form} #loading`).show();
+          $(`${form} #submit`).hide();
         } else {
-          $('#guardarLoading').hide();
-          $('#guardarSubmit').show();
+          $(`${form} #loading`).hide();
+          $(`${form} #submit`).show();
         }
 
       }
     })
+
+    function edit(id) {
+      $.ajax({
+        type: "POST",
+        url: updateUrl,
+        data: {
+          'codigo': id
+        },
+        error: function(error, status) {
+          alert(error.responseText)
+        },
+        success: function(data, status) {
+
+          renderUpdateForm(JSON.parse(data))
+        },
+      });
+    }
+
+    function renderUpdateForm(data) {
+
+      $('#editar').modal('show')
+
+      // seleccionar trayecto
+      $(`#actualizar #trayecto_id option[value='${data.materia.trayecto_id}']`).attr("selected", true);
+      // seleccionar periodo
+      $(`#actualizar #periodo option[value='${data.materia.periodo}']`).attr("selected", true);
+
+      $(`#actualizar #codigo`).val(data.materia.materia_id);
+      $(`#actualizar #nombre`).val(data.materia.nombre);
+      $(`#actualizar #eje`).val(data.materia.eje);
+
+      $(`#actualizar #htasist`).val(data.materia.htasist);
+      $(`#actualizar #htind`).val(data.materia.htind);
+      $(`#actualizar #ucredito`).val(data.materia.ucredito);
+      $(`#actualizar #hrs_acad`).val(data.materia.hrs_acad);
+
+    }
+
+    function remove(id) {
+      $.ajax({
+        type: "POST",
+        url: deleteUrl,
+        data: {
+          'codigo': id
+        },
+        error: function(error, status) {
+          alert(error.responseText)
+        },
+        success: function(data, status) {
+          alert('Materia borrada exitosamente')
+          $('#example').DataTable().ajax.reload();
+        },
+      });
+    }
   </script>

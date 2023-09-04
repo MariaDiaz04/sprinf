@@ -74,14 +74,27 @@ class materias extends model
 
     /**
      * Obtener los detalles de una materia
-     * por su código
+     * por su código de materia
      *
      * @param string $codigo
      * @return array - es un array vacio en caso de que no consiga alguna coincidencia
      */
     public function find(string $codigo)
     {
-        $materias = $this->selectOne('detalles_materias', [['codigo', '=', $codigo]]);
+        $materias = $this->selectOne('detalles_materias', [['materia_id', '=', '"' . $codigo . '"']]);
+        return !$materias ? [] : $materias;
+    }
+
+    /**
+     * Obtener los detalles completos de una materia
+     * por su código de materia
+     *
+     * @param string $codigo
+     * @return array
+     */
+    function findMalla(string $codigo): array
+    {
+        $materias = $this->select('detalles_materias', [['materia_id', '=', '"' . $codigo . '"']]);
         return !$materias ? [] : $materias;
     }
 
@@ -231,12 +244,10 @@ class materias extends model
             parent::beginTransaction();
             // actualizar tabla materia
             $codigo = $this->save($this->codigo);
-
-
-
             parent::commit();
             return $codigo;
         } catch (Exception $e) {
+            print($e);
             parent::rollBack();
             return '';
         }
@@ -292,12 +303,11 @@ class materias extends model
             // no se debe de actualizar
             unset($data['codigo']);
 
-            // actualizamos la materia con la nueva informacion
-            $this->update('materias', $data, [['codigo', '=', $codigo]]);
-
-
             // borramos su antigua malla
             $this->delete('malla_curricular', [['materia_id', '=', '"' . $codigo . '"']]);
+
+            // actualizamos la materia con la nueva informacion
+            $this->update('materias', $data, [['codigo', '=', '"' . $codigo . '"']]);
 
             // creamos su nueva malla
             foreach ($this->malla as $malla) {
@@ -327,7 +337,7 @@ class materias extends model
     {
         $columns = array(
             array(
-                'db'        => 'codigo',
+                'db'        => 'materia_id',
                 'dt'        => 0
             ),
             array(
