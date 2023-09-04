@@ -140,6 +140,8 @@
         ajax: '<?= $this->Route('dimensiones/ssp') ?>',
         processing: true,
         serverSide: true,
+        pageLength: 30,
+
         columnDefs: [{
           data: null,
           render: function(data, type, row, meta) {

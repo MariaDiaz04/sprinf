@@ -165,6 +165,8 @@
         ajax: '<?= $this->Route('proyectos/ssp') ?>',
         processing: true,
         serverSide: true,
+        pageLength: 30,
+
         columnDefs: [{
           data: null,
           render: function(data, type, row, meta) {

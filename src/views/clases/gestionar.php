@@ -79,7 +79,7 @@
               <div class="row form-group align-items-end">
                 <div class="col-lg-10">
                   <label class="form-label" for="estudiantes">Estudiantes</label>
-                  <select class="selectpicker" id="estudiantes" data-live-search="true">
+                  <select class="d-block selectpicker" id="estudiantes" data-live-search="true">
 
                     <?php foreach ($estudiantes as $estudiante) : ?>
                       <option value="<?= $estudiante->id ?>" data-tokens="<?= $estudiante->cedula ?> <?= $estudiante->nombre ?> <?= $estudiante->apellido ?>" data-cedula="<?= $estudiante->cedula ?>" data-nombre="<?= $estudiante->nombre ?>" data-apellido="<?= $estudiante->apellido ?>"><?= "$estudiante->nombre $estudiante->apellido - C.I. $estudiante->cedula" ?></option>
@@ -134,6 +134,8 @@
         ajax: '<?= $this->Route('clases/ssp') ?>',
         processing: true,
         serverSide: true,
+        pageLength: 30,
+
         columnDefs: [{
           targets: 7, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
           render: function(data, type, row, meta) {

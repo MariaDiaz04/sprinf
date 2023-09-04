@@ -46,6 +46,8 @@
         ajax: '<?= $this->Route('trayectos/ssp') ?>',
         processing: true,
         serverSide: true,
+        pageLength: 30,
+
       });
 
 
