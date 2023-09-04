@@ -51,6 +51,9 @@
   <script src="<?= APP_URL ?>assets/js/config.js"></script>
   <link rel="stylesheet" href="<?= APP_URL ?>assets/css/sweetalert.css">
 
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
 
 
 
