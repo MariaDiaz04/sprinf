@@ -86,6 +86,19 @@ class materias extends model
     }
 
     /**
+     * Obtener los detalles de una materia
+     * por su código de unidad curricular (Malla [fase1/fase2])
+     *
+     * @param string $codigo
+     * @return array
+     */
+    function findByUnidadCurricularId(string $codigo): array
+    {
+        $materias = $this->selectOne('detalles_materias', [['codigo', '=', '"' . $codigo . '"']]);
+        return !$materias ? [] : $materias;
+    }
+
+    /**
      * Obtener los detalles completos de una materia
      * por su código de materia
      *

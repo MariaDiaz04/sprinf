@@ -11,12 +11,14 @@ class inscripcion extends model
 {
 
   public $fillable = [
-    'fecha_inicio',
-    'fecha_cierre',
+    'clase_id',
+    'estudiante_id',
+    'calificacion',
   ];
   private $id;
-  private $fecha_inicio;
-  private $fecha_cierre;
+  private $clase_id;
+  private $estudiante_id;
+  private $calificacion;
 
   public function all()
   {
@@ -26,6 +28,19 @@ class inscripcion extends model
     } catch (Exception $th) {
       return $th;
     }
+  }
+
+  /**
+   * Obtener los detalles de una inscripcion
+   * por su código de estudiante
+   *
+   * @param string $codigo
+   * @return array - es un array vacio en caso de que no consiga alguna coincidencia
+   */
+  public function find(string $codigo)
+  {
+    $inscripcion = $this->selectOne('detalles_inscripciones', [['id', '=', '"' . $codigo . '"']]);
+    return !$inscripcion ? [] : $inscripcion;
   }
 
 
@@ -72,10 +87,10 @@ class inscripcion extends model
       }
     }
     if ($id) {
-      $this->update('periodo', $data, [['id', '=', $id]]);
+      $this->update('inscripcion', $data, [['id', '=', $id]]);
       return $id;
     } else {
-      $this->set('periodo', $data);
+      $this->set('inscripcion', $data);
       $this->id = $this->lastInsertId();
       return $this->id;
     }

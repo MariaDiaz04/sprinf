@@ -368,10 +368,28 @@ $routes->add('clases_manage', new Route(
 
 $routes->add('clases_edit', new Route(
 
-    '/clases/edit/{id}',
+    '/clases/edit',
     [
         'controller' => clasesController::class,
         'method' => 'edit',
+    ]
+));
+
+$routes->add('clases_update', new Route(
+
+    '/clases/update',
+    [
+        'controller' => clasesController::class,
+        'method' => 'update',
+    ]
+));
+
+$routes->add('clases_delete', new Route(
+
+    '/clases/delete',
+    [
+        'controller' => clasesController::class,
+        'method' => 'delete',
     ]
 ));
 

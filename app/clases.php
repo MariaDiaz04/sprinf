@@ -11,21 +11,30 @@ class clases extends model
 {
 
   public $fillable = [
-    'fecha_inicio',
-    'fecha_cierre',
+    'codigo',
+    'profesor_id',
+    'seccion_id',
+    'unidad_curricular_id',
   ];
-  private $id;
-  private $fecha_inicio;
-  private $fecha_cierre;
+  private $codigo;
+  private $profesor_id;
+  private $seccion_id;
+  private $unidad_curricular_id;
 
   public function all()
   {
     try {
-      $periodos = $this->select('clases');
-      return $periodos ? $periodos : null;
+      $clases = $this->select('clases');
+      return $clases ? $clases : null;
     } catch (Exception $th) {
       return $th;
     }
+  }
+
+  function crearCodigoClase(): void
+  {
+    $codigo = "c-" . $this->seccion_id . $this->unidad_curricular_id;
+    $this->codigo = $codigo;
   }
 
   /**
@@ -38,6 +47,20 @@ class clases extends model
   function getAllBySubject(string $codigoMateria): array
   {
     $clases = $this->select('detalles_clases', [['materia_id', '=', '"' . $codigoMateria . '"']]);
+    return $clases ? $clases : [];
+  }
+
+  /**
+   * Obtiene las clases de cualquier fase y seccion
+   * perteneciente a una materia de una seccion
+   *
+   * @param string $codigoMateria
+   * @param string $codigoSeccion
+   * @return array
+   */
+  function getBySubjectAndSection(string $codigoMateria, string $codigoSeccion): array
+  {
+    $clases = $this->select('detalles_clases', [['unidad_curricular_id', '=', '"' . $codigoMateria . '"'], ['seccion_id', '=', '"' . $codigoSeccion . '"']]);
     return $clases ? $clases : [];
   }
 
@@ -71,7 +94,7 @@ class clases extends model
    * @param [type] $id
    * @return integer ID de elemento creado o actualizado
    */
-  public function save($id = null): int
+  public function save($codigo = null): string
   {
     $data = [];
 
@@ -84,15 +107,15 @@ class clases extends model
         }
       }
     }
-    if ($id) {
-      $this->update('clases', $data, [['id', '=', $id]]);
-      return $id;
+    if ($codigo) {
+      $this->update('clase', $data, [['codigo', '=', $codigo]]);
+      return $codigo;
     } else {
-      $this->set('clases', $data);
-      $this->id = $this->lastInsertId();
-      return $this->id;
+      $this->set('clase', $data);
+      return $this->codigo;
     }
   }
+
 
 
 

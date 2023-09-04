@@ -79,10 +79,10 @@
               <div class="row form-group align-items-end">
                 <div class="col-lg-10">
                   <label class="form-label" for="estudiantes">Estudiantes</label>
-                  <select class="d-block selectpicker" id="estudiantes" data-live-search="true">
+                  <select class="d-block selectpicker w-100" id="estudiantes" data-live-search="true">
 
                     <?php foreach ($estudiantes as $estudiante) : ?>
-                      <option value="<?= $estudiante->id ?>" data-tokens="<?= $estudiante->cedula ?> <?= $estudiante->nombre ?> <?= $estudiante->apellido ?>" data-cedula="<?= $estudiante->cedula ?>" data-nombre="<?= $estudiante->nombre ?>" data-apellido="<?= $estudiante->apellido ?>"><?= "$estudiante->nombre $estudiante->apellido - C.I. $estudiante->cedula" ?></option>
+                      <option value="<?= $estudiante->id ?>" data-tokens="<?= $estudiante->cedula ?> <?= $estudiante->nombre ?> <?= $estudiante->apellido ?> <?= $estudiante->seccion_id ?>" data-cedula="<?= $estudiante->cedula ?>" data-nombre="<?= $estudiante->nombre ?>" data-apellido="<?= $estudiante->apellido ?>"><?= "$estudiante->nombre $estudiante->apellido - C.I. $estudiante->cedula" . (($estudiante->seccion_id != null) ? " - $estudiante->seccion_id" : '') ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>

@@ -72,22 +72,17 @@ class seccion extends model
     //     return $allstatus;
     // }
 
-    //=========================FIND==========================
-    public function find($id)
+    /**
+     * Obtener los detalles de una seccion
+     * por su código de seccion
+     *
+     * @param string $codigo
+     * @return array - es un array vacio en caso de que no consiga alguna coincidencia
+     */
+    public function find(string $codigo)
     {
-        try {
-            $seccion = $this->select('seccion', [['id', '=', $id]]);
-            if ($seccion) {
-                foreach ($seccion[0] as $key => $value) {
-                    $this->fillable[$key] = $value;
-                }
-                return $this;
-            } else {
-                return null;
-            }
-        } catch (\PDOException $th) {
-            return $th;
-        }
+        $materias = $this->selectOne('detalles_seccion', [['codigo', '=', '"' . $codigo . '"']]);
+        return !$materias ? [] : $materias;
     }
     //=========================/FIND==========================
 
