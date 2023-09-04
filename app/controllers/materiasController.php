@@ -182,6 +182,14 @@ class materiasController extends controller
         return $malla;
     }
 
+    /**
+     * Verifica si hay clases o dimensiones que dependen de esta
+     * materia
+     *
+     * @param string $codigo
+     * @param string $action
+     * @return boolean
+     */
     function checkMateria(string $codigo, string $action): bool
     {
         $clases = $this->CLASES->getAllBySubject($codigo);
