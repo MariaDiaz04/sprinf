@@ -401,6 +401,22 @@ $routes->add('/clases/guardar', new Route(
         'method' => 'store',
     ]
 ));
+$routes->add('/clases/show', new Route(
+
+    '/clases/show',
+    [
+        'controller' => clasesController::class,
+        'method' => 'show',
+    ]
+));
+$routes->add('/clases/evaluar', new Route(
+
+    '/clases/evaluar',
+    [
+        'controller' => clasesController::class,
+        'method' => 'evaluar',
+    ]
+));
 
 $routes->add('clases_ssp', new Route(
 

@@ -118,7 +118,67 @@
   </div>
 
 
+  <!-- MODAL EVALUAR -->
+  <div class="modal fade" id="evaluar" tabindex="-1" role="dialog" aria-labelledby="evaluarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="evaluarLabel">Nueva Clase</h5>
+
+        </div>
+        <form action="<?= APP_URL . $this->Route('clases/evaluar') ?>" method="post" id="clasesEvaluar">
+          <div class="container-fluid">
+            <div class="row pb-2">
+              <div class="col-12">
+                <div class="row form-group mb-2">
+                  <div class="col-lg-3">
+                    <label class="form-label" for="codigo">Código *</label>
+                    <input type="text" class="form-control mb-1" placeholder="..." name="codigo" id="codigo" readonly>
+                  </div>
+
+                  <div class="col-lg-3">
+                    <label class="form-label" for="profesor_id">Profesor *</label>
+                    <input type="text" class="form-control mb-1" placeholder="..." name="profesor_id" id="profesor_id" readonly>
+                  </div>
+
+                  <div class="col-lg-3">
+                    <label class="form-label" for="seccion_id">Seccion *</label>
+                    <input type="text" class="form-control mb-1" placeholder="..." name="seccion_id" id="seccion_id" readonly>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="border-light my-3">
+
+              <div class="row form-group justify-content-center">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Cedula</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Apellido</th>
+                      <th scope="col">Nota Final de Fase</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cuerpoTablaInscritos">
+
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-right mt-3">
+                <input type="submit" class="btn btn-primary" value='Subir Nota' />&nbsp;
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
   <script>
+    let showUrl = "<?= APP_URL . $this->Route('clases/show') ?>";
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -144,6 +204,7 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
+                      <a class="dropdown-item" onClick="grade('${row[0]}')" href="#">Evaluar</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>
@@ -261,9 +322,6 @@
         url = $(this).attr('action');
         data = $(this).serializeArray();
 
-        console.log(url)
-        console.log(data)
-
         $.ajax({
           type: "POST",
           url: url,
@@ -281,7 +339,74 @@
           },
         });
       })
+
+      $('#clasesEvaluar').submit(function(e) {
+        e.preventDefault()
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            // usar sweetalerts
+            document.getElementById("clasesEvaluar").reset();
+            // actualizar tabla
+            toggleLoading(false)
+          },
+        });
+      })
     })
+
+    function grade(id) {
+      $.ajax({
+        type: "POST",
+        url: showUrl,
+        data: {
+          'codigo': id
+        },
+        error: function(error, status) {
+          alert(error.responseText)
+        },
+        success: function(data, status) {
+
+          renderGradeForm(JSON.parse(data))
+        },
+      });
+    }
+
+    function renderGradeForm(data) {
+
+      $('#evaluar').modal('show')
+
+      $(`#clasesEvaluar #codigo`).val(data.clase.codigo);
+      $(`#clasesEvaluar #profesor_id`).val(data.clase.profesor_id);
+      $(`#clasesEvaluar #seccion_id`).val(data.clase.seccion_id);
+
+      let table = $('#cuerpoTablaInscritos')
+
+      data.inscritos.forEach(estudiante => {
+        let row = `<tr id="appenedStudent-${estudiante.id}">
+                    <th scope="row">
+                    <input type="text" name="inscritos[${estudiante.id_inscripcion}][id]" class="form-control-plaintext" value="${estudiante.id_inscripcion}" hidden>
+                    ${estudiante.id_inscripcion}
+                    </th>
+                    
+                    <td><input type="text" name="inscritos[${estudiante.id_inscripcion}][estudiante_id]" class="form-control-plaintext" value="${estudiante.id}" hidden>
+                    ${estudiante.cedula}</td>
+                    <td>${estudiante.nombre_estudiante}</td>
+                    <td>${estudiante.apellido_estudiante}</td>
+                    <td><input type="number" name="inscritos[${estudiante.id}][calificacion]" class="form-control-plaintext"></td>
+                  </tr>`;
+        $(table).append(row);
+      });
+
+    }
 
     function edit(id) {
       alert(`Editing ${id}`)

@@ -31,6 +31,18 @@ class clases extends model
     }
   }
 
+  /**
+   * Obtener clase por código de clase
+   *
+   * @param string $codigo
+   * @return array
+   */
+  function find(string $codigo): array
+  {
+    $clase = $this->selectOne('detalles_clases', [['codigo', '=', '"' . $codigo . '"']]);
+    return $clase ? $clase : [];
+  }
+
   function crearCodigoClase(): void
   {
     $codigo = "c-" . $this->seccion_id . $this->unidad_curricular_id;

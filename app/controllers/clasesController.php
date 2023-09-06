@@ -129,7 +129,50 @@ class clasesController extends controller
     }
   }
 
+  function show(Request $clase): void
+  {
+    try {
+      $data = [];
+      $codigoClase = $clase->get('codigo');
 
+      // obtener clase
+      $data['clase'] = $this->clases->find($codigoClase);
+
+      if (empty($data['clase'])) throw new Exception('Clase no encontrada');
+
+      // obtener lista de integrantes
+      $data['inscritos'] = $this->inscripcion->findByClass($codigoClase);
+
+      http_response_code(200);
+      echo json_encode($data);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
+    }
+  }
+
+  function evaluar(Request $clase): void
+  {
+    try {
+      $estudiantes = $clase->get('inscritos');
+      exit();
+      $codigoClase = $clase->get('codigo');
+
+      // obtener clase
+      $data['clase'] = $this->clases->find($codigoClase);
+
+      if (empty($data['clase'])) throw new Exception('Clase no encontrada');
+
+      // obtener lista de integrantes
+      $data['inscritos'] = $this->inscripcion->findByClass($codigoClase);
+
+      http_response_code(200);
+      echo json_encode($data);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
+    }
+  }
 
   function ssp(Request $query): void
   {

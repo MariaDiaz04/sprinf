@@ -23,11 +23,24 @@ class inscripcion extends model
   public function all()
   {
     try {
-      $periodos = $this->select('periodo');
+      $periodos = $this->select('detalles_inscripciones');
       return $periodos ? $periodos : null;
     } catch (Exception $th) {
       return $th;
     }
+  }
+
+  /**
+   * Obtener lista de estudiantes
+   * inscritos a una materia
+   *
+   * @param string $codigo
+   * @return array
+   */
+  function findByClass(string $codigo): array
+  {
+    $inscripcion = $this->select('detalles_inscripciones', [['codigo', '=', '"' . $codigo . '"']]);
+    return !$inscripcion ? [] : $inscripcion;
   }
 
   /**
