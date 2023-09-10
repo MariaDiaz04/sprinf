@@ -222,7 +222,6 @@ class proyectoController extends controller
             $fase = $this->fase->find($proyecto['codigo_fase']);
             $materiasDeDimension = $this->dimension->materiasDeBaremos($proyecto['codigo_fase']);
             $baremos = [];
-            $indicadoresIndividuales = [];
 
             if (empty($materiasDeDimension)) {
                 throw new Exception('Baremos no cuenta con dimensiones');
@@ -233,7 +232,11 @@ class proyectoController extends controller
                     $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['estudiante_id'], $materia['codigo']);
 
                     if (empty($inscripcion)) {
-                        $errors['warning'][] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "";
+                        if (!str_contains($materia['codigo'], 'ASESOR')) {
+                            $errors['warning'][] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "";
+                        } else {
+                            // do nothing
+                        }
                     } else {
 
                         if ($inscripcion['calificacion'] == null) {

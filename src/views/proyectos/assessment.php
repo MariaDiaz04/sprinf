@@ -8,7 +8,7 @@
       </h4>
     </div>
   </div>
-  <?php if (property_exists($errors, 'danger')) : ?>
+  <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
 
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>Atención!</strong> Han ocurrido algunos errores críticos al generar baremos:
@@ -20,7 +20,8 @@
       </ul>
     </div>
   <?php endif; ?>
-  <?php if ($errors->warning) : ?>
+
+  <?php if (is_object($errors) && property_exists($errors, 'warning')) : ?>
 
     <div class="alert alert-secondary alert-dismissible fade show" role="alert">
       <strong>Atención!</strong> El equipo de proyecto cuenta con las siguientes caracteristicas:
@@ -33,13 +34,12 @@
     </div>
   <?php endif; ?>
 
-  <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardar">
+  <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="evaluarProyecto">
 
     <?php foreach ($baremos as $materia) : ?>
       <div class="card mb-3">
         <h6 class="card-header bg-primary text-white"><?= $materia->nombre ?></h6>
         <div class="card-body px-3 pt-3">
-          <input type="hidden" name="estatus" value="1">
           <?php if (property_exists($materia->dimension, 'grupal') && !empty($materia->dimension->grupal)) : ?>
             <?php foreach ($materia->dimension->grupal as $dimension) : ?>
               <div class="container">
@@ -51,9 +51,8 @@
                   <?php foreach ($dimension->indicadores as $indicador) : ?>
 
                     <div class="col-6">
-                      <label class="form-label" for="repositorio_documentacion"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
-                      <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." name="repositorio_documentacion">
-
+                      <label class="form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
+                      <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
                     </div>
                   <?php endforeach; ?>
 
@@ -78,8 +77,8 @@
                   <hr>
                   <?php foreach ($materia->dimension->individual as $dimension) : ?>
                     <div class="col-6">
-                      <label class="form-label" for="repositorio_documentacion"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
-                      <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." name="repositorio_documentacion">
+                      <label class="form-label" for="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
+                      <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]">
 
                     </div>
                   <?php endforeach; ?>
@@ -98,7 +97,7 @@
       </div>
     <?php endforeach; ?>
     <hr class="border-light m-0">
-    <?php if (property_exists($errors, 'danger')) : ?>
+    <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
       <p>
         No se podrá evaluar baremos hasta que se resuelvan los conflictos críticos
       </p>
@@ -111,3 +110,16 @@
     <?php endif; ?>
   </form>
 </div>
+
+<script>
+  $(document).ready(() => {
+    $('#evaluarProyecto').submit(function(e) {
+      e.preventDefault()
+
+      url = $(this).attr('action');
+      data = $(this).serializeArray();
+
+      console.log(data)
+    });
+  });
+</script>
