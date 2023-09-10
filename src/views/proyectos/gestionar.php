@@ -274,5 +274,29 @@
 
 
       })
+
+      $('#proyectoGuardar').submit(function(e) {
+        e.preventDefault()
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("proyectoGuardar").reset();
+            // actualizar tabla
+            toggleLoading(false)
+          },
+        });
+      })
+
     })
   </script>

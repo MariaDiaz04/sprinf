@@ -32,6 +32,18 @@ class trayectos extends model
   }
 
   /**
+   * Obtener trayecto por codigo de fase
+   *
+   * @param string $codigoFase
+   * @return array
+   */
+  function findByFase(string $codigoFase): array
+  {
+    $proyectos = $this->selectOne("detalles_fase", [['codigo_fase', '=', "'" . $codigoFase . "'"]]);
+    return !$proyectos ? [] : $proyectos;
+  }
+
+  /**
    * setData
    * 
    * Se encarga de asignar los valores en los campos

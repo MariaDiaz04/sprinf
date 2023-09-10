@@ -79,11 +79,26 @@ class proyectoController extends controller
     public function store(Request $nuevoProyecto)
     {
         try {
-            if (!array_key_exists('estudiantes', $nuevoProyecto->request->all())) throw new Exception('No puede crear proyecto sin integrantes');
-            $estudiantes = $nuevoProyecto->request->all()['estudiantes'];
+            if (!array_key_exists('integrantes', $nuevoProyecto->request->all())) throw new Exception('No puede crear proyecto sin integrantes');
+            $integrantes = $nuevoProyecto->request->all()['integrantes'];
+            $fase = $nuevoProyecto->get('fase_id');
+            $trayecto = $this->trayectos->findByFase($fase);
+            // VALIDACIONES
+
+            foreach ($integrantes as $codigoEstudiante) {
+                $dataEstudiante = $this->estudiantes->find($codigoEstudiante);
+                // VERIFICAR QUE UN ESTUDIANTE NO PERTENEZCA A OTRO GRUPO DE PROYECTO
+                if ($dataEstudiante['proyecto_id'] != null) {
+                    throw new Exception("Estudiante " . $dataEstudiante['nombre'] . " " . $dataEstudiante['apellido'] . " ya pertenece a un proyecto");
+                }
+                // VERIFICAR QUE UN ESTUDIANTE PERTENEZCA A LA FASE ESPECIFICADA EN LA CREACION DEL PROYECTO
+                if (!is_null($dataEstudiante['trayecto_id']) && $dataEstudiante['trayecto_id'] != $trayecto['codigo_trayecto']) {
+                    throw new Exception("Estudiante " . $dataEstudiante['nombre'] . " " . $dataEstudiante['apellido'] . " No pertenece al trayecto especificado en la creación del proyecto");
+                }
+            }
+
             $this->proyecto->setProyectData($nuevoProyecto->request->all());
-            $this->proyecto->save();
-            $this->proyecto->saveTeam(1, $estudiantes);
+            $this->proyecto->insertTransaction();
 
             http_response_code(200);
             echo json_encode($this->proyecto);
@@ -155,7 +170,7 @@ class proyectoController extends controller
             $this->proyecto->save($idProyecto);
 
             $estudiantes = $proyecto->request->all()['estudiantes'];
-            $this->proyecto->updateTeam($idProyecto, 1, $estudiantes);
+            $this->proyecto->updateTeam($idProyecto, $estudiantes);
 
             http_response_code(200);
             echo json_encode($this->proyecto);

@@ -33,6 +33,18 @@ class estudiante extends model
         }
     }
 
+    /**
+     * Obtener información del estudiante
+     *
+     * @param string $id
+     * @return array
+     */
+    function find(string $id): array
+    {
+        $proyectos = $this->selectOne("detalles_estudiantes", [['id', '=', "'" . $id . "'"]]);
+        return !$proyectos ? [] : $proyectos;
+    }
+
     public function listPendingForProject()
     {
         try {
