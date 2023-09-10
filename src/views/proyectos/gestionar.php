@@ -235,26 +235,25 @@
 
           let studentId = $(selectedStudent).val();
 
-          if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
-            alert('Estudiante ya ha sido añadido')
-            return false;
+          if (studentId) {
+
+            if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
+              alert('Estudiante ya ha sido añadido')
+              return false;
+            }
+
+            let fila = `<tr id="appenedStudent-${studentId}" class="studentRow">
+                      <th scope="row">
+                      <input type="text" name="integrantes[]" class="form-control-plaintext" value="${studentId}" hidden>
+                      ${$(selectedStudent).data('cedula')}
+                      </th>
+                      <td>${$(selectedStudent).data('nombre')}</td>
+                      <td>${$(selectedStudent).data('apellido')}</td>
+                      <td><button type="button" class="btn btn-secondary" onClick="removeStudent('${studentId}')">Eliminar</button></td>
+                    </tr>`;
+            $('#cuerpoTablaEstudiantes').append(fila);
           }
-
-          let fila = `<tr id="appenedStudent-${studentId}">
-                    <th scope="row">
-                    <input type="text" name="integrantes[]" class="form-control-plaintext" value="${studentId}" hidden>
-                    ${$(selectedStudent).data('cedula')}
-                    </th>
-                    <td>${$(selectedStudent).data('nombre')}</td>
-                    <td>${$(selectedStudent).data('apellido')}</td>
-                    <td><button class="btn btn-secondary" onClick="removeStudent(${studentId})">Eliminar</button></td>
-                  </tr>`;
-          $('#cuerpoTablaEstudiantes').append(fila);
-
-          //$(`#selectEstudiante option[value='${studentId}']`).remove();
         }
-
-
       })
 
       $('#proyectoGuardar').submit(function(e) {
@@ -285,7 +284,6 @@
 
         let faseId = $(selectedFase).val();
 
-        console.log(faseId);
         fetchEstudiantes(faseId);
       })
 
@@ -327,4 +325,8 @@
       }
 
     })
+
+    function removeStudent(id) {
+      $(`#appenedStudent-${id}`).remove()
+    }
   </script>

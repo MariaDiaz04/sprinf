@@ -62,13 +62,7 @@ class proyectoController extends controller
         $tutores = $this->tutores->all();
         $trayectos = $this->trayectos->all();
 
-
-
-        $estudiantes = $this->estudiantes->listPendingForProject();
-
-
         return $this->view('proyectos/crear', [
-            'estudiantes' => $estudiantes,
             'tutores' => $tutores,
             'trayectos' => $trayectos
         ]);
