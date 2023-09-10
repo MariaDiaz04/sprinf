@@ -389,6 +389,7 @@
       $(`#clasesEvaluar #seccion_id`).val(data.clase.seccion_id);
 
       let table = $('#cuerpoTablaInscritos')
+      $(table).find('tr').remove()
 
       data.inscritos.forEach(estudiante => {
         let row = `<tr id="appenedStudent-${estudiante.id}">
@@ -401,7 +402,7 @@
                     ${estudiante.cedula}</td>
                     <td>${estudiante.nombre_estudiante}</td>
                     <td>${estudiante.apellido_estudiante}</td>
-                    <td><input type="number" name="inscritos[${estudiante.id_inscripcion}][calificacion]" class="form-control-plaintext"></td>
+                    <td><input type="number" name="inscritos[${estudiante.id_inscripcion}][calificacion]" value="${estudiante.calificacion ?? null}" class="form-control-plaintext"></td>
                   </tr>`;
         $(table).append(row);
       });
