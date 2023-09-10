@@ -1277,14 +1277,26 @@ insert into integrante_proyecto (proyecto_id, estudiante_id) values (2,'e-61587'
 -- vistas
 DROP VIEW IF EXISTS detalles_estudiantes;
 CREATE VIEW detalles_estudiantes AS
-SELECT persona.*, usuario.email
+SELECT 
+  estudiante.id, 
+  persona.*, 
+  usuario.email, 
+  count(detalles_inscripciones.codigo) as clases, 
+  detalles_inscripciones.seccion_id, 
+  integrante_proyecto.proyecto_id,
+  trayecto.codigo as trayecto_id
 FROM persona
 INNER JOIN estudiante ON estudiante.persona_id = persona.cedula
-LEFT JOIN usuario ON usuario.id = persona.usuario_id;
+LEFT JOIN usuario ON usuario.id = persona.usuario_id
+LEFT JOIN detalles_inscripciones ON detalles_inscripciones.id = estudiante.id
+LEFT JOIN integrante_proyecto ON integrante_proyecto.estudiante_id = estudiante.id
+LEFT JOIN seccion ON seccion.codigo = detalles_inscripciones.seccion_id
+LEFT JOIN trayecto ON trayecto.codigo = seccion.trayecto_id
+GROUP BY persona.cedula, detalles_inscripciones.seccion_id;
 
 DROP VIEW IF EXISTS detalles_profesores;
 CREATE VIEW detalles_profesores AS
-SELECT persona.*, usuario.email
+SELECT profesor.codigo, persona.*, usuario.email
 FROM persona
 INNER JOIN profesor ON profesor.persona_id = persona.cedula
 LEFT JOIN usuario ON usuario.id = persona.usuario_id;
@@ -1321,7 +1333,20 @@ GROUP BY proyecto_id;
 
 DROP VIEW IF EXISTS detalles_materias;
 CREATE VIEW detalles_materias AS
-SELECT malla_curricular.codigo,materias.nombre, trayecto.nombre as nombre_trayecto, trayecto.codigo as codigo_trayecto, fase.nombre as nombre_fase, fase.codigo as codigo_fase, count(dimension.id) as dimensiones_proyecto
+SELECT 
+  malla_curricular.materia_id,
+  malla_curricular.codigo,
+  materias.nombre,
+  trayecto.nombre as nombre_trayecto,
+  trayecto.codigo as codigo_trayecto,
+  fase.nombre as nombre_fase,
+  fase.codigo as codigo_fase,
+  materias.eje,
+  materias.htasist,
+  materias.htind,
+  materias.ucredito,
+  materias.hrs_acad,
+  count(dimension.id) as dimensiones_proyecto
 FROM materias
 LEFT JOIN malla_curricular on malla_curricular.materia_id = materias.codigo
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
@@ -1331,7 +1356,7 @@ GROUP BY malla_curricular.codigo;
 
 DROP VIEW IF EXISTS detalles_clases;
 CREATE VIEW detalles_clases AS
-SELECT clase.*, persona.nombre as profesor,detalles_materias.nombre, detalles_materias.nombre_fase, detalles_materias.nombre_trayecto, count(inscripcion.id) as estudiantes
+SELECT clase.*, persona.nombre as profesor,detalles_materias.materia_id,detalles_materias.nombre, detalles_materias.nombre_fase, detalles_materias.nombre_trayecto, count(inscripcion.id) as estudiantes
 FROM clase
 INNER JOIN profesor ON profesor.codigo = clase.profesor_id
 INNER JOIN persona ON persona.cedula = profesor.persona_id
@@ -1341,13 +1366,25 @@ GROUP BY clase.codigo;
 
 DROP VIEW IF EXISTS detalles_inscripciones;
 CREATE VIEW detalles_inscripciones AS
-SELECT estudiante.id, persona.nombre as nombre_estudiante,clase.codigo, clase.unidad_curricular_id, materias.nombre as nombre_materia, inscripcion.calificacion
+SELECT 
+  inscripcion.id as id_inscripcion, 
+  persona.cedula, 
+  estudiante.id, 
+  persona.nombre as nombre_estudiante, 
+  persona.apellido as apellido_estudiante, 
+  clase.codigo, 
+  clase.seccion_id, 
+  clase.unidad_curricular_id, 
+  materias.nombre as nombre_materia, 
+  inscripcion.calificacion, 
+  fase.codigo as codigo_fase
 FROM `estudiante`
 INNER JOIN persona ON persona.cedula = estudiante.persona_id 
 INNER JOIN inscripcion ON inscripcion.estudiante_id = estudiante.id 
 INNER JOIN clase ON clase.codigo = inscripcion.clase_id
 INNER JOIN malla_curricular on malla_curricular.codigo = clase.unidad_curricular_id
-INNER JOIN materias ON materias.codigo = malla_curricular.materia_id;
+INNER JOIN materias ON materias.codigo = malla_curricular.materia_id
+INNER JOIN fase ON fase.codigo = malla_curricular.fase_id;
 
 DROP VIEW IF EXISTS detalles_integrantes;
 CREATE VIEW detalles_integrantes AS

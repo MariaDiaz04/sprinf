@@ -8,7 +8,7 @@
       </h4>
     </div>
   </div>
-  <?php if ($errors->danger) : ?>
+  <?php if (property_exists($errors, 'danger')) : ?>
 
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>Atención!</strong> Han ocurrido algunos errores críticos al generar baremos:
@@ -98,7 +98,7 @@
       </div>
     <?php endforeach; ?>
     <hr class="border-light m-0">
-    <?php if ($errors->danger) : ?>
+    <?php if (property_exists($errors, 'danger')) : ?>
       <p>
         No se podrá evaluar baremos hasta que se resuelvan los conflictos críticos
       </p>
