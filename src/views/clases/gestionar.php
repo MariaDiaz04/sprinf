@@ -355,7 +355,7 @@
           },
           success: function(data, status) {
             // usar sweetalerts
-            document.getElementById("clasesEvaluar").reset();
+            // document.getElementById("clasesEvaluar").reset();
             // actualizar tabla
             toggleLoading(false)
           },
@@ -401,7 +401,7 @@
                     ${estudiante.cedula}</td>
                     <td>${estudiante.nombre_estudiante}</td>
                     <td>${estudiante.apellido_estudiante}</td>
-                    <td><input type="number" name="inscritos[${estudiante.id}][calificacion]" class="form-control-plaintext"></td>
+                    <td><input type="number" name="inscritos[${estudiante.id_inscripcion}][calificacion]" class="form-control-plaintext"></td>
                   </tr>`;
         $(table).append(row);
       });

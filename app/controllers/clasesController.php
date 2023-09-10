@@ -154,20 +154,19 @@ class clasesController extends controller
   function evaluar(Request $clase): void
   {
     try {
-      $estudiantes = $clase->get('inscritos');
-      exit();
+      $inscripciones = $clase->get('inscritos');
       $codigoClase = $clase->get('codigo');
 
-      // obtener clase
-      $data['clase'] = $this->clases->find($codigoClase);
+      $clase = $this->clases->find($codigoClase);
 
-      if (empty($data['clase'])) throw new Exception('Clase no encontrada');
+      if (empty($clase)) throw new Exception('Clase no encontrada');
 
-      // obtener lista de integrantes
-      $data['inscritos'] = $this->inscripcion->findByClass($codigoClase);
+      foreach ($inscripciones as $inscripcion) {
+        $this->clases->grade($inscripcion['id'], $inscripcion['calificacion']);
+      }
 
       http_response_code(200);
-      echo json_encode($data);
+      echo json_encode(true);
     } catch (Exception $e) {
       http_response_code(500);
       echo json_encode($e->getMessage());

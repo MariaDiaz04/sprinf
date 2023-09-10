@@ -128,6 +128,11 @@ class clases extends model
     }
   }
 
+  function grade($codigoInscripcion, float $calificacion): void
+  {
+    $this->update('inscripcion', ['calificacion' => $calificacion], [['id', '=', "'" . $codigoInscripcion . "'"]]);
+  }
+
 
 
 
