@@ -51,7 +51,7 @@
 
                     <div class="col-lg-6">
                       <label class="form-label" for="fase_id">Fase *</label>
-                      <select class="form-select" name="fase_id">
+                      <select class="form-select" name="fase_id" id="selectFaseId">
 
                         <?php foreach ($fases as $fase) : ?>
                           <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto - $fase->nombre_fase" ?></option>
@@ -64,8 +64,8 @@
                   <div class="row form-group">
 
                     <div class="col-lg-6">
-                      <label class="form-label" for="descripcion">Descripción</label>
-                      <textarea class="form-control" placeholder="..." id="descripcion" name="descripcion" style="height: 100px"></textarea>
+                      <label class="form-label" for="resumen">Resumen</label>
+                      <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 100px"></textarea>
                     </div>
 
                     <div class="col-lg-3">
@@ -79,25 +79,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12">
-                  <div class="row form-group">
 
-                    <div class="col-lg-4">
-                      <label class="form-label" for="repositorio_codigo" for="descripcion">Repositorio de Código</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="repositorio_codigo">
-                    </div>
-
-                    <div class="col-lg-4">
-                      <label class="form-label" for="repositorio_documentacion">Documentación</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="repositorio_documentacion">
-                    </div>
-
-                    <div class="col-lg-4">
-                      <label class="form-label" for="url">URL</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="url">
-                    </div>
-                  </div>
-                </div>
                 <div class="col-12">
                   <div class="row form-group align-items-end">
 
@@ -147,6 +129,7 @@
 
 
   <script>
+    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";;
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -257,10 +240,9 @@
             return false;
           }
 
-          console.log($(selectedStudent).data('nombre'))
           let fila = `<tr id="appenedStudent-${studentId}">
                     <th scope="row">
-                    <input type="text" name="estudiantes[]" class="form-control-plaintext" value="${studentId}" hidden>
+                    <input type="text" name="integrantes[]" class="form-control-plaintext" value="${studentId}" hidden>
                     ${$(selectedStudent).data('cedula')}
                     </th>
                     <td>${$(selectedStudent).data('nombre')}</td>
@@ -297,6 +279,52 @@
           },
         });
       })
+
+      $('#selectFaseId').change(function(e) {
+        let selectedFase = $('#selectFaseId option:selected');
+
+        let faseId = $(selectedFase).val();
+
+        console.log(faseId);
+        fetchEstudiantes(faseId);
+      })
+
+      function fetchEstudiantes(idFase) {
+        $.ajax({
+          type: "POST",
+          url: fetchStudentsUrl,
+          data: {
+            'idFase': idFase
+          },
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            estudiantes = JSON.parse(data)
+            if (estudiantes) {
+              renderSelectList(estudiantes)
+            } else {
+              $('#selectEstudiante').find('option').remove()
+            }
+          },
+        });
+      }
+
+      function renderSelectList(data) {
+        $('#selectEstudiante').find('option').remove()
+        data.forEach(estudiante => {
+          let row = `<option 
+            value="${estudiante.id}" 
+            data-cedula="${estudiante.cedula}" 
+            data-nombre="${estudiante.nombre}" 
+            data-apellido="${estudiante.apellido}">
+            ${estudiante.cedula} - ${estudiante.nombre} ${estudiante.apellido}
+          </option>`;
+
+          $('#selectEstudiante').append(row);
+        });
+      }
 
     })
   </script>

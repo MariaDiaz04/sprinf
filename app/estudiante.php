@@ -45,15 +45,16 @@ class estudiante extends model
         return !$proyectos ? [] : $proyectos;
     }
 
-    public function listPendingForProject()
+    public function listPendingForProject(string $codigoTrayecto)
     {
         try {
-            $estudiantes = $this->select('detalles_estudiantes', [['id', 'NOT IN', '(SELECT estudiante_id FROM integrante_proyecto)']]);
+            $estudiantes = $this->select('detalles_estudiantes', [['id', 'NOT IN', '(SELECT estudiante_id FROM integrante_proyecto)'], ['trayecto_id', '=', '"' . $codigoTrayecto . '"']]);
             return $estudiantes ? $estudiantes : null;
         } catch (Exception $th) {
             return $th;
         }
     }
+
 
     public function byProject($id)
     {

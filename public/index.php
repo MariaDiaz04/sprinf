@@ -508,6 +508,14 @@ $routes->add('proyectos_delete', new Route(
         'method' => 'delete',
     ]
 ));
+$routes->add('proyectos_pendingStudents', new Route(
+
+    '/proyectos/pending-students',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'pendingStudents',
+    ]
+));
 
 $routes->add('proyectos_ssp', new Route(
 

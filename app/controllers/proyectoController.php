@@ -48,13 +48,11 @@ class proyectoController extends controller
 
         $fases = $this->fase->getPrimerFaseDeTrayectos();
 
-        $estudiantes = $this->estudiantes->listPendingForProject();
 
 
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'fases' => $fases,
-            'estudiantes' => $estudiantes,
             'tutores' => $tutores
         ]);
     }
@@ -102,6 +100,22 @@ class proyectoController extends controller
 
             http_response_code(200);
             echo json_encode($this->proyecto);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    function pendingStudents(Request $request): void
+    {
+        try {
+            $idFase = $request->get('idFase');
+            $trayecto = $this->trayectos->findByFase($idFase);
+
+            $estudiantes = $this->estudiantes->listPendingForProject($trayecto['codigo_trayecto']);
+
+            http_response_code(200);
+            echo json_encode($estudiantes);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());
