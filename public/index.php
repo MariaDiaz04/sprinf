@@ -525,7 +525,14 @@ $routes->add('proyectos_ssp', new Route(
         'method' => 'ssp',
     ]
 ));
+$routes->add('proyectos_evaluar_baremos', new Route(
 
+    '/proyectos/evaluar',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'evaluar',
+    ]
+));
 $showRoute = new Route(
 
     '/proyectos/{id}',
@@ -553,6 +560,8 @@ $routes->add('proyectos_evaluar', new Route(
         'method' => 'assessment',
     ]
 ));
+
+
 
 # FIN DE GESTIÓN DE PROYECTOS
 

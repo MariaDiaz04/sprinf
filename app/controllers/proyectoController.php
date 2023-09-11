@@ -10,6 +10,7 @@ use Bcrypt\Bcrypt;
 use App\proyecto;
 use App\estudiante;
 use App\inscripcion;
+use App\baremos;
 use App\fase;
 use App\dimension;
 use App\tutor;
@@ -24,6 +25,7 @@ class proyectoController extends controller
     private $estudiantes;
     private $dimension;
     private $tutores;
+    private $baremos;
     private $fase;
     private $trayectos;
     private $inscripcion;
@@ -35,6 +37,7 @@ class proyectoController extends controller
         $this->dimension = new dimension();
         $this->tutores = new tutor();
         $this->trayectos = new trayectos();
+        $this->baremos = new baremos();
         $this->fase = new fase();
         $this->inscripcion = new inscripcion();
     }
@@ -273,15 +276,48 @@ class proyectoController extends controller
 
 
             return $this->view('proyectos/assessment', [
+                'proyecto_id' => $id,
                 'fase' => $fase,
                 'integrantes' => $integrantes,
                 'baremos' => $baremos,
                 'errors' => $errors,
             ]);
         } catch (Exception $e) {
+
             return $this->view('errors/501', [
                 'message' => $e->getMessage(),
             ]);
+        }
+    }
+
+    function evaluar(Request $request): void
+    {
+        try {
+            $proyectoId = $request->get('proyecto_id');
+            // se recorreran todos los integrantes del proyecto
+            $integrantes = $this->proyecto->obtenerIntegrantes($proyectoId);
+
+            $indicadoresGrupales = $request->get('indicador_grupal');
+            $indicadoresIndividuales = $request->get('indicador_individual');
+
+            foreach ($integrantes as $integrante) {
+                // indicadores grupales
+                foreach ($indicadoresGrupales as $id => $value) {
+                    $value = floatval($value);
+                    $this->baremos->evaluarIndicador($id, $integrante['id'], $value);
+                }
+
+                foreach ($indicadoresIndividuales[$integrante['id']] as $id => $value) {
+                    $value = floatval($value);
+                    $this->baremos->evaluarIndicador($id, $integrante['id'], $value);
+                }
+            }
+
+            http_response_code(200);
+            echo json_encode(true);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
         }
     }
 

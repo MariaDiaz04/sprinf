@@ -34,8 +34,8 @@
     </div>
   <?php endif; ?>
 
-  <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="evaluarProyecto">
-
+  <form action="<?= APP_URL . $this->Route('proyectos/evaluar') ?>" method="post" id="evaluarProyecto">
+    <input type="hidden" name="proyecto_id" value="<?= $proyecto_id ?>">
     <?php foreach ($baremos as $materia) : ?>
       <div class="card mb-3">
         <h6 class="card-header bg-primary text-white"><?= $materia->nombre ?></h6>
@@ -89,10 +89,6 @@
 
 
           <?php endif; ?>
-
-
-
-
         </div>
       </div>
     <?php endforeach; ?>
@@ -119,7 +115,18 @@
       url = $(this).attr('action');
       data = $(this).serializeArray();
 
-      console.log(data)
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        error: function(error, status) {
+          toggleLoading(false)
+          alert(error.responseText)
+        },
+        success: function(data, status) {
+          console.log(data)
+        },
+      });
     });
   });
 </script>
