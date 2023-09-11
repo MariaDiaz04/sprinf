@@ -290,7 +290,19 @@ class proyectoController extends controller
         }
     }
 
-    function evaluar(Request $request): void
+    function evaluar(): void
+    {
+        try {
+            // como gestionar las fases
+            http_response_code(200);
+            echo json_encode($this->proyecto->generarSSP());
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    function subirNotas(Request $request): void
     {
         try {
             $proyectoId = $request->get('proyecto_id');

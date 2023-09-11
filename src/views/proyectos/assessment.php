@@ -100,6 +100,7 @@
     <?php else : ?>
 
       <div class="text-end mt-3">
+        <input type="button" class="btn btn-primary" id="actualizarNota" value='Actualizar Nota' />&nbsp;
         <input type="submit" class="btn btn-primary" value='Evaluar' />&nbsp;
       </div>
 
@@ -108,16 +109,50 @@
 </div>
 
 <script>
+  let urlEvaluar = "<?= APP_URL . $this->Route('proyectos/subir-notas') ?>";
   $(document).ready(() => {
     $('#evaluarProyecto').submit(function(e) {
       e.preventDefault()
 
-      url = $(this).attr('action');
-      data = $(this).serializeArray();
+      Swal.fire({
+        title: '¿Seguro que desea evaluar baremos?',
+        text: 'Al evaluar baremos su nota pasara al historico por lo que no podrá ser actualizado',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Continuar'
+      }).then((result) => {
+        if (result.value) {
+          url = $(this).attr('action');
+          data = $(this).serializeArray();
+
+          $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            error: function(error, status) {
+              toggleLoading(false)
+              alert(error.responseText)
+            },
+            success: function(data, status) {
+              console.log(data)
+            },
+          });
+        }
+      });
+
+    });
+
+    $('#actualizarNota').click(function(e) {
+      e.preventDefault();
+
+      data = $('#evaluarProyecto').serializeArray();
 
       $.ajax({
         type: "POST",
-        url: url,
+        url: urlEvaluar,
         data: data,
         error: function(error, status) {
           toggleLoading(false)
@@ -127,6 +162,6 @@
           console.log(data)
         },
       });
-    });
+    })
   });
 </script>

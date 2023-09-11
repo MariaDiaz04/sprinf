@@ -525,6 +525,14 @@ $routes->add('proyectos_ssp', new Route(
         'method' => 'ssp',
     ]
 ));
+$routes->add('proyectos_subir-notas_baremos', new Route(
+
+    '/proyectos/subir-notas',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'subirNotas',
+    ]
+));
 $routes->add('proyectos_evaluar_baremos', new Route(
 
     '/proyectos/evaluar',
