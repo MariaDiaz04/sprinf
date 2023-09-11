@@ -290,12 +290,29 @@ class proyectoController extends controller
         }
     }
 
-    function evaluar(): void
+    function evaluar(Request $request): void
     {
         try {
             // como gestionar las fases
+            $proyectoId = $request->get('proyecto_id');
+            $proyecto = $this->proyecto->find($proyectoId);
+
+
+            $baremos = $this->baremos->findByFase($proyecto['fase_id']);
+
+            $integrantes = $this->proyecto->obtenerIntegrantes($proyectoId);
+
+            foreach ($integrantes as $integrante) {
+
+                foreach ($baremos as $indicador) {
+                    $calificacion = $this->baremos->findStudentItem($indicador['indicador_id'], $integrante['id']);
+                    if (empty($calificacion)) throw new Exception("El integrante " . $integrante['nombre'] . " C.I. " . $integrante['cedula'] . " No ha sido evaluado en el item " . $indicador['nombre_indicador'] . " que pertenece a la dimension " . $indicador['nombre'] . " de la materia " . $indicador['nombre_materia']);
+                }
+            }
+
+            var_dump($baremos);
             http_response_code(200);
-            echo json_encode($this->proyecto->generarSSP());
+            echo json_encode(true);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());
