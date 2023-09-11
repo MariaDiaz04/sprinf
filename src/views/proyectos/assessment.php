@@ -71,16 +71,20 @@
             <?php foreach ($integrantes as $integrante) : ?>
               <div class="container">
                 <div class="row">
-                  <div class="col-12">
-                    <strong>INDIVIDUAL - <?= $integrante->nombre ?> - C.I. <?= $integrante->cedula ?> </strong>
-                  </div>
-                  <hr>
-                  <?php foreach ($materia->dimension->individual as $dimension) : ?>
-                    <div class="col-6">
-                      <label class="form-label" for="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
-                      <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]">
 
+                  <?php foreach ($materia->dimension->individual as $dimension) : ?>
+                    <div class="col-12">
+                      <strong>INDIVIDUAL - <?= $integrante->nombre ?> - C.I. <?= $integrante->cedula ?> - <?= $dimension->nombre ?> </strong>
                     </div>
+                    <hr>
+                    <?php foreach ($dimension->indicadores as $indicador) : ?>
+
+                      <div class="col-6">
+                        <label class="form-label" for="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
+                        <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]">
+
+                      </div>
+                    <?php endforeach; ?>
                   <?php endforeach; ?>
 
                 </div>

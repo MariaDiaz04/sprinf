@@ -302,15 +302,15 @@ class proyectoController extends controller
 
             $integrantes = $this->proyecto->obtenerIntegrantes($proyectoId);
 
+            // verifica que todos los estudiantes hayan sido evaluados
             foreach ($integrantes as $integrante) {
 
                 foreach ($baremos as $indicador) {
-                    $calificacion = $this->baremos->findStudentItem($indicador['indicador_id'], $integrante['id']);
-                    if (empty($calificacion)) throw new Exception("El integrante " . $integrante['nombre'] . " C.I. " . $integrante['cedula'] . " No ha sido evaluado en el item " . $indicador['nombre_indicador'] . " que pertenece a la dimension " . $indicador['nombre'] . " de la materia " . $indicador['nombre_materia']);
+                    $calificacion = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
+                    if (empty($calificacion)) throw new Exception("El integrante " . $integrante['nombre'] . " C.I. " . $integrante['cedula'] . " No ha sido evaluado en el item " . $indicador['nombre_indicador'] . " que pertenece a la dimension " . $indicador['nombre_dimension'] . " de la materia " . $indicador['nombre_materia']);
                 }
             }
 
-            var_dump($baremos);
             http_response_code(200);
             echo json_encode(true);
         } catch (Exception $e) {
