@@ -3,6 +3,7 @@ CREATE VIEW detalles_fase AS
 SELECT 
   fase.codigo as codigo_fase, 
   fase.nombre as nombre_fase, 
+  fase.siguiente_fase, 
   trayecto.codigo as codigo_trayecto, 
   trayecto.nombre as nombre_trayecto, 
   periodo.fecha_inicio, periodo.fecha_cierre 

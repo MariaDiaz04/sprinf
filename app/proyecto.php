@@ -82,6 +82,11 @@ class proyecto extends model
         }
     }
 
+    function updateFase(int $id, string $codigoFase): void
+    {
+        $this->update('proyecto', ['fase_id' => "'$codigoFase'"], [['id', '=', $id]]);
+    }
+
     /**
      * Transaccion para inserción de proyectos
      *

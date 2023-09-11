@@ -311,6 +311,17 @@ class proyectoController extends controller
                 }
             }
 
+            // verificar si existe una siguiente fase
+
+            $fase = $this->fase->find($proyecto['fase_id']);
+
+            if ($fase['siguiente_fase']) {
+                // actualizar proyecto
+                $this->proyecto->updateFase($proyecto['id'], $fase['siguiente_fase']);
+            } else {
+                // pasar a historico
+            }
+
             http_response_code(200);
             echo json_encode(true);
         } catch (Exception $e) {
