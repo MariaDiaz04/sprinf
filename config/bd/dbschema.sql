@@ -16,7 +16,8 @@ CREATE TABLE `sprinf_bd`.`trayecto` (
 CREATE TABLE `sprinf_bd`.`fase` (
   `codigo` varchar(255) UNIQUE PRIMARY KEY,
   `trayecto_id` varchar(255),
-  `nombre` varchar(255)
+  `nombre` varchar(255),
+  `siguiente_fase` varchar(255)
 );
 
 CREATE TABLE `sprinf_bd`.`seccion` (
@@ -163,6 +164,8 @@ CREATE TABLE `sprinf_bd`.`bitacora` (
 ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`periodo_id`) REFERENCES `sprinf_bd`.`periodo` (`id`);
 
 ALTER TABLE `sprinf_bd`.`fase` ADD FOREIGN KEY (`trayecto_id`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`fase` ADD FOREIGN KEY (`siguiente_fase`) REFERENCES `sprinf_bd`.`fase` (`codigo`);
 
 ALTER TABLE `sprinf_bd`.`seccion` ADD FOREIGN KEY (`trayecto_id`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
 
