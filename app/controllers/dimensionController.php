@@ -49,9 +49,8 @@ class dimensionController extends controller
 
       $this->dimension->setData($dimension->request->all());
 
-      var_dump($dimension->request->all());
-
       $id = $this->dimension->save();
+      $id = $this->dimension->saveItems();
 
       http_response_code(200);
       echo json_encode($id);

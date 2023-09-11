@@ -40,7 +40,6 @@
         <form action="<?= APP_URL . $this->Route('dimensiones/guardar') ?>" method="post" id="guardar">
           <div class="modal-body">
             <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
             <div class="container-fluid">
               <div class="row pb-2">
                 <div class="col-12">
@@ -184,7 +183,7 @@
           success: function(data, status) {
             table.ajax.reload();
             // usar sweetalerts
-            document.getElementById("guardar").reset();
+            // document.getElementById("guardar").reset();
             // actualizar tabla
             toggleLoading(false)
           },

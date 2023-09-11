@@ -94,7 +94,7 @@ class model extends conexion
 		}
 		$sql = substr($sql, 0, -2);
 		$sql = $sql . ');';
-		// echo $sql;
+		echo $sql;
 		return \PDO::query($sql);
 	} //finaliza set
 

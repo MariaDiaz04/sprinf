@@ -10,21 +10,18 @@ class dimension extends model
 {
 
   public $fillable = [
-    'evaluador',
+    'unidad_id',
     'nombre',
-    'trayecto',
-    'fase',
-    'individual',
-    'estatus'
+    'grupal',
+
+    'indicadores', // has many
   ];
 
   private $id;
-  private $evaluador;
+  private $indicadores;
+  private $unidad_id;
   private $nombre;
-  private $trayecto;
-  private $fase;
-  private $individual;
-  private $estatus;
+  private $grupal;
 
   public function all()
   {
@@ -72,14 +69,15 @@ class dimension extends model
     return !$indicadores ? [] : $indicadores;
   }
 
-  function saveItems(array $items): void
+  function saveItems(): void
   {
 
-    foreach ($items as $value) {
+    foreach ($this->indicadores as $value) {
 
-      $this->set('items', [
+      $this->set('indicadores', [
         'dimension_id' => $this->id,
-        'items' => $value,
+        'nombre' => "'" . $value['nombre'] . "'",
+        'ponderacion' => $value['ponderacion'],
       ]);
     }
   }
@@ -127,6 +125,9 @@ class dimension extends model
         }
       }
     }
+
+    unset($data['indicadores']);
+
     if ($id) {
       $this->update('dimension', $data, [['id', '=', $id]]);
       return $id;
