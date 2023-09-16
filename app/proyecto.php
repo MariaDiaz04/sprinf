@@ -125,6 +125,11 @@ class proyecto extends model
         }
     }
 
+    function cerrar(int $idProyecto): void
+    {
+        $this->update('proyecto', ['cerrado' => 1], [['id', '=', $idProyecto]]);
+    }
+
     public function updateTeam($idProyecto, array $participantes)
     {
         $participantesActuales = $this->select('integrante_proyecto', [['proyecto_id', '=', $idProyecto]]);

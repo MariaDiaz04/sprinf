@@ -137,7 +137,6 @@
             url: url,
             data: data,
             error: function(error, status) {
-              toggleLoading(false)
               alert(error.responseText)
             },
             success: function(data, status) {
@@ -159,7 +158,6 @@
         url: urlEvaluar,
         data: data,
         error: function(error, status) {
-          toggleLoading(false)
           alert(error.responseText)
         },
         success: function(data, status) {
