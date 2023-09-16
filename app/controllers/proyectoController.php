@@ -320,6 +320,7 @@ class proyectoController extends controller
                 $this->proyecto->updateFase($proyecto['id'], $fase['siguiente_fase']);
             } else {
                 // pasar a historico
+                // TODO: marcar como evaluado
             }
 
             http_response_code(200);

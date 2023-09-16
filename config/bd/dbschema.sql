@@ -90,7 +90,25 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `resumen` varchar(255),
   `direccion` varchar(255),
   `municipio` varchar(255),
-  `parroquia` varchar(255)
+  `parroquia` varchar(255),
+  `cerrado` bool DEFAULT false
+);
+
+CREATE TABLE `sprinf_bd`.`proyecto_historico` (
+  `nombre_estudiante` varchar(255),
+  `cedula_estudiante` int,
+  `nombre_proyecto` varchar(255),
+  `comunidad` varchar(255),
+  `area` varchar(255),
+  `motor_productivo` varchar(255),
+  `resumen` varchar(255),
+  `direccion` varchar(255),
+  `municipio` varchar(255),
+  `parroquia` varchar(255),
+  `nota_fase_1` float,
+  `nota_fase_2` float,
+  `periodo_inicio` date,
+  `periodo_final` date
 );
 
 CREATE TABLE `sprinf_bd`.`integrante_proyecto` (
