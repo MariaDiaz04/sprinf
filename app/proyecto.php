@@ -228,6 +228,10 @@ class proyecto extends model
                 'db'        => 'integrantes',
                 'dt'        => 5
             ),
+            array(
+                'db'        => 'cerrado',
+                'dt'        => 6
+            )
         );
         return $this->getSSP('detalles_proyecto', 'id', $columns);
     }

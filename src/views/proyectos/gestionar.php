@@ -22,6 +22,7 @@
             <th>Trayecto</th>
             <th>Fase</th>
             <th>Integrantes</th>
+            <th>Estatus</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -151,6 +152,16 @@
         pageLength: 30,
 
         columnDefs: [{
+          visible: false,
+          targets: [0, 5]
+        }, {
+          data: null,
+          render: function(data, type, row, meta) {
+            return row[6] == 1 ? `<span class="badge rounded-pill bg-success">Evaluado</span>` : `<span class="badge rounded-pill bg-secondary">Pendiente a Evaluar</span>`
+          },
+          targets: 6
+        }, {
+
           data: null,
           render: function(data, type, row, meta) {
             return `<div class="dropdown show">
@@ -158,13 +169,13 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
-                        <a class="dropdown-item" href="<?= APP_URL ?>proyectos/assessment/${row[0]}">Evaluar</a>
+                      ${ row[6] == 0 ? ` <a class="dropdown-item" href="<?= APP_URL ?>proyectos/assessment/${row[0]}">Evaluar</a>` : ``}
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
-          targets: 6 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
 
