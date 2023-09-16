@@ -125,6 +125,12 @@ class proyecto extends model
         }
     }
 
+    function pendientesACerrar(): array
+    {
+        $proyectos = $this->select("detalles_proyecto", [['cerrado', '=', 0]]);
+        return $proyectos ? $proyectos : [];
+    }
+
     function cerrar(int $idProyecto): void
     {
         $this->update('proyecto', ['cerrado' => 1], [['id', '=', $idProyecto]]);

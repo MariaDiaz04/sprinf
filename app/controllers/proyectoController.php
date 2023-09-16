@@ -46,6 +46,7 @@ class proyectoController extends controller
     {
 
         $proyectos = $this->proyecto->all();
+        $pendientes = $this->proyecto->pendientesACerrar();
 
         $tutores = $this->tutores->all();
 
@@ -56,6 +57,7 @@ class proyectoController extends controller
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'fases' => $fases,
+            'cerrarFase' => empty($pendientes),
             'tutores' => $tutores
         ]);
     }

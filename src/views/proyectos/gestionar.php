@@ -10,6 +10,12 @@
     </div>
   </div>
 
+  <?php if ($cerrarFase) : ?>
+    <div class="alert alert-success" role="alert">
+      Todos los proyectos han sido evaluado, ya puede <b>aperturar un nuevo periodo</b>
+    </div>
+  <?php endif; ?>
+
   <div class="card">
     <h6 class="card-header bg-primary text-white">Proyectos</h6>
     <div class="card-body px-3 pt-3">
