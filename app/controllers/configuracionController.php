@@ -48,9 +48,6 @@ class configuracionController extends controller
 
       if (!empty($pendientes)) throw new Exception('Hay proyectos pendientes por cerrar');
 
-      $fecha_inicio = $nuevoPeriodo->get('fecha_inicio');
-      $fecha_cierre = $nuevoPeriodo->get('fecha_cierre');
-
       // iniciar transaccion que envia información al historico
       $this->proyectoHistorico->historicalTransaction();
 
