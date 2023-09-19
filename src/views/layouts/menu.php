@@ -152,7 +152,7 @@
 
         <ul class="menu-sub">
           <li class="menu-item <?= $this->currentPath() == 'periodos' ? 'active' : '' ?>">
-            <a href="<?= APP_URL . $this->Route('periodos') ?>" class="menu-link">
+            <a href="<?= APP_URL . $this->Route('configuracion/periodo') ?>" class="menu-link">
               <div data-i18n="Without menu">Periodos</div>
             </a>
           </li>

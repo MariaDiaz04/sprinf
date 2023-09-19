@@ -95,6 +95,18 @@ class proyectoHistorico extends model
           $this->save();
         }
       }
+
+      // remove data from inscripcion
+      $this->delete('inscripcion');
+      // remove data from clase
+      $this->delete('clase');
+      // remove data from notas_integrante_proyecto
+      $this->delete('notas_integrante_proyecto');
+      // remove data from integrante_proyecto
+      $this->delete('integrante_proyecto');
+      // remove data from proyecto
+      $this->delete('proyecto');
+
       parent::commit();
       return '';
     } catch (Exception $e) {

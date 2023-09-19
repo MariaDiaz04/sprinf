@@ -52,8 +52,6 @@ class proyectoController extends controller
 
         $fases = $this->fase->getPrimerFaseDeTrayectos();
 
-
-
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'fases' => $fases,

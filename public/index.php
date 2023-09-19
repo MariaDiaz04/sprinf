@@ -758,6 +758,15 @@ $routes->add('configuracion/cerrar', new Route(
     ]
 ));
 
+$routes->add('configuracion/periodo', new Route(
+
+    '/configuracion/periodo',
+    [
+        'controller' => configuracionController::class,
+        'method' => 'periodo',
+    ]
+));
+
 //coment
 try {
     // Get the route matcher from the container ...

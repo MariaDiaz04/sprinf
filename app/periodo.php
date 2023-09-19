@@ -28,6 +28,13 @@ class periodo extends model
     }
   }
 
+  function get(): array
+  {
+    $periodo = $this->selectOne('periodo');
+    return $periodo ? $periodo : [];
+  }
+
+
 
   /**
    * setData

@@ -3,43 +3,40 @@
 namespace App\controllers;
 
 use App\permisos;
+use App\periodo;
 use App\proyectoHistorico;
 use App\materias;
 use App\trayectos;
 use App\proyecto;
-use App\clases;
-use App\fase;
-use App\malla;
 use App\controllers\controller;
 use Exception;
-
 use Symfony\Component\HttpFoundation\Request;
 
 class configuracionController extends controller
 {
   public $materias;
   public $proyectoHistorico;
-  public $clases;
   public $permisos;
   public $trayecto;
   public $proyectos;
-  public $fase;
-  public $malla;
+  public $periodo;
 
   function __construct()
   {
     $this->proyectoHistorico = new proyectoHistorico();
     $this->materias = new materias();
-    $this->clases = new clases();
+    $this->periodo = new periodo();
     $this->permisos = new permisos();
     $this->proyectos = new proyecto();
     $this->trayecto = new trayectos();
-    $this->fase = new fase();
-    $this->malla = new malla();
   }
 
-  function periodo(): void
+  function periodo()
   {
+    $pendientes = $this->proyectos->pendientesACerrar();
+    return $this->view('configuracion/periodo', [
+      'cerrarFase' => empty($pendientes),
+    ]);
   }
 
   function cerrarPeriodo(Request $nuevoPeriodo): void
@@ -50,11 +47,15 @@ class configuracionController extends controller
 
       if (!empty($pendientes)) throw new Exception('Hay proyectos pendientes por cerrar');
 
+      $fecha_inicio = $nuevoPeriodo->get('fecha_inicio');
+      $fecha_cierre = $nuevoPeriodo->get('fecha_cierre');
+
       // iniciar transaccion que envia información al historico
       $this->proyectoHistorico->historicalTransaction();
 
       // actualizar periodo de trayecto
-
+      $this->periodo->setData($nuevoPeriodo->request->all());
+      $this->periodo->save(1); // update first record
 
       http_response_code(200);
       echo json_encode(true);
