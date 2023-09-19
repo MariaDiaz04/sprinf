@@ -95,6 +95,7 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
 );
 
 CREATE TABLE `sprinf_bd`.`proyecto_historico` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
   `nombre_estudiante` varchar(255),
   `cedula_estudiante` int,
   `nombre_proyecto` varchar(255),

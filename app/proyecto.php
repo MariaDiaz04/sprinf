@@ -32,7 +32,7 @@ class proyecto extends model
     public function all()
     {
         try {
-            $proyectos = $this->querys("SELECT proyecto.*, CONCAT(persona.nombre, ' ',persona.apellido) as nombre_tutor, trayecto.nombre as nombre_trayecto FROM proyecto INNER JOIN tutor ON tutor.id = proyecto.tutor_id INNER JOIN persona ON persona.id = tutor.persona_id INNER JOIN trayecto ON trayecto.id = proyecto.trayecto_id");
+            $proyectos = $this->select("detalles_proyecto");
             return $proyectos ? $proyectos : null;
         } catch (Exception $th) {
             return $th;
@@ -85,6 +85,66 @@ class proyecto extends model
     function updateFase(int $id, string $codigoFase): void
     {
         $this->update('proyecto', ['fase_id' => "'$codigoFase'"], [['id', '=', $id]]);
+    }
+
+    function historicalTransaction(): string
+    {
+        try {
+            parent::beginTransaction();
+            $proyectos = $this->all();
+
+
+            foreach ($proyectos as $proyecto) {
+                $data['nombre_proyecto'] = $proyecto['nombre'];
+                $data['comunidad'] = $proyecto['comunidad'];
+                $data['area'] = $proyecto['area'];
+                $data['motor_productivo'] = $proyecto['motor_productivo'];
+                $data['resumen'] = $proyecto['resumen'];
+                $data['direccion'] = $proyecto['direccion'];
+                $data['municipio'] = $proyecto['municipio'];
+                $data['parroquia'] = $proyecto['parroquia'];
+                $data['periodo_inicio'] = $proyecto['fecha_inicio'];
+                $data['periodo_final'] = $proyecto['fecha_cierre'];
+
+                // obtener integrantes
+                $integrantes =  $this->obtenerIntegrantes($proyecto['id']);
+
+                foreach ($integrantes as $integrante) {
+
+                    $data['cedula_estudiante'] = $integrante['cedula'];
+                    $data['nombre_estudiante'] = $integrante['nombre'];
+
+                    $calificacionFases = $this->findStudentGrades($integrante['cedula']);
+
+                    foreach ($calificacionFases as $calificacionFase) {
+                        if (str_contains($calificacionFase['fase_id'], '_1')) {
+                            $data['nota_fase_1'] = $calificacionFase['calificacion'];
+                        } else {
+                            $data['nota_fase_2'] = $calificacionFase['calificacion'];
+                        }
+                    }
+                    $this->saveHistorico($data);
+                }
+            }
+            parent::commit();
+            return '';
+        } catch (Exception $e) {
+            print($e->getMessage());
+            parent::rollBack();
+            return '';
+        }
+    }
+
+    function saveHistorico(array $data): bool
+    {
+        $result = $this->set('proyecto_historico', $data);
+        return $result ? true : false;
+    }
+
+    function findStudentGrades(int $cedula): array
+    {
+        $notas = $this->select('detalles_notas_baremos', [['cedula', '=', $cedula]]);
+        return !$notas ? [] : $notas;
     }
 
     /**

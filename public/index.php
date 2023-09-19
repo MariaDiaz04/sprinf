@@ -4,6 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
+use App\controllers\configuracionController;
 use App\controllers\periodoController;
 use App\controllers\clasesController;
 use App\controllers\seccionController;
@@ -743,6 +744,17 @@ $routes->add('modulos/actualizar/{id}', new Route(
     [
         'controller' => moduloController::class,
         'method' => 'update',
+    ]
+));
+
+// GESTION DE CONFIGURACION
+
+$routes->add('configuracion/cerrar', new Route(
+
+    '/configuracion/cerrar',
+    [
+        'controller' => configuracionController::class,
+        'method' => 'cerrarPeriodo',
     ]
 ));
 

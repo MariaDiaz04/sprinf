@@ -19,6 +19,12 @@ class baremos extends model
   public int $trayecto_id;
   public string $estatus;
 
+  function findStudentGrades(int $idParticipante): array
+  {
+    $notas = $this->select('notas_integrante_proyecto', [['integrante_id', '=', $idParticipante]]);
+    return !$notas ? [] : $notas;
+  }
+
   function findStudentItem(int $idInidicador, int $idParticipante): array
   {
     $materias = $this->selectOne('notas_integrante_proyecto', [['indicador_id', '=', $idInidicador], ['integrante_id', '=', $idParticipante]]);
