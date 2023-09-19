@@ -33,9 +33,10 @@ class configuracionController extends controller
 
   function periodo()
   {
+    $proyectos = $this->proyectos->all();
     $pendientes = $this->proyectos->pendientesACerrar();
     return $this->view('configuracion/periodo', [
-      'cerrarFase' => empty($pendientes),
+      'cerrarFase' => empty($pendientes) && !empty($proyectos),
     ]);
   }
 

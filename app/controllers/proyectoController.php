@@ -55,7 +55,7 @@ class proyectoController extends controller
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'fases' => $fases,
-            'cerrarFase' => empty($pendientes),
+            'cerrarFase' => empty($pendientes) && !empty($proyectos),
             'tutores' => $tutores
         ]);
     }
