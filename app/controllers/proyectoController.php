@@ -259,6 +259,7 @@ class proyectoController extends controller
 
                     $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
 
+
                     if (empty($indicadores)) {
                         $errors['danger'][] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
                     } else {
@@ -267,8 +268,16 @@ class proyectoController extends controller
                             $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['nombre'] = $dimension['nombre'];
                             $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['indicadores'] = $indicadores;
                         } else {
+
                             $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['nombre'] = $dimension['nombre'];
-                            $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['indicadores'] = $indicadores;
+                            foreach ($integrantes as $key => $integrante) {
+
+                                foreach ($indicadores as $key => $indicador) {
+                                    $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
+                                    if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
+                                }
+                                $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['integrantes'][$integrante['estudiante_id']]['indicadores'] = $indicadores;
+                            }
                         }
                     }
                 }
@@ -315,15 +324,18 @@ class proyectoController extends controller
 
             $fase = $this->fase->find($proyecto['fase_id']);
 
+            $msg = '';
             if ($fase['siguiente_fase']) {
                 // actualizar proyecto
                 $this->proyecto->updateFase($proyecto['id'], $fase['siguiente_fase']);
+                $msg = 'Fase actualizada';
             } else {
                 $this->proyecto->cerrar($proyecto['id']);
+                $msg = 'Proyecto cerrado';
             }
 
             http_response_code(200);
-            echo json_encode(true);
+            echo json_encode($msg);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());

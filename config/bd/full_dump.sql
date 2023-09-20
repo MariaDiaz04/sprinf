@@ -90,7 +90,26 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `resumen` varchar(255),
   `direccion` varchar(255),
   `municipio` varchar(255),
-  `parroquia` varchar(255)
+  `parroquia` varchar(255),
+  `cerrado` bool DEFAULT false
+);
+
+CREATE TABLE `sprinf_bd`.`proyecto_historico` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `nombre_estudiante` varchar(255),
+  `cedula_estudiante` int,
+  `nombre_proyecto` varchar(255),
+  `comunidad` varchar(255),
+  `area` varchar(255),
+  `motor_productivo` varchar(255),
+  `resumen` varchar(255),
+  `direccion` varchar(255),
+  `municipio` varchar(255),
+  `parroquia` varchar(255),
+  `nota_fase_1` float,
+  `nota_fase_2` float,
+  `periodo_inicio` date,
+  `periodo_final` date
 );
 
 CREATE TABLE `sprinf_bd`.`integrante_proyecto` (
@@ -212,8 +231,6 @@ ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`rol_id`) REFERENCES `sprinf
 ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`modulo_id`) REFERENCES `sprinf_bd`.`modulo` (`id`);
 
 ALTER TABLE `sprinf_bd`.`bitacora` ADD FOREIGN KEY (`usuario_id`) REFERENCES `sprinf_bd`.`usuario` (`id`);
-
-
 
 
 use sprinf_bd;
@@ -1358,6 +1375,7 @@ LEFT OUTER JOIN integrante_proyecto ON integrante_proyecto.proyecto_id = proyect
 GROUP BY proyecto_id;
 
 DROP VIEW IF EXISTS detalles_materias;
+
 CREATE VIEW detalles_materias AS
 SELECT 
   malla_curricular.materia_id,
@@ -1381,6 +1399,7 @@ LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
 GROUP BY malla_curricular.codigo;
 
 DROP VIEW IF EXISTS detalles_clases;
+
 CREATE VIEW detalles_clases AS
 SELECT clase.*, persona.nombre as profesor,detalles_materias.materia_id,detalles_materias.nombre, detalles_materias.nombre_fase, detalles_materias.nombre_trayecto, count(inscripcion.id) as estudiantes
 FROM clase
@@ -1393,6 +1412,7 @@ GROUP BY clase.codigo;
 
 
 DROP VIEW IF EXISTS detalles_integrantes;
+
 CREATE VIEW detalles_integrantes AS
 SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.cedula
 FROM integrante_proyecto
@@ -1401,6 +1421,7 @@ INNER JOIN persona on persona.cedula = estudiante.persona_id
 INNER JOIN proyecto on proyecto.id = integrante_proyecto.proyecto_id;
 
 DROP VIEW IF EXISTS detalles_fase;
+
 CREATE VIEW detalles_fase AS
 SELECT 
   fase.codigo as codigo_fase, 
@@ -1411,3 +1432,48 @@ SELECT
 FROM `fase` 
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 INNER JOIN periodo ON periodo.id = trayecto.periodo_id; 
+
+DROP VIEW IF EXISTS detalles_baremos;
+
+CREATE VIEW detalles_baremos AS
+SELECT 
+    indicadores.id, 
+    indicadores.nombre as nombre_indicador,
+    indicadores.ponderacion as ponderacion,
+    indicadores.dimension_id,
+    dimension.nombre as nombre_dimension,
+    dimension.grupal,
+    materias.codigo as codigo_materia,
+    materias.nombre as nombre_materia, 
+    fase.nombre as nombre_fase, 
+    fase.codigo as codigo_fase, 
+    trayecto.nombre as nombre_trayecto, 
+    trayecto.codigo as codigo_trayecto
+FROM `indicadores` 
+INNER JOIN dimension ON dimension.id = indicadores.dimension_id
+INNER JOIN malla_curricular ON malla_curricular.codigo = dimension.unidad_id
+INNER JOIN fase ON fase.codigo = malla_curricular.fase_id 
+INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
+INNER JOIN materias ON  materias.codigo = malla_curricular.materia_id
+GROUP BY indicadores.id;
+
+DROP VIEW IF EXISTS detalles_notas_baremos;
+
+CREATE VIEW detalles_notas_baremos AS
+SELECT 
+  malla_curricular.fase_id,
+  fase.nombre as nombre_fase,
+  persona.cedula,
+  persona.nombre,
+  integrante_proyecto.proyecto_id,
+  sum(indicadores.ponderacion) as ponderado,
+  sum(nip.calificacion) as calificacion
+FROM notas_integrante_proyecto as nip
+INNER JOIN indicadores ON indicadores.id = nip.indicador_id
+INNER JOIN integrante_proyecto ON integrante_proyecto.id = nip.integrante_id
+INNER JOIN estudiante ON estudiante.id = integrante_proyecto.estudiante_id
+INNER JOIN persona ON persona.cedula = estudiante.persona_id
+INNER JOIN dimension ON dimension.id = indicadores.dimension_id
+INNER JOIN malla_curricular ON dimension.unidad_id = malla_curricular.codigo
+INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
+GROUP BY persona.cedula, malla_curricular.fase_id;

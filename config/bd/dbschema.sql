@@ -122,7 +122,7 @@ CREATE TABLE `sprinf_bd`.`notas_integrante_proyecto` (
   `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
   `indicador_id` int,
   `integrante_id` int,
-  `calificacion` float,
+  `calificacion` float
 );
 
 CREATE TABLE `sprinf_bd`.`persona` (

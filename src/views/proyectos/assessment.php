@@ -68,20 +68,19 @@
             <hr>
             <div class="my-5"></div>
 
-            <?php foreach ($integrantes as $integrante) : ?>
+            <?php foreach ($materia->dimension->individual as $dimensionIndividual) : ?>
               <div class="container">
                 <div class="row">
-
-                  <?php foreach ($materia->dimension->individual as $dimension) : ?>
-                    <div class="col-12">
-                      <strong>INDIVIDUAL - <?= $integrante->nombre ?> - C.I. <?= $integrante->cedula ?> - <?= $dimension->nombre ?> </strong>
-                    </div>
-                    <hr>
-                    <?php foreach ($dimension->indicadores as $indicador) : ?>
+                  <div class="col-12">
+                    <strong>INDIVIDUAL - <?= $dimensionIndividual->nombre ?></strong>
+                  </div>
+                  <hr>
+                  <?php foreach ($dimensionIndividual->integrantes as $idIntegrante => $individual) : ?>
+                    <?php foreach ($individual->indicadores as $indicador) : ?>
 
                       <div class="col-6">
-                        <label class="form-label" for="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
-                        <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]">
+                        <label class="form-label" for="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
+                        <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]">
 
                       </div>
                     <?php endforeach; ?>
@@ -90,8 +89,6 @@
                 </div>
               </div>
             <?php endforeach; ?>
-
-
           <?php endif; ?>
         </div>
       </div>
