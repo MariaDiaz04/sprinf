@@ -1171,35 +1171,53 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'indicador
 -- -------------------- trayecto 3 fase 1 ---------------------------
 -- TUTOR
 insert into dimension (id, unidad_id, nombre, grupal) values(7,'ASESOR3078303_1','Sistema', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de menú amigable al usuario', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de inserción o captura de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de confirmación de eliminación de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Demuestra conocimiento en la programación modular del Sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Modulo de reportes básicos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Utiliza modelo vista-controlador', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Codifica basado en el Diseño', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Justifica la Metodología', 1);
 
 insert into dimension (id, unidad_id, nombre, grupal) values(8,'ASESOR3078303_1','Informe', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'Capitulo 1', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'Capitulo 2', 2);
 
 insert into dimension (id, unidad_id, nombre, grupal) values(9,'ASESOR3078303_1','Manejo de Equipo', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'indicador', 1);
-
-insert into dimension (id, unidad_id, nombre, grupal) values(10,'ASESOR3078303_1','Modelado del negocio', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'indicador', 1);
-
-insert into dimension (id, unidad_id, nombre, grupal) values(11,'ASESOR3078303_1','Modelado del sistema', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'Manejo de conflictos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'Responsabilidad', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'Hábitos de trabajo', 2);
 
 
 -- Modelado de base de datos 
 insert into dimension (id, unidad_id, nombre, grupal) values(12,'PIMOB078303_1','Diseño de la Base de datos', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Modelo Entidad Relacion', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Modelo Logico Relacional', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Modelo Fisico', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Utiliza postgres para el diseño fisico de la base de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Diccionario de datos', 1);
 
 -- Docente de proyecto
-insert into dimension (id, unidad_id, nombre, grupal) values(13,'PIPST078303_1','Evaluación Del Docente de Proyecto', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'indicador', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(13,'PIPST078303_1','Aspectos a evaluar', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Titulo del proyecto', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'La descripcion del diagnostico situacional', 0.75);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Aplica e interpreta instrumentos para el levantamiento de la niformación y captura de requisitos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Presenta una propuesta de solución coherente', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Objetivo general se relaciona con la propuesta de solución', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Objetivos especificos: reflejan el alcance del proyecto y se relacionan con la propuesta de solución del objetivo general', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Justifica las razones para el uso de la propuesta de solución', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'El proyecto describe los procesos llevados a cabo dentro de la comunidad', 0.75);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Aborda teorías y conocimientos cónsonos al trayecto respectivo y su acreditación', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Se aborda el marco legal', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Realiza planificación de actividades del proyecto', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Entrega a tiempo de artefactos correspondientes al diseño del sistema', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Sistematiza Capitulo 1 y 2 del proyecto', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Aplica normas para representar cuadros y figuras', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Redacción, analisis y ortografia', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los participantes se integraron como equipo de trabajo para la resolución de conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los participantes aplicaron instrumentos de recolección de información', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los participantes cumplieron con las tareas y actividades programadas', 0.5);
 
 -- --------------------- trayecto 3 fase 2 ------------------------------
 
@@ -1422,10 +1440,12 @@ INNER JOIN proyecto on proyecto.id = integrante_proyecto.proyecto_id;
 
 DROP VIEW IF EXISTS detalles_fase;
 
+DROP VIEW IF EXISTS detalles_fase;
 CREATE VIEW detalles_fase AS
 SELECT 
   fase.codigo as codigo_fase, 
   fase.nombre as nombre_fase, 
+  fase.siguiente_fase, 
   trayecto.codigo as codigo_trayecto, 
   trayecto.nombre as nombre_trayecto, 
   periodo.fecha_inicio, periodo.fecha_cierre 
