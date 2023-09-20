@@ -64,9 +64,9 @@
 
 
           <?php if (property_exists($materia->dimension, 'individual') && !empty($materia->dimension->individual)) : ?>
-            <div class="my-5"></div>
+            <div class="my-3"></div>
             <hr>
-            <div class="my-5"></div>
+            <div class="my-3"></div>
 
             <?php foreach ($materia->dimension->individual as $dimensionIndividual) : ?>
               <div class="container">
@@ -76,33 +76,39 @@
                   </div>
                   <hr>
                   <?php foreach ($dimensionIndividual->integrantes as $idIntegrante => $individual) : ?>
+
                     <?php foreach ($individual->indicadores as $indicador) : ?>
 
                       <div class="col-6">
-                        <label class="form-label" for="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
+                        <label class="form-label" for="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]"><b>C.I. <?= $indicador->cedula_integrante ?> <?= $indicador->nombre_integrante ?></b> | <?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
                         <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]">
 
                       </div>
                     <?php endforeach; ?>
+                    <div class="my-2"></div>
+                    <hr>
+                    <div class="my-2"></div>
                   <?php endforeach; ?>
 
                 </div>
               </div>
             <?php endforeach; ?>
           <?php endif; ?>
+          <div class="text-right mt-3 d-flex justify-content-end">
+            <input type="submit" class="btn btn-outline-primary" value='Editar Notas' />&nbsp;
+          </div>
         </div>
       </div>
     <?php endforeach; ?>
+    <div class="mt-5"></div>
     <hr class="border-light m-0">
     <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
       <p>
         No se podrá evaluar baremos hasta que se resuelvan los conflictos críticos
       </p>
     <?php else : ?>
-
       <div class="text-end mt-3">
-        <input type="button" class="btn btn-primary" id="actualizarNota" value='Actualizar Nota' />&nbsp;
-        <input type="submit" class="btn btn-primary" value='Evaluar' />&nbsp;
+        <input type="submit" class="btn btn-primary" value='Evaluar Fase' />&nbsp;
       </div>
 
     <?php endif; ?>

@@ -279,6 +279,8 @@ class proyectoController extends controller
                                 foreach ($indicadores as $key => $indicador) {
                                     $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
                                     if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
+                                    $indicadores[$key]['nombre_integrante'] = $integrante['nombre'];
+                                    $indicadores[$key]['cedula_integrante'] = $integrante['cedula'];
                                 }
                                 $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['integrantes'][$integrante['id']]['indicadores'] = $indicadores;
                             }
