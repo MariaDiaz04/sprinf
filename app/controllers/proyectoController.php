@@ -266,6 +266,10 @@ class proyectoController extends controller
                         // configurar informacion de indicador
                         if ($dimension['grupal'] == 1) {
                             $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['nombre'] = $dimension['nombre'];
+                            foreach ($indicadores as $key => $indicador) {
+                                $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrantes[0]['id']);
+                                if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
+                            }
                             $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['indicadores'] = $indicadores;
                         } else {
 
@@ -276,12 +280,15 @@ class proyectoController extends controller
                                     $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
                                     if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
                                 }
-                                $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['integrantes'][$integrante['estudiante_id']]['indicadores'] = $indicadores;
+                                $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['integrantes'][$integrante['id']]['indicadores'] = $indicadores;
                             }
                         }
                     }
                 }
             }
+
+            // echo json_encode($baremos);
+            // exit();
 
 
             return $this->view('proyectos/assessment', [
