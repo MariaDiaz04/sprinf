@@ -34,11 +34,11 @@
     </div>
   <?php endif; ?>
 
-  <form action="<?= APP_URL . $this->Route('proyectos/evaluar') ?>" method="post" id="evaluarProyecto">
-    <input type="hidden" name="proyecto_id" value="<?= $proyecto_id ?>">
-    <?php foreach ($baremos as $materia) : ?>
-      <div class="card mb-3">
-        <h6 class="card-header bg-primary text-white"><?= $materia->nombre ?></h6>
+  <?php foreach ($baremos as $materia) : ?>
+    <div class="card mb-3">
+      <h6 class="card-header bg-primary text-white"><?= $materia->nombre ?></h6>
+      <form action="<?= APP_URL . $this->Route('proyectos/editarNotaBaremos') ?>" method="post" class="editarNotaBaremos">
+        <input type="hidden" name="proyecto_id" value="<?= $proyecto_id ?>">
         <div class="card-body px-3 pt-3">
           <?php if (property_exists($materia->dimension, 'grupal') && !empty($materia->dimension->grupal)) : ?>
             <?php foreach ($materia->dimension->grupal as $dimension) : ?>
@@ -52,7 +52,7 @@
 
                     <div class="col-6">
                       <label class="form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
-                      <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
+                      <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
                     </div>
                   <?php endforeach; ?>
 
@@ -81,7 +81,7 @@
 
                       <div class="col-6">
                         <label class="form-label" for="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]"><b>C.I. <?= $indicador->cedula_integrante ?> <?= $indicador->nombre_integrante ?></b> | <?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
-                        <input type="number" class="form-control mb-1" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]">
+                        <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]">
 
                       </div>
                     <?php endforeach; ?>
@@ -98,21 +98,24 @@
             <input type="submit" class="btn btn-outline-primary" value='Editar Notas' />&nbsp;
           </div>
         </div>
-      </div>
-    <?php endforeach; ?>
-    <div class="mt-5"></div>
-    <hr class="border-light m-0">
-    <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
-      <p>
-        No se podrá evaluar baremos hasta que se resuelvan los conflictos críticos
-      </p>
-    <?php else : ?>
+      </form>
+    </div>
+  <?php endforeach; ?>
+  <div class="mt-5"></div>
+  <hr class="border-light m-0">
+  <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
+    <p>
+      No se podrá evaluar baremos hasta que se resuelvan los conflictos críticos
+    </p>
+  <?php else : ?>
+    <form action="<?= APP_URL . $this->Route('proyectos/evaluar') ?>" method="post" id="evaluarProyecto">
+      <input type="hidden" name="proyecto_id" value="<?= $proyecto_id ?>">
       <div class="text-end mt-3">
         <input type="submit" class="btn btn-primary" value='Evaluar Fase' />&nbsp;
       </div>
+    </form>
 
-    <?php endif; ?>
-  </form>
+  <?php endif; ?>
 </div>
 
 <script>
@@ -151,10 +154,10 @@
 
     });
 
-    $('#actualizarNota').click(function(e) {
+    $('.editarNotaBaremos').submit(function(e) {
       e.preventDefault();
 
-      data = $('#evaluarProyecto').serializeArray();
+      data = $(this).serializeArray();
 
       $.ajax({
         type: "POST",
