@@ -1223,34 +1223,65 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los part
 
 -- TUTORA
 insert into dimension (id, unidad_id, nombre, grupal) values(14,'ASESOR4078303_2','Desempeño Individual',0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'CRUD del sistema. (Por Modulo)', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Validación de datos. (Por Modulo)', 1);
 
 insert into dimension (id, unidad_id, nombre, grupal) values(15,'ASESOR4078303_2','Desempeño grupal',1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Responsabilidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Integración al grupo', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'proactividad', 0.5);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(16,'ASESOR4078303_2','Avances de programación', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'indicador', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(16,'ASESOR4078303_2','Avances de programación (Por Modulo)', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Instalación del software necesario para la ejecución de la aplicación o componentes', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Pantallas bien conectadas con la Base de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Los módulos de modificación de base de datos garantizan la integridad referencial', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Desarrollo de todos los modulos diseñados en los diagramas de casos de uso', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Módulos acordes al Diagrama de clases', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Funcionamiento completo de los módulos de automatización', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Correctitud en los reportes estadisticos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Cumplimiento del estandar de programación entregado', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Control de errores', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Gestión de bitácora', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Manejo de sesiones respecto a concurrencia de usuarios', 1);
 
 insert into dimension (id, unidad_id, nombre, grupal) values(17,'ASESOR4078303_2','Interfaz y estilo', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso adecuado de los colores en la aplicación', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Fondos claros y sencillos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso de iamgenes', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Distribución de la interfaz', 1);
 
 -- Ingeniera de Software
 insert into dimension (id, unidad_id, nombre, grupal) values(18,'PINGSO078303_2','Desempeño Tecnico', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Cumple con actividades Asignadas', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Conoce con exactitud el Sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Conoce el uso de Bitacora', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Codifica los requerimientos dados por el docente', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Desarrollo y programo el módulo asignado', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Integro el módulo desarrollado', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Planifica el proceso de Desarrollo del software', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Identifica los escenarios y casos de prueba en el sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Detecta errores, fallas, defectos en el sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Planifica las activdades de capacitación', 1);
 
 insert into dimension (id, unidad_id, nombre, grupal) values(19,'PINGSO078303_2','Usabilidad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Facilidad de uso', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Tiempos de respuesta del sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Interactividad con el usuario', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Ayuda al Usuario', 1);
 
 -- Docente de Proyecto
-insert into dimension (id, unidad_id, nombre, grupal) values(20,'PIPST078303_2','Informe', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'indicador', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(20,'PIPST078303_2','Capitulo III', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Manual de usuario', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Manual de Sistema', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Plan de Pruebas', 3);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Plan de Instalación', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Plan de Capacitación', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(21,'PIPST078303_2','Capitulo IV', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Recomendaciones y Evolución Previsible del sistema.', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(21,'PIPST078303_2','Capitulo V', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Anexos y Referencias', 2);
 
 
 -- 9_clases.sql
