@@ -80,15 +80,18 @@
           <div data-i18n="Analytics">Proyectos</div>
         </a>
       </li>
-
       <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Unidades Curriculares</span>
+        <span class="menu-header-text">Personal</span>
       </li>
+
       <li class="menu-item <?= $this->currentPath() == 'profesores' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('profesores') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-group"></i>
           <div data-i18n="Analytics">Docentes</div>
         </a>
+      </li>
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Unidades Curriculares</span>
       </li>
       <li class="menu-item <?= $this->currentPath() == 'materias' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('materias') ?>" class="menu-link">
@@ -108,12 +111,12 @@
           <div data-i18n="Analytics">Secciones</div>
         </a>
       </li>
-      <li class="menu-item <?= $this->currentPath() == 'clases' ? 'active' : '' ?>">
+      <!-- <li class="menu-item <?= $this->currentPath() == 'clases' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('clases') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-chalkboard"></i>
           <div data-i18n="Analytics">Clases</div>
         </a>
-      </li>
+      </li> -->
 
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Administrar</span>
