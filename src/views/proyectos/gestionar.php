@@ -13,7 +13,7 @@
   <?php if ($cerrarFase) : ?>
     <div class="alert alert-primary" role="alert">
       <p>Todos los proyectos han sido evaluados! 🥳</p>
-      <p><a href="<?= APP_URL . $this->Route('configuracion/periodo') ?>" class="btn btn-primary">aperturar un nuevo periodo</a></p>
+      <p><a href="<?= APP_URL . $this->Route('configuracion/aperturar-periodo') ?>" class="btn btn-primary">aperturar un nuevo periodo</a></p>
     </div>
   <?php endif; ?>
 

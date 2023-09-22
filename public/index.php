@@ -758,9 +758,9 @@ $routes->add('configuracion/cerrar', new Route(
     ]
 ));
 
-$routes->add('configuracion/periodo', new Route(
+$routes->add('configuracion/aperturar-periodo', new Route(
 
-    '/configuracion/periodo',
+    '/configuracion/aperturar-periodo',
     [
         'controller' => configuracionController::class,
         'method' => 'periodo',

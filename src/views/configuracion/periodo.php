@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Configuracion </span>/ Periodo</div>
+        <div><span class="text-muted font-weight-light">Configuracion </span>/ Aperturar Periodo</div>
 
 
       </h4>

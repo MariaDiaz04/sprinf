@@ -144,23 +144,23 @@
 
         </ul>
       </li>
-      <li class="menu-item <?= in_array($this->currentPath(), ['periodos', 'trayectos']) ? 'open' : '' ?>">
+      <li class="menu-item <?= in_array($this->currentPath(), ['configuracion', 'trayectos']) ? 'open' : '' ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">Configuración</div>
         </a>
 
         <ul class="menu-sub">
-          <li class="menu-item <?= $this->currentPath() == 'periodos' ? 'active' : '' ?>">
-            <a href="<?= APP_URL . $this->Route('configuracion/periodo') ?>" class="menu-link">
-              <div data-i18n="Without menu">Periodos</div>
+          <li class="menu-item <?= $this->currentPath() == 'configuracion' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('configuracion/aperturar-periodo') ?>" class="menu-link">
+              <div data-i18n="Without menu">Aperturar Periodo</div>
             </a>
           </li>
-          <li class="menu-item <?= $this->currentPath() == 'trayectos' ? 'active' : '' ?>">
+          <!-- <li class="menu-item <?= $this->currentPath() == 'trayectos' ? 'active' : '' ?>">
             <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
               <div data-i18n="Analytics">Trayectos</div>
             </a>
-          </li>
+          </li> -->
         </ul>
       </li>
 
