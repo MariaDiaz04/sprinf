@@ -11,13 +11,14 @@
   </div>
 
   <?php if ($cerrarFase) : ?>
-    <div class="alert alert-success" role="alert">
-      Todos los proyectos han sido evaluado, ya puede <b>aperturar un nuevo periodo</b>
+    <div class="alert alert-primary" role="alert">
+      <p>Todos los proyectos han sido evaluados! 🥳</p>
+      <p><a href="<?= APP_URL . $this->Route('configuracion/periodo') ?>" class="btn btn-primary">aperturar un nuevo periodo</a></p>
     </div>
   <?php endif; ?>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white">Proyectos</h6>
+    <h6 class="card-header bg-primary text-white"><b>Proyectos</b> - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?></h6>
     <div class="card-body px-3 pt-3">
       <table id="example" class="display" style="width:100%">
         <thead>

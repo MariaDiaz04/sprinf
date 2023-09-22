@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Bcrypt\Bcrypt;
 
 use App\proyecto;
+use App\periodo;
 use App\estudiante;
 use App\inscripcion;
 use App\baremos;
@@ -27,6 +28,7 @@ class proyectoController extends controller
     private $tutores;
     private $baremos;
     private $fase;
+    private $periodo;
     private $trayectos;
     private $inscripcion;
 
@@ -39,6 +41,7 @@ class proyectoController extends controller
         $this->trayectos = new trayectos();
         $this->baremos = new baremos();
         $this->fase = new fase();
+        $this->periodo = new periodo();
         $this->inscripcion = new inscripcion();
     }
 
@@ -52,8 +55,11 @@ class proyectoController extends controller
 
         $fases = $this->fase->getPrimerFaseDeTrayectos();
 
+        $periodo = $this->periodo->get();
+
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
+            'periodo' => $periodo,
             'fases' => $fases,
             'cerrarFase' => empty($pendientes) && !empty($proyectos),
             'tutores' => $tutores
