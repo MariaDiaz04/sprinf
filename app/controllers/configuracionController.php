@@ -35,8 +35,16 @@ class configuracionController extends controller
   {
     $proyectos = $this->proyectos->all();
     $pendientes = $this->proyectos->pendientesACerrar();
+    $periodo = $this->periodo->get();
+
+    $proximoInicioDePeriodo = date('Y-m-d', strtotime('+1 year', strtotime($periodo['fecha_inicio'])));
+    $proximoCierreDePeriodo = date('Y-m-d', strtotime('+1 year', strtotime($periodo['fecha_cierre'])));
+
     return $this->view('configuracion/periodo', [
       'cerrarFase' => empty($pendientes) && !empty($proyectos),
+      'periodo' => $periodo,
+      'inicio' => $proximoInicioDePeriodo,
+      'cierre' => $proximoCierreDePeriodo
     ]);
   }
 
