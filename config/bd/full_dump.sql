@@ -1439,6 +1439,7 @@ SELECT
   materias.htind,
   materias.ucredito,
   materias.hrs_acad,
+  materias.cursable,
   count(dimension.id) as dimensiones_proyecto
 FROM materias
 LEFT JOIN malla_curricular on malla_curricular.materia_id = materias.codigo

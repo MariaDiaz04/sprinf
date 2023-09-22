@@ -369,6 +369,10 @@ class materias extends model
                 'db'        => 'dimensiones_proyecto',
                 'dt'        => 4
             ),
+            array(
+                'db'        => 'cursable',
+                'dt'        => 5
+            ),
         );
         return $this->getSSP('detalles_materias', 'codigo', $columns);
     }
