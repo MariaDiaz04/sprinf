@@ -363,14 +363,18 @@ class proyectoController extends controller
 
             foreach ($integrantes as $integrante) {
                 // indicadores grupales
-                foreach ($indicadoresGrupales as $id => $value) {
-                    $value = floatval($value);
-                    $this->baremos->evaluarIndicador($id, $integrante['id'], $value);
+                if (!empty($indicadoresGrupales)) {
+                    foreach ($indicadoresGrupales as $id => $value) {
+                        $value = floatval($value);
+                        $this->baremos->evaluarIndicador($id, $integrante['id'], $value);
+                    }
                 }
+                if (!empty($indicadoresIndividuales)) {
 
-                foreach ($indicadoresIndividuales[$integrante['id']] as $id => $value) {
-                    $value = floatval($value);
-                    $this->baremos->evaluarIndicador($id, $integrante['id'], $value);
+                    foreach ($indicadoresIndividuales[$integrante['id']] as $id => $value) {
+                        $value = floatval($value);
+                        $this->baremos->evaluarIndicador($id, $integrante['id'], $value);
+                    }
                 }
             }
 
