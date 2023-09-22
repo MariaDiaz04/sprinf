@@ -957,7 +957,7 @@ insert into estudiante (id, persona_id) values ('e-39263',39263);
 
 -- 4_periodo.sql
 delete from periodo where true;
-insert into periodo (id, fecha_inicio, fecha_cierre) values (1, '7/24/2023', '12/22/2022');
+insert into periodo (id, fecha_inicio, fecha_cierre) values (1, '2023-03-01', '2024-02-01');
 
 -- 5_trayecto-fase.sql
 insert into trayecto (codigo, periodo_id, nombre) values ('TR1',1,'Trayecto I');
@@ -1045,7 +1045,7 @@ insert into malla_curricular (codigo, fase_id, materia_id) values ('PINGSO078303
 
 
 -- Tutor Asesor Proyecto anual trayecto 3
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('ASESOR3078303', 'Tutor Asesor Proyecto III', 72, 6, 3, 4, '');
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ASESOR3078303', 'Tutor Asesor Proyecto III', 72, 6, 3, 4, '',0);
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078303_1', 'TR3_1','ASESOR3078303');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078303_2', 'TR3_2','ASESOR3078303');
 -- vincula a proyecto por lo que se crean dimensiones e indicadores
@@ -1104,7 +1104,7 @@ insert into malla_curricular (codigo, fase_id, materia_id) values ('PISEI078303_
 
 
 -- Tutor Asesor Proyecto IV
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('ASESOR4078303', 'Tutor Asesor Proyecto IV', 72, 6, 3, 4, '');
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ASESOR4078303', 'Tutor Asesor Proyecto IV', 72, 6, 3, 4, '',0);
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR4078303_1', 'TR4_1','ASESOR4078303');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR4078303_2', 'TR4_2','ASESOR4078303');
 
@@ -1267,6 +1267,10 @@ delete from inscripcion where true;
 insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_1', 'e-15408');
 insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_1', 'e-63578');
 insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_1', 'e-39263');
+-- fase 2
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_2', 'e-15408');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_2', 'e-63578');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_2', 'e-39263');
 
 -- administración de base de datos
 insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-654854354', 'IN4301', 'PIABD078303_1', 'e-15408');
@@ -1309,21 +1313,20 @@ DROP VIEW IF EXISTS detalles_inscripciones;
 CREATE VIEW detalles_inscripciones AS
 SELECT 
   inscripcion.id as id_inscripcion, 
-  persona.cedula, 
-  estudiante.id, 
-  persona.nombre as nombre_estudiante, 
-  persona.apellido as apellido_estudiante, 
   inscripcion.seccion_id, 
-  inscripcion.unidad_curricular_id, 
+  estudiante.id as estudiante_id, 
+  persona.cedula, 
+  CONCAT(persona.nombre,' ',persona.apellido)  as nombre_estudiante, 
+  materias.codigo as codigo_materia, 
   materias.nombre as nombre_materia, 
-  inscripcion.calificacion, 
-  fase.codigo as codigo_fase
+  sum(inscripcion.calificacion) as calificacion
 FROM `estudiante`
 INNER JOIN persona ON persona.cedula = estudiante.persona_id 
 INNER JOIN inscripcion ON inscripcion.estudiante_id = estudiante.id 
 INNER JOIN malla_curricular on malla_curricular.codigo = inscripcion.unidad_curricular_id
 INNER JOIN materias ON materias.codigo = malla_curricular.materia_id
-INNER JOIN fase ON fase.codigo = malla_curricular.fase_id;
+INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
+GROUP BY persona.cedula, materias.codigo;
 
 DROP VIEW IF EXISTS detalles_estudiantes;
 CREATE VIEW detalles_estudiantes AS
@@ -1338,7 +1341,7 @@ SELECT
 FROM persona
 INNER JOIN estudiante ON estudiante.persona_id = persona.cedula
 LEFT JOIN usuario ON usuario.id = persona.usuario_id
-LEFT JOIN detalles_inscripciones ON detalles_inscripciones.id = estudiante.id
+LEFT JOIN detalles_inscripciones ON detalles_inscripciones.id_inscripcion = estudiante.id
 LEFT JOIN integrante_proyecto ON integrante_proyecto.estudiante_id = estudiante.id
 LEFT JOIN seccion ON seccion.codigo = detalles_inscripciones.seccion_id
 LEFT JOIN trayecto ON trayecto.codigo = seccion.trayecto_id

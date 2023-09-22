@@ -131,28 +131,42 @@ class inscripcion extends model
    *
    * @return array
    */
-  public function generarSSP(): array
+  public function generarComplexSSP(string $idMateria): array
   {
     $columns = array(
       array(
-        'db'        => 'id',
+        'db'        => 'id_inscripcion',
         'dt'        => 0
       ),
       array(
-        'db'        => 'fecha_inicio',
+        'db'        => 'seccion_id',
         'dt'        => 1,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
       ),
       array(
-        'db'        => 'fecha_cierre',
+        'db'        => 'estudiante_id',
         'dt'        => 2,
-        'formatter' => function ($d, $row) {
-          return date('d/m/Y', strtotime($d));
-        }
+      ),
+      array(
+        'db'        => 'cedula',
+        'dt'        => 3,
+      ),
+      array(
+        'db'        => 'nombre_estudiante',
+        'dt'        => 4,
+      ),
+      array(
+        'db'        => 'codigo_materia',
+        'dt'        => 5,
+      ),
+      array(
+        'db'        => 'nombre_materia',
+        'dt'        => 6,
+      ),
+      array(
+        'db'        => 'calificacion',
+        'dt'        => 7,
       )
     );
-    return $this->getSSP('detalles_inscripcion', 'id', $columns);
+    return $this->getComplexSSP('detalles_inscripciones', 'id_inscripcion', $columns, ['condition' => "codigo_materia = '$idMateria'"]);
   }
 }

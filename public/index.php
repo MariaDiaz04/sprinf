@@ -4,9 +4,9 @@ require __DIR__ . '/../vendor/autoload.php';
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
+use App\controllers\inscripcionController;
 use App\controllers\configuracionController;
 use App\controllers\periodoController;
-use App\controllers\clasesController;
 use App\controllers\seccionController;
 use App\controllers\profesorController;
 use App\controllers\estudianteController;
@@ -356,75 +356,21 @@ $routes->add('periodo_ssp', new Route(
     ]
 ));
 
+// GESTION DE INSCRIPCION
+$routes->add('inscripcion/ssp/{idMateria}', new Route(
 
-# GESTION DE clases
-$routes->add('clases_manage', new Route(
-
-    '/clases',
+    '/inscripcion/ssp/{idMateria}',
     [
-        'controller' => clasesController::class,
-        'method' => 'index',
-    ]
-));
-
-$routes->add('clases_edit', new Route(
-
-    '/clases/edit',
-    [
-        'controller' => clasesController::class,
-        'method' => 'edit',
-    ]
-));
-
-$routes->add('clases_update', new Route(
-
-    '/clases/update',
-    [
-        'controller' => clasesController::class,
-        'method' => 'update',
-    ]
-));
-
-$routes->add('clases_delete', new Route(
-
-    '/clases/delete',
-    [
-        'controller' => clasesController::class,
-        'method' => 'delete',
-    ]
-));
-
-$routes->add('/clases/guardar', new Route(
-
-    '/clases/guardar',
-    [
-        'controller' => clasesController::class,
-        'method' => 'store',
-    ]
-));
-$routes->add('/clases/show', new Route(
-
-    '/clases/show',
-    [
-        'controller' => clasesController::class,
-        'method' => 'show',
-    ]
-));
-$routes->add('/clases/evaluar', new Route(
-
-    '/clases/evaluar',
-    [
-        'controller' => clasesController::class,
-        'method' => 'evaluar',
-    ]
-));
-
-$routes->add('clases_ssp', new Route(
-
-    '/clases/ssp',
-    [
-        'controller' => clasesController::class,
+        'controller' => inscripcionController::class,
         'method' => 'ssp',
+    ]
+));
+$routes->add('inscripcion/{idMateria}', new Route(
+
+    '/inscripcion/{idMateria}',
+    [
+        'controller' => inscripcionController::class,
+        'method' => 'index',
     ]
 ));
 
