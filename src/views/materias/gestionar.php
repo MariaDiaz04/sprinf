@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Materias </span>/ Gestión</div>
+        <div><span class="text-muted font-weight-light">Materias / <?= $trayecto->nombre ?> </span>/ Gestión</div>
 
         <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
@@ -228,14 +228,14 @@
       // contiene el nombre de alguna acción que haya definido
 
       let table = new DataTable('#example', {
-        ajax: '<?= $this->Route('materias/ssp') ?>',
+        ajax: '<?= $this->Route('ssp/' . $idTrayecto) ?>',
         processing: true,
         serverSide: true,
         pageLength: 30,
 
         columnDefs: [{
           visible: false,
-          targets: [4]
+          targets: [0, 4]
         }, {
           data: null,
           render: function(data, type, row, meta) {

@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Inscripción </span>/ <?= $materia->nombre_materia ?></div>
+        <div><span class="text-muted font-weight-light">Inscripción / <?= $materia->nombre_trayecto ?> </span>/ <?= $materia->nombre_materia ?></div>
         <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
       </h4>

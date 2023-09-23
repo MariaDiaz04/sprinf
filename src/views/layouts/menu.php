@@ -93,12 +93,36 @@
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Unidades Curriculares</span>
       </li>
-      <li class="menu-item <?= $this->currentPath() == 'materias' ? 'active' : '' ?>">
-        <a href="<?= APP_URL .  $this->Route('materias') ?>" class="menu-link">
+      <li class="menu-item <?= in_array($this->currentPath(), ['materias']) ? 'open' : '' ?>">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-book"></i>
-          <div data-i18n="Analytics">Materias</div>
+          <div data-i18n="Authentications">Materias</div>
         </a>
+        <ul class="menu-sub">
+          <li class="menu-item <?= $this->currentLastPath() == 'TR1' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('materias/TR1') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto I</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentLastPath() == 'TR2' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('materias/TR2') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto II</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentLastPath() == 'TR3' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('materias/TR3') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto III</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentLastPath() == 'TR4' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('materias/TR4') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto IV</div>
+            </a>
+          </li>
+
+        </ul>
       </li>
+
       <li class="menu-item <?= $this->currentPath() == 'dimensiones' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-columns"></i>

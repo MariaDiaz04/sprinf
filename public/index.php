@@ -223,10 +223,10 @@ $routes->add('seccion_ssp', new Route(
         'method' => 'ssp',
     ]
 ));
-$routes->add('materias', new Route(
+$routes->add('materias/{idTrayecto}', new Route(
 
 
-    '/materias',
+    '/materias/{idTrayecto}',
     [
         'controller' => materiasController::class,
         'method' => 'index',
@@ -277,7 +277,7 @@ $routes->add('materia_delete', new Route(
 ));
 $routes->add('materia_ssp', new Route(
 
-    '/materias/ssp',
+    '/materias/ssp/{idTrayecto}',
     [
         'controller' => materiasController::class,
         'method' => 'ssp',

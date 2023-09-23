@@ -32,14 +32,17 @@ class materiasController extends controller
         $this->MALLA = new malla();
     }
 
-    public function index()
+    public function index(Request $materia, $idTrayecto)
     {
 
         $materias = $this->MATERIAS->all();
         $trayectos = $this->TRAYECTO->all();
+        $trayecto = $this->TRAYECTO->find($idTrayecto);
 
 
         return $this->view('materias/gestionar', [
+            'trayecto' => $trayecto,
+            'idTrayecto' => $idTrayecto,
             'materias' => $materias,
             'trayectos' => $trayectos
         ]);
@@ -236,11 +239,11 @@ class materiasController extends controller
         return true;
     }
 
-    function ssp(): void
+    function ssp(Request $query, $idTrayecto): void
     {
         try {
             http_response_code(200);
-            echo json_encode($this->MATERIAS->generarSSP());
+            echo json_encode($this->MATERIAS->generarComplexSSP($idTrayecto));
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());

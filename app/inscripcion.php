@@ -125,7 +125,7 @@ class inscripcion extends model
 
 
   /**
-   * generarSSP
+   * generarComplexSSP
    * 
    * Generar SSP proveniente de la función de data table
    *

@@ -382,4 +382,48 @@ class materias extends model
         );
         return $this->getSSP('detalles_materias', 'codigo_materia', $columns);
     }
+
+    /**
+     * generarComplexSSP
+     * 
+     * Generar SSP proveniente de la función de data table
+     *
+     * @return array
+     */
+    public function generarComplexSSP(string $idTrayecto): array
+    {
+        $columns = array(
+            array(
+                'db'        => 'nombre_trayecto',
+                'dt'        => 0
+            ),
+            array(
+                'db'        => 'codigo_materia',
+                'dt'        => 1
+            ),
+            array(
+                'db'        => 'nombre_materia',
+                'dt'        => 2
+            ),
+            array(
+                'db'        => 'count_malla',
+                'dt'        => 3
+            ),
+            array(
+                'db'        => 'nombre_fase',
+                'dt'        => 4
+            ),
+
+            array(
+                'db'        => 'cursable',
+                'dt'        => 5
+            ),
+            array(
+                'db'        => 'dimensiones',
+                'dt'        => 6
+            ),
+
+        );
+        return $this->getComplexSSP('detalles_materias', 'codigo_materia', $columns, ['condition' => "codigo_trayecto = '$idTrayecto'"]);
+    }
 }
