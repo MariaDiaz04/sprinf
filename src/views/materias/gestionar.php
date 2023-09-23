@@ -16,11 +16,12 @@
       <table id="example" class="display" style="width:100%">
         <thead>
           <tr>
+            <th>Trayecto</th>
             <th>Código</th>
             <th>Nombre</th>
-            <th>Trayecto</th>
+            <th>Periodo</th>
             <th>Fase</th>
-            <th>Dimensiones</th>
+            <th>Estatus en Baremos</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -233,20 +234,35 @@
         pageLength: 30,
 
         columnDefs: [{
+          visible: false,
+          targets: [4]
+        }, {
+          data: null,
+          render: function(data, type, row, meta) {
+            return row[3] > 1 ? 'Anual' : row[4];
+          },
+          targets: 3
+        }, {
+          data: null,
+          render: function(data, type, row, meta) {
+            return row[6] >= 1 ? '<span class="badge rounded-pill bg-primary">Vincula</span>' : '<span class="badge rounded-pill bg-secondary">No vincula</span>';
+          },
+          targets: 5
+        }, {
           data: null,
           render: function(data, type, row, meta) {
             return `<div class="dropdown show">
                       <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
-                        ${(row[5] ? `<a class="dropdown-item" href="<?= APP_URL . $this->Route('inscripcion') ?>/${row[0]}">Gestionar Inscripciones</a>`:'' )}
-                        <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="#">Eliminar</a>
+                      <div class="dropdown-menu" aria-labelledby="dropdown-${row[1]}">
+                        ${(row[5] ? `<a class="dropdown-item" href="<?= APP_URL . $this->Route('inscripcion') ?>/${row[1]}">Gestionar Inscripciones</a>`:'' )}
+                        <a class="dropdown-item" onClick="edit('${row[1]}')" href="#">Editar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[1]}')" href="#">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
-          targets: 5 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          targets: 6 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
 

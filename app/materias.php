@@ -81,7 +81,7 @@ class materias extends model
      */
     public function find(string $codigo)
     {
-        $materias = $this->selectOne('detalles_materias', [['materia_id', '=', '"' . $codigo . '"']]);
+        $materias = $this->selectOne('detalles_materias', [['codigo_materia', '=', '"' . $codigo . '"']]);
         return !$materias ? [] : $materias;
     }
 
@@ -350,30 +350,36 @@ class materias extends model
     {
         $columns = array(
             array(
-                'db'        => 'materia_id',
+                'db'        => 'nombre_trayecto',
                 'dt'        => 0
             ),
             array(
-                'db'        => 'nombre',
+                'db'        => 'codigo_materia',
                 'dt'        => 1
             ),
             array(
-                'db'        => 'nombre_trayecto',
+                'db'        => 'nombre_materia',
                 'dt'        => 2
             ),
             array(
-                'db'        => 'nombre_fase',
+                'db'        => 'count_malla',
                 'dt'        => 3
             ),
             array(
-                'db'        => 'dimensiones_proyecto',
+                'db'        => 'nombre_fase',
                 'dt'        => 4
             ),
+
             array(
                 'db'        => 'cursable',
                 'dt'        => 5
             ),
+            array(
+                'db'        => 'dimensiones',
+                'dt'        => 6
+            ),
+
         );
-        return $this->getSSP('detalles_materias', 'codigo', $columns);
+        return $this->getSSP('detalles_materias', 'codigo_materia', $columns);
     }
 }
