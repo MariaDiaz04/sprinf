@@ -160,7 +160,7 @@ CREATE TABLE `sprinf_bd`.`proyecto_historico` (
   `periodo_inicio` date,
   `periodo_final` date
 );
-CREATE TABLE `bitacora` (
+CREATE TABLE `sprinf_bd`.`bitacora` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario_id` int(11) NOT NULL,
   `fecha` date NOT NULL,
