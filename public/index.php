@@ -542,14 +542,7 @@ $routes->add('baremos_edit', new Route(
     ]
 ));
 
-$routes->add('dimension_manage', new Route(
 
-    '/dimensiones',
-    [
-        'controller' => dimensionController::class,
-        'method' => 'index',
-    ]
-));
 
 
 $routes->add('dimension_edit', new Route(
@@ -570,12 +563,21 @@ $routes->add('/dimensiones/guardar', new Route(
     ]
 ));
 
-$routes->add('dimension_ssp', new Route(
+$routes->add('dimensiones/ssp/{idTrayecto}', new Route(
 
-    '/dimensiones/ssp',
+    '/dimensiones/ssp/{idTrayecto}',
     [
         'controller' => dimensionController::class,
         'method' => 'ssp',
+    ]
+));
+
+$routes->add('dimension_manage', new Route(
+
+    '/dimensiones/{idTrayecto}',
+    [
+        'controller' => dimensionController::class,
+        'method' => 'index',
     ]
 ));
 

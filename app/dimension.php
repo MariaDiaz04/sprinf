@@ -189,4 +189,46 @@ class dimension extends model
     );
     return $this->getSSP('detalles_dimension', 'id', $columns);
   }
+
+  /**
+   * generarComplexSSP
+   * 
+   * Generar SSP proveniente de la función de data table
+   *
+   * @return array
+   */
+  public function generarComplexSSP(string $idTrayecto): array
+  {
+    $columns = array(
+      array(
+        'db'        => 'id',
+        'dt'        => 0
+      ),
+      array(
+        'db'        => 'nombre',
+        'dt'        => 1
+      ),
+      array(
+        'db'        => 'nombre_materia',
+        'dt'        => 2
+      ),
+      array(
+        'db'        => 'nombre_fase',
+        'dt'        => 3
+      ),
+      array(
+        'db'        => 'nombre_trayecto',
+        'dt'        => 4
+      ),
+      array(
+        'db'        => 'grupal',
+        'dt'        => 5
+      ),
+      array(
+        'db'        => 'codigo_trayecto',
+        'dt'        => 5
+      )
+    );
+    return $this->getComplexSSP('detalles_dimension', 'id', $columns, ['condition' => "codigo_trayecto = '$idTrayecto'"]);
+  }
 }

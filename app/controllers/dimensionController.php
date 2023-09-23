@@ -31,12 +31,15 @@ class dimensionController extends controller
     $this->materias = new materias();
   }
 
-  public function index()
+  public function index(Request $dimension, $idTrayecto)
   {
     $dimensiones = $this->dimension->all();
     $materias = $this->materias->all();
+    $trayecto = $this->trayectos->find($idTrayecto);
 
     return $this->view('dimensiones/gestionar', [
+      'trayecto' => $trayecto,
+      'idTrayecto' => $idTrayecto,
       'dimensiones' => $dimensiones,
       'materias' => $materias,
     ]);
@@ -60,11 +63,11 @@ class dimensionController extends controller
     }
   }
 
-  function ssp(Request $query): void
+  function ssp(Request $query, $idTrayecto): void
   {
     try {
       http_response_code(200);
-      echo json_encode($this->dimension->generarSSP());
+      echo json_encode($this->dimension->generarComplexSSP($idTrayecto));
     } catch (Exception $e) {
       http_response_code(500);
       echo json_encode($e->getMessage());
