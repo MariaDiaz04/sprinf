@@ -226,7 +226,7 @@ class dimension extends model
       ),
       array(
         'db'        => 'codigo_trayecto',
-        'dt'        => 5
+        'dt'        => 6
       )
     );
     return $this->getComplexSSP('detalles_dimension', 'id', $columns, ['condition' => "codigo_trayecto = '$idTrayecto'"]);

@@ -21,7 +21,7 @@
             <th>Materia</th>
             <th>Fase</th>
             <th>Trayecto</th>
-            <th>Grupal</th>
+            <th>Tipo</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -142,6 +142,15 @@
         pageLength: 30,
 
         columnDefs: [{
+          visible: false,
+          targets: [0]
+        }, {
+          data: null,
+          render: function(data, type, row, meta) {
+            return (row[5] == 1) ? '<span class="badge rounded-pill bg-secondary">Grupal</span>' : '<span class="badge rounded-pill bg-secondary">Individual</span>'
+          },
+          targets: 5,
+        }, {
           data: null,
           render: function(data, type, row, meta) {
             return `<div class="dropdown show">
