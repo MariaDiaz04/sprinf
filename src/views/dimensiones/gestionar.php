@@ -62,8 +62,8 @@
 
                     <div class="col-lg-12 d-flex justify-content-start align-items-end">
                       <div class="form-check ">
-                        <input class="form-check-input" type="checkbox" value="1" id="vinculacion" name="vinculacion">
-                        <label class="form-check-label" for="vinculacion">
+                        <input class="form-check-input" type="checkbox" value="1" id="grupal" name="grupal">
+                        <label class="form-check-label" for="grupal">
                           Evaluación Grupal
                         </label>
                       </div>
