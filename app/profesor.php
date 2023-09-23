@@ -34,6 +34,32 @@ class profesor extends model
   }
 
   /**
+     * Transaccion para inserción de profesor
+     *
+     * @return String - còdigo de profesor
+     */
+    function insertTransaction(): String
+    {
+        try {
+            parent::beginTransaction();
+            // crear usuario
+
+            $idUsuario = $this->setUsuario();
+
+            // crear persona pasar id de usuario creado
+            $idPersona = $this->setPersona();
+            // crear profesor donde le pases id de persona
+            $this->setProfesor();
+            
+            parent::commit();
+            return $codigo;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return '';
+        }
+    }
+
+  /**
    * generarSSP
    * 
    * Generar SSP proveniente de la función de data table
