@@ -62,7 +62,7 @@
                       <select class="form-select" name="fase_id" id="selectFaseId">
 
                         <?php foreach ($fases as $fase) : ?>
-                          <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto - $fase->nombre_fase" ?></option>
+                          <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
