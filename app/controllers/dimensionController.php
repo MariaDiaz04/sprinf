@@ -10,7 +10,7 @@ use Bcrypt\Bcrypt;
 use App\baremos;
 use App\dimension;
 use App\materias;
-use App\estudiante;
+use App\malla;
 use App\tutor;
 use App\trayectos;
 use Exception;
@@ -21,6 +21,7 @@ class dimensionController extends controller
   public $baremos;
   public $trayectos;
   public $dimension;
+  public $malla;
   public $materias;
 
   function __construct()
@@ -29,12 +30,13 @@ class dimensionController extends controller
     $this->dimension = new dimension();
     $this->trayectos = new trayectos();
     $this->materias = new materias();
+    $this->malla = new malla();
   }
 
   public function index(Request $dimension, $idTrayecto)
   {
     $dimensiones = $this->dimension->all();
-    $materias = $this->materias->all();
+    $materias = $this->malla->findByTrayecto($idTrayecto);
     $trayecto = $this->trayectos->find($idTrayecto);
 
     return $this->view('dimensiones/gestionar', [

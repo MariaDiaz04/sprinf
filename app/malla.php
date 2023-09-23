@@ -20,6 +20,12 @@ class malla extends model
   private $fase_id;
   private $materia_id;
 
+  function findByTrayecto(string $codigoTrayecto): array
+  {
+    $materias = $this->select('detalles_malla', [['codigo_trayecto', '=', '"' . $codigoTrayecto . '"']]);
+    return !$materias ? [] : $materias;
+  }
+
 
   /**
    * setData

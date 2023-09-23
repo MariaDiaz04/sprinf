@@ -49,7 +49,7 @@
                       <label class="form-label" for="unidad_id">Unidad Curricular *</label>
                       <select class="form-select" name="unidad_id">
                         <?php foreach ($materias as $unidad) : ?>
-                          <option value="<?= $unidad->codigo ?>"><?= "$unidad->nombre_trayecto - $unidad->nombre_fase - $unidad->nombre" ?></option>
+                          <option value="<?= $unidad->codigo ?>"><?= "$unidad->nombre - $unidad->nombre_fase" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
