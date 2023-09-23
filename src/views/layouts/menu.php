@@ -91,7 +91,22 @@
         </a>
       </li>
       <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Baremos</span>
+      </li>
+      <li class="menu-item <?= $this->currentPath() == 'dimensiones' ? 'active' : '' ?>">
+        <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-columns"></i>
+          <div data-i18n="Analytics">Baremos</div>
+        </a>
+      </li>
+      <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Unidades Curriculares</span>
+      </li>
+      <li class="menu-item <?= $this->currentPath() == 'seccion' ? 'active' : '' ?>">
+        <a href="<?= APP_URL .  $this->Route('seccion') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-grid"></i>
+          <div data-i18n="Analytics">Secciones</div>
+        </a>
       </li>
       <li class="menu-item <?= in_array($this->currentPath(), ['materias']) ? 'open' : '' ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -123,18 +138,8 @@
         </ul>
       </li>
 
-      <li class="menu-item <?= $this->currentPath() == 'dimensiones' ? 'active' : '' ?>">
-        <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-columns"></i>
-          <div data-i18n="Analytics">Dimensiones</div>
-        </a>
-      </li>
-      <li class="menu-item <?= $this->currentPath() == 'seccion' ? 'active' : '' ?>">
-        <a href="<?= APP_URL .  $this->Route('seccion') ?>" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-grid"></i>
-          <div data-i18n="Analytics">Secciones</div>
-        </a>
-      </li>
+
+
       <!-- <li class="menu-item <?= $this->currentPath() == 'clases' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('clases') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-chalkboard"></i>
