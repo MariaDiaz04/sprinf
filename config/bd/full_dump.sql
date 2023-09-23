@@ -160,6 +160,20 @@ CREATE TABLE `sprinf_bd`.`proyecto_historico` (
   `periodo_inicio` date,
   `periodo_final` date
 );
+CREATE TABLE `bitacora` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `navegador` varchar(105) NOT NULL,
+  `hora_inicio` time NOT NULL,
+  `hora_cierre` time DEFAULT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `apellido` varchar(80) NOT NULL,
+  `token` varchar(85) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_bitacora_usuario1_idx` (`usuario_id`),
+  CONSTRAINT `fk_bitacora_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`periodo_id`) REFERENCES `sprinf_bd`.`periodo` (`id`);
 
@@ -1409,7 +1423,7 @@ INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
 GROUP BY materias.codigo
-ORDER BY codigo_trayecto
+ORDER BY codigo_trayecto;
 
 DROP VIEW IF EXISTS detalles_integrantes;
 
@@ -1479,3 +1493,19 @@ INNER JOIN dimension ON dimension.id = indicadores.dimension_id
 INNER JOIN malla_curricular ON dimension.unidad_id = malla_curricular.codigo
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 GROUP BY persona.cedula, malla_curricular.fase_id;
+
+DROP VIEW IF EXISTS detalles_malla;
+CREATE VIEW detalles_malla AS
+SELECT
+trayecto.codigo as codigo_trayecto,
+materias.nombre,
+malla_curricular.codigo,
+fase.codigo as codigo_fase,
+fase.nombre as nombre_fase,
+count(dimension.id) as dimensiones
+FROM malla_curricular
+INNER JOIN materias ON materias.codigo =  malla_curricular.materia_id
+INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
+INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
+LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+GROUP BY malla_curricular.codigo;
