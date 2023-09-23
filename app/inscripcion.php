@@ -118,7 +118,7 @@ class inscripcion extends model
    */
   function usuarioCursaMateria(string $idEstudiante, string $idUnidadCurricular): array
   {
-    $inscripcion = $this->selectOne('detalles_inscripciones', [['id', '=', "'" . $idEstudiante . "'"], ['unidad_curricular_id', '=', "'" . $idUnidadCurricular . "'"]]);
+    $inscripcion = $this->selectOne('inscripcion', [['id', '=', "'" . $idEstudiante . "'"], ['unidad_curricular_id', '=', "'" . $idUnidadCurricular . "'"]]);
     return !$inscripcion ? [] : $inscripcion;
   }
 

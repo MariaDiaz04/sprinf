@@ -98,8 +98,6 @@ class proyectoHistorico extends model
 
       // remove data from inscripcion
       $this->delete('inscripcion');
-      // remove data from clase
-      $this->delete('clase');
       // remove data from notas_integrante_proyecto
       $this->delete('notas_integrante_proyecto');
       // remove data from integrante_proyecto
@@ -110,7 +108,6 @@ class proyectoHistorico extends model
       parent::commit();
       return '';
     } catch (Exception $e) {
-      print($e->getMessage());
       parent::rollBack();
       return '';
     }

@@ -145,7 +145,7 @@ class dimension extends model
    */
   function materiasDeBaremos(string $codFase): array
   {
-    $materias = $this->select('detalles_materias', [['codigo_fase', '=', '"' . $codFase . '"'], ['dimensiones_proyecto', '>', 0]]);
+    $materias = $this->select('detalles_malla', [['codigo_fase', '=', '"' . $codFase . '"'], ['dimensiones', '>', 0]]);
 
     return $materias;
   }

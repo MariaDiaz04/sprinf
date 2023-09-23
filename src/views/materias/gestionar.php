@@ -256,7 +256,7 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[1]}">
-                        ${(row[5] ? `<a class="dropdown-item" href="<?= APP_URL . $this->Route('inscripcion') ?>/${row[1]}">Gestionar Inscripciones</a>`:'' )}
+                        ${(row[5] ? `<a class="dropdown-item" href="<?= APP_URL . $this->Route('inscripcion') ?>/${row[1]}">Inscripciones</a>`:'' )}
                         <a class="dropdown-item" onClick="edit('${row[1]}')" href="#">Editar</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[1]}')" href="#">Eliminar</a>
                       </div>
