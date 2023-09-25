@@ -26,30 +26,77 @@ class estudiante extends model
     public function all()
     {
         try {
-            $estudiantes = $this->querys('SELECT estudiante.*, persona.nombre, persona.apellido, persona.cedula FROM estudiante INNER JOIN persona ON persona.id = estudiante.persona_id');
+            $estudiantes = $this->select('detalles_estudiantes');
             return $estudiantes ? $estudiantes : null;
         } catch (Exception $th) {
             return $th;
         }
     }
 
-    public function listPendingForProject()
+    /**
+     * Obtener información del estudiante
+     *
+     * @param string $id
+     * @return array
+     */
+    function find(string $id): array
+    {
+        $proyectos = $this->selectOne("detalles_estudiantes", [['id', '=', "'" . $id . "'"]]);
+        return !$proyectos ? [] : $proyectos;
+    }
+
+    public function listPendingForProject(string $codigoTrayecto)
     {
         try {
-            $estudiantes = $this->querys('SELECT estudiante.*, persona.nombre, persona.apellido, persona.cedula FROM estudiante INNER JOIN persona ON persona.id = estudiante.persona_id WHERE estudiante.id NOT IN (SELECT estudiante_id FROM estudiante_proyecto)');
+            $estudiantes = $this->select('detalles_estudiantes', [['id', 'NOT IN', '(SELECT estudiante_id FROM integrante_proyecto)'], ['trayecto_id', '=', '"' . $codigoTrayecto . '"']]);
             return $estudiantes ? $estudiantes : null;
         } catch (Exception $th) {
             return $th;
         }
     }
+
 
     public function byProject($id)
     {
         try {
-            $estudiantes = $this->querys("SELECT estudiante_proyecto.id, estudiante_proyecto.estudiante_id, persona.nombre, persona.apellido, persona.cedula FROM estudiante_proyecto LEFT JOIN estudiante ON estudiante.id = estudiante_proyecto.estudiante_id LEFT JOIN persona ON persona.id = estudiante.persona_id WHERE estudiante_proyecto.proyecto_id = $id");
+            $estudiantes = $this->querys("SELECT estudiante_proyecto.id, estudiante_proyecto.estudiante_id, persona.nombre, persona.apellido, persona.cedula FROM estudiante_proyecto LEFT JOIN estudiante ON estudiante.id = estudiante_proyecto.estudiante_id LEFT JOIN persona ON persona.cedula = estudiante.persona_id WHERE estudiante_proyecto.proyecto_id = $id");
             return $estudiantes ? $estudiantes : null;
         } catch (Exception $th) {
             return $th;
         }
+    }
+
+    /**
+     * generarSSP
+     * 
+     * Generar SSP proveniente de la función de data table
+     *
+     * @return array
+     */
+    public function generarSSP(): array
+    {
+        $columns = array(
+            array(
+                'db'        => 'cedula',
+                'dt'        => 0
+            ),
+            array(
+                'db'        => 'nombre',
+                'dt'        => 1
+            ),
+            array(
+                'db'        => 'apellido',
+                'dt'        => 2
+            ),
+            array(
+                'db'        => 'email',
+                'dt'        => 3
+            ),
+            array(
+                'db'        => 'telefono',
+                'dt'        => 4
+            )
+        );
+        return $this->getSSP('detalles_estudiantes', 'cedula', $columns);
     }
 }

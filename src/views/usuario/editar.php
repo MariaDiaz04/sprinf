@@ -10,7 +10,7 @@
       Editar usuario
     </h5>
     <div class="card-body">
-      <form action="<?=APP_URL. $this->Route("usuario/actualizar/$usuario->usuarios_id") ?>" method="POST" id="usuarioeditar">
+      <form action="<?= APP_URL . $this->Route("usuario/actualizar/$usuario->usuario_id") ?>" method="POST" id="usuarioeditar">
         <div class="container-fluid">
           <div class="row pb-2">
             <div class="col-12">
@@ -60,7 +60,7 @@
 
                 <div class="col-12">
                   <div class="row form-group">
-               
+
                     <div class="col-lg-8 ">
                       <label class="form-label">Dirección </label>
                       <input type="text" class="form-control" name="direccion" value="<?= $usuario->direccion ?>">
@@ -112,12 +112,13 @@
     },
     "Debe ingresar solo números"
   );
-/*   jQuery.validator.addMethod("alpha", function(value, element) {
-    return /^[A-Za-zñÑ\d=#$%@_ -]+$/.test(value);
-  }, "Use solo letras"); */
+  /*   jQuery.validator.addMethod("alpha", function(value, element) {
+      return /^[A-Za-zñÑ\d=#$%@_ -]+$/.test(value);
+    }, "Use solo letras"); */
 
   jQuery.validator.addMethod("alpha", function(value, element) {
-    return /^[a-z A-Z ñÑ]*$/.test(value); },"Debe ingresar solo letras");
+    return /^[a-z A-Z ñÑ]*$/.test(value);
+  }, "Debe ingresar solo letras");
   [a - zA - Z] * $
   $(function() {
 

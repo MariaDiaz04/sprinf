@@ -57,163 +57,164 @@
     <ul class="menu-inner py-1">
 
       <!-- Dashboard -->
-      <li class="menu-item active">
+      <li class="menu-item <?= $this->currentPath() == 'home' ? 'active' : '' ?>">
         <a href="<?= APP_URL . $this->Route('home') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Inicio</div>
         </a>
       </li>
 
-      <!-- Layouts -->
-      <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Personal</div>
-        </a>
-
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('profesor') ?>" class="menu-link">
-              <div data-i18n="Without menu">Profesor</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('estudiante') ?>" class="menu-link">
-              <div data-i18n="Without navbar">Estudiantes</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('coordinador') ?>" class="menu-link">
-              <div data-i18n="Container">Coordinador</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="<?= APP_URL . $this->Route('tutor') ?>" class="menu-link">
-              <div data-i18n="Container">Tutor</div>
-            </a>
-          </li>
-        </ul>
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Personas</span>
       </li>
-      <!-- ########### INICIO GESTION DE PROYECTO ############## -->
-      <!-- TODO: Verificar que usuario cuente con rol para modificar -->
+      <li class="menu-item <?= $this->currentPath() == 'profesores' ? 'active' : '' ?>">
+        <a href="<?= APP_URL .  $this->Route('profesores') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-group"></i>
+          <div data-i18n="Analytics">Docentes</div>
+        </a>
+      </li>
+      <li class="menu-item <?= $this->currentPath() == 'estudiantes' ? 'active' : '' ?>">
+        <a href="<?= APP_URL .  $this->Route('estudiantes') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-face"></i>
+          <div data-i18n="Analytics">Estudiantes</div>
+        </a>
+      </li>
+
 
       <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Proyectos</span>
+        <span class="menu-header-text">Organización Docente</span>
+      </li>
+      <li class="menu-item <?= $this->currentPath() == 'seccion' ? 'active' : '' ?>">
+        <a href="<?= APP_URL .  $this->Route('seccion') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-grid"></i>
+          <div data-i18n="Analytics">Secciones</div>
+        </a>
+      </li>
+      <li class="menu-item <?= in_array($this->currentPath(), ['materias']) ? 'open' : '' ?>">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-book"></i>
+          <div data-i18n="Authentications">Materias</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item <?= $this->currentLastPath() == 'TR1' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('materias/TR1') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto I</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentLastPath() == 'TR2' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('materias/TR2') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto II</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentLastPath() == 'TR3' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('materias/TR3') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto III</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentLastPath() == 'TR4' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('materias/TR4') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto IV</div>
+            </a>
+          </li>
+
+        </ul>
       </li>
 
-      <li class="menu-item">
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Baremos</span>
+      </li>
+      <!-- <li class="menu-item <?= $this->currentPath() == 'dimensiones' ? 'active' : '' ?>">
+        <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-poll"></i>
+          <div data-i18n="Analytics">Baremos</div>
+        </a>
+      </li> -->
+      <li class="menu-item <?= in_array($this->currentPath(), ['dimensiones']) ? 'open' : '' ?>">
+        <a href="javascript:void(0)" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-poll"></i>
+          <div data-i18n="Analytics">Baremos</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item <?= $this->currentLastPath() == 'TR1' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('dimensiones/TR1') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto I</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentLastPath() == 'TR2' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('dimensiones/TR2') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto II</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentLastPath() == 'TR3' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('dimensiones/TR3') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto III</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentLastPath() == 'TR4' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('dimensiones/TR4') ?>" class="menu-link">
+              <div data-i18n="Basic">Trayecto IV</div>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+      <li class="menu-item <?= $this->currentPath() == 'proyectos' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('proyectos') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-code"></i>
-          <div data-i18n="Analytics">Gestión de Proyectos</div>
+          <div data-i18n="Analytics">Proyectos</div>
         </a>
       </li>
 
-      <li class="menu-item">
+    
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Administración</span>
+      </li>
+      <!-- Layouts -->
+
+      <li class="menu-item <?= in_array($this->currentPath(), ['bitacora', 'permisos', 'modulos']) ? 'open' : '' ?>">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+          <div data-i18n="Authentications">Seguridad</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item <?= $this->currentPath() == 'bitacora' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
+              <div data-i18n="Basic">Bitacora</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentPath() == 'permisos' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
+              <div data-i18n="Basic">Permisos</div>
+            </a>
+          </li>
+          <li class="menu-item <?= $this->currentPath() == 'modulos' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('modulos') ?>" class="menu-link">
+              <div data-i18n="Basic">Modulo</div>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+      <li class="menu-item <?= in_array($this->currentPath(), ['configuracion', 'trayectos']) ? 'open' : '' ?>">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Baremos</div>
+          <div data-i18n="Layouts">Configuración</div>
         </a>
 
         <ul class="menu-sub">
-
-          <!-- TODO: Verificar que usuario cuente con rol para modificar -->
-          <li class="menu-item">
-            <a href="<?= APP_URL .  $this->Route('baremos') ?>" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-book-content"></i>
-              <div data-i18n="Analytics">Gestión de Baremos</div>
+          <li class="menu-item <?= $this->currentPath() == 'configuracion' ? 'active' : '' ?>">
+            <a href="<?= APP_URL . $this->Route('configuracion/aperturar-periodo') ?>" class="menu-link">
+              <div data-i18n="Without menu">Aperturar Lapso</div>
             </a>
           </li>
-
-          <!-- TODO: Verificar que usuario cuente con rol para modificar -->
-          <li class="menu-item">
-            <a href="<?= APP_URL .  $this->Route('dimensiones') ?>" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-columns"></i>
-              <div data-i18n="Analytics">Gestión de Dimensiones</div>
+          <!-- <li class="menu-item <?= $this->currentPath() == 'trayectos' ? 'active' : '' ?>">
+            <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
+              <div data-i18n="Analytics">Trayectos</div>
             </a>
-          </li>
-      </li>
-
-      <!-- TODO: Verificar que usuario cuente con rol para modificar -->
-      <li class="menu-item">
-        <a href="<?= APP_URL .  $this->Route('aspectos') ?>" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
-          <div data-i18n="Analytics">Gestión de Aspectos a Evaluar</div>
-        </a>
-      </li>
-    </ul>
-
-    <!-- ########### FIN GESTION DE PROYECTO ############## -->
-
-
-
-    <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">Unidades Curriculares</span>
-    </li>
-    <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons bx bx-layout"></i>
-        <div data-i18n="Layouts">Registro de Materias</div>
-      </a>
-      <ul class="menu-sub">
-        <li class="menu-item">
-          <a href="<?= $this->Route('/seccion') ?>" class="menu-link">
-            <div data-i18n="Without menu">Sección </div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="<?= $this->Route('materias') ?>" class="menu-link">
-            <div data-i18n="Without menu">Materias</div>
-          </a>
-        </li>
-      </ul>
-    </li>
-    <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">Seguridad</span>
-    </li>
-
-    <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-        <div data-i18n="Authentications">Seguridad</div>
-      </a>
-      <ul class="menu-sub">
-        <li class="menu-item">
-          <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
-            <div data-i18n="Basic">Bitacora</div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
-            <div data-i18n="Basic">Permisos</div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="<?= APP_URL . $this->Route('modulos') ?>" class="menu-link">
-            <div data-i18n="Basic">Modulo</div>
-          </a>
-        </li>
-
-      </ul>
-    </li>
-    <!-- <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-          <div data-i18n="Misc">Misc</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="pages-misc-error.html" class="menu-link">
-              <div data-i18n="Error">Error</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="pages-misc-under-maintenance.html" class="menu-link">
-              <div data-i18n="Under Maintenance">Under Maintenance</div>
-            </a>
-          </li>
+          </li> -->
         </ul>
-      </li> -->
+      </li>
+
 
     </ul>
   </aside>
-  <!-- / Menu -->

@@ -25,7 +25,7 @@ Homestead.json
 /.vagrant
 .phpunit.result.cache
 
-/public
+
 /storage
 /.vscode
 /.phpintel

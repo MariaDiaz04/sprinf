@@ -3,7 +3,7 @@
 namespace App;
 
 use App\model;
-
+use Utils\Sanitizer;
 
 use Exception;
 
@@ -12,74 +12,193 @@ class proyecto extends model
 
     public $fillable = [
         'tutor_id',
-        'trayecto_id',
+        'fase_id',
         'nombre',
         'descripcion',
         'municipio',
         'area',
-        'repositorio_codigo',
-        'repositorio_documentacion',
-        'url',
-        'estatus',
+        'integrantes',
     ];
     private int $id;
     public int $tutor_id;
-    public int $trayecto_id;
+    public string $fase_id;
     public string $nombre;
-    public string $descripcion;
+    public string $resumen;
     public string $municipio;
     public string $area;
-    public string $repositorio_codigo;
-    public string $repositorio_documentacion;
-    public string $url;
-    public string $estatus;
+
+    public array $integrantes; // has many
 
     public function all()
     {
         try {
-            $proyectos = $this->querys("SELECT proyecto.*, CONCAT(persona.nombre, ' ',persona.apellido) as nombre_tutor, trayecto.nombre as nombre_trayecto FROM proyecto INNER JOIN tutor ON tutor.id = proyecto.tutor_id INNER JOIN persona ON persona.id = tutor.persona_id INNER JOIN trayecto ON trayecto.id = proyecto.trayecto_id");
+            $proyectos = $this->select("detalles_proyecto");
             return $proyectos ? $proyectos : null;
         } catch (Exception $th) {
             return $th;
         }
     }
 
-    public function find($id)
+    /**
+     * Retorna los datos del proyecto
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function find($id): array
     {
-        try {
-            $proyectos = $this->querys("SELECT proyecto.*, CONCAT(persona.nombre, ' ',persona.apellido) as nombre_tutor, trayecto.nombre as nombre_trayecto FROM proyecto INNER JOIN tutor ON tutor.id = proyecto.tutor_id INNER JOIN persona ON persona.id = tutor.persona_id INNER JOIN trayecto ON trayecto.id = proyecto.trayecto_id WHERE proyecto.id = $id");
-            return $proyectos ? reset($proyectos) : null;
-        } catch (Exception $th) {
-            return $th;
-        }
+        $proyectos = $this->selectOne("detalles_proyecto", [['id', '=', $id]]);
+        return !$proyectos ? [] : $proyectos;
     }
 
+    /**
+     * Encontrar proyecto al que el estudiante pertenece
+     *
+     * @param string $estudiante_id
+     * @return array
+     */
+    function findByStudent(string $estudiante_id): array
+    {
+        $proyectos = $this->selectOne("integrante_proyecto", [['estudiante_id', '=', $estudiante_id]]);
+        return !$proyectos ? [] : $proyectos;
+    }
 
+    /**
+     * Definir los valores del proyecto
+     *
+     * @param array $data
+     * @return void
+     */
     public function setProyectData(array $data)
     {
         foreach ($data as $prop => $value) {
-
             if (property_exists($this, $prop) && in_array($prop, $this->fillable)) {
-                $this->{$prop} = $value;
+                if (is_string($value)) {
+                    $this->{$prop} =  Sanitizer::sanitize($value);
+                } else {
+                    $this->{$prop} = $value;
+                }
             }
         }
     }
 
-    public function saveTeam(int $periodo_id, array $participantes)
+    function updateFase(int $id, string $codigoFase): void
     {
-        foreach ($participantes as $value) {
+        $this->update('proyecto', ['fase_id' => "'$codigoFase'"], [['id', '=', $id]]);
+    }
 
-            $this->set('estudiante_proyecto', [
+    function historicalTransaction(): string
+    {
+        try {
+            parent::beginTransaction();
+            $proyectos = $this->all();
+
+
+            foreach ($proyectos as $proyecto) {
+                $data['nombre_proyecto'] = $proyecto['nombre'];
+                $data['comunidad'] = $proyecto['comunidad'];
+                $data['area'] = $proyecto['area'];
+                $data['motor_productivo'] = $proyecto['motor_productivo'];
+                $data['resumen'] = $proyecto['resumen'];
+                $data['direccion'] = $proyecto['direccion'];
+                $data['municipio'] = $proyecto['municipio'];
+                $data['parroquia'] = $proyecto['parroquia'];
+                $data['periodo_inicio'] = $proyecto['fecha_inicio'];
+                $data['periodo_final'] = $proyecto['fecha_cierre'];
+
+                // obtener integrantes
+                $integrantes =  $this->obtenerIntegrantes($proyecto['id']);
+
+                foreach ($integrantes as $integrante) {
+
+                    $data['cedula_estudiante'] = $integrante['cedula'];
+                    $data['nombre_estudiante'] = $integrante['nombre'];
+
+                    $calificacionFases = $this->findStudentGrades($integrante['cedula']);
+
+                    foreach ($calificacionFases as $calificacionFase) {
+                        if (str_contains($calificacionFase['fase_id'], '_1')) {
+                            $data['nota_fase_1'] = $calificacionFase['calificacion'];
+                        } else {
+                            $data['nota_fase_2'] = $calificacionFase['calificacion'];
+                        }
+                    }
+                    $this->saveHistorico($data);
+                }
+            }
+            parent::commit();
+            return '';
+        } catch (Exception $e) {
+            print($e->getMessage());
+            parent::rollBack();
+            return '';
+        }
+    }
+
+    function saveHistorico(array $data): bool
+    {
+        $result = $this->set('proyecto_historico', $data);
+        return $result ? true : false;
+    }
+
+    function findStudentGrades(int $cedula): array
+    {
+        $notas = $this->select('detalles_notas_baremos', [['cedula', '=', $cedula]]);
+        return !$notas ? [] : $notas;
+    }
+
+    /**
+     * Transaccion para inserción de proyectos
+     *
+     * @return String - código de materia creada
+     */
+    function insertTransaction(): String
+    {
+        try {
+            parent::beginTransaction();
+            // almacenar materia
+            $codigo = $this->save();
+            $team = $this->saveTeam();
+
+            parent::commit();
+            return $codigo;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return '';
+        }
+    }
+
+    /**
+     * Recorre el array de integrantes y los añade a 
+     * la tabla de integrantes de proyecto
+     *
+     * @return void
+     */
+    public function saveTeam()
+    {
+        foreach ($this->integrantes as $integrante) {
+
+            $this->set('integrante_proyecto', [
                 'proyecto_id' => $this->id,
-                'periodo_id' => $periodo_id,
-                'estudiante_id' => $value
+                'estudiante_id' => "'" . $integrante . "'"
             ]);
         }
     }
 
-    public function updateTeam($idProyecto, int $periodo_id, array $participantes)
+    function pendientesACerrar(): array
     {
-        $participantesActuales = $this->select('estudiante_proyecto', [['proyecto_id', '=', $idProyecto]]);
+        $proyectos = $this->select("detalles_proyecto", [['cerrado', '=', 0]]);
+        return $proyectos ? $proyectos : [];
+    }
+
+    function cerrar(int $idProyecto): void
+    {
+        $this->update('proyecto', ['cerrado' => 1], [['id', '=', $idProyecto]]);
+    }
+
+    public function updateTeam($idProyecto, array $participantes)
+    {
+        $participantesActuales = $this->select('integrante_proyecto', [['proyecto_id', '=', $idProyecto]]);
 
         $idParticipantesActuales = array_column($participantesActuales, 'estudiante_id');
 
@@ -87,14 +206,13 @@ class proyecto extends model
         $insert_list = array_diff($participantes, $idParticipantesActuales);
 
         foreach ($delete_list as $item) {
-            $this->delete('estudiante_proyecto', [['estudiante_id', '=', $item], ['proyecto_id', '=', $idProyecto]]);
+            $this->delete('integrante_proyecto', [['estudiante_id', '=', $item], ['proyecto_id', '=', $idProyecto]]);
             // delete $item from DB
         }
 
         foreach ($insert_list as $item) {
-            $this->set('estudiante_proyecto', [
+            $this->set('integrante_proyecto', [
                 'proyecto_id' => $idProyecto,
-                'periodo_id' => $periodo_id,
                 'estudiante_id' => $item
             ]);
         }
@@ -113,9 +231,11 @@ class proyecto extends model
                 }
             }
         }
+
         if ($id) {
             $this->update('proyecto', $data, [['id', '=', $id]]);
         } else {
+            unset($data['integrantes']);
             $this->set('proyecto', $data);
             $this->id = $this->lastInsertId();
             return $this->id;
@@ -124,7 +244,61 @@ class proyecto extends model
 
     function remove($id): void
     {
-        $this->delete('estudiante_proyecto', [['proyecto_id', '=', $id]]);
+        $this->delete('integrante_proyecto', [['proyecto_id', '=', $id]]);
         $this->delete('proyecto', [['id', '=', $id]]);
+    }
+
+    /**
+     * Obtiene los integrantes de un proyecto
+     *
+     * @param [int] $id - ID de proyecto
+     * @return array retorna vacio si no tiene integrantes
+     */
+    function obtenerIntegrantes(int $id): array
+    {
+        $integrantes = $this->select('detalles_integrantes', [['proyecto_id', '=', $id]]);
+        return !$integrantes ? [] : $integrantes;
+    }
+
+    /**
+     * generarSSP
+     * 
+     * Generar SSP proveniente de la función de data table
+     *
+     * @return array
+     */
+    public function generarSSP(): array
+    {
+        $columns = array(
+            array(
+                'db'        => 'id',
+                'dt'        => 0
+            ),
+            array(
+                'db'        => 'nombre',
+                'dt'        => 1
+            ),
+            array(
+                'db'        => 'comunidad',
+                'dt'        => 2
+            ),
+            array(
+                'db'        => 'nombre_trayecto',
+                'dt'        => 3
+            ),
+            array(
+                'db'        => 'nombre_fase',
+                'dt'        => 4
+            ),
+            array(
+                'db'        => 'integrantes',
+                'dt'        => 5
+            ),
+            array(
+                'db'        => 'cerrado',
+                'dt'        => 6
+            )
+        );
+        return $this->getSSP('detalles_proyecto', 'id', $columns);
     }
 }
