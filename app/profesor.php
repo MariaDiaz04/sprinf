@@ -3,6 +3,7 @@
 namespace App;
 
 use App\model;
+use App\usuario;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,6 +46,7 @@ class profesor extends model
             // crear usuario
 
             $idUsuario = $this->setUsuario();
+            $codigo = $this->save();
 
             // crear persona pasar id de usuario creado
             $idPersona = $this->setPersona();
@@ -91,5 +93,16 @@ class profesor extends model
       )
     );
     return $this->getSSP('detalles_profesores', 'cedula', $columns);
+  }
+
+
+  public function setProfesor(array $data)
+  {
+    foreach ($data as $prof => $value) {
+
+      if (property_exists($this, $prof) && in_array($prof, $this->fillable)) {
+        $this->{$prof} = $value;
+      }
+    }
   }
 }
