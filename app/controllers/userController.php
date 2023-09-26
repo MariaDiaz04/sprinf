@@ -74,7 +74,9 @@ class userController extends controller
 
     public function store(Request $usuario)
     {
-        /*     if ($usuario['rol'] == '2') {
+        //return var_dump(1);
+       // return $usuario;
+            if ($usuario['rol'] == '2') {
 
             $nombre = substr($usuario['nombre'], 0, 2);
             $apellido = substr($usuario['apellido'], 0, 3);
@@ -93,8 +95,12 @@ class userController extends controller
                 'nacimiento' => $usuario['nacimiento'],
                 'direccion' => $usuario['direccion'],
                 'estatus' => 1,
+
+  
+
+
             ])->save();
-        } else { */
+        } else { 
         $contrasena = password_hash($usuario->request->get('contrasena'), PASSWORD_DEFAULT);
 
         $user =  $this->USUARIO->create([
@@ -109,9 +115,9 @@ class userController extends controller
             'direccion' => $usuario->request->get('direccion'),
             'estatus' => 1,
         ])->save();
-        /*   } */
-
-        //return var_dump($user);
+           } 
+    // $codigo = $this->USUARIO->insertTransaction();
+       // return var_dump($user);
 
         switch ($usuario->request->get('rol')) {
             case '2':
@@ -124,6 +130,7 @@ class userController extends controller
                 return $this->redirect('home');
                 break;
         }
+        return var_dump($user);
     }
 
 
