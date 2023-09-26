@@ -52,7 +52,7 @@
               </div>
 
               <div class="col-lg-3">
-                <label class="form-label" for="area">Area</label>
+                <label class="form-label" for="area">Parroquia</label>
                 <input type="text" class="form-control mb-1" placeholder="..." name="area">
               </div>
             </div>

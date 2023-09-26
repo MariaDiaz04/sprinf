@@ -83,12 +83,17 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `fase_id` varchar(255),
   `nombre` varchar(255),
   `comunidad` varchar(255),
-  `area` varchar(255),
+  `direccion` varchar(255),
   `motor_productivo` varchar(255),
   `resumen` varchar(255),
   `direccion` varchar(255),
   `municipio` varchar(255),
   `parroquia` varchar(255),
+  `tutor_in` varchar(255),
+  `tutor_ex` varchar(255),
+  `tlf_tin` int,
+  `tlf_tex` int,
+
   `cerrado` bool DEFAULT false
 );
 

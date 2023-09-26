@@ -213,7 +213,14 @@
             </a>
           </li> -->
         </ul>
+        <li class="menu-item <?= $this->currentPath() == 'usuarioCrear' ? 'active' : '' ?>">
+        <a href="<?= APP_URL .  $this->Route('usuarioCrear') ?>" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-group"></i>
+          <div data-i18n="Analytics">Docentes</div>
+        </a>
       </li>
+
+
 
 
     </ul>

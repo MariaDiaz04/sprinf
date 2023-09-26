@@ -323,4 +323,16 @@ class usuario extends model
             return $th;
         }
     }
+
+    public function setUsuario(array $data)
+  {
+    foreach ($data as $per => $value) {
+
+      if (property_exists($this, $per) && in_array($per, $this->fillable)) {
+        $this->{$per} = $value;
+      }
+    }
+  }
+
+
 }

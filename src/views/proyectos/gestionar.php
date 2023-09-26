@@ -72,20 +72,50 @@
                   <div class="row form-group">
 
                     <div class="col-lg-6">
-                      <label class="form-label" for="resumen">Resumen</label>
-                      <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 100px"></textarea>
+                      <label class="form-label" for="resumen">Dirección</label>
+                      <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 50px"></textarea>
                     </div>
 
                     <div class="col-lg-3">
                       <label class="form-label" for="municipio">Municipio</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="municipio">
+                      <select class="form-select" name="municipio" id="selectmunicipio">
+
+                      </select>
                     </div>
 
                     <div class="col-lg-3">
-                      <label class="form-label" for="area">Area</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="area">
+                      <label class="form-label" for="parroquia">Parroquia</label>
+                      <select class="form-select" name="parroquia" id="selectparroquia">
+
+                      </select>
                     </div>
-                  </div>
+
+                    <div class="col-lg-3">
+                      <label class="form-label" for="tutor_in">Tutor Interno</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_in">
+                    </div>
+                    
+                    <div class="col-lg-3">
+                      <label class="form-label" for="tlf_tin">Teléfono</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="tlf_tin" id="tlf_tin">
+                    </div>
+  
+                    <div class="col-lg-3">
+                      <label class="form-label" for="tutor_ex">Tutor Externo</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex">
+                    </div>
+
+                    <div class="col-lg-3">
+                      <label class="form-label" for="tlf_tex">Teléfono</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="tlf_ex" id="tlf_tex">
+                    </div>
+
+                    <div class="col-lg-6">
+                      <label class="form-label" for="comunidad">Comunidad</label>
+                      <textarea class="form-control" placeholder="..." id="comunidad" name="comunidad" style="height: 50px "></textarea>
+                    </div>
+
+                 </div>
                 </div>
 
                 <div class="col-12">

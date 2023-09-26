@@ -1,6 +1,6 @@
-          <h4 class="font-weight-bold py-3 mb-4">
+          <!-- <h4 class="font-weight-bold py-3 mb-4">
             <span class="text-muted font-weight-light"><?php echo $this->ROL->find($rol)->fillable['nombre']; ?> /</span> Agregar
-          </h4>
+          </h4> -->
           <!-- Content -->
           <div class="card">
             <h5 class="card-header bg-primary text-white">
@@ -68,12 +68,9 @@
                   <hr class="border-light m-0">
                   <div class="text-right mt-3">
                     <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
-                    <?php if ($this->ROL->find($rol)->fillable['id'] == 2) : ?>
+                    <!-- <?php if ($this->ROL->find($rol)->fillable['id'] == 2) : ?>
                       <a href="<?= $this->Route('profesor') ?>" class="btn btn-outline-primary">Volver</a>
-                    <?php endif ?>
-                    <?php if ($this->ROL->find($rol)->fillable['id'] == 4) : ?>
-                      <a href="<?= $this->Route('estudiante') ?>" class="btn btn-outline-primary">Volver</a>
-                    <?php endif ?>
+                    <?php endif ?> -->
                   </div>
                 </div>
               </form>

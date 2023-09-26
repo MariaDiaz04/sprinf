@@ -32,14 +32,16 @@ class profesorController extends controller
     ]);
   }
 
-  public function store(Request $profesor)
+  public function store(Request $nuevoprofesor)
   {
     try {
-      DateValidator::checkPeriodDates($profesor->get('fecha_inicio'), $profesor->get('fecha_cierre'));
+      DateValidator::checkPeriodDates($nuevoprofesor->get('fecha_inicio'), $nuevoprofesor->get('fecha_cierre'));
 
       // $this->estudiante->setData($profesor->request->all());
 
       // $id = $this->estudiante->save();
+      $this->profesor->setProfesor($nuevoprofesor->request->all());
+      $this->profesor->insertTransaction();
 
       http_response_code(200);
       // echo json_encode($id);
@@ -95,4 +97,5 @@ class profesorController extends controller
 
     return $this->page('errors/501');
   }
+  
 }
