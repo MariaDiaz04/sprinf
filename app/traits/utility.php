@@ -17,8 +17,10 @@ trait Utility
    *
    * @return boolean
    */
-  function generarLlaves(): bool
+  function generarLlaves(): void
   {
+    $path_to_public = $_ENV['PATH_TO_PUBLIC_KEY'];
+    $path_to_private = $_ENV['PATH_TO_PRIVATE_KEY'];
 
     $config = array(
       "digest_alg" => 'sha512',
@@ -30,7 +32,16 @@ trait Utility
     $key = openssl_pkey_new($config);
     if (!$key) throw new Exception('Key was not generated');
 
-    return true;
+    // obtener llave privada
+    openssl_pkey_export($key, $llavePrivada);
+
+    // obtener llave publica
+    $llavePublica = openssl_pkey_get_details($key);
+    $llavePublica = $llavePublica["key"];
+
+    // almacenar llaves en directorio seguro especificado
+    file_put_contents($path_to_public, $llavePublica);
+    file_put_contents($path_to_private, $llavePrivada);
   }
 
   /**
