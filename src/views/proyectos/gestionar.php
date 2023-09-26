@@ -94,12 +94,12 @@
                       <label class="form-label" for="tutor_in">Tutor Interno</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="tutor_in">
                     </div>
-                    
+
                     <div class="col-lg-3">
                       <label class="form-label" for="tlf_tin">Teléfono</label>
                       <input type="number" class="form-control mb-1" placeholder="..." name="tlf_tin" id="tlf_tin">
                     </div>
-  
+
                     <div class="col-lg-3">
                       <label class="form-label" for="tutor_ex">Tutor Externo</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex">
@@ -115,7 +115,7 @@
                       <textarea class="form-control" placeholder="..." id="comunidad" name="comunidad" style="height: 50px "></textarea>
                     </div>
 
-                 </div>
+                  </div>
                 </div>
 
                 <div class="col-12">
@@ -167,7 +167,7 @@
 
 
   <script>
-    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";;
+    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
     $(document).ready(() => {
 
       toggleLoading(false)

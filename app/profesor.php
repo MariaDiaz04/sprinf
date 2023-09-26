@@ -116,9 +116,10 @@ class profesor extends model
         'dt'        => 3
       ),
       array(
-        'db'        => 'telefono',
+        'db'        => 'codigo',
         'dt'        => 4
-      )
+      ),
+
     );
     return $this->getSSP('detalles_profesores', 'cedula', $columns);
   }

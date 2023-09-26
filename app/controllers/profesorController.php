@@ -114,8 +114,6 @@ class profesorController extends controller
       $telefono = $this->desencriptar($profesor['telefono']);
       $direccion = $this->desencriptar($profesor['direccion']);
 
-
-
       http_response_code(200);
       echo json_encode([
         'telefono' => $telefono,

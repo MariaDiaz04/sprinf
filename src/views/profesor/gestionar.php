@@ -20,7 +20,6 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>email</th>
-            <th>telefono</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -88,8 +87,43 @@
     </div>
   </div>
 
+  <!-- MODAL DATOS CONTACTO -->
+  <div class="modal fade" id="datos" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearLabel">Datos de Contacto</h5>
+        </div>
+        <div class="modal-body">
+          <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
+          <div class="container-fluid" id="datosContacto">
+            <div class="row pb-2">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label class="form-label" for="direccion">Dirección *</label>
+                    <input type="text" class="form-control mb-1" placeholder="..." name="direccion" id="direccion" readonly>
+                  </div>
+                  <div class="col-lg-6">
+                    <label class="form-label" for="apellido">Teléfono *</label>
+                    <input type="text" class="form-control mb-1" placeholder="..." name="telefono" id="telefono" readonly>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- footer de acciones -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <script>
+    let showDetailsUrl = "<?= APP_URL . $this->Route('profesores/showDetails') ?>";
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -101,9 +135,6 @@
       // luego en la función table.on(). verifico si la clase del boton en el que hice click
       // contiene el nombre de alguna acción que haya definido
 
-
-
-
       let table = new DataTable('#example', {
         ajax: '<?= $this->Route('profesores/ssp') ?>',
         processing: true,
@@ -113,17 +144,18 @@
         columnDefs: [{
           data: null,
           render: function(data, type, row, meta) {
-            return `<div class="dropdown show">
-                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            return `<div class="btn-group dropstart">
+                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown-${row[0]}" >
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
+                        <a class="dropdown-item" onClick="showDetails('${row[4]}')" href="#">Mostrar Datos de Contracto</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
-          targets: 5 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          targets: 4 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
 
@@ -134,13 +166,8 @@
 
         toggleLoading(true);
 
-
         url = $(this).attr('action');
         data = $(this).serializeArray();
-
-
-
-
         $.ajax({
           type: "POST",
           url: url,
@@ -159,6 +186,7 @@
         });
 
       })
+
 
       function edit(id) {
         alert(`Editing ${id}`)
@@ -180,4 +208,24 @@
 
       }
     })
+
+    function showDetails(id) {
+
+      $.ajax({
+        type: "POST",
+        url: showDetailsUrl,
+        data: {
+          'codigo': id
+        },
+        error: function(error, status) {
+          alert(error.responseText)
+        },
+        success: function(data, status) {
+          datos = JSON.parse(data)
+          $('#datos').modal('show')
+          $('#datosContacto').find('#telefono').val(datos.telefono)
+          $('#datosContacto').find('#direccion').val(datos.direccion)
+        },
+      });
+    }
   </script>
