@@ -111,8 +111,8 @@ CREATE TABLE `sprinf_bd`.`persona` (
   `usuario_id` int,
   `nombre` varchar(255),
   `apellido` varchar(255),
-  `direccion` varchar(255),
-  `telefono` int,
+  `direccion` text,
+  `telefono` text,
   `estatus` bool
 );
 
