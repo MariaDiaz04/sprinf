@@ -5,6 +5,7 @@ namespace App\controllers;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\profesor;
+use App\Traits\Utility;
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;
@@ -13,6 +14,8 @@ class profesorController extends controller
 {
 
   private $profesor;
+
+  use Utility;
 
   function __construct()
   {
@@ -46,6 +49,36 @@ class profesorController extends controller
     }
   }
 
+  function test(): void
+  {
+    $path_to_public = $_ENV['PATH_TO_PUBLIC_KEY'];
+    $path_to_private = $_ENV['PATH_TO_PRIVATE_KEY'];
+
+    // Obtener información de las llaves
+    $public_key = openssl_pkey_get_public(file_get_contents($path_to_public));
+    $private_key = openssl_pkey_get_private(file_get_contents($path_to_private));
+
+
+    // Obtener llaves
+    $keyData = openssl_pkey_get_details($public_key);
+    openssl_pkey_export($private_key, $privKey);
+
+    // usar llaves
+    $pubKey = $keyData['key'];
+
+    $data = '04245293870';
+
+    // Encrypt the data to $encrypted using the public key
+    openssl_public_encrypt($data, $encrypted, $pubKey);
+
+
+    echo $encrypted;
+
+    // Decrypt the data using the private key and store the results in $decrypted
+    openssl_private_decrypt($encrypted, $decrypted, $privKey);
+
+    echo $decrypted;
+  }
   function ssp(Request $query): void
   {
     try {

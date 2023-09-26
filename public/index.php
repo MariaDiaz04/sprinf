@@ -159,6 +159,15 @@ $routes->add('profesor_manage', new Route(
     ]
 ));
 
+$routes->add('profesor_test', new Route(
+
+    '/profesores/test',
+    [
+        'controller' => profesorController::class,
+        'method' => 'test',
+    ]
+));
+
 $routes->add('profesor_edit', new Route(
 
     '/profesores/edit/{id}',
