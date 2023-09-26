@@ -55,7 +55,7 @@ trait Utility
     $path_to_public = $_ENV['PATH_TO_PUBLIC_KEY'];
 
     if (!file_exists($path_to_public)) {
-      $this->generarLlaves;
+      $this->generarLlaves();
     }
 
     $public_key = openssl_pkey_get_public(file_get_contents($path_to_public));
