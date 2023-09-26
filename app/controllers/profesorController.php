@@ -11,8 +11,6 @@ use App\Traits\Utility;
 
 
 use Exception;
-use Utils\DateValidator;
-use Utils\Sanitizer;
 
 class profesorController extends controller
 {
