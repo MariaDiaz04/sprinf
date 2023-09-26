@@ -14,17 +14,18 @@ class usuario extends model
 {
 
     public $fillable = [
+        'rol_id',
         'email',
         'contrasena',
-        'rol_id',
-        'nombre',
-        'apellido',
-        'cedula',
-        'direccion',
-        'telefono',
-        'nacimiento',
-        'estatus',
+        'token',
     ];
+
+    private int $id;
+    public int $rol_id;
+    private string $email;
+    private string $contrasena;
+    private string $token;
+
 
     public function all()
     {
@@ -33,6 +34,39 @@ class usuario extends model
             return $usuarios ? $usuarios : null;
         } catch (Exception $th) {
             return $th;
+        }
+    }
+
+    public function setUsuario(array $data)
+    {
+        foreach ($data as $prof => $value) {
+
+            if (property_exists($this, $prof) && in_array($prof, $this->fillable)) {
+                $this->{$prof} = $value;
+            }
+        }
+    }
+
+    public function save($id = null)
+    {
+        $data = [];
+
+        foreach ($this->fillable as $key => $value) {
+            if (isset($this->{$value})) {
+                if (is_string($this->{$value})) {
+                    $data[$value] = '"' . $this->{$value} . '"';
+                } else {
+                    $data[$value] =  $this->{$value};
+                }
+            }
+        }
+
+        if ($id) {
+            $this->update('usuario', $data, [['id', '=', $id]]);
+        } else {
+            $this->set('usuario', $data);
+            $this->id = $this->lastInsertId();
+            return $this->id;
         }
     }
 
@@ -178,32 +212,16 @@ class usuario extends model
 
     // ======================== / G E T S =====================
 
-    //=========================FIND==========================
-    public function find($id)
+    /**
+     * Retorna los datos del usuario
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el usuario
+     */
+    public function find($id): array
     {
-        try {
-            $usuarios = $this->querys(
-                'SELECT
-                        persona.*,
-                        usuario.email,
-                        usuario.rol_id
-                    FROM
-                        `usuario`,
-                        `persona`
-                    WHERE
-                        usuario.id = persona.usuario_id AND usuario.id = ' . $id . ';'
-            );
-            if ($usuarios) {
-                foreach ($usuarios[0] as $key => $value) {
-                    $this->fillable[$key] = $value;
-                }
-                return $this;
-            } else {
-                return null;
-            }
-        } catch (\PDOException $th) {
-            return $th;
-        }
+        $usuario = $this->selectOne("usuario", [['id', '=', $id]]);
+        return !$usuario ? [] : $usuario;
     }
 
     //=========================/FIND==========================
@@ -218,66 +236,50 @@ class usuario extends model
         return $this;
     }
 
-    public function save()
-    {
-        try {
+    // public function save()
+    // {
+    //     try {
 
-            $this->set('usuario', [
-                'email' => '"' . $this->fillable['email'] . '"',
-                'contrasena' => '"' . $this->fillable['contrasena'] . '"',
-                'rol_id' => '"' . $this->fillable['rol_id'] . '"',
-            ]);
+    //         $this->set('usuario', [
+    //             'email' => '"' . $this->fillable['email'] . '"',
+    //             'contrasena' => '"' . $this->fillable['contrasena'] . '"',
+    //             'rol_id' => '"' . $this->fillable['rol_id'] . '"',
+    //         ]);
 
-            $usuario = $this->select('usuario', [['email', '=', "'" . $this->fillable['email'] . "'"]])[0]['id'];
+    //         $usuario = $this->select('usuario', [['email', '=', "'" . $this->fillable['email'] . "'"]])[0]['id'];
 
-            $this->set('persona', [
-                'usuario_id' => $usuario,
-                'nombre' => '"' . $this->fillable['nombre'] . '"',
-                'apellido' => '"' . $this->fillable['apellido'] . '"',
-                'cedula' => '"' . $this->fillable['cedula'] . '"',
-                'telefono' => '"' . $this->fillable['telefono'] . '"',
-                'nacimiento' => '"' . $this->fillable['nacimiento'] . '"',
-                'direccion' => '"' . $this->fillable['direccion'] . '"',
-                'estatus' => '"' . $this->fillable['estatus'] . '"',
-            ]);
+    //         $this->set('persona', [
+    //             'usuario_id' => $usuario,
+    //             'nombre' => '"' . $this->fillable['nombre'] . '"',
+    //             'apellido' => '"' . $this->fillable['apellido'] . '"',
+    //             'cedula' => '"' . $this->fillable['cedula'] . '"',
+    //             'telefono' => '"' . $this->fillable['telefono'] . '"',
+    //             'nacimiento' => '"' . $this->fillable['nacimiento'] . '"',
+    //             'direccion' => '"' . $this->fillable['direccion'] . '"',
+    //             'estatus' => '"' . $this->fillable['estatus'] . '"',
+    //         ]);
 
-            $persona_id = $this->lastInsertId();
+    //         $persona_id = $this->lastInsertId();
 
-            if ($this->fillable['rol_id'] == 2) {
+    //         if ($this->fillable['rol_id'] == 2) {
 
-                $this->set('profesor', [
-                    'persona_id' => $persona_id,
-                ]);
-            } elseif ($this->fillable['rol_id'] == 4) {
-                $this->set('estudiante', [
-                    'persona_id' => $persona_id,
-                ]);
-            }
+    //             $this->set('profesor', [
+    //                 'persona_id' => $persona_id,
+    //             ]);
+    //         } elseif ($this->fillable['rol_id'] == 4) {
+    //             $this->set('estudiante', [
+    //                 'persona_id' => $persona_id,
+    //             ]);
+    //         }
 
-            // return $this->fillable;
+    //         // return $this->fillable;
 
-        } catch (\PDOException $th) {
-            return $th;
-        }
-    }
+    //     } catch (\PDOException $th) {
+    //         return $th;
+    //     }
+    // }
 
 
-    // ======================== / S E T S =====================
-
-    public function eliminarAgente()
-    {
-
-        try {
-            $analista = $this->query(
-                '
-            DELETE usuario.* FROM usuarios INNER JOIN persona ON usuario.id = persona.usuario_id INNER JOIN agentes ON agentes.persona_id = persona.id WHERE usuario.id = "' . $this->fillable['usuario_id'] . '" AND persona.rol_id = 2'
-            );
-
-            return $this;
-        } catch (\PDOException $th) {
-            return $th;
-        }
-    }
 
 
     public function eliminar()
@@ -323,16 +325,4 @@ class usuario extends model
             return $th;
         }
     }
-
-    public function setUsuario(array $data)
-  {
-    foreach ($data as $per => $value) {
-
-      if (property_exists($this, $per) && in_array($per, $this->fillable)) {
-        $this->{$per} = $value;
-      }
-    }
-  }
-
-
 }

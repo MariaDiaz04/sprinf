@@ -20,15 +20,15 @@ trait Utility
     $pubKey = $keyData['key'];
     openssl_public_encrypt($data, $encrypted, $pubKey);
 
-    return $encrypted;
+    return base64_encode($encrypted);
   }
 
-  function Desencriptar($encryptedData): string
+  function desencriptar($encryptedData): string | null
   {
     $path_to_private = $_ENV['PATH_TO_PRIVATE_KEY'];
     $private_key = openssl_pkey_get_private(file_get_contents($path_to_private));
     openssl_pkey_export($private_key, $privKey);
-    openssl_private_decrypt($encryptedData, $decrypted, $privKey);
+    openssl_private_decrypt(base64_decode($encryptedData), $decrypted, $privKey);
     return $decrypted;
   }
 }

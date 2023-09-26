@@ -5,7 +5,11 @@ namespace App\controllers;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\profesor;
+use App\usuario;
+use App\persona;
 use App\Traits\Utility;
+
+
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;
@@ -13,13 +17,18 @@ use Utils\Sanitizer;
 class profesorController extends controller
 {
 
-  private $profesor;
-
   use Utility;
+
+
+  private $profesor;
+  private $usuario;
+  private $persona;
 
   function __construct()
   {
     $this->profesor = new profesor();
+    $this->usuario = new usuario();
+    $this->persona = new persona();
   }
 
   public function index()
@@ -35,51 +44,83 @@ class profesorController extends controller
   public function store(Request $nuevoprofesor)
   {
     try {
-      DateValidator::checkPeriodDates($nuevoprofesor->get('fecha_inicio'), $nuevoprofesor->get('fecha_cierre'));
+      // DateValidator::checkPeriodDates($nuevoprofesor->get('fecha_inicio'), $nuevoprofesor->get('fecha_cierre'));
 
-      // $this->estudiante->setData($profesor->request->all());
+      // creación de usuario
+      $email = $nuevoprofesor->request->get('email');
+      $contrasena = $nuevoprofesor->request->get('contrasena');
 
-      // $id = $this->estudiante->save();
-      $this->profesor->setProfesor($nuevoprofesor->request->all());
-      $this->profesor->insertTransaction();
+      // encriptar contraseña de usuario
+      $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
+
+      $this->usuario->setUsuario([
+        'rol_id' => 2, // profesores
+        'email' => $email,
+        'contrasena' => $contrasena
+      ]);
+
+      $idUsuario = $this->usuario->save();
+
+      // creacion de persona
+
+      $cedula = $nuevoprofesor->request->get('cedula');
+      $usuario_id = $idUsuario;
+      $nombre = $nuevoprofesor->request->get('nombre');
+      $apellido = $nuevoprofesor->request->get('apellido');
+      $direccion = $nuevoprofesor->request->get('direccion');
+      $telefono = $nuevoprofesor->request->get('telefono');
+
+      // encriptar datos de contacto
+      $telefono = $this->encriptar($telefono);
+
+
+      $this->persona->setPersona([
+        'cedula' => $cedula,
+        'usuario_id' => $usuario_id,
+        'nombre' => $nombre,
+        'apellido' => $apellido,
+        'direccion' => $direccion,
+        'direccion' => $direccion,
+        'telefono' => $telefono,
+      ]);
+
+      $idPersona = $this->persona->save();
+
+      $this->profesor->setProfesor(['persona_id' => $idPersona]);
+      $this->profesor->setProfesorId();
+      $codigoProfesor = $this->profesor->save();
 
       http_response_code(200);
-      // echo json_encode($id);
+      echo json_encode($codigoProfesor);
     } catch (Exception $e) {
       http_response_code(500);
       echo json_encode($e->getMessage());
     }
   }
 
-  function test(): void
+  function showDetails(Request $profesor): void
   {
-    $path_to_public = $_ENV['PATH_TO_PUBLIC_KEY'];
-    $path_to_private = $_ENV['PATH_TO_PRIVATE_KEY'];
+    try {
+      // verificar datos de usuario
+      // $idUsuario = $_SESSION['usuario_id'];
+      // $usuario = $this->usuario->find($idUsuario);
+      // if ($usuario['rol_id'] != 1) {
+      //   throw new Exception('No cuenta con los permisos necesarios');
+      // }
 
-    // Obtener información de las llaves
-    $public_key = openssl_pkey_get_public(file_get_contents($path_to_public));
-    $private_key = openssl_pkey_get_private(file_get_contents($path_to_private));
+      $codigoProfesor = $profesor->request->get('codigo');
 
-
-    // Obtener llaves
-    $keyData = openssl_pkey_get_details($public_key);
-    openssl_pkey_export($private_key, $privKey);
-
-    // usar llaves
-    $pubKey = $keyData['key'];
-
-    $data = '04245293870';
-
-    // Encrypt the data to $encrypted using the public key
-    openssl_public_encrypt($data, $encrypted, $pubKey);
+      $profesor = $this->profesor->find($codigoProfesor);
+      $telefono = $this->desencriptar($profesor['telefono']);
 
 
-    echo $encrypted;
 
-    // Decrypt the data using the private key and store the results in $decrypted
-    openssl_private_decrypt($encrypted, $decrypted, $privKey);
-
-    echo $decrypted;
+      http_response_code(200);
+      echo json_encode(['telefono' => $telefono]);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
+    }
   }
   function ssp(Request $query): void
   {
@@ -97,5 +138,4 @@ class profesorController extends controller
 
     return $this->page('errors/501');
   }
-  
 }

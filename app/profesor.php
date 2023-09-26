@@ -3,6 +3,7 @@
 namespace App;
 
 use App\model;
+
 use App\usuario;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,15 +15,14 @@ use Exception;
 class profesor extends model
 {
 
+
   public $fillable = [
-    'nombre',
-    'apellido',
-    'cedula',
-    'direccion',
-    'telefono',
-    'nacimiento',
-    'estatus'
+    'codigo',
+    'persona_id',
   ];
+
+  private string $codigo;
+  private string $persona_id;
 
   public function all()
   {
@@ -35,31 +35,59 @@ class profesor extends model
   }
 
   /**
-     * Transaccion para inserción de profesor
-     *
-     * @return String - còdigo de profesor
-     */
-    function insertTransaction(): String
-    {
-        try {
-            parent::beginTransaction();
-            // crear usuario
+   * Retorna los datos del profesor
+   *
+   * @param [type] $codigo
+   * @return array es vacio si no consigue el profesor
+   */
+  public function find($codigo): array
+  {
+    $profesor = $this->selectOne("detalles_profesores", [['codigo', '=', "'$codigo'"]]);
+    return !$profesor ? [] : $profesor;
+  }
 
-            $idUsuario = $this->setUsuario();
-            $codigo = $this->save();
+  /**
+   * Generar código de profesor
+   * (esta funcion se debe ejecutar antes de crear un profesor)
+   *
+   * @return void
+   */
+  function setProfesorId(): void
+  {
+    $this->codigo = 'p-' . $this->persona_id;
+  }
 
-            // crear persona pasar id de usuario creado
-            $idPersona = $this->setPersona();
-            // crear profesor donde le pases id de persona
-            $this->setProfesor();
-            
-            parent::commit();
-            return $codigo;
-        } catch (Exception $e) {
-            parent::rollBack();
-            return '';
-        }
+  public function setProfesor(array $data)
+  {
+    foreach ($data as $prof => $value) {
+
+      if (property_exists($this, $prof) && in_array($prof, $this->fillable)) {
+        $this->{$prof} = $value;
+      }
     }
+  }
+
+  public function save($id = null)
+  {
+    $data = [];
+
+    foreach ($this->fillable as $key => $value) {
+      if (isset($this->{$value})) {
+        if (is_string($this->{$value})) {
+          $data[$value] = '"' . $this->{$value} . '"';
+        } else {
+          $data[$value] =  $this->{$value};
+        }
+      }
+    }
+
+    if ($id) {
+      $this->update('profesor', $data, [['codigo', '=', $id]]);
+    } else {
+      $this->set('profesor', $data);
+      return $this->codigo;
+    }
+  }
 
   /**
    * generarSSP
@@ -93,16 +121,5 @@ class profesor extends model
       )
     );
     return $this->getSSP('detalles_profesores', 'cedula', $columns);
-  }
-
-
-  public function setProfesor(array $data)
-  {
-    foreach ($data as $prof => $value) {
-
-      if (property_exists($this, $prof) && in_array($prof, $this->fillable)) {
-        $this->{$prof} = $value;
-      }
-    }
   }
 }

@@ -1,8 +1,8 @@
 <?php
 
 
-$path_to_public = getenv('PATH_TO_PUBLIC_KEY');
-$path_to_private = getenv('PATH_TO_PRIVATE_KEY');
+$path_to_public = 'F:\xampp\htdocs\sprinf\public_key.pem';
+$path_to_private = 'F:\xampp\htdocs\sprinf\private_key.pem';
 
 var_dump($path_to_private);
 // Obtener información de las llaves
@@ -23,9 +23,10 @@ $data = '04245293870';
 openssl_public_encrypt($data, $encrypted, $pubKey);
 
 
-echo $encrypted;
+$basencrypted = base64_encode($encrypted);
+var_dump($basencrypted);
 
 // Decrypt the data using the private key and store the results in $decrypted
-openssl_private_decrypt($encrypted, $decrypted, $privKey);
+openssl_private_decrypt(base64_decode($basencrypted), $decrypted, $privKey);
 
 echo $decrypted;
