@@ -102,11 +102,11 @@ class profesorController extends controller
   {
     try {
       // verificar datos de usuario
-      // $idUsuario = $_SESSION['usuario_id'];
-      // $usuario = $this->usuario->find($idUsuario);
-      // if ($usuario['rol_id'] != 1) {
-      //   throw new Exception('No cuenta con los permisos necesarios');
-      // }
+      $idUsuario = $_SESSION['usuario_id'];
+      $usuario = $this->usuario->find($idUsuario);
+      if ($usuario['rol_id'] != 1) {
+        throw new Exception('No cuenta con los permisos necesarios');
+      }
 
       $codigoProfesor = $profesor->request->get('codigo');
 
