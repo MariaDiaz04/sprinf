@@ -72,6 +72,7 @@ class profesorController extends controller
 
       // encriptar datos de contacto
       $telefono = $this->encriptar($telefono);
+      $direccion = $this->encriptar($direccion);
 
 
       $this->persona->setPersona([
@@ -79,7 +80,6 @@ class profesorController extends controller
         'usuario_id' => $usuario_id,
         'nombre' => $nombre,
         'apellido' => $apellido,
-        'direccion' => $direccion,
         'direccion' => $direccion,
         'telefono' => $telefono,
       ]);
@@ -112,11 +112,15 @@ class profesorController extends controller
 
       $profesor = $this->profesor->find($codigoProfesor);
       $telefono = $this->desencriptar($profesor['telefono']);
+      $direccion = $this->desencriptar($profesor['direccion']);
 
 
 
       http_response_code(200);
-      echo json_encode(['telefono' => $telefono]);
+      echo json_encode([
+        'telefono' => $telefono,
+        'direccion' => $direccion
+      ]);
     } catch (Exception $e) {
       http_response_code(500);
       echo json_encode($e->getMessage());
