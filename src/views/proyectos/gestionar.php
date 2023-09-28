@@ -4,7 +4,10 @@
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
         <div><span class="text-muted font-weight-light">Proyectos </span>/ Gestión</div>
 
-        <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+        <div class="d-flex">
+          <a class="btn btn-primary btn-round d-block d-inline-block " style="margin-right: 10px;" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Registrar Histórico </a>
+          <a class="btn btn-primary btn-round d-block d-inline-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+        </div>
 
       </h4>
 
@@ -23,13 +26,13 @@
 
       <h6 class="text-white pt-3 "><b>Proyectos</b> - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?> </h6>
       <form method="POST" action="<?= APP_URL . $this->Route('configuracion/excel')  ?>">
-      <div>
-        <select class="form-select" name="trayecto_id">
-          <?php foreach ($trayectos as $trayecto) : ?>
-            <option value="<?= $trayecto->codigo ?>"><?= $trayecto->nombre ?></option>
-          <?php endforeach; ?>
-        </select>
-      </div>
+        <div>
+          <select class="form-select" name="trayecto_id">
+            <?php foreach ($trayectos as $trayecto) : ?>
+              <option value="<?= $trayecto->codigo ?>"><?= $trayecto->nombre ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
         <button class="btn btn-primary btn-round d-block ">
           <span class="ion ion-md-add"></span>&nbsp; Matriz de proyecto </button>
       </form>
