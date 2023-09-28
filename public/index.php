@@ -18,6 +18,7 @@ use App\controllers\proyectoController;
 use App\controllers\homeController;
 use App\controllers\moduloController;
 use App\controllers\trayectosController;
+use App\proyecto;
 use App\seccion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -724,6 +725,14 @@ $routes->add('configuracion/aperturar-periodo', new Route(
     ]
 ));
 
+$routes->add('configuracion/excel', new Route(
+
+    '/configuracion/excel',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'exportExcel',
+    ]
+));
 //coment
 try {
     // Get the route matcher from the container ...

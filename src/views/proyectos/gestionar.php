@@ -7,6 +7,7 @@
         <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
       </h4>
+
     </div>
   </div>
 
@@ -18,7 +19,22 @@
   <?php endif; ?>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white"><b>Proyectos</b> - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?></h6>
+    <div class="card-header bg-primary  d-flex justify-content-between  align-items-center">
+
+      <h6 class="text-white pt-3 "><b>Proyectos</b> - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?> </h6>
+      <form method="POST" action="<?= APP_URL . $this->Route('configuracion/excel')  ?>">
+      <div>
+        <select class="form-select" name="trayecto_id">
+          <?php foreach ($trayectos as $trayecto) : ?>
+            <option value="<?= $trayecto->codigo ?>"><?= $trayecto->nombre ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+        <button class="btn btn-primary btn-round d-block ">
+          <span class="ion ion-md-add"></span>&nbsp; Matriz de proyecto </button>
+      </form>
+    </div>
+
     <div class="card-body px-3 pt-3">
       <table id="example" class="display" style="width:100%">
         <thead>

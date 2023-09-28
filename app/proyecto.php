@@ -260,6 +260,28 @@ class proyecto extends model
         return !$integrantes ? [] : $integrantes;
     }
 
+
+    /** 
+    *consulta para el reporte excel
+    * @return array para los integrantes de los poryetcos segun su trayecto
+    */
+    function IntegrastesPorTrayecto($trayectoId){
+        try {
+            $dataExcel = $this->querys('SELECT DISTINCT detalles_inscripciones.seccion_id, detalles_estudiantes.cedula,detalles_estudiantes.apellido, detalles_estudiantes.nombre,
+            detalles_estudiantes.telefono, detalles_estudiantes.email,detalles_proyecto.comunidad, detalles_integrantes.proyecto_nombre, 
+            detalles_proyecto.municipio,detalles_proyecto.area, detalles_proyecto.motor_productivo, detalles_proyecto.resumen, detalles_proyecto.direccion, 
+            detalles_proyecto.parroquia FROM detalles_proyecto 
+            INNER JOIN detalles_integrantes ON detalles_proyecto.id = detalles_integrantes.proyecto_id 
+            INNER JOIN detalles_estudiantes ON detalles_integrantes.estudiante_id = detalles_estudiantes.id 
+            INNER JOIN detalles_inscripciones ON detalles_estudiantes.id = detalles_inscripciones.estudiante_id 
+            WHERE detalles_proyecto.codigo_trayecto ="' . $trayectoId . '"'.' ORDER BY detalles_estudiantes.apellido');
+            return $dataExcel ? $dataExcel : null;
+        } catch (\PDOException $th) {
+            return $th;
+        } 
+    }
+
+
     /**
      * generarSSP
      * 
@@ -302,3 +324,7 @@ class proyecto extends model
         return $this->getSSP('detalles_proyecto', 'id', $columns);
     }
 }
+
+/* SELECT fase.siguiente_fase, proyecto.*, integrante_proyecto.estudiante_id, estudiante.id as estudiante_id,malla_curricular.codigo,inscripcion.profesor_id, inscripcion.seccion_id,persona.cedula,persona.nombre, persona.apellido FROM fase INNER JOIN proyecto ON fase.codigo = proyecto.fase_id INNER JOIN malla_curricular ON fase.codigo = malla_curricular.fase_id INNER JOIN integrante_proyecto ON proyecto.id = integrante_proyecto.proyecto_id INNER JOIN estudiante ON integrante_proyecto.estudiante_id = estudiante.id INNER JOIN persona ON estudiante.persona_id = persona.cedula INNER JOIN inscripcion ON estudiante.id = inscripcion.estudiante_id INNER JOIN malla_curricular as mc ON inscripcion.unidad_curricular_id = mc.codigo WHERE fase.trayecto_id = 'TR4'; */
+/* SELECT DISTINCTROW fase.siguiente_fase, malla_curricular.materia_id, inscripcion.profesor_id, inscripcion.seccion_id, inscripcion.estudiante_id, estudiante.id as estudiante_id, persona.cedula , persona.nombre, persona.apellido, integrante_proyecto.estudiante_id, proyecto.* FROM fase INNER JOIN malla_curricular ON fase.codigo = malla_curricular.fase_id INNER JOIN inscripcion ON malla_curricular.codigo = inscripcion.unidad_curricular_id INNER JOIN estudiante ON inscripcion.estudiante_id = estudiante.id INNER JOIN persona ON estudiante.persona_id = persona.cedula INNER JOIN integrante_proyecto ON estudiante.id = integrante_proyecto.estudiante_id INNER JOIN proyecto on integrante_proyecto.proyecto_id = proyecto.id WHERE fase.trayecto_id = 'TR4' ORDER BY proyecto.id; */
+/* SELECT DISTINCT detalles_proyecto.* ,detalles_integrantes.proyecto_id as di_pID , detalles_estudiantes.seccion_id, detalles_estudiantes.nombre, detalles_estudiantes.cedula, detalles_estudiantes.apellido, detalles_estudiantes.email FROM detalles_proyecto INNER JOIN detalles_integrantes ON detalles_proyecto.id = detalles_integrantes.proyecto_id INNER JOIN detalles_estudiantes ON detalles_integrantes.estudiante_id = detalles_estudiantes.id WHERE detalles_proyecto.nombre_trayecto = 'TRA'; */
