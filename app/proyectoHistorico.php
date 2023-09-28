@@ -11,6 +11,7 @@ class proyectoHistorico extends model
 {
 
   public $fillable = [
+    'id_proyecto',
     'nombre_estudiante',
     'cedula_estudiante',
     'nombre_proyecto',
@@ -20,13 +21,15 @@ class proyectoHistorico extends model
     'area',
     'municipio',
     'parroquia',
+    'tutor_in',
+    'tutor_ex',
     'nota_fase_1',
     'nota_fase_2',
     'periodo_inicio',
     'periodo_final',
     'integrantes',
   ];
-  private int $id;
+  private int $id_proyecto;
   public string $nombre_estudiante;
   public int $cedula_estudiante;
   public string $nombre_proyecto;
@@ -39,6 +42,8 @@ class proyectoHistorico extends model
   public string $area;
   public string $municipio;
   public string $parroquia;
+  public string $tutor_in;
+  public string $tutor_ex;
   public float $nota_fase_1;
   public float $nota_fase_2;
   public string $periodo_inicio;
@@ -64,14 +69,16 @@ class proyectoHistorico extends model
 
 
       foreach ($proyectos as $proyecto) {
+        $this->id_proyecto = $proyecto['id'];
         $this->nombre_proyecto = $proyecto['nombre'];
         $this->comunidad = $proyecto['comunidad'];
-        $this->area = $proyecto['area'];
         $this->motor_productivo = $proyecto['motor_productivo'];
         $this->resumen = $proyecto['resumen'];
         $this->direccion = $proyecto['direccion'];
         $this->municipio = $proyecto['municipio'];
         $this->parroquia = $proyecto['parroquia'];
+        $this->tutor_in = $proyecto['tutor_in'];
+        $this->tutor_ex = $proyecto['tutor_ex'];
         $this->periodo_inicio = $proyecto['fecha_inicio'];
         $this->periodo_final = $proyecto['fecha_cierre'];
 
@@ -140,8 +147,7 @@ class proyectoHistorico extends model
     }
 
     $this->set('proyecto_historico', $data);
-    $this->id = $this->lastInsertId();
-    return $this->id;
+    return true;
   }
 
   function findStudentGrades(int $cedula): array

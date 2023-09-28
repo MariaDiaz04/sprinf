@@ -44,14 +44,21 @@
             <?php foreach ($materia->dimension->grupal as $dimension) : ?>
               <div class="container">
                 <div class="row">
-                  <div class="col-12">
-                    <strong>GRUPAL - <?= $dimension->nombre ?></strong>
+                  <strong>GRUPAL - <?= $dimension->nombre ?></strong>
+                </div>
+                <!-- <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail3">
                   </div>
+                </div> -->
+
+                <div class="row">
                   <hr>
                   <?php foreach ($dimension->indicadores as $indicador) : ?>
 
-                    <div class="col-6">
-                      <label class="form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
+                    <label class="form-label col-sm-10 col-form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> pts</b></label>
+                    <div class="col-sm-2">
                       <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
                     </div>
                   <?php endforeach; ?>
@@ -74,13 +81,15 @@
                   <div class="col-12">
                     <strong>INDIVIDUAL - <?= $dimensionIndividual->nombre ?></strong>
                   </div>
+                </div>
+                <div class="row">
                   <hr>
                   <?php foreach ($dimensionIndividual->integrantes as $idIntegrante => $individual) : ?>
 
                     <?php foreach ($individual->indicadores as $indicador) : ?>
 
-                      <div class="col-6">
-                        <label class="form-label" for="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]"><b>C.I. <?= $indicador->cedula_integrante ?> <?= $indicador->nombre_integrante ?></b> | <?= $indicador->nombre ?> - <?= $indicador->ponderacion ?> pts</label>
+                      <label class="form-label col-sm-10" for="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]"><b>C.I. <?= $indicador->cedula_integrante ?> <?= $indicador->nombre_integrante ?></b> | <?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> pts</b></label>
+                      <div class="col-sm-2">
                         <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]">
 
                       </div>
