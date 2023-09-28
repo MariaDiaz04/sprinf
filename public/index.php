@@ -498,6 +498,14 @@ $routes->add('proyectos_evaluar_baremos', new Route(
         'method' => 'evaluar',
     ]
 ));
+$routes->add('proyectos_historico', new Route(
+
+    '/proyectos/historico',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'historico',
+    ]
+));
 $showRoute = new Route(
 
     '/proyectos/{id}',

@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use App\proyectoHistorico;
 use App\proyecto;
 use App\periodo;
 use App\estudiante;
@@ -26,7 +27,7 @@ use PDOException;
 
 class proyectoController extends controller
 {
-
+    public $proyectoHistorico;
     public $proyecto;
     private $estudiantes;
     private $dimension;
@@ -39,6 +40,7 @@ class proyectoController extends controller
 
     function __construct()
     {
+        $this->proyectoHistorico = new proyectoHistorico();
         $this->proyecto = new proyecto();
         $this->estudiantes = new estudiante();
         $this->dimension = new dimension();
@@ -158,7 +160,6 @@ class proyectoController extends controller
         try {
 
             $proyecto = $this->proyecto->find($id);
-            $estudiantesPendientes = $this->estudiantes->listPendingForProject();
             $estudiantes = $this->estudiantes->byProject($id);
             $tutores = $this->tutores->all();
 
@@ -166,7 +167,6 @@ class proyectoController extends controller
             return $this->view('proyectos/edit', [
                 'proyecto' => $proyecto,
                 'estudiantes' => $estudiantes,
-                'estudiantesPendientes' => $estudiantesPendientes ?? [],
                 'tutores' => $tutores
             ]);
         } catch (PDOException $pdoe) {
@@ -316,6 +316,31 @@ class proyectoController extends controller
             return $this->view('errors/501', [
                 'message' => $e->getMessage(),
             ]);
+        }
+    }
+
+    function historico(Request $periodo): void
+    {
+        try {
+            $historico = $this->proyectoHistorico->all();
+
+            $group = [];
+            foreach ($historico as $item) {
+                if (!isset($group[$item['id_proyecto']])) {
+                    $group[$item['id_proyecto']] = [];
+                    $group[$item['id_proyecto']]['nombre'] = $item['nombre_proyecto'];
+                }
+                foreach ($item as $key => $value) {
+                    if ($key == 'id_proyecto') continue;
+                    $group[$item['id_proyecto']]['integrantes'][$item['cedula_estudiante']][$key] = $value;
+                }
+            }
+
+            http_response_code(200);
+            echo json_encode($group);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
         }
     }
 

@@ -54,7 +54,7 @@ class proyectoHistorico extends model
   public function all()
   {
     try {
-      $proyectos = $this->select("detalles_proyecto");
+      $proyectos = $this->select("proyecto_historico");
       return $proyectos ? $proyectos : null;
     } catch (Exception $th) {
       return $th;
