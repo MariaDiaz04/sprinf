@@ -64,6 +64,8 @@ class proyectoController extends controller
 
         $periodo = $this->periodo->get();
 
+        $historico = $this->historico();
+
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'periodo' => $periodo,
@@ -71,6 +73,7 @@ class proyectoController extends controller
             'cerrarFase' => empty($pendientes) && !empty($proyectos),
             'tutores' => $tutores,
             'trayectos' => $trayectos,
+            'historico' => $historico,
 
         ]);
     }
@@ -319,7 +322,7 @@ class proyectoController extends controller
         }
     }
 
-    function historico(Request $periodo): void
+    function historico()
     {
         try {
             $historico = $this->proyectoHistorico->all();
@@ -328,6 +331,7 @@ class proyectoController extends controller
             foreach ($historico as $item) {
                 if (!isset($group[$item['id_proyecto']])) {
                     $group[$item['id_proyecto']] = [];
+                    $group[$item['id_proyecto']]['id'] = $item['id_proyecto'];
                     $group[$item['id_proyecto']]['nombre'] = $item['nombre_proyecto'];
                 }
                 foreach ($item as $key => $value) {
@@ -336,8 +340,24 @@ class proyectoController extends controller
                 }
             }
 
+            $response = [];
+
+            foreach ($group as $key => $proyecto) {
+                $integrantes = [];
+                foreach ($proyecto['integrantes'] as $key => $value) {
+                    $info = ['nombre' => $value['nombre_estudiante'], 'value' => $value['cedula_estudiante']];
+                    $integrantes[] = (object)$info;
+                    # code...
+                }
+                $informacionProyecto = [
+                    'nombre' => $proyecto['nombre'],
+                    'integrantes' => $integrantes
+                ];
+                $response[] = (object)$informacionProyecto;
+            }
+
             http_response_code(200);
-            echo json_encode($group);
+            return $response;
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());

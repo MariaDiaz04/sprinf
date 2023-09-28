@@ -1,3 +1,12 @@
+<style>
+  .transfer-double {
+    background-color: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
 <div>
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
@@ -5,7 +14,7 @@
         <div><span class="text-muted font-weight-light">Proyectos </span>/ Gestión</div>
 
         <div class="d-flex">
-          <a class="btn btn-primary btn-round d-block d-inline-block " style="margin-right: 10px;" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Registrar Histórico </a>
+          <a class="btn btn-primary btn-round d-block d-inline-block " style="margin-right: 10px;" href="#" data-bs-toggle="modal" data-bs-target="#historico"><span class="ion ion-md-add" id="cargarHistoricoBtn"></span>&nbsp; Registrar Histórico </a>
           <a class="btn btn-primary btn-round d-block d-inline-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
         </div>
 
@@ -14,7 +23,11 @@
     </div>
   </div>
 
-  <?php if ($cerrarFase) : ?>
+  <?php
+
+  use PHPUnit\Util\Json;
+
+  if ($cerrarFase) : ?>
     <div class="alert alert-primary" role="alert">
       <p>Todos los proyectos han sido evaluados! 🥳</p>
       <p><a href="<?= APP_URL . $this->Route('configuracion/aperturar-periodo') ?>" class="btn btn-primary">aperturar un nuevo periodo</a></p>
@@ -184,10 +197,75 @@
     </div>
   </div>
 
+  <div class="modal fade" id="historico" tabindex="-1" role="dialog" aria-labelledby="historicoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="historicoLabel">Nuevo Proyecto Histórico</h5>
+        </div>
+        <div class="modal-body">
+          <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardarHistorico">
+            <input type="hidden" name="estatus" value="1">
+            <div class="container-fluid">
+              <div class="transfer">
 
+              </div>
+              <hr class="border-light m-0">
+              <div class="text-right mt-3">
+                <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="<?= APP_URL ?>assets/js/jquery.transfer.js"></script>
+  <script>
+    let fetchHistoricalUrl = "<?= APP_URL . $this->Route('proyectos/historico') ?>";
+    dataProyectos = []
+
+
+    var groupDataArray1 = <?= json_encode($historico); ?>;
+
+    console.log(groupDataArray1)
+
+    var settings3 = {
+      groupDataArray: groupDataArray1,
+      groupItemName: "nombre",
+      groupArrayName: "integrantes",
+      itemName: "nombre",
+      valueName: "value",
+      rightTabNameText: 'Estudiantes Seleccionados',
+      tabNameText: 'Estudiantes del Historico',
+      searchPlaceholderText: 'Buscar Estudiantes',
+      callable: function(items) {
+        console.dir(items);
+      },
+    };
+
+    var transfer = $(".transfer").transfer(settings3);
+
+    $('#proyectoGuardarHistorico').submit(function(e) {
+      e.preventDefault()
+      data = $(this).serializeArray();
+      console.log(data)
+      items = transfer.getSelectedItems();
+      console.log(items)
+    })
+  </script>
   <script>
     let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
+
+
+
     $(document).ready(() => {
+      $('#historico').modal('show')
+
+      $('#cargarHistoricoBtn').click(function(e) {
+
+      })
 
       toggleLoading(false)
 
@@ -234,6 +312,8 @@
           targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
+
+
 
 
 
