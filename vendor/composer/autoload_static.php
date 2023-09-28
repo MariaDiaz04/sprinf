@@ -10,6 +10,7 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
@@ -18,6 +19,14 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
     );
 
     public static $prefixLengthsPsr4 = array (
+        'Z' => 
+        array (
+            'ZipStream\\' => 10,
+        ),
+        'U' => 
+        array (
+            'Utils\\' => 6,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php83\\' => 23,
@@ -31,15 +40,20 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         ),
         'P' => 
         array (
+            'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
+            'Psr\\Http\\Client\\' => 16,
             'Phroute\\Phroute\\' => 16,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
+            'PhpOffice\\PhpSpreadsheet\\' => 25,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
         array (
             'Monolog\\' => 8,
+            'Matrix\\' => 7,
         ),
         'G' => 
         array (
@@ -50,6 +64,10 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
+        ),
+        'C' => 
+        array (
+            'Complex\\' => 8,
         ),
         'B' => 
         array (
@@ -64,6 +82,14 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
     );
 
     public static $prefixDirsPsr4 = array (
+        'ZipStream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
+        ),
+        'Utils\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/utils',
+        ),
         'Symfony\\Polyfill\\Php83\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php83',
@@ -96,9 +122,22 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         array (
             0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
         ),
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
         'Phroute\\Phroute\\' => 
         array (
@@ -112,6 +151,10 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
+        'PhpOffice\\PhpSpreadsheet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
@@ -119,6 +162,10 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'Matrix\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
         ),
         'GrahamCampbell\\ResultType\\' => 
         array (
@@ -135,6 +182,10 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'Complex\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
         ),
         'Bcrypt\\' => 
         array (
@@ -154,14 +205,33 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'H' => 
+        array (
+            'HTMLPurifier' => 
+            array (
+                0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'App\\controllers\\aspectosController' => __DIR__ . '/../..' . '/app/controllers/aspectosController.php',
         'App\\controllers\\baremosController' => __DIR__ . '/../..' . '/app/controllers/baremosController.php',
+        'App\\controllers\\clasesController' => __DIR__ . '/../..' . '/app/controllers/clasesController.php',
+        'App\\controllers\\configuracionController' => __DIR__ . '/../..' . '/app/controllers/configuracionController.php',
         'App\\controllers\\controller' => __DIR__ . '/../..' . '/app/controllers/controller.php',
         'App\\controllers\\dimensionController' => __DIR__ . '/../..' . '/app/controllers/dimensionController.php',
+        'App\\controllers\\estudianteController' => __DIR__ . '/../..' . '/app/controllers/estudianteController.php',
         'App\\controllers\\homeController' => __DIR__ . '/../..' . '/app/controllers/homeController.php',
+        'App\\controllers\\inscripcionController' => __DIR__ . '/../..' . '/app/controllers/inscripcionController.php',
+        'App\\controllers\\materiasController' => __DIR__ . '/../..' . '/app/controllers/materiasController.php',
         'App\\controllers\\moduloController' => __DIR__ . '/../..' . '/app/controllers/moduloController.php',
+        'App\\controllers\\periodoController' => __DIR__ . '/../..' . '/app/controllers/periodoController.php',
+        'App\\controllers\\profesorController' => __DIR__ . '/../..' . '/app/controllers/profesorController.php',
         'App\\controllers\\proyectoController' => __DIR__ . '/../..' . '/app/controllers/proyectoController.php',
+        'App\\controllers\\seccionController' => __DIR__ . '/../..' . '/app/controllers/seccionController.php',
+        'App\\controllers\\trayectosController' => __DIR__ . '/../..' . '/app/controllers/trayectosController.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
@@ -808,9 +878,7 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'authController' => __DIR__ . '/../..' . '/app/controllers/authController.php',
         'bitacoraController' => __DIR__ . '/../..' . '/app/controllers/bitacoraController.php',
-        'materiasController' => __DIR__ . '/../..' . '/app/controllers/materiasController.php',
         'permisosController' => __DIR__ . '/../..' . '/app/controllers/permisosController.php',
-        'seccionController' => __DIR__ . '/../..' . '/app/controllers/seccionController.php',
         'userController' => __DIR__ . '/../..' . '/app/controllers/userController.php',
     );
 
@@ -819,6 +887,7 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$classMap;
 
         }, null, ClassLoader::class);

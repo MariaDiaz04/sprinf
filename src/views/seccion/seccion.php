@@ -1,64 +1,172 @@
 <div>
-   <div>
-      <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
-            <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-                <div><span class="text-muted font-weight-light">Sección </span>/ </div>
-               
-                        <form method="POST" action="<?= $this->Route('seccionCrear') ?>">
-                        <input type="hidden" name="rol" value="<?= 2 ?>">
-                        <button class="btn btn-outline-primary btn-round d-block">
-                        <span class="ion ion-md-add"></span>&nbsp; Nuevo </button>
-                        </form>
+  <div>
+    <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
+      <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+        <div><span class="text-muted font-weight-light">Secciones </span>/ Gestión</div>
 
-           </h4>
-      </div>
+        <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+
+      </h4>
     </div>
+  </div>
 
- <div class="card">
-  <h6 class="card-header bg-primary text-white">Sección</h6>
-  <div class="card-body px-0 pt-0">
-  <?php if ($seccion): ?>
-      <table id="tableSeccion" class="table table-hover">
-              <thead class=" thead">
-                <tr>
-                  <th>Código</th>
-                  <th>Nombre</th>
-                  <th>Trayecto</th>
-                </tr>
-              </thead>
-            <tbody>
-              <?php foreach ($seccion as $objseccion): ?>
-                <tr class="CUser CU<?=$objseccion->id?>" id="i<?=$objseccion->id?>">
-                <td><?=$objseccion->id?></td>
-                <td><?=$objseccion->nombre?></td>
-                <td><?=$objseccion->trayecto?></td>
-                <td>      <div class="btn-group">
-                      <button type="button" class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow " data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bx bx-dots-vertical-rounded"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end " data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 41px);">
-                        <li><a class="dropdown-item" href="<?=APP_URL.$this->Route("seccion/editar/$objseccion->idseccion") ?>"><i class="fas fa-user-edit"></i> Editar</a></li>
-                        <li><a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarpermisos(<?= $objseccion->idseccion ?>)" id='<?= $objseccion->idseccion ?>'><i class="fas fa-user-minus"></i> Eliminar </a></li>
-                      </ul>
+  <div class="card">
+    <h6 class="card-header bg-primary text-white">Secciones</h6>
+    <div class="card-body px-3 pt-3">
+      <table id="example" class="display" style="width:100%">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Trayecto</th>
+            <th>Observación</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+
+  <!-- MODAL CREAR -->
+  <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearLabel">Nueva Seccion</h5>
+
+        </div>
+        <form action="<?= APP_URL . $this->Route('trayectos/guardar') ?>" method="post" id="guardar">
+          <div class="modal-body">
+            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
+            <input type="hidden" name="estatus" value="1">
+            <div class="container-fluid">
+              <div class="row pb-2">
+                <div class="col-12">
+                  <div class="row form-group">
+                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
+                    <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Número * </label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="numero_trayecto" id="numero_trayecto">
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label">Periodo *</label>
+                      <select class="form-select" id="selectPeriodo" name="periodo_id">
+                        <?php if ($periodos) : ?>
+                          <?php foreach ($periodos as $periodo) : ?>
+                            <option value="<?= $periodo->id ?>"><?= $periodo->fecha_inicio ?> /<?= $periodo->fecha_cierre ?></option>
+                          <?php endforeach; ?>
+                        <?php endif; ?>
+                      </select>
                     </div>
                   </div>
-                </td>
-
-                   
-                </tr>
-              <?php endforeach;?>
-        </tbody>
-        <?php else: ?>
-          <div class="col-12 mt-4 text-muted">
-            <h4 class="text-center">No hay ninguna sección registrada</h4>
+                </div>
+              </div>
+            </div>
           </div>
-        <?php endif;?>
-    </table>
+          <!-- footer de acciones -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
+            <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
+            <div id="guardarLoading">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
- </div>
 
-<script>
-      document.addEventListener('DOMContentLoaded', function () {
-    $('#tableSeccion').DataTable();
-} ); 
-</script>
+
+  <script>
+    $(document).ready(() => {
+
+      toggleLoading(false)
+
+      // DATATABLE CRUD
+
+      // las acciones son definidas en la clase que contiene el botón, es decir,
+      // si necesito editar, le añado la clase "edit"
+      // luego en la función table.on(). verifico si la clase del boton en el que hice click
+      // contiene el nombre de alguna acción que haya definido
+
+
+
+
+      let table = new DataTable('#example', {
+        ajax: '<?= $this->Route('seccion/ssp') ?>',
+        processing: true,
+        serverSide: true,
+        pageLength: 30,
+
+        columnDefs: [{
+          data: null,
+          render: function(data, type, row, meta) {
+            return `<div class="dropdown show">
+                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
+                        <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
+                      </div>
+                    </div>`;
+          }, // combino los botons de acción
+          targets: 4 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+        }]
+      });
+
+
+
+      $('#guardar').submit(function(e) {
+        e.preventDefault()
+
+        toggleLoading(true);
+
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+
+
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("guardar").reset();
+            // actualizar tabla
+            toggleLoading(false)
+          },
+        });
+
+      })
+
+      function edit(id) {
+        alert(`Editing ${id}`)
+      }
+
+      function remove(id) {
+        alert(`Removing ${id}`)
+      }
+
+      // TOGGLE BUTTON AND SPINNER
+      function toggleLoading(show) {
+        if (show) {
+          $('#guardarLoading').show();
+          $('#guardarSubmit').hide();
+        } else {
+          $('#guardarLoading').hide();
+          $('#guardarSubmit').show();
+        }
+
+      }
+    })
+  </script>

@@ -12,7 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
   <!-- <link rel="icon" type="image/x-icon" href="favicon"> -->
-
+  <script src="<?= APP_URL ?>js/jquery-3.7.0.slim.min.js"></script>
+  <!-- <script src="<?= APP_URL ?>js/jquery-4.4.0.min.js"></script> -->
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,10 +24,14 @@
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/fonts/boxicons.css" />
 
+
+
   <!-- Core CSS -->
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/css/core.css" class="template-customizer-core-css" />
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
   <link rel="stylesheet" href="<?= APP_URL ?>assets/css/demo.css" />
+
+
 
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
@@ -35,8 +40,6 @@
 
   <!-- Page CSS -->
 
-  <!-- <script src="<?= APP_URL ?>js/jquery-3.7.0.slim.min.js"></script> -->
-  <script src="<?= APP_URL ?>js/jquery-4.4.0.min.js"></script>
 
 
   <link href="https://cdn.datatables.net/v/bs4/dt-1.13.5/datatables.min.css" rel="stylesheet" />
@@ -46,7 +49,11 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="<?= APP_URL ?>assets/js/config.js"></script>
-  <script src="<?= APP_URL ?>assets/css/sweetalert.css"></script>
+  <link rel="stylesheet" href="<?= APP_URL ?>assets/css/sweetalert.css">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 

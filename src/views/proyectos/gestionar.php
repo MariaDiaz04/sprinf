@@ -4,209 +4,363 @@
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
         <div><span class="text-muted font-weight-light">Proyectos </span>/ Gestión</div>
 
-        <a class="btn btn-outline-primary btn-round d-block" href="<?= APP_URL . $this->Route('proyectos/crear') ?>">
-          <span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+        <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
       </h4>
+
     </div>
   </div>
+
+  <?php if ($cerrarFase) : ?>
+    <div class="alert alert-primary" role="alert">
+      <p>Todos los proyectos han sido evaluados! 🥳</p>
+      <p><a href="<?= APP_URL . $this->Route('configuracion/aperturar-periodo') ?>" class="btn btn-primary">aperturar un nuevo periodo</a></p>
+    </div>
+  <?php endif; ?>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white">Proyectos</h6>
-    <div class="card-body px-0 pt-0">
-      <?php if ($proyectos) : ?>
-        <table id="tablaProyectos" class="table table-hover">
-          <thead class=" thead">
-            <tr>
-              <th>id</th>
-              <th>Trayecto</th>
-              <th>Tutor</th>
-              <th>Nombre</th>
-              <th>area</th>
-              <th>estatus</th>
-              <th>Opciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($proyectos as $proyecto) : ?>
+    <div class="card-header bg-primary  d-flex justify-content-between  align-items-center">
 
-              <tr class="item-proyecto ip-<?= $proyecto->id ?>" id="i<?= $proyecto->id ?>">
-                <td scope="row"><strong><?= $proyecto->id ?></strong></td>
-                <td><?= $proyecto->nombre_trayecto ?></td>
-                <td><?= $proyecto->nombre_tutor ?></td>
-                <td><?= $proyecto->nombre ?></td>
-                <td><?= $proyecto->area ?></td>
-                <td class="text-center">
-                  <?php if ($proyecto->estatus) : ?>
-                    <span class="badge bg-label-primary  mt-2 py-2">Activo</span>
-                  <?php else : ?>
-                    <span class="badge bg-label-dark ">Inactivo</span>
-                  <?php endif ?>
-                </td>
-                <td>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                      Opciones <box-icon name='cog'></box-icon>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("proyectos/$proyecto->id") ?>"><box-icon name='edit'></box-icon> Ver Detalles</a></li>
-                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("proyectos/edit/$proyecto->id") ?>"><box-icon name='edit'></box-icon> Editar</a></li>
-                      <li>
-                        <form action="<?= APP_URL . $this->Route('proyectos/delete') ?>" method="post" id="eliminarProyecto">
-                          <input type="hidden" name="id" value="<?= $proyecto->id ?>">
-                          <button class="dropdown-item">Eliminar</button>
-                        </form>
-                      </li>
+      <h6 class="text-white pt-3 "><b>Proyectos</b> - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?> </h6>
+      <form method="POST" action="<?= APP_URL . $this->Route('configuracion/excel')  ?>">
+      <div>
+        <select class="form-select" name="trayecto_id">
+          <?php foreach ($trayectos as $trayecto) : ?>
+            <option value="<?= $trayecto->codigo ?>"><?= $trayecto->nombre ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+        <button class="btn btn-primary btn-round d-block ">
+          <span class="ion ion-md-add"></span>&nbsp; Matriz de proyecto </button>
+      </form>
+    </div>
 
-                    </ul>
-                  </div>
-                </td>
-                <!-- TODO: CRUD OPTIONS -->
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        <?php else : ?>
-          <div class="col-12 mt-4 text-muted">
-            <h4 class="text-center">No hay ningun Proyecto registrado</h4>
-          </div>
-        <?php endif; ?>
-        </table>
+    <div class="card-body px-3 pt-3">
+      <table id="example" class="display" style="width:100%">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Comunidad</th>
+            <th>Trayecto</th>
+            <th>Fase</th>
+            <th>Integrantes</th>
+            <th>Estatus</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+      </table>
     </div>
   </div>
 
+  <!-- MODAL CREAR -->
+  <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearLabel">Nuevo Proyecto</h5>
+
+        </div>
+        <div class="modal-body">
+          <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardar">
+            <input type="hidden" name="estatus" value="1">
+            <div class="container-fluid">
+              <div class="row pb-2">
+                <div class="col-12">
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Nombre *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre">
+                    </div>
+
+                    <div class="col-lg-6">
+                      <label class="form-label" for="fase_id">Fase *</label>
+                      <select class="form-select" name="fase_id" id="selectFaseId">
+
+                        <?php foreach ($fases as $fase) : ?>
+                          <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="row form-group">
+
+                    <div class="col-lg-6">
+                      <label class="form-label" for="resumen">Resumen</label>
+                      <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 100px"></textarea>
+                    </div>
+
+                    <div class="col-lg-3">
+                      <label class="form-label" for="municipio">Municipio</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="municipio">
+                    </div>
+
+                    <div class="col-lg-3">
+                      <label class="form-label" for="area">Area</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="area">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row form-group align-items-end">
+
+                    <div class="col-lg-10">
+                      <label class="form-label">Estudiantes *</label>
+                      <select class="form-select" id="selectEstudiante">
+                        <?php foreach ($estudiantes as $estudiante) : ?>
+                          <option value="<?= $estudiante->id ?>" data-cedula="<?= $estudiante->cedula ?>" data-nombre="<?= $estudiante->nombre ?>" data-apellido="<?= $estudiante->apellido ?>"><?= "$estudiante->cedula - $estudiante->nombre $estudiante->apellido" ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+
+                    <div class="col-lg-1 align-middle">
+                      <button class="btn btn-primary" id="anadirEstudiante">Añadir</button>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-12 mb-4">
+                  <div class="row form-group justify-content-center">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">C.I.</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Apellido</th>
+                          <th scope="col">Remover</th>
+                        </tr>
+                      </thead>
+                      <tbody id="cuerpoTablaEstudiantes">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <hr class="border-light m-0">
+                <div class="text-right mt-3">
+                  <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <script>
-    $(document).ready(function() {
-      $('#tablaProyectos').DataTable();
+    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";;
+    $(document).ready(() => {
+
+      toggleLoading(false)
+
+      // DATATABLE CRUD
+
+      // las acciones son definidas en la clase que contiene el botón, es decir,
+      // si necesito editar, le añado la clase "edit"
+      // luego en la función table.on(). verifico si la clase del boton en el que hice click
+      // contiene el nombre de alguna acción que haya definido
 
 
-      $('#eliminarProyecto').submit(function(e) {
+
+
+      let table = new DataTable('#example', {
+        ajax: '<?= $this->Route('proyectos/ssp') ?>',
+        processing: true,
+        serverSide: true,
+        pageLength: 30,
+
+        columnDefs: [{
+          visible: false,
+          targets: [0, 5]
+        }, {
+          data: null,
+          render: function(data, type, row, meta) {
+            return row[6] == 1 ? `<span class="badge rounded-pill bg-success">Evaluado</span>` : `<span class="badge rounded-pill bg-secondary">Pendiente a Evaluar</span>`
+          },
+          targets: 6
+        }, {
+
+          data: null,
+          render: function(data, type, row, meta) {
+            return `<div class="dropdown show">
+                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
+                      ${ row[6] == 0 ? ` <a class="dropdown-item" href="<?= APP_URL ?>proyectos/assessment/${row[0]}">Evaluar</a>` : ``}
+                        <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
+                      </div>
+                    </div>`;
+          }, // combino los botons de acción
+          targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+        }]
+      });
+
+
+
+      $('#guardar').submit(function(e) {
         e.preventDefault()
+
+        toggleLoading(true);
 
 
         url = $(this).attr('action');
         data = $(this).serializeArray();
 
-        console.log(url)
+
+
 
         $.ajax({
           type: "POST",
           url: url,
           data: data,
           error: function(error, status) {
+            toggleLoading(false)
             alert(error.responseText)
           },
           success: function(data, status) {
-            alert('Eliminado exitosamente')
-            window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
+            table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("guardar").reset();
+            // actualizar tabla
+            toggleLoading(false)
           },
         });
 
       })
 
+      function edit(id) {
+        alert(`Editing ${id}`)
+      }
 
-    });
-    /* const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false
-})
+      function remove(id) {
+        alert(`Removing ${id}`)
+      }
 
- function eliminaragente(id) {
-  
-   swal.fire({
-        title: "¿Estas seguro?",
-        text: "¡No podras revertir este paso!!",
-        icon: "info",
-        showCancelButton: true,
-        confirmButtonColor: "#ca3333",
-        cancelButtonColor: "#1c2730",
-        confirmButtonText: "¡Si, eliminar!",
-        cancelButtonText: "¡No, cancelar!",
+      // TOGGLE BUTTON AND SPINNER
+      function toggleLoading(show) {
+        if (show) {
+          $('#guardarLoading').show();
+          $('#guardarSubmit').hide();
+        } else {
+          $('#guardarLoading').hide();
+          $('#guardarSubmit').show();
+        }
 
-        }).then((result) => {
-            if (result.isConfirmed) {
-              jQuery.get('?r=usuario/eliminaragente&id='+id, function(data) {
-                    $('#i'+id).attr({ hidden: '', });
-                    swalWithBootstrapButtons.fire(
-                      'Hecho!',
-                      'El usuario a sido eliminado.',
-                      'success'
-                    )
-              });
-             
-            } else if (
-              result.dismiss === Swal.DismissReason.cancel
-            ) {
-              swalWithBootstrapButtons.fire(
-                'Cancelado',
-                'Tu usuario no ha sido eliminado :)',
-                'error'
-              )
+      }
+
+      $('#anadirEstudiante').click(function(e) {
+        e.preventDefault();
+
+        let studentsAlreadyAppened = document.getElementById("cuerpoTablaEstudiantes").children.length;
+
+
+
+        if (studentsAlreadyAppened >= 5) {
+          alert('limite de estudiantes alcanzado');
+        } else {
+          let selectedStudent = $('#selectEstudiante option:selected');
+
+          let studentId = $(selectedStudent).val();
+
+          if (studentId) {
+
+            if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
+              alert('Estudiante ya ha sido añadido')
+              return false;
             }
-          })
-       
-};
 
-function eliminaranalista(id) {
-  
- swal.fire({
-      title: "¿Estas seguro?",
-      text: "¡No podras revertir este paso!!",
-      icon: "info",
-      showCancelButton: true,
-      confirmButtonColor: "#ca3333",
-      cancelButtonColor: "#1c2730",
-      confirmButtonText: "¡Si, eliminar!",
-      cancelButtonText: "¡No, cancelar!",
-
-      }).then((result) => {
-          if (result.isConfirmed) {
-            jQuery.get('?r=usuario/eliminaranalista&id='+id, function(data) {
-                  console.log(data);
-                  $('#i'+id).attr({ hidden: '', });
-                  swalWithBootstrapButtons.fire(
-              'Hecho!',
-              'El usuario a sido eliminado.',
-              'success'
-            )
-              });
-           
-          } else if (
-            result.dismiss === Swal.DismissReason.cancel
-          ) {
-            swalWithBootstrapButtons.fire(
-              'Cancelado',
-              'Tu usuario no ha sido eliminado :)',
-              'error'
-            )
+            let fila = `<tr id="appenedStudent-${studentId}" class="studentRow">
+                      <th scope="row">
+                      <input type="text" name="integrantes[]" class="form-control-plaintext" value="${studentId}" hidden>
+                      ${$(selectedStudent).data('cedula')}
+                      </th>
+                      <td>${$(selectedStudent).data('nombre')}</td>
+                      <td>${$(selectedStudent).data('apellido')}</td>
+                      <td><button type="button" class="btn btn-secondary" onClick="removeStudent('${studentId}')">Eliminar</button></td>
+                    </tr>`;
+            $('#cuerpoTablaEstudiantes').append(fila);
           }
-        })
-     
-};
+        }
+      })
 
+      $('#proyectoGuardar').submit(function(e) {
+        e.preventDefault()
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
 
-$('#search').on('submit', function(event) {
-    event.preventDefault();
-    if ($("#dni").val().length!=0) {
-        $('.CUser').attr({hidden:''});
-        $('.CU'+$("#dni").val()).removeAttr('hidden');
-        $("#dni").val('');
-    }else{swal('Ayuda?','Debes ingrsar un DNI para buscarlo','info'); }
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("proyectoGuardar").reset();
+            // actualizar tabla
+            toggleLoading(false)
+          },
+        });
+      })
 
-});
+      $('#selectFaseId').change(function(e) {
+        let selectedFase = $('#selectFaseId option:selected');
 
-$("#dni").on('keyup', function(e) {
-    if (e.keyCode==8 && $("#dni").val().length==0) {
-        $('.CUser').removeAttr('hidden');
+        let faseId = $(selectedFase).val();
+
+        fetchEstudiantes(faseId);
+      })
+
+      function fetchEstudiantes(idFase) {
+        $.ajax({
+          type: "POST",
+          url: fetchStudentsUrl,
+          data: {
+            'idFase': idFase
+          },
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            estudiantes = JSON.parse(data)
+            if (estudiantes) {
+              renderSelectList(estudiantes)
+            } else {
+              $('#selectEstudiante').find('option').remove()
+            }
+          },
+        });
+      }
+
+      function renderSelectList(data) {
+        $('#selectEstudiante').find('option').remove()
+        data.forEach(estudiante => {
+          let row = `<option 
+            value="${estudiante.id}" 
+            data-cedula="${estudiante.cedula}" 
+            data-nombre="${estudiante.nombre}" 
+            data-apellido="${estudiante.apellido}">
+            ${estudiante.cedula} - ${estudiante.nombre} ${estudiante.apellido}
+          </option>`;
+
+          $('#selectEstudiante').append(row);
+        });
+      }
+
+    })
+
+    function removeStudent(id) {
+      $(`#appenedStudent-${id}`).remove()
     }
-});
-
-$(document).ready(function() {
-    $('#tableUser').DataTable();
-} ); */
   </script>
-
-
-</div>
