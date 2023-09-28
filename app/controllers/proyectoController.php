@@ -464,11 +464,10 @@ class proyectoController extends controller
             $spreadsheet->getActiveSheet()->setCellValue('G2', 'Lugar');
             $spreadsheet->getActiveSheet()->setCellValue('H2', 'Nombre del Proyecto');
             $spreadsheet->getActiveSheet()->setCellValue('I2', 'Municipio donde se ejecuta el proyecto');
-            $spreadsheet->getActiveSheet()->setCellValue('J2', 'Área');
-            $spreadsheet->getActiveSheet()->setCellValue('K2', 'Motor Productivo');
-            $spreadsheet->getActiveSheet()->setCellValue('L2', 'Breve Descripción (Resumen)');
-            $spreadsheet->getActiveSheet()->setCellValue('M2', 'Dirección');
-            $spreadsheet->getActiveSheet()->setCellValue('N2', 'Parroquia');
+            $spreadsheet->getActiveSheet()->setCellValue('J2', 'Motor Productivo');
+            $spreadsheet->getActiveSheet()->setCellValue('K2', 'Breve Descripción (Resumen)');
+            $spreadsheet->getActiveSheet()->setCellValue('L2', 'Dirección');
+            $spreadsheet->getActiveSheet()->setCellValue('M2', 'Parroquia');
             if (!is_null($integrantes)) {
                 $spreadsheet->getActiveSheet()
                     ->fromArray(
@@ -477,10 +476,10 @@ class proyectoController extends controller
                         'A3'         // Top left coordinate of the worksheet range where
                         //    we want to set these values (default is A1)
                     );
-            }else{
-            $spreadsheet->getActiveSheet()->setCellValue('H3', 'SIN DATOS');
-            $spreadsheet->getActiveSheet()->getStyle('H3')->getFont()->setBold(true)->setSize(16);
-            $spreadsheet->getActiveSheet()->getStyle('H3')->getAlignment()->setHorizontal('center');
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValue('H3', 'SIN DATOS');
+                $spreadsheet->getActiveSheet()->getStyle('H3')->getFont()->setBold(true)->setSize(16);
+                $spreadsheet->getActiveSheet()->getStyle('H3')->getAlignment()->setHorizontal('center');
             }
             header('Content-Type: application/vnd.ms-excel');
             header('Content-Disposition: attachment;filename="matriz de proyectos.xlsx"');
