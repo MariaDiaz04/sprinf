@@ -11,6 +11,7 @@ use App\Traits\Utility;
 
 
 use Exception;
+use PHPUnit\Framework\MockObject\DuplicateMethodException;
 
 class profesorController extends controller
 {
@@ -41,21 +42,24 @@ class profesorController extends controller
 
   public function store(Request $nuevoprofesor)
   {
+    
     try {
       // DateValidator::checkPeriodDates($nuevoprofesor->get('fecha_inicio'), $nuevoprofesor->get('fecha_cierre'));
 
       // creación de usuario
       $email = $nuevoprofesor->request->get('email');
       $contrasena = $nuevoprofesor->request->get('contrasena');
-
+      var_dump($contrasena) ;
       // encriptar contraseña de usuario
-      $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
+       $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
 
       $this->usuario->setUsuario([
         'rol_id' => 2, // profesores
         'email' => $email,
         'contrasena' => $contrasena
       ]);
+
+      
 
       $idUsuario = $this->usuario->save();
 
@@ -68,10 +72,10 @@ class profesorController extends controller
       $direccion = $nuevoprofesor->request->get('direccion');
       $telefono = $nuevoprofesor->request->get('telefono');
 
-      // encriptar datos de contacto
-      $telefono = $this->encriptar($telefono);
-      $direccion = $this->encriptar($direccion);
-
+                  // // // encriptar datos de contacto
+                  $telefono = $this->encriptar($telefono);
+                  $direccion = $this->encriptar($direccion); 
+      
 
       $this->persona->setPersona([
         'cedula' => $cedula,
@@ -81,12 +85,17 @@ class profesorController extends controller
         'direccion' => $direccion,
         'telefono' => $telefono,
       ]);
+      
+
+      
+
 
       $idPersona = $this->persona->save();
 
       $this->profesor->setProfesor(['persona_id' => $idPersona]);
       $this->profesor->setProfesorId();
       $codigoProfesor = $this->profesor->save();
+
 
       http_response_code(200);
       echo json_encode($codigoProfesor);

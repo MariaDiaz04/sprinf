@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Bcrypt\Bcrypt;
+use Utils\Sanitizer;
 
 use Exception;
 
@@ -14,9 +15,15 @@ class seccion extends model
 {
 
     public $fillable = [
-        'nombre',
+        'codigo',
         'trayecto_id',
+        'observacion',
+        
+
     ];
+    private  $codigo;
+    private  $trayecto_id;
+    private string $observacion;
 
     public function all()
     {
@@ -36,21 +43,93 @@ class seccion extends model
         return $this;
     }
 
-    public function save()
-    { {
+     /**
+     * setData
+     * 
+     * Se encarga de asignar los valores en los campos
+     * definidos en la variable "fillable", tambien se 
+     * encarga de sanitizar cada uno de estos valores
+     *
+     * @param array $data
+     * @return void
+     */
+    public function setData(array $data)
+  {
+    foreach ($data as $secc => $value) {
 
-            try {
+      if (property_exists($this, $secc) && in_array($secc, $this->fillable)) {
+        $this->{$secc} = $value;
+      }
+    }
+  }
 
-                $this->set('seccion', [
-                    'nombre' => '"' . $this->fillable['nombre'] . '"',
-                    'trayecto_id' => '"' . $this->fillable['trayecto_id'] . '"',
+  /**
+     * Transaccion para inserción de materias
+     *
+     * @return String - código de materia creada
+     */
+  function insertTransaction(): String
+  {
+      try {
 
-                ]);
-                return $this;
-            } catch (Exception $th) {
-                return $th;
+          parent::beginTransaction();
+          // almacenar seccion
+          $codigo = $this->save();
+
+          parent::commit();
+          return $codigo;
+      } catch (Exception $e) {
+          parent::rollBack();
+          return null;
+      }
+  }
+
+    /**
+     * save
+     * 
+     * Se encarga de tomar los valores que fueron asignados al modelo
+     * previamente y realizar la consulta SQL
+     *
+     * @param [type] $id
+     * @return string Código de materia
+     */
+
+    public function save($codigo = null): string
+    {
+        $data = [];
+
+        foreach ($this->fillable as $key => $value) {
+            if (isset($this->{$value})) {
+                if (is_string($this->{$value})) {
+                    $data[$value] = '"' . Sanitizer::sanitize($this->{$value}) . '"';
+                } else {
+                    $data[$value] =  $this->{$value};
+                }
             }
         }
+            
+            $this->set('seccion', $data);
+            return $this->codigo;
+        
+        
+    }
+
+
+
+    
+    
+    public function Selectcod()
+    {
+
+        $codigo = $this->query(
+            'SELECT
+                trayecto.id AS id,
+                trayecto.nombre AS nombre
+            FROM
+                
+                `trayecto`;'
+        );
+        return $codigo;
     }
     // funcion para traer estatus 1 
     // public function allstatus() {

@@ -45,16 +45,15 @@
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
                       <label class="form-label" for="trayecto_id">Trayecto *</label>
-                      <select class="form-select" name="trayecto_id">
-
+                      <select class="form-select" name="trayecto_id" id="id">
                         <?php foreach ($trayectos as $trayecto) : ?>
-                          <option value="<?= $trayecto->codigo ?>"><?= $trayecto->nombre ?></option>
+                          <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Código *</label>
-                      <input type="text" class="form-control mb-1" placeholder="IN...." pattern="/^([A-Z]{2,3})([1-9]){4}/" name="codigo" id="codigo">
+                      <input type="text" class="form-control mb-1" placeholder="IN...." pattern="([A-Z]{2,3})([1-9]){4}$" name="codigo" id="codigo">
                     </div>
                   </div>
                   <div class="row form-group">
@@ -98,7 +97,35 @@
       // contiene el nombre de alguna acción que haya definido
 
 
+      $('#guardar').submit(function(e) {
+        e.preventDefault()
 
+        toggleLoading(true, '#guardar');
+
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false, '#guardar')
+            alert(error.responseText)
+            console.log(error)  
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            console.log(data)
+            document.getElementById("guardar").reset();
+            // actualizar tabla
+            toggleLoading(false, '#guardar')
+          },
+        });
+
+      })
 
       let table = new DataTable('#example', {
         ajax: '<?= $this->Route('seccion/ssp') ?>',
@@ -125,36 +152,7 @@
 
 
 
-      $('#guardar').submit(function(e) {
-        e.preventDefault()
-
-        toggleLoading(true);
-
-
-        url = $(this).attr('action');
-        data = $(this).serializeArray();
-
-
-
-
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: data,
-          error: function(error, status) {
-            toggleLoading(false)
-            alert(error.responseText)
-          },
-          success: function(data, status) {
-            table.ajax.reload();
-            // usar sweetalerts
-            document.getElementById("guardar").reset();
-            // actualizar tabla
-            toggleLoading(false)
-          },
-        });
-
-      })
+     
 
       function edit(id) {
         alert(`Editing ${id}`)

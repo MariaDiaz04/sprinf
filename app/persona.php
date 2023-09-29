@@ -90,4 +90,6 @@ class persona extends model
 
     return $this->cedula;
   }
+
+  
 }

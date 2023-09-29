@@ -284,10 +284,12 @@
           error: function(error, status) {
             toggleLoading(false, '#guardar')
             alert(error.responseText)
+            console.log(error)  
           },
           success: function(data, status) {
             table.ajax.reload();
             // usar sweetalerts
+            console.log(data)
             document.getElementById("guardar").reset();
             // actualizar tabla
             toggleLoading(false, '#guardar')
