@@ -59,7 +59,7 @@
 
                     <label class="form-label col-sm-10 col-form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> pts</b></label>
                     <div class="col-sm-2">
-                      <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
+                      <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : $indicador->ponderacion ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
                     </div>
                   <?php endforeach; ?>
 
@@ -90,7 +90,7 @@
 
                       <label class="form-label col-sm-10" for="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]"><b>C.I. <?= $indicador->cedula_integrante ?> <?= $indicador->nombre_integrante ?></b> | <?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> pts</b></label>
                       <div class="col-sm-2">
-                        <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : null ?>" name="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]">
+                        <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : $indicador->ponderacion ?>" name="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]">
 
                       </div>
                     <?php endforeach; ?>

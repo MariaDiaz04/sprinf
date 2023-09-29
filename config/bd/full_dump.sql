@@ -153,6 +153,7 @@ CREATE TABLE `sprinf_bd`.`proyecto_historico` (
   `nombre_estudiante` varchar(255),
   `cedula_estudiante` int,
   `nombre_proyecto` varchar(255),
+  `nombre_trayecto` varchar(255),
   `comunidad` varchar(255),
   `tutor_in` varchar(255),
   `tutor_ex` varchar(255),

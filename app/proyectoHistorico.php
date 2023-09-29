@@ -13,6 +13,7 @@ class proyectoHistorico extends model
   public $fillable = [
     'id_proyecto',
     'nombre_estudiante',
+    'nombre_trayecto',
     'cedula_estudiante',
     'nombre_proyecto',
     'comunidad',
@@ -31,6 +32,7 @@ class proyectoHistorico extends model
   ];
   private int $id_proyecto;
   public string $nombre_estudiante;
+  public string $nombre_trayecto;
   public int $cedula_estudiante;
   public string $nombre_proyecto;
   public string $cedula;
@@ -61,17 +63,24 @@ class proyectoHistorico extends model
     }
   }
 
+  function allActive(): array
+  {
+    $proyectos = $this->select("detalles_proyecto");
+    return $proyectos ? $proyectos : null;
+  }
+
   function historicalTransaction(): string
   {
     try {
       parent::beginTransaction();
-      $proyectos = $this->all();
+      $proyectos = $this->allActive();
 
 
       foreach ($proyectos as $proyecto) {
         $this->id_proyecto = $proyecto['id'];
         $this->nombre_proyecto = $proyecto['nombre'];
         $this->comunidad = $proyecto['comunidad'];
+        $this->nombre_trayecto = $proyecto['nombre_trayecto'];
         $this->motor_productivo = $proyecto['motor_productivo'];
         $this->resumen = $proyecto['resumen'];
         $this->direccion = $proyecto['direccion'];
@@ -106,11 +115,11 @@ class proyectoHistorico extends model
       // remove data from inscripcion
       $this->delete('inscripcion');
       // remove data from notas_integrante_proyecto
-      $this->delete('notas_integrante_proyecto');
+      // $this->delete('notas_integrante_proyecto');
       // remove data from integrante_proyecto
-      $this->delete('integrante_proyecto');
+      // $this->delete('integrante_proyecto');
       // remove data from proyecto
-      $this->delete('proyecto');
+      // $this->delete('proyecto');
 
       parent::commit();
       return '';

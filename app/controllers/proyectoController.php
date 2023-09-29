@@ -87,6 +87,8 @@ class proyectoController extends controller
 
         $historico = $this->proyectoHistorico->all();
 
+        if (!$historico) return [];
+
         $group = [];
         foreach ($historico as $item) {
             if (!isset($group[$item['id_proyecto']])) {
@@ -94,6 +96,7 @@ class proyectoController extends controller
                     $group[$item['id_proyecto']][$item['periodo_inicio']] = [];
                     $group[$item['id_proyecto']][$item['periodo_inicio']]['nombre'] = $item['nombre_proyecto'];
                     $group[$item['id_proyecto']][$item['periodo_inicio']]['comunidad'] = $item['comunidad'];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['nombre_trayecto'] = $item['nombre_trayecto'];
                     $group[$item['id_proyecto']][$item['periodo_inicio']]['tutor_in'] = $item['tutor_in'];
                     $group[$item['id_proyecto']][$item['periodo_inicio']]['tutor_ex'] = $item['tutor_ex'];
                     $group[$item['id_proyecto']][$item['periodo_inicio']]['motor_productivo'] = $item['motor_productivo'];
@@ -117,11 +120,14 @@ class proyectoController extends controller
             $historico = $this->proyectoHistorico->all();
 
             $group = [];
+            if (!$historico) return [];
             foreach ($historico as $item) {
                 if (!isset($group[$item['id_proyecto']])) {
                     $group[$item['id_proyecto']] = [];
                     $group[$item['id_proyecto']]['id'] = $item['id_proyecto'];
                     $group[$item['id_proyecto']]['nombre'] = $item['nombre_proyecto'];
+                    $group[$item['id_proyecto']]['nombre_trayecto'] = $item['nombre_trayecto'];
+                    $group[$item['id_proyecto']]['periodo_inicio'] = $item['periodo_inicio'];
                 }
                 foreach ($item as $key => $value) {
                     if ($key == 'id_proyecto') continue;
@@ -139,7 +145,7 @@ class proyectoController extends controller
                     # code...
                 }
                 $informacionProyecto = [
-                    'nombre' => $proyecto['nombre'],
+                    'nombre' =>  '<b>' . $proyecto['periodo_inicio'] . ' - ' . $proyecto['nombre_trayecto'] . '</b>' . ' - ' . $proyecto['nombre'],
                     'integrantes' => $integrantes
                 ];
                 $response[] = (object)$informacionProyecto;
