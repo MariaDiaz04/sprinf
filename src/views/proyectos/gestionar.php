@@ -212,7 +212,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="historicoLabel">Nuevo Proyecto Histórico - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?></h5>
+          <h5 class="modal-title font-weight-bold" id="historicoLabel">Nuevo Proyecto Histórico - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?></h5>
         </div>
         <div class="modal-body">
           <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardarHistorico">
@@ -223,7 +223,7 @@
                   <div class="row form-group mb-3">
                     <div class="col-lg-12">
                       <label class="form-label" for="nombre">Proyecto </label>
-                      <select class="form-select" name="fase_id" id="selectFaseId">
+                      <select class="form-select" name="id" id="selectProyecto">
                         <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
                           <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-municipio="<?= $proyecto->municipio ?>" data-parroquia="<?= $proyecto->parroquia ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>"><?= "$proyecto->nombre" ?></option>
                         <?php endforeach; ?>
@@ -233,7 +233,7 @@
                   <div class="row form-group">
                     <div class="col-lg-4">
                       <label class="form-label" for="fase_id">Trayecto</label>
-                      <select class="form-select" name="fase_id" id="selectFaseId">
+                      <select class="form-select" name="fase_id" id="selectTrayecto">
 
                         <?php foreach ($fases as $fase) : ?>
                           <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
@@ -248,15 +248,12 @@
                   </div>
                   <hr>
                   <div class="row form-group">
-                    <div class="col-lg-3">
-                      <label class="form-label" for="tlf_tin">Teléfono</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="tlf_tin" id="tlf_tin">
-                    </div>
+
                     <div class="col-lg-3">
                       <label class="form-label" for="parroquia">Parroquia</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="parroquia" readonly>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="parroquia" id="parroquia" readonly>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-9">
                       <label class="form-label" for="comunidad">Comunidad</label>
                       <textarea class="form-control" placeholder="..." id="comunidad" name="comunidad" style="height: 50px " readonly></textarea>
                     </div>
@@ -264,118 +261,141 @@
                   <div class="row form-group mb-2">
 
                     <div class="col-lg-12">
-                      <label class="form-label" for="resumen">Dirección</label>
-                      <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 50px" readonly></textarea>
+                      <label class="form-label" for="direccion">Dirección</label>
+                      <textarea class="form-control" placeholder="..." id="direccion" name="direccion" style="height: 50px" readonly></textarea>
                     </div>
                   </div>
                   <div class="row form-group mb-2">
                     <div class="col-lg-6">
                       <label class="form-label" for="tutor_in">Tutor Interno</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_in">
+                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_in" id="tutor_in">
                     </div>
 
                     <div class="col-lg-6">
                       <label class="form-label" for="tutor_ex">Tutor Externo</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex">
+                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex">
                     </div>
 
                   </div>
                 </div>
               </div>
             </div>
-        </div>
-        <hr>
-        <div class="transfer">
+            <hr>
+            <div class="transfer">
 
+            </div>
+            <hr class="border-light m-0">
+            <div class="text-right mt-3" style="text-align: end;">
+              <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
+            </div>
+          </form>
         </div>
-        <hr class="border-light m-0">
-        <div class="text-right mt-3" style="text-align: end;">
-          <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
-        </div>
-        </form>
       </div>
     </div>
   </div>
-</div>
 
-<script src="<?= APP_URL ?>assets/js/jquery.transfer.js"></script>
-<script>
-  let fetchHistoricalUrl = "<?= APP_URL . $this->Route('proyectos/historico') ?>";
-  dataProyectos = []
-
-
-  var groupDataArray1 = <?= json_encode($historicoEstudiantes); ?>;
-
-  console.log(groupDataArray1)
-
-  var settings3 = {
-    groupDataArray: groupDataArray1,
-    groupItemName: "nombre",
-    groupArrayName: "integrantes",
-    itemName: "nombre",
-    valueName: "value",
-    rightTabNameText: 'Estudiantes Seleccionados',
-    tabNameText: 'Estudiantes del Historico',
-    searchPlaceholderText: 'Buscar Estudiantes',
-    callable: function(items) {
-      console.dir(items);
-    },
-  };
-
-  var transfer = $(".transfer").transfer(settings3);
-
-  $('#proyectoGuardarHistorico').submit(function(e) {
-    e.preventDefault()
-    formData = $(this).serializeArray();
-    items = transfer.getSelectedItems();
-    data = [...formData, ...items];
-    console.log(data)
-  })
-</script>
-<script>
-  let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
+  <script src="<?= APP_URL ?>assets/js/jquery.transfer.js"></script>
+  <script>
+    let fetchHistoricalUrl = "<?= APP_URL . $this->Route('proyectos/historico') ?>";
+    dataProyectos = []
 
 
+    var groupDataArray1 = <?= json_encode($historicoEstudiantes); ?>;
 
-  $(document).ready(() => {
-    $('#historico').modal('show')
+    console.log(groupDataArray1)
 
-    $('#cargarHistoricoBtn').click(function(e) {
+    var settings3 = {
+      groupDataArray: groupDataArray1,
+      groupItemName: "nombre",
+      groupArrayName: "integrantes",
+      itemName: "nombre",
+      valueName: "value",
+      rightTabNameText: 'Estudiantes Seleccionados',
+      tabNameText: 'Estudiantes del Historico',
+      searchPlaceholderText: 'Buscar Estudiantes',
+      callable: function(items) {
+        console.dir(items);
+      },
+    };
 
+    var transfer = $(".transfer").transfer(settings3);
+
+    $('#proyectoGuardarHistorico').submit(function(e) {
+      e.preventDefault()
+      formData = $(this).serializeArray();
+      items = transfer.getSelectedItems();
+      data = [...formData];
+      data.integrantes = []
+      for (const integrante in items) {
+        if (Object.hasOwnProperty.call(items, integrante)) {
+          const element = items[integrante];
+          data.integrantes.push(element.value)
+        }
+      }
+      console.log(data)
     })
+  </script>
+  <script>
+    $(document).ready(function(e) {
+      $('#cargarInformacion').click(function(e) {
+        e.preventDefault()
 
-    toggleLoading(false)
+        let proyectoSeleccionado = $('#selectProyecto option:selected').data()
+        console.log($('#historico #telefono'))
+        console.log($('#historico'))
 
-    // DATATABLE CRUD
+        $('#historico #parroquia').val(proyectoSeleccionado.parroquia)
+        $('#historico #direccion').val(proyectoSeleccionado.direccion)
+        $('#historico #comunidad').val(proyectoSeleccionado.comunidad)
+        $('#historico #tutor_in').val(proyectoSeleccionado.tutor_in)
+        $('#historico #tutor_ex').val(proyectoSeleccionado.tutor_ex)
+      })
+    })
+  </script>
+  <script>
+    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
 
-    // las acciones son definidas en la clase que contiene el botón, es decir,
-    // si necesito editar, le añado la clase "edit"
-    // luego en la función table.on(). verifico si la clase del boton en el que hice click
-    // contiene el nombre de alguna acción que haya definido
+
+
+    $(document).ready(() => {
+      $('#historico').modal('show')
+
+      $('#cargarHistoricoBtn').click(function(e) {
+
+      })
+
+      toggleLoading(false)
+
+      // DATATABLE CRUD
+
+      // las acciones son definidas en la clase que contiene el botón, es decir,
+      // si necesito editar, le añado la clase "edit"
+      // luego en la función table.on(). verifico si la clase del boton en el que hice click
+      // contiene el nombre de alguna acción que haya definido
 
 
 
 
-    let table = new DataTable('#example', {
-      ajax: '<?= $this->Route('proyectos/ssp') ?>',
-      processing: true,
-      serverSide: true,
-      pageLength: 30,
+      let table = new DataTable('#example', {
+        ajax: '<?= $this->Route('proyectos/ssp') ?>',
+        processing: true,
+        serverSide: true,
+        pageLength: 30,
 
-      columnDefs: [{
-        visible: false,
-        targets: [0, 5]
-      }, {
-        data: null,
-        render: function(data, type, row, meta) {
-          return row[6] == 1 ? `<span class="badge rounded-pill bg-success">Evaluado</span>` : `<span class="badge rounded-pill bg-secondary">Pendiente a Evaluar</span>`
-        },
-        targets: 6
-      }, {
+        columnDefs: [{
+          visible: false,
+          targets: [0, 5]
+        }, {
+          data: null,
+          render: function(data, type, row, meta) {
+            return row[6] == 1 ? `<span class="badge rounded-pill bg-success">Evaluado</span>` : `<span class="badge rounded-pill bg-secondary">Pendiente a Evaluar</span>`
+          },
+          targets: 6
+        }, {
 
-        data: null,
-        render: function(data, type, row, meta) {
-          return `<div class="dropdown show">
+          data: null,
+          render: function(data, type, row, meta) {
+            return `<div class="dropdown show">
                       <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
@@ -385,88 +405,85 @@
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>
                     </div>`;
-        }, // combino los botons de acción
-        targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
-      }]
-    });
-
-
-
-
-
-    $('#guardar').submit(function(e) {
-      e.preventDefault()
-
-      toggleLoading(true);
-
-
-      url = $(this).attr('action');
-      data = $(this).serializeArray();
-
-
-
-
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        error: function(error, status) {
-          toggleLoading(false)
-          alert(error.responseText)
-        },
-        success: function(data, status) {
-          table.ajax.reload();
-          // usar sweetalerts
-          document.getElementById("guardar").reset();
-          // actualizar tabla
-          toggleLoading(false)
-        },
+          }, // combino los botons de acción
+          targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+        }]
       });
 
-    })
 
-    function edit(id) {
-      alert(`Editing ${id}`)
-    }
 
-    function remove(id) {
-      alert(`Removing ${id}`)
-    }
 
-    // TOGGLE BUTTON AND SPINNER
-    function toggleLoading(show) {
-      if (show) {
-        $('#guardarLoading').show();
-        $('#guardarSubmit').hide();
-      } else {
-        $('#guardarLoading').hide();
-        $('#guardarSubmit').show();
+
+      $('#guardar').submit(function(e) {
+        e.preventDefault()
+
+        toggleLoading(true);
+
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("guardar").reset();
+            // actualizar tabla
+            toggleLoading(false)
+          },
+        });
+
+      })
+
+      function edit(id) {
+        alert(`Editing ${id}`)
       }
 
-    }
+      function remove(id) {
+        alert(`Removing ${id}`)
+      }
 
-    $('#anadirEstudiante').click(function(e) {
-      e.preventDefault();
+      // TOGGLE BUTTON AND SPINNER
+      function toggleLoading(show) {
+        if (show) {
+          $('#guardarLoading').show();
+          $('#guardarSubmit').hide();
+        } else {
+          $('#guardarLoading').hide();
+          $('#guardarSubmit').show();
+        }
 
-      let studentsAlreadyAppened = document.getElementById("cuerpoTablaEstudiantes").children.length;
+      }
+
+      $('#anadirEstudiante').click(function(e) {
+        e.preventDefault();
+
+        let studentsAlreadyAppened = document.getElementById("cuerpoTablaEstudiantes").children.length;
 
 
 
-      if (studentsAlreadyAppened >= 5) {
-        alert('limite de estudiantes alcanzado');
-      } else {
-        let selectedStudent = $('#selectEstudiante option:selected');
+        if (studentsAlreadyAppened >= 5) {
+          alert('limite de estudiantes alcanzado');
+        } else {
+          let selectedStudent = $('#selectEstudiante option:selected');
 
-        let studentId = $(selectedStudent).val();
+          let studentId = $(selectedStudent).val();
 
-        if (studentId) {
+          if (studentId) {
 
-          if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
-            alert('Estudiante ya ha sido añadido')
-            return false;
-          }
+            if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
+              alert('Estudiante ya ha sido añadido')
+              return false;
+            }
 
-          let fila = `<tr id="appenedStudent-${studentId}" class="studentRow">
+            let fila = `<tr id="appenedStudent-${studentId}" class="studentRow">
                       <th scope="row">
                       <input type="text" name="integrantes[]" class="form-control-plaintext" value="${studentId}" hidden>
                       ${$(selectedStudent).data('cedula')}
@@ -475,68 +492,68 @@
                       <td>${$(selectedStudent).data('apellido')}</td>
                       <td><button type="button" class="btn btn-secondary" onClick="removeStudent('${studentId}')">Eliminar</button></td>
                     </tr>`;
-          $('#cuerpoTablaEstudiantes').append(fila);
-        }
-      }
-    })
-
-    $('#proyectoGuardar').submit(function(e) {
-      e.preventDefault()
-      url = $(this).attr('action');
-      data = $(this).serializeArray();
-
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        error: function(error, status) {
-          toggleLoading(false)
-          alert(error.responseText)
-        },
-        success: function(data, status) {
-          table.ajax.reload();
-          // usar sweetalerts
-          document.getElementById("proyectoGuardar").reset();
-          // actualizar tabla
-          toggleLoading(false)
-        },
-      });
-    })
-
-    $('#selectFaseId').change(function(e) {
-      let selectedFase = $('#selectFaseId option:selected');
-
-      let faseId = $(selectedFase).val();
-
-      fetchEstudiantes(faseId);
-    })
-
-    function fetchEstudiantes(idFase) {
-      $.ajax({
-        type: "POST",
-        url: fetchStudentsUrl,
-        data: {
-          'idFase': idFase
-        },
-        error: function(error, status) {
-          toggleLoading(false)
-          alert(error.responseText)
-        },
-        success: function(data, status) {
-          estudiantes = JSON.parse(data)
-          if (estudiantes) {
-            renderSelectList(estudiantes)
-          } else {
-            $('#selectEstudiante').find('option').remove()
+            $('#cuerpoTablaEstudiantes').append(fila);
           }
-        },
-      });
-    }
+        }
+      })
 
-    function renderSelectList(data) {
-      $('#selectEstudiante').find('option').remove()
-      data.forEach(estudiante => {
-        let row = `<option 
+      $('#proyectoGuardar').submit(function(e) {
+        e.preventDefault()
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("proyectoGuardar").reset();
+            // actualizar tabla
+            toggleLoading(false)
+          },
+        });
+      })
+
+      $('#selectFaseId').change(function(e) {
+        let selectedFase = $('#selectFaseId option:selected');
+
+        let faseId = $(selectedFase).val();
+
+        fetchEstudiantes(faseId);
+      })
+
+      function fetchEstudiantes(idFase) {
+        $.ajax({
+          type: "POST",
+          url: fetchStudentsUrl,
+          data: {
+            'idFase': idFase
+          },
+          error: function(error, status) {
+            toggleLoading(false)
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            estudiantes = JSON.parse(data)
+            if (estudiantes) {
+              renderSelectList(estudiantes)
+            } else {
+              $('#selectEstudiante').find('option').remove()
+            }
+          },
+        });
+      }
+
+      function renderSelectList(data) {
+        $('#selectEstudiante').find('option').remove()
+        data.forEach(estudiante => {
+          let row = `<option 
             value="${estudiante.id}" 
             data-cedula="${estudiante.cedula}" 
             data-nombre="${estudiante.nombre}" 
@@ -544,13 +561,13 @@
             ${estudiante.cedula} - ${estudiante.nombre} ${estudiante.apellido}
           </option>`;
 
-        $('#selectEstudiante').append(row);
-      });
+          $('#selectEstudiante').append(row);
+        });
+      }
+
+    })
+
+    function removeStudent(id) {
+      $(`#appenedStudent-${id}`).remove()
     }
-
-  })
-
-  function removeStudent(id) {
-    $(`#appenedStudent-${id}`).remove()
-  }
-</script>
+  </script>
