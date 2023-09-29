@@ -172,7 +172,9 @@ class proyectoController extends controller
             $integrantes = $nuevoProyecto->request->all()['integrantes'];
             $fase = $nuevoProyecto->get('fase_id');
             $trayecto = $this->trayectos->findByFase($fase);
-            // VALIDACIONES
+            // VALIDACIONES 
+
+            $idEstudiantes = [];
 
             foreach ($integrantes as $cedula) {
                 $dataEstudiante = $this->estudiantes->findByCedula($cedula);
@@ -184,9 +186,39 @@ class proyectoController extends controller
                 if (!is_null($dataEstudiante['trayecto_id']) && $dataEstudiante['trayecto_id'] != $trayecto['codigo_trayecto']) {
                     throw new Exception("Estudiante " . $dataEstudiante['nombre'] . " " . $dataEstudiante['apellido'] . " No pertenece al trayecto especificado en la creación del proyecto");
                 }
+
+                array_push($idEstudiantes, $dataEstudiante['id']);
             }
 
-            $this->proyecto->setProyectData($nuevoProyecto->request->all());
+            $nombre = $nuevoProyecto->request->get('nombre');
+            $comunidad = $nuevoProyecto->request->get('comunidad');
+            $fase_id = $nuevoProyecto->request->get('fase_id');
+            $estatus = $nuevoProyecto->request->get('estatus');
+            $resumen = $nuevoProyecto->request->get('resumen');
+            $municipio = $nuevoProyecto->request->get('municipio');
+            $direccion = $nuevoProyecto->request->get('direccion');
+            $motor_productivo = $nuevoProyecto->request->get('motor_productivo');
+            $parroquia = $nuevoProyecto->request->get('parroquia');
+            $tutor_in = $nuevoProyecto->request->get('tutor_in');
+            $tutor_ex = $nuevoProyecto->request->get('tutor_ex');
+            $id = $nuevoProyecto->request->get('id');
+
+
+            $this->proyecto->setProyectData([
+                'nombre' => $nombre,
+                'comunidad' => $comunidad,
+                'fase_id' => $fase_id,
+                'estatus' => $estatus,
+                'direccion' => $direccion,
+                'resumen' => $resumen,
+                'municipio' => $municipio,
+                'motor_productivo' => $motor_productivo,
+                'parroquia' => $parroquia,
+                'tutor_in' => $tutor_in,
+                'tutor_ex' => $tutor_ex,
+                'id' => $id,
+                'integrantes' => $idEstudiantes
+            ]);
             $this->proyecto->insertTransaction();
 
             http_response_code(200);

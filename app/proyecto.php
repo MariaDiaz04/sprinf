@@ -11,11 +11,18 @@ class proyecto extends model
 {
 
     public $fillable = [
-        'tutor_id',
-        'fase_id',
+        'estatus',
         'nombre',
-        'descripcion',
+        'fase_id',
+        'comunidad',
+        'direccion',
+        'motor_productivo',
+        'resumen',
         'municipio',
+        'parroquia',
+        'tutor_in',
+        'tutor_ex',
+        'id',
         'area',
         'integrantes',
     ];
@@ -23,9 +30,14 @@ class proyecto extends model
     public int $tutor_id;
     public string $fase_id;
     public string $nombre;
+    public string $direccion;
+    public string $parroquia;
     public string $resumen;
     public string $municipio;
-    public string $area;
+    public string $comunidad;
+    public string $motor_productivo;
+    public string $tutor_in;
+    public string $tutor_ex;
 
     public array $integrantes; // has many
 
@@ -163,6 +175,7 @@ class proyecto extends model
             parent::commit();
             return $codigo;
         } catch (Exception $e) {
+            echo $e->getMessage();
             parent::rollBack();
             return '';
         }
@@ -232,14 +245,11 @@ class proyecto extends model
             }
         }
 
-        if ($id) {
-            $this->update('proyecto', $data, [['id', '=', $id]]);
-        } else {
-            unset($data['integrantes']);
-            $this->set('proyecto', $data);
-            $this->id = $this->lastInsertId();
-            return $this->id;
-        }
+
+        unset($data['integrantes']);
+        $this->set('proyecto', $data);
+        $this->id = $this->lastInsertId();
+        return $this->id;
     }
 
     function remove($id): void
