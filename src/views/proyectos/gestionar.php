@@ -225,7 +225,7 @@
                       <label class="form-label" for="nombre">Proyecto </label>
                       <select class="form-select" name="id" id="selectProyecto">
                         <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
-                          <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-municipio="<?= $proyecto->municipio ?>" data-parroquia="<?= $proyecto->parroquia ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>"><?= "$proyecto->nombre" ?></option>
+                          <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-municipio="<?= $proyecto->municipio ?>" data-parroquia="<?= $proyecto->parroquia ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>"><?= "$proyecto->display" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
@@ -248,18 +248,37 @@
                   </div>
                   <hr>
                   <div class="row form-group">
-
+                    <div class="col-lg-12">
+                      <label class="form-label" for="nombre">Nombre</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" readonly>
+                    </div>
+                  </div>
+                  <div class="row form-group mb-2">
+                    <div class="col-lg-3">
+                      <label class="form-label" for="motor_productivo">Motor Productivo</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="motor_productivo" id="motor_productivo" readonly>
+                    </div>
+                    <div class="col-lg-9">
+                      <label class="form-label" for="direccion">Resumen</label>
+                      <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 50px" readonly></textarea>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-lg-3">
+                      <label class="form-label" for="parroquia">Municipio</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="municipio" id="municipio" readonly>
+                    </div>
                     <div class="col-lg-3">
                       <label class="form-label" for="parroquia">Parroquia</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="parroquia" id="parroquia" readonly>
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-lg-6">
                       <label class="form-label" for="comunidad">Comunidad</label>
                       <textarea class="form-control" placeholder="..." id="comunidad" name="comunidad" style="height: 50px " readonly></textarea>
                     </div>
                   </div>
-                  <div class="row form-group mb-2">
 
+                  <div class="row form-group mb-2">
                     <div class="col-lg-12">
                       <label class="form-label" for="direccion">Dirección</label>
                       <textarea class="form-control" placeholder="..." id="direccion" name="direccion" style="height: 50px" readonly></textarea>
@@ -285,8 +304,14 @@
 
             </div>
             <hr class="border-light m-0">
-            <div class="text-right mt-3" style="text-align: end;">
-              <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <input type="submit" class="btn btn-primary" value="Guardar">
+              <div id="loading">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only"></span>
+                </div>
+              </div>
             </div>
           </form>
         </div>
@@ -296,14 +321,33 @@
 
   <script src="<?= APP_URL ?>assets/js/jquery.transfer.js"></script>
   <script>
-    let fetchHistoricalUrl = "<?= APP_URL . $this->Route('proyectos/historico') ?>";
-    dataProyectos = []
 
+  </script>
+  <script>
+    $(document).ready(function(e) {
+      $('#cargarInformacion').click(function(e) {
+        e.preventDefault()
+
+        let proyectoSeleccionado = $('#selectProyecto option:selected').data()
+        console.log($('#historico #telefono'))
+        console.log($('#historico'))
+
+        $('#historico #nombre').val(proyectoSeleccionado.nombre)
+        $('#historico #motor_productivo').val(proyectoSeleccionado.motor_productivo)
+        $('#historico #parroquia').val(proyectoSeleccionado.parroquia)
+        $('#historico #municipio').val(proyectoSeleccionado.municipio)
+        $('#historico #direccion').val(proyectoSeleccionado.direccion)
+        $('#historico #resumen').val(proyectoSeleccionado.resumen)
+        $('#historico #comunidad').val(proyectoSeleccionado.comunidad)
+        $('#historico #tutor_in').val(proyectoSeleccionado.tutor_in)
+        $('#historico #tutor_ex').val(proyectoSeleccionado.tutor_ex)
+      })
+    })
+  </script>
+  <script>
+    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
 
     var groupDataArray1 = <?= json_encode($historicoEstudiantes); ?>;
-
-    console.log(groupDataArray1)
-
     var settings3 = {
       groupDataArray: groupDataArray1,
       groupItemName: "nombre",
@@ -320,41 +364,18 @@
 
     var transfer = $(".transfer").transfer(settings3);
 
-    $('#proyectoGuardarHistorico').submit(function(e) {
-      e.preventDefault()
-      formData = $(this).serializeArray();
-      items = transfer.getSelectedItems();
-      data = [...formData];
-      data.integrantes = []
-      for (const integrante in items) {
-        if (Object.hasOwnProperty.call(items, integrante)) {
-          const element = items[integrante];
-          data.integrantes.push(element.value)
-        }
+    function toggleLoading(show, form = '') {
+      if (show) {
+        $(`${form} #loading`).show();
+        $(`${form} #submit`).hide();
+      } else {
+        $(`${form} #loading`).hide();
+        $(`${form} #submit`).show();
       }
-      console.log(data)
-    })
-  </script>
-  <script>
-    $(document).ready(function(e) {
-      $('#cargarInformacion').click(function(e) {
-        e.preventDefault()
 
-        let proyectoSeleccionado = $('#selectProyecto option:selected').data()
-        console.log($('#historico #telefono'))
-        console.log($('#historico'))
+    }
 
-        $('#historico #parroquia').val(proyectoSeleccionado.parroquia)
-        $('#historico #direccion').val(proyectoSeleccionado.direccion)
-        $('#historico #comunidad').val(proyectoSeleccionado.comunidad)
-        $('#historico #tutor_in').val(proyectoSeleccionado.tutor_in)
-        $('#historico #tutor_ex').val(proyectoSeleccionado.tutor_ex)
-      })
-    })
-  </script>
-  <script>
-    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
-
+    toggleLoading(false)
 
 
     $(document).ready(() => {
@@ -372,9 +393,6 @@
       // si necesito editar, le añado la clase "edit"
       // luego en la función table.on(). verifico si la clase del boton en el que hice click
       // contiene el nombre de alguna acción que haya definido
-
-
-
 
       let table = new DataTable('#example', {
         ajax: '<?= $this->Route('proyectos/ssp') ?>',
@@ -412,7 +430,44 @@
 
 
 
+      $('#proyectoGuardarHistorico').submit(function(e) {
+        e.preventDefault()
+        toggleLoading(true, '#proyectoGuardarHistorico');
+        formData = $(this).serializeArray();
+        items = transfer.getSelectedItems();
+        data = [...formData];
+        counter = 0
+        for (const idIntegrante in items) {
+          integrante = {}
+          if (Object.hasOwnProperty.call(items, idIntegrante)) {
+            const element = items[idIntegrante];
+            integrante.name = `integrantes[${counter}]`
+            integrante.value = element.value
+            counter++
+            data.push(integrante)
+          }
+        }
 
+        url = $(this).attr('action');
+        console.log(data)
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false, '#proyectoGuardarHistorico')
+            alert(error.responseText)
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("guardar").reset();
+            // actualizar tabla
+            toggleLoading(false, '#proyectoGuardarHistorico')
+          },
+        });
+      })
 
       $('#guardar').submit(function(e) {
         e.preventDefault()
