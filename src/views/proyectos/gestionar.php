@@ -379,11 +379,6 @@
 
 
     $(document).ready(() => {
-      $('#historico').modal('show')
-
-      $('#cargarHistoricoBtn').click(function(e) {
-
-      })
 
       toggleLoading(false)
 
