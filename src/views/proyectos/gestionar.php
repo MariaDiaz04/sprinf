@@ -212,7 +212,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="historicoLabel">Nuevo Proyecto Histórico</h5>
+          <h5 class="modal-title" id="historicoLabel">Nuevo Proyecto Histórico - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?></h5>
         </div>
         <div class="modal-body">
           <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardarHistorico">
@@ -220,17 +220,17 @@
             <div class="container-fluid">
               <div class="row pb-2">
                 <div class="col-12">
-                  <div class="row form-group">
-                    <div class="col-lg-8">
+                  <div class="row form-group mb-3">
+                    <div class="col-lg-12">
                       <label class="form-label" for="nombre">Proyecto </label>
                       <select class="form-select" name="fase_id" id="selectFaseId">
-
-                        <?php foreach ($fases as $fase) : ?>
-                          <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
+                        <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
+                          <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-municipio="<?= $proyecto->municipio ?>" data-parroquia="<?= $proyecto->parroquia ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>"><?= "$proyecto->nombre" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
-
+                  </div>
+                  <div class="row form-group">
                     <div class="col-lg-4">
                       <label class="form-label" for="fase_id">Trayecto</label>
                       <select class="form-select" name="fase_id" id="selectFaseId">
@@ -239,6 +239,11 @@
                           <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
                         <?php endforeach; ?>
                       </select>
+                    </div>
+                    <div class="col-lg-4 d-flex align-items-end" style="margin-left: auto;">
+
+                      <button class="btn btn-primary" id="cargarInformacion">Cargar Informacion</button>
+
                     </div>
                   </div>
                 </div>

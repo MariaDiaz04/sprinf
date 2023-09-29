@@ -65,10 +65,9 @@ class proyectoController extends controller
         $periodo = $this->periodo->get();
 
         $historicoEstudiantes = $this->historicoEstudiantes();
-        $historicoProyecto = $this->historicoProyecto();
+        $historicoProyectos = $this->historicoProyecto();
 
-        // echo json_encode($historicoEstudiantes);
-        // exit();
+
 
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
@@ -77,6 +76,7 @@ class proyectoController extends controller
             'cerrarFase' => empty($pendientes) && !empty($proyectos),
             'tutores' => $tutores,
             'trayectos' => $trayectos,
+            'historicoProyectos' => $historicoProyectos,
             'historicoEstudiantes' => $historicoEstudiantes,
 
         ]);
@@ -92,23 +92,19 @@ class proyectoController extends controller
         $group = [];
         foreach ($historico as $item) {
             if (!isset($group[$item['id_proyecto']])) {
-                if (!isset($group[$item['id_proyecto']][$item['periodo_inicio']])) {
-                    $group[$item['id_proyecto']][$item['periodo_inicio']] = [];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['nombre'] = $item['nombre_proyecto'];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['comunidad'] = $item['comunidad'];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['nombre_trayecto'] = $item['nombre_trayecto'];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['tutor_in'] = $item['tutor_in'];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['tutor_ex'] = $item['tutor_ex'];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['motor_productivo'] = $item['motor_productivo'];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['resumen'] = $item['resumen'];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['direccion'] = $item['direccion'];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['municipio'] = $item['municipio'];
-                    $group[$item['id_proyecto']][$item['periodo_inicio']]['parroquia'] = $item['parroquia'];
+                if (!isset($group[$item['id_proyecto']])) {
+                    $group[$item['id_proyecto']] = [];
+                    $group[$item['id_proyecto']]['nombre'] = '<b>' . $item['periodo_inicio'] . '</b> - ' . $item['nombre_proyecto'];
+                    $group[$item['id_proyecto']]['comunidad'] = $item['comunidad'];
+                    $group[$item['id_proyecto']]['nombre_trayecto'] = $item['nombre_trayecto'];
+                    $group[$item['id_proyecto']]['tutor_in'] = $item['tutor_in'];
+                    $group[$item['id_proyecto']]['tutor_ex'] = $item['tutor_ex'];
+                    $group[$item['id_proyecto']]['motor_productivo'] = $item['motor_productivo'];
+                    $group[$item['id_proyecto']]['resumen'] = $item['resumen'];
+                    $group[$item['id_proyecto']]['direccion'] = $item['direccion'];
+                    $group[$item['id_proyecto']]['municipio'] = $item['municipio'];
+                    $group[$item['id_proyecto']]['parroquia'] = $item['parroquia'];
                 }
-            }
-            foreach ($item as $key => $value) {
-                if ($key == 'id_proyecto') continue;
-                $group[$item['id_proyecto']][$item['periodo_inicio']]['integrantes'][$item['cedula_estudiante']][$key] = $value;
             }
         }
         return $group;
