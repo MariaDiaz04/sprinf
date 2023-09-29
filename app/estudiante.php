@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\usuario;
 use App\model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,14 +15,12 @@ class estudiante extends model
 {
 
     public $fillable = [
-        'nombre',
-        'apellido',
-        'cedula',
-        'direccion',
-        'telefono',
-        'nacimiento',
-        'estatus'
+        'id',
+        'persona_id',
     ];
+
+    private string $id;
+    private string $persona_id;
 
     public function all()
     {
@@ -33,6 +32,45 @@ class estudiante extends model
         }
     }
 
+
+
+    function setestudianteId(): void
+  {
+    $this->id = 'e-' . $this->persona_id;
+  }
+
+
+    public function setEstudiante(array $data)
+    {
+      foreach ($data as $estud => $value) {
+  
+        if (property_exists($this, $estud) && in_array($estud, $this->fillable)) {
+          $this->{$estud} = $value;
+        }
+      }
+    }
+  
+    public function save($id = null)
+    {
+        $data = [];
+
+        foreach ($this->fillable as $key => $value) {
+          if (isset($this->{$value})) {
+            if (is_string($this->{$value})) {
+              $data[$value] = '"' . $this->{$value} . '"';
+            } else {
+              $data[$value] =  $this->{$value};
+            }
+          }
+        }
+    
+        if ($id) {
+          $this->update('estudiante', $data, [['id', '=', $id]]);
+        } else {
+          $this->set('estudiante', $data);
+          return $this->id;
+        }
+    }
     /**
      * Obtener información del estudiante
      *
@@ -45,10 +83,10 @@ class estudiante extends model
         return !$proyectos ? [] : $proyectos;
     }
 
-    public function listPendingForProject(string $codigoTrayecto)
+    public function listPendingForProject(string $idTrayecto)
     {
         try {
-            $estudiantes = $this->select('detalles_estudiantes', [['id', 'NOT IN', '(SELECT estudiante_id FROM integrante_proyecto)'], ['trayecto_id', '=', '"' . $codigoTrayecto . '"']]);
+            $estudiantes = $this->select('detalles_estudiantes', [['id', 'NOT IN', '(SELECT estudiante_id FROM integrante_proyecto)'], ['trayecto_id', '=', '"' . $idTrayecto . '"']]);
             return $estudiantes ? $estudiantes : null;
         } catch (Exception $th) {
             return $th;
