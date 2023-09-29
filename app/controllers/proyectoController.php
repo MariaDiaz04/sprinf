@@ -94,6 +94,7 @@ class proyectoController extends controller
             if (!isset($group[$item['id_proyecto']])) {
                 if (!isset($group[$item['id_proyecto']])) {
                     $group[$item['id_proyecto']] = [];
+                    $group[$item['id_proyecto']]['id'] = $item['id_proyecto'];
                     $group[$item['id_proyecto']]['display'] = '<b>' . $item['periodo_inicio'] . '</b> - ' . $item['nombre_proyecto'];
                     $group[$item['id_proyecto']]['nombre'] = $item['nombre_proyecto'];
                     $group[$item['id_proyecto']]['comunidad'] = $item['comunidad'];

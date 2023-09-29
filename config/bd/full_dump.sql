@@ -1546,3 +1546,11 @@ INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
 GROUP BY malla_curricular.codigo;
+
+
+DROP VIEW IF EXISTS detalles_historico_proyecto;
+CREATE VIEW detalles_historico_proyecto AS
+SELECT
+* 
+FROM proyecto_historico
+ORDER BY periodo_final DESC
