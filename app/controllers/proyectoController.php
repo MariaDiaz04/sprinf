@@ -64,7 +64,11 @@ class proyectoController extends controller
 
         $periodo = $this->periodo->get();
 
-        $historico = $this->historico();
+        $historicoEstudiantes = $this->historicoEstudiantes();
+        $historicoProyecto = $this->historicoProyecto();
+
+        // echo json_encode($historicoEstudiantes);
+        // exit();
 
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
@@ -73,10 +77,80 @@ class proyectoController extends controller
             'cerrarFase' => empty($pendientes) && !empty($proyectos),
             'tutores' => $tutores,
             'trayectos' => $trayectos,
-            'historico' => $historico,
+            'historicoEstudiantes' => $historicoEstudiantes,
 
         ]);
     }
+
+    function historicoProyecto(): array
+    {
+
+        $historico = $this->proyectoHistorico->all();
+
+        $group = [];
+        foreach ($historico as $item) {
+            if (!isset($group[$item['id_proyecto']])) {
+                if (!isset($group[$item['id_proyecto']][$item['periodo_inicio']])) {
+                    $group[$item['id_proyecto']][$item['periodo_inicio']] = [];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['nombre'] = $item['nombre_proyecto'];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['comunidad'] = $item['comunidad'];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['tutor_in'] = $item['tutor_in'];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['tutor_ex'] = $item['tutor_ex'];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['motor_productivo'] = $item['motor_productivo'];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['resumen'] = $item['resumen'];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['direccion'] = $item['direccion'];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['municipio'] = $item['municipio'];
+                    $group[$item['id_proyecto']][$item['periodo_inicio']]['parroquia'] = $item['parroquia'];
+                }
+            }
+            foreach ($item as $key => $value) {
+                if ($key == 'id_proyecto') continue;
+                $group[$item['id_proyecto']][$item['periodo_inicio']]['integrantes'][$item['cedula_estudiante']][$key] = $value;
+            }
+        }
+        return $group;
+    }
+
+    function historicoEstudiantes(): array
+    {
+        try {
+            $historico = $this->proyectoHistorico->all();
+
+            $group = [];
+            foreach ($historico as $item) {
+                if (!isset($group[$item['id_proyecto']])) {
+                    $group[$item['id_proyecto']] = [];
+                    $group[$item['id_proyecto']]['id'] = $item['id_proyecto'];
+                    $group[$item['id_proyecto']]['nombre'] = $item['nombre_proyecto'];
+                }
+                foreach ($item as $key => $value) {
+                    if ($key == 'id_proyecto') continue;
+                    $group[$item['id_proyecto']]['integrantes'][$item['cedula_estudiante']][$key] = $value;
+                }
+            }
+
+            $response = [];
+
+            foreach ($group as $key => $proyecto) {
+                $integrantes = [];
+                foreach ($proyecto['integrantes'] as $key => $value) {
+                    $info = ['nombre' => $value['nombre_estudiante'] . ' - ' . $value['cedula_estudiante'], 'value' => $value['cedula_estudiante']];
+                    $integrantes[] = (object)$info;
+                    # code...
+                }
+                $informacionProyecto = [
+                    'nombre' => $proyecto['nombre'],
+                    'integrantes' => $integrantes
+                ];
+                $response[] = (object)$informacionProyecto;
+            }
+
+            return $response;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
 
     public function create()
     {
@@ -98,8 +172,8 @@ class proyectoController extends controller
             $trayecto = $this->trayectos->findByFase($fase);
             // VALIDACIONES
 
-            foreach ($integrantes as $codigoEstudiante) {
-                $dataEstudiante = $this->estudiantes->find($codigoEstudiante);
+            foreach ($integrantes as $cedula) {
+                $dataEstudiante = $this->estudiantes->findByCedula($cedula);
                 // VERIFICAR QUE UN ESTUDIANTE NO PERTENEZCA A OTRO GRUPO DE PROYECTO
                 if ($dataEstudiante['proyecto_id'] != null) {
                     throw new Exception("Estudiante " . $dataEstudiante['nombre'] . " " . $dataEstudiante['apellido'] . " ya pertenece a un proyecto");
@@ -322,47 +396,8 @@ class proyectoController extends controller
         }
     }
 
-    function historico()
-    {
-        try {
-            $historico = $this->proyectoHistorico->all();
 
-            $group = [];
-            foreach ($historico as $item) {
-                if (!isset($group[$item['id_proyecto']])) {
-                    $group[$item['id_proyecto']] = [];
-                    $group[$item['id_proyecto']]['id'] = $item['id_proyecto'];
-                    $group[$item['id_proyecto']]['nombre'] = $item['nombre_proyecto'];
-                }
-                foreach ($item as $key => $value) {
-                    if ($key == 'id_proyecto') continue;
-                    $group[$item['id_proyecto']]['integrantes'][$item['cedula_estudiante']][$key] = $value;
-                }
-            }
 
-            $response = [];
-
-            foreach ($group as $key => $proyecto) {
-                $integrantes = [];
-                foreach ($proyecto['integrantes'] as $key => $value) {
-                    $info = ['nombre' => $value['nombre_estudiante'], 'value' => $value['cedula_estudiante']];
-                    $integrantes[] = (object)$info;
-                    # code...
-                }
-                $informacionProyecto = [
-                    'nombre' => $proyecto['nombre'],
-                    'integrantes' => $integrantes
-                ];
-                $response[] = (object)$informacionProyecto;
-            }
-
-            http_response_code(200);
-            return $response;
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode($e->getMessage());
-        }
-    }
 
     function evaluar(Request $request): void
     {

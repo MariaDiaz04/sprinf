@@ -23,7 +23,7 @@ CREATE TABLE `sprinf_bd`.`fase` (
 CREATE TABLE `sprinf_bd`.`seccion` (
   `codigo` varchar(255) UNIQUE PRIMARY KEY,
   `trayecto_id` varchar(255),
-  `observacion` int
+  `observacion` varchar(255)
 );
 
 CREATE TABLE `sprinf_bd`.`malla_curricular` (

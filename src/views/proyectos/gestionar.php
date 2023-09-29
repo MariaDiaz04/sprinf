@@ -3,8 +3,19 @@
     background-color: none !important;
     border: none !important;
     box-shadow: none !important;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+  }
+
+  .transfer-double-content {
+    display: flex;
+  }
+
+  .transfer-double-content-right {
+    flex-grow: 1;
+  }
+
+  .transfer-double-content-left {
+    flex-grow: 1;
   }
 </style>
 <div>
@@ -207,13 +218,39 @@
           <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardarHistorico">
             <input type="hidden" name="estatus" value="1">
             <div class="container-fluid">
-              <div class="transfer">
+              <div class="row pb-2">
+                <div class="col-12">
+                  <div class="row form-group">
+                    <div class="col-lg-8">
+                      <label class="form-label" for="nombre">Proyecto </label>
+                      <select class="form-select" name="fase_id" id="selectFaseId">
 
+                        <?php foreach ($fases as $fase) : ?>
+                          <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+
+                    <div class="col-lg-4">
+                      <label class="form-label" for="fase_id">Trayecto</label>
+                      <select class="form-select" name="fase_id" id="selectFaseId">
+
+                        <?php foreach ($fases as $fase) : ?>
+                          <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <hr class="border-light m-0">
-              <div class="text-right mt-3">
-                <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
-              </div>
+            </div>
+            <hr>
+            <div class="transfer">
+
+            </div>
+            <hr class="border-light m-0">
+            <div class="text-right mt-3" style="text-align: end;">
+              <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
             </div>
           </form>
         </div>
@@ -227,7 +264,7 @@
     dataProyectos = []
 
 
-    var groupDataArray1 = <?= json_encode($historico); ?>;
+    var groupDataArray1 = <?= json_encode($historicoEstudiantes); ?>;
 
     console.log(groupDataArray1)
 
@@ -249,10 +286,10 @@
 
     $('#proyectoGuardarHistorico').submit(function(e) {
       e.preventDefault()
-      data = $(this).serializeArray();
-      console.log(data)
+      formData = $(this).serializeArray();
       items = transfer.getSelectedItems();
-      console.log(items)
+      data = [...formData, ...items];
+      console.log(data)
     })
   </script>
   <script>

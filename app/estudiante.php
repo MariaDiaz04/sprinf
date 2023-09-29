@@ -41,9 +41,22 @@ class estudiante extends model
      */
     function find(string $id): array
     {
-        $proyectos = $this->selectOne("detalles_estudiantes", [['id', '=', "'" . $id . "'"]]);
-        return !$proyectos ? [] : $proyectos;
+        $estudiante = $this->selectOne("detalles_estudiantes", [['id', '=', "'" . $id . "'"]]);
+        return !$estudiante ? [] : $estudiante;
     }
+
+    /**
+     * Obtener información del estudiante
+     *
+     * @param string $id
+     * @return array
+     */
+    function findByCedula(string $cedula): array
+    {
+        $estudiante = $this->selectOne("detalles_estudiantes", [['cedula', '=', "'" . $cedula . "'"]]);
+        return !$estudiante ? [] : $estudiante;
+    }
+
 
     public function listPendingForProject(string $codigoTrayecto)
     {
