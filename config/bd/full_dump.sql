@@ -1,4 +1,4 @@
-DROP SCHEMA `sprinf_bd`;
+DROP SCHEMA IF EXISTS `sprinf_bd`;
 CREATE SCHEMA `sprinf_bd`;
 
 CREATE TABLE `sprinf_bd`.`periodo` (

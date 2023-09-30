@@ -53,28 +53,17 @@ class persona extends model
 
   public function setPersona(array $data)
   {
+   
     foreach ($data as $prof => $value) {
 
       if (property_exists($this, $prof) && in_array($prof, $this->fillable)) {
         $this->{$prof} = $value;
       }
     }
+    // return $data;
   }
 
-  // public function save($id = null)
-  // {
-  //   $data = [];
 
-  //   foreach ($this->fillable as $key => $value) {
-  //     if (isset($this->{$value})) {
-  //       if (is_string($this->{$value})) {
-  //         $data[$value] = '"' . $this->{$value} . '"';
-  //       } else {
-  //         $data[$value] =  $this->{$value};
-  //       }
-  //     }
-  //   }
-  // }
 
   public function save()
   {
@@ -90,4 +79,6 @@ class persona extends model
 
     return $this->cedula;
   }
+
+  
 }

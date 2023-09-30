@@ -19,8 +19,7 @@
             <th>Cedula</th>
             <th>Nombre</th>
             <th>Apellido</th>
-            <th>email</th>
-            <th>telefono</th>
+            <th>Email</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -43,30 +42,44 @@
             <div class="container-fluid">
               <div class="row pb-2">
                 <div class="col-12">
-                  <div class="row form-group">
+                <div class="row form-group">
+                <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Cedula *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="cedula" id="cedula">
+                    </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre *</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
                     </div>
+                </div>
+                  <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="apellido">Apellido *</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
                     </div>
-                  </div>
-                  <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="direccion">Dirección</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="direccion" id="direccion">
                     </div>
+                  </div>
+                  <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="telefono">Teléfono</label>
                       <input type="number" class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
                     </div>
                   </div>
-                  <div class="row form-group">
+
+                  <br>
+                    <hr> <h5 class="modal-title" id="crearLabel">Usuario Estudiante</h5>
+                    <br>
+                    <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="email">Correo Electronico</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="email" id="email">
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="contrasena">Contraseña</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="contrasena" id="contrasena">
                     </div>
                   </div>
                 </div>
@@ -90,6 +103,7 @@
 
 
   <script>
+   let showDetailsUrl = "<?= APP_URL . $this->Route('profesores/showDetails') ?>";
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -101,7 +115,6 @@
       // luego en la función table.on(). verifico si la clase del boton en el que hice click
       // contiene el nombre de alguna acción que haya definido
 
-
       let table = new DataTable('#example', {
         ajax: '<?= $this->Route('estudiantes/ssp') ?>',
         processing: true,
@@ -111,32 +124,30 @@
         columnDefs: [{
           data: null,
           render: function(data, type, row, meta) {
-            return `<div class="dropdown show">
-                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            return `<div class="btn-group dropstart">
+                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown-${row[0]}" >
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
+                        <a class="dropdown-item" onClick="showDetails('${row[4]}')" href="#">Mostrar Datos de Contacto</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
-          targets: 5 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          targets: 4 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
+
+
 
       $('#guardar').submit(function(e) {
         e.preventDefault()
 
         toggleLoading(true);
 
-
         url = $(this).attr('action');
         data = $(this).serializeArray();
-
-
-
-
         $.ajax({
           type: "POST",
           url: url,
@@ -144,6 +155,7 @@
           error: function(error, status) {
             toggleLoading(false)
             alert(error.responseText)
+            console.log(error, status)
           },
           success: function(data, status) {
             table.ajax.reload();
@@ -151,10 +163,12 @@
             document.getElementById("guardar").reset();
             // actualizar tabla
             toggleLoading(false)
+            console.log(data, status)
           },
         });
 
       })
+
 
       function edit(id) {
         alert(`Editing ${id}`)
@@ -176,4 +190,24 @@
 
       }
     })
+
+    function showDetails(id) {
+
+      $.ajax({
+        type: "POST",
+        url: showDetailsUrl,
+        data: {
+          'codigo': id
+        },
+        error: function(error, status) {
+          alert(error.responseText)
+        },
+        success: function(data, status) {
+          datos = JSON.parse(data)
+          $('#datos').modal('show')
+          $('#datosContacto').find('#telefono').val(datos.telefono)
+          $('#datosContacto').find('#direccion').val(datos.direccion)
+        },
+      });
+    }
   </script>

@@ -79,7 +79,6 @@ class usuario extends model
             ['email', '=', '"' . $email . '"']
         ]);
 
-        //TAREASARAI: explicar en video de seguridad
         if (!password_verify($contrasena, $credenciales['contrasena'])) {
             return [
                 'estatus' => '0',

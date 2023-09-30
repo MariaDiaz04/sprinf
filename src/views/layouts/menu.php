@@ -44,7 +44,7 @@
             </g>
           </svg>
         </span>
-        <span class="app-brand-text demo menu-text fw-bolder ms-2">SPRINF</span>
+        <span class="app-brand-text demo menu-text fw-bolder ms-2">SPRINF ff</span>
       </a>
 
       <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -213,15 +213,12 @@
             </a>
           </li> -->
         </ul>
-        <li class="menu-item <?= $this->currentPath() == 'usuarioCrear' ? 'active' : '' ?>">
+        <!-- <li class="menu-item <?= $this->currentPath() == 'usuarioCrear' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('usuarioCrear') ?>" class="menu-link">
           <i class="menu-icon tf-icons bx bx-group"></i>
           <div data-i18n="Analytics">Docentes</div>
         </a>
-      </li>
-
-
-
+      </li> -->
 
     </ul>
   </aside>
