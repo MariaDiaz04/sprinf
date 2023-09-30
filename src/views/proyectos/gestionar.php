@@ -17,6 +17,10 @@
   .transfer-double-content-left {
     flex-grow: 1;
   }
+
+  .swal2-container {
+    z-index: 100000;
+  }
 </style>
 <div>
   <div>
@@ -208,7 +212,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="historico" tabindex="-1" role="dialog" aria-labelledby="historicoLabel" aria-hidden="true">
+  <div class="modal fade" id="historico" role="dialog" aria-labelledby="historicoLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -306,7 +310,7 @@
             <hr class="border-light m-0">
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <input type="submit" class="btn btn-primary" value="Guardar">
+              <input type="submit" class="btn btn-primary" value="Guardar" id="submit">
               <div id="loading">
                 <div class="spinner-border text-primary" role="status">
                   <span class="sr-only"></span>
@@ -329,8 +333,6 @@
         e.preventDefault()
 
         let proyectoSeleccionado = $('#selectProyecto option:selected').data()
-        console.log($('#historico #telefono'))
-        console.log($('#historico'))
 
         $('#historico #nombre').val(proyectoSeleccionado.nombre)
         $('#historico #motor_productivo').val(proyectoSeleccionado.motor_productivo)
@@ -364,21 +366,12 @@
 
     var transfer = $(".transfer").transfer(settings3);
 
-    function toggleLoading(show, form = '') {
-      if (show) {
-        $(`${form} #loading`).show();
-        $(`${form} #submit`).hide();
-      } else {
-        $(`${form} #loading`).hide();
-        $(`${form} #submit`).show();
-      }
 
-    }
-
-    toggleLoading(false)
 
 
     $(document).ready(() => {
+
+
 
       toggleLoading(false)
 
@@ -444,7 +437,6 @@
         }
 
         url = $(this).attr('action');
-        console.log(data)
 
         $.ajax({
           type: "POST",
@@ -452,9 +444,26 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false, '#proyectoGuardarHistorico')
-            alert(error.responseText)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
           },
           success: function(data, status) {
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'success',
+              title: 'Creación Exitosa',
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
+            $('#historico').modal('hide')
             table.ajax.reload();
             // usar sweetalerts
             document.getElementById("guardar").reset();
@@ -501,13 +510,13 @@
       }
 
       // TOGGLE BUTTON AND SPINNER
-      function toggleLoading(show) {
+      function toggleLoading(show, form = '') {
         if (show) {
-          $('#guardarLoading').show();
-          $('#guardarSubmit').hide();
+          $(`${form} #loading`).show();
+          $(`${form} #submit`).hide();
         } else {
-          $('#guardarLoading').hide();
-          $('#guardarSubmit').show();
+          $(`${form} #loading`).hide();
+          $(`${form} #submit`).show();
         }
 
       }
