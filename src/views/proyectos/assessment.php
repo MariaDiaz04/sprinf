@@ -8,7 +8,7 @@
       </h4>
     </div>
   </div>
-  <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
+  <!-- <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
 
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>Atención!</strong> Han ocurrido algunos errores críticos al generar baremos:
@@ -32,7 +32,7 @@
 
       </ul>
     </div>
-  <?php endif; ?>
+  <?php endif; ?> -->
 
   <?php foreach ($baremos as $materia) : ?>
     <div class="card mb-3">
@@ -104,7 +104,12 @@
             <?php endforeach; ?>
           <?php endif; ?>
           <div class="text-right mt-3 d-flex justify-content-end">
-            <input type="submit" class="btn btn-outline-primary" value='Editar Notas' />&nbsp;
+            <input type="submit" class="btn btn-outline-primary submit" id="" value='Editar Notas' />&nbsp;
+            <div class="loading">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -130,6 +135,9 @@
 <script>
   let urlEvaluar = "<?= APP_URL . $this->Route('proyectos/subir-notas') ?>";
   $(document).ready(() => {
+
+    toggleLoading(false)
+
     $('#evaluarProyecto').submit(function(e) {
       e.preventDefault()
 
@@ -152,10 +160,27 @@
             url: url,
             data: data,
             error: function(error, status) {
-              alert(error.responseText)
+              Swal.fire({
+                position: 'bottom-end',
+                icon: 'error',
+                title: error.responseText,
+                showConfirmButton: false,
+                toast: true,
+                timer: 2000
+              })
+
             },
             success: function(data, status) {
               console.log(data)
+              Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: 'Proyecto Evaluado',
+                showConfirmButton: false,
+                toast: true,
+                timer: 2000
+              })
+              window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
             },
           });
         }
@@ -168,17 +193,51 @@
 
       data = $(this).serializeArray();
 
+      toggleLoading(true, this)
+
       $.ajax({
         type: "POST",
         url: urlEvaluar,
         data: data,
         error: function(error, status) {
-          alert(error.responseText)
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
         },
         success: function(data, status) {
-          console.log(data)
+          toggleLoading(false)
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Actualizacion Exitosa',
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
         },
       });
     })
+
+    function toggleLoading(show, form) {
+      if (!form) {
+        $('.loading').hide()
+        $('.submit').show()
+      } else {
+
+        if (show) {
+          $(form).find('.loading').show()
+          $(form).find('.submit').hide()
+        } else {
+          $(form).find('.loading').hide()
+          $(form).find('.submit').show()
+        }
+      }
+
+    }
   });
 </script>

@@ -70,7 +70,15 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false)
-            alert(error.responseText)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
           },
           success: function(data, status) {
             table.ajax.reload();

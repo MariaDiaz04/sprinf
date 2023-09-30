@@ -112,8 +112,16 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false, '#guardar')
-            alert(error.responseText)
-            console.log(error)  
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
+            console.log(error)
           },
           success: function(data, status) {
             table.ajax.reload();
@@ -152,7 +160,7 @@
 
 
 
-     
+
 
       function edit(id) {
         alert(`Editing ${id}`)

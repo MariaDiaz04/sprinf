@@ -42,8 +42,8 @@
             <div class="container-fluid">
               <div class="row pb-2">
                 <div class="col-12">
-                <div class="row form-group">
-                  <div class="col-lg-6">
+                  <div class="row form-group">
+                    <div class="col-lg-6">
                       <label class="form-label" for="nombre">Cedula *</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="cedula" id="cedula">
                     </div>
@@ -51,31 +51,32 @@
                       <label class="form-label" for="nombre">Nombre *</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
                     </div>
-                </div>
-                <div class="row form-group">
+                  </div>
+                  <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="apellido">Apellido *</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
                     </div>
-                  
-                  <!-- <div class="row form-group"> -->
+
+                    <!-- <div class="row form-group"> -->
                     <div class="col-lg-6">
                       <label class="form-label" for="direccion">Dirección</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="direccion" id="direccion">
                     </div>
-                </div>
-                    <div class="row form-group">
+                  </div>
+                  <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="telefono">Teléfono</label>
                       <input type="number" class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
                     </div>
-                    </div>
-                
+                  </div>
+
                   <!-- <div class="row form-group"> -->
-                    <br>
-                    <hr> <h5 class="modal-title" id="crearLabel">Usuario Docente</h5>
-                    <br>
-                    <div class="row form-group">
+                  <br>
+                  <hr>
+                  <h5 class="modal-title" id="crearLabel">Usuario Docente</h5>
+                  <br>
+                  <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="email">Correo Electronico</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="email" id="email">
@@ -92,7 +93,7 @@
           <!-- footer de acciones -->
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            
+
             <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
             <div id="guardarLoading">
               <div class="spinner-border text-primary" role="status">
@@ -192,7 +193,15 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false)
-            alert(error.responseText)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
           },
           success: function(data, status) {
             table.ajax.reload();
@@ -236,7 +245,15 @@
           'codigo': id
         },
         error: function(error, status) {
-          alert(error.responseText)
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+
         },
         success: function(data, status) {
           datos = JSON.parse(data)

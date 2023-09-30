@@ -17,10 +17,6 @@
   .transfer-double-content-left {
     flex-grow: 1;
   }
-
-  .swal2-container {
-    z-index: 100000;
-  }
 </style>
 <div>
   <div>
@@ -488,7 +484,15 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false)
-            alert(error.responseText)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
           },
           success: function(data, status) {
             table.ajax.reload();
@@ -567,7 +571,15 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false)
-            alert(error.responseText)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
           },
           success: function(data, status) {
             table.ajax.reload();
@@ -596,7 +608,15 @@
           },
           error: function(error, status) {
             toggleLoading(false)
-            alert(error.responseText)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
           },
           success: function(data, status) {
             estudiantes = JSON.parse(data)

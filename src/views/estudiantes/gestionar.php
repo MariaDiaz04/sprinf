@@ -42,44 +42,45 @@
             <div class="container-fluid">
               <div class="row pb-2">
                 <div class="col-12">
-                <div class="row form-group">
-                <div class="col-lg-6">
+                  <div class="row form-group">
+                    <div class="col-lg-6">
                       <label class="form-label" for="nombre">Cedula *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="cedula" id="cedula">
+                      <input type="text" required class="form-control mb-1" placeholder="..." name="cedula" id="cedula">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
+                      <input type="text" required class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
                     </div>
-                </div>
+                  </div>
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="apellido">Apellido *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
+                      <input type="text" required class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="direccion">Dirección</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="direccion" id="direccion">
+                      <input type="text" required class="form-control mb-1" placeholder="..." name="direccion" id="direccion">
                     </div>
                   </div>
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
+                      <input type="number" required class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
                     </div>
                   </div>
 
                   <br>
-                    <hr> <h5 class="modal-title" id="crearLabel">Usuario Estudiante</h5>
-                    <br>
-                    <div class="row form-group">
+                  <hr>
+                  <h5 class="modal-title" id="crearLabel">Usuario Estudiante</h5>
+                  <br>
+                  <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="email">Correo Electronico</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="email" id="email">
+                      <input type="email" required class="form-control mb-1" placeholder="..." name="email" id="email">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="contrasena">Contraseña</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="contrasena" id="contrasena">
+                      <input type="password" required class="form-control mb-1" placeholder="..." name="contrasena" id="contrasena">
                     </div>
                   </div>
                 </div>
@@ -103,7 +104,7 @@
 
 
   <script>
-   let showDetailsUrl = "<?= APP_URL . $this->Route('profesores/showDetails') ?>";
+    let showDetailsUrl = "<?= APP_URL . $this->Route('profesores/showDetails') ?>";
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -154,7 +155,15 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false)
-            alert(error.responseText)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
             console.log(error, status)
           },
           success: function(data, status) {
@@ -200,7 +209,15 @@
           'codigo': id
         },
         error: function(error, status) {
-          alert(error.responseText)
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+
         },
         success: function(data, status) {
           datos = JSON.parse(data)

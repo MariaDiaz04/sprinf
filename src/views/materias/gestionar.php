@@ -283,8 +283,16 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false, '#guardar')
-            alert(error.responseText)
-            console.log(error)  
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
+            console.log(error)
           },
           success: function(data, status) {
             table.ajax.reload();
@@ -313,7 +321,15 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false, '#actualizar')
-            alert(error.responseText)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
           },
           success: function(data, status) {
             table.ajax.reload();
@@ -347,7 +363,15 @@
           'codigo': id
         },
         error: function(error, status) {
-          alert(error.responseText)
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+
         },
         success: function(data, status) {
 
@@ -384,7 +408,15 @@
           'codigo': id
         },
         error: function(error, status) {
-          alert(error.responseText)
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+
         },
         success: function(data, status) {
           alert('Materia borrada exitosamente')

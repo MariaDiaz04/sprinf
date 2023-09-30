@@ -83,7 +83,15 @@
           url: url,
           data: data,
           error: function(error, status) {
-            alert(error.responseText)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
           },
           success: function(data, status) {
             alert('Nuevo Periodo Creado')
