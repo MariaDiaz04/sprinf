@@ -5,6 +5,8 @@ namespace API;
 use App\usuario;
 use App\controllers\controller;
 
+use Firebase\JWT\JWT;
+
 use Symfony\Component\HttpFoundation\Request;
 
 class auth extends controller
@@ -30,11 +32,21 @@ class auth extends controller
         echo json_encode('Unauthorized');
       } else {
 
-        $data = [
-          'correo' => $correo,
-          'contrasena' => $contrasena
+        $ahora = strtotime("now");
+
+        $key = 'CLAVE_DE_APLICACION';
+        $payload = [
+          'exp' => $ahora + 3600,
+          'data' => [
+            'id' => $infoUsuario['id'],
+            'rol' => $infoUsuario['rol_id']
+          ]
         ];
-        echo json_encode($data);
+
+        $jwt = JWT::encode($payload, $key, 'HS256');
+
+
+        echo json_encode($jwt);
       }
     } catch (\Exception $th) {
       http_response_code(500);
