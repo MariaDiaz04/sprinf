@@ -77,6 +77,7 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
             'Aura\\Session\\_Config\\' => 21,
             'Aura\\Session\\' => 13,
             'App\\' => 4,
+            'API\\' => 4,
         ),
     );
 
@@ -201,6 +202,10 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
+        ),
+        'API\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/api',
         ),
     );
 

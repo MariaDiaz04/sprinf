@@ -1,6 +1,8 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
+use Symfony\Component\Routing\Loader\YamlFileLoader;
+
 /* use App\Controllers\AuthenticationController;
 use App\Controllers\DashboardController; */
 
@@ -18,8 +20,12 @@ use App\controllers\proyectoController;
 use App\controllers\homeController;
 use App\controllers\moduloController;
 use App\controllers\trayectosController;
-use App\proyecto;
-use App\seccion;
+
+###############################################
+// API
+##############################################
+// use API\apiAuthController;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -27,6 +33,7 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
+
 
 if ($_ENV['ENVIRONMENT'] != "production") {
     // Show errors
@@ -53,6 +60,22 @@ $context->fromRequest($request);
 
 // Create the router container and get the routing map.
 $routes = new RouteCollection();
+
+############################################################
+//                          API
+############################################################
+
+$routes->add('api_login', new Route(
+    '/api/auth/login',
+    [
+        'controller' => API\auth::class,
+        'method' => 'login',
+    ]
+));
+
+############################################################
+//                          WEB
+############################################################
 
 $routes->add('index', new Route(
     '/',
