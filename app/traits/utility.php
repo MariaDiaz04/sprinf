@@ -2,7 +2,11 @@
 
 namespace App\Traits;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 use Exception;
+use stdClass;
 
 /**
  * Trait General para funciones Helpers
@@ -80,5 +84,29 @@ trait Utility
     openssl_pkey_export($private_key, $privKey);
     openssl_private_decrypt(base64_decode($encryptedData), $decrypted, $privKey);
     return $decrypted;
+  }
+
+  function obtenerTokenJWT(): stdClass|bool
+  {
+    try {
+      $headers  = apache_request_headers();
+      $key = 'CLAVE_DE_APLICACION';
+      if (!isset($headers['Authorization'])) {
+        throw new Exception('Peticion no autenticada');
+      }
+      $jwt = explode(" ", $headers['Authorization'])[1];
+      $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+
+      return $decoded;
+    } catch (Exception $th) {
+      http_response_code(401);
+      echo json_encode(
+        [
+          'error' => $th->getMessage(),
+          'status' => 'error'
+        ]
+      );
+      return false;
+    }
   }
 }

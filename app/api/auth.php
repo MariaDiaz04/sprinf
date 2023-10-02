@@ -4,6 +4,7 @@ namespace API;
 
 use App\usuario;
 use App\controllers\controller;
+use App\Traits\Utility;
 
 use Firebase\JWT\JWT;
 
@@ -11,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class auth extends controller
 {
+
+  use Utility;
 
   public $usuarios;
 
@@ -28,8 +31,8 @@ class auth extends controller
       $infoUsuario = $this->usuarios->findByEmail($correo);
 
       if (!$infoUsuario || !password_verify($contrasena, $infoUsuario['contrasena'])) {
-        http_response_code(401);
-        echo json_encode('Unauthorized');
+        http_response_code(400);
+        echo json_encode('Bad Request');
       } else {
 
         $ahora = strtotime("now");
@@ -44,7 +47,6 @@ class auth extends controller
         ];
 
         $jwt = JWT::encode($payload, $key, 'HS256');
-
 
         echo json_encode($jwt);
       }

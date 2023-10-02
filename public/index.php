@@ -73,6 +73,14 @@ $routes->add('api_login', new Route(
     ]
 ));
 
+$routes->add('api_show', new Route(
+    '/api/user',
+    [
+        'controller' => API\user::class,
+        'method' => 'show',
+    ]
+));
+
 ############################################################
 //                          WEB
 ############################################################
