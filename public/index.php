@@ -61,26 +61,16 @@ $context->fromRequest($request);
 // Create the router container and get the routing map.
 $routes = new RouteCollection();
 
+
 ############################################################
 //                          API
 ############################################################
+$listaDeRutas = [];
+require __DIR__ . '/../config/routes/api.php';
 
-$routes->add('api_login', new Route(
-    '/api/auth/login',
-    [
-        'controller' => API\auth::class,
-        'method' => 'login',
-    ]
-));
-
-$routes->add('api_show', new Route(
-    '/api/user',
-    [
-        'controller' => API\user::class,
-        'method' => 'show',
-    ]
-));
-
+foreach ($listaDeRutas as $nombre => $ruta) {
+    $routes->add($nombre, $ruta);
+}
 ############################################################
 //                          WEB
 ############################################################
