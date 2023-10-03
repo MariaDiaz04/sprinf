@@ -1,23 +1,6 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-use Symfony\Component\Routing\Loader\YamlFileLoader;
-
-/* use App\Controllers\AuthenticationController;
-use App\Controllers\DashboardController; */
-
-use App\controllers\inscripcionController;
-use App\controllers\configuracionController;
-use App\controllers\periodoController;
-use App\controllers\estudianteController;
-use App\controllers\materiasController;
-use App\controllers\aspectosController;
-use App\controllers\baremosController;
-use App\controllers\dimensionController;
-use App\controllers\proyectoController;
-use App\controllers\moduloController;
-use App\controllers\trayectosController;
-
 ###############################################
 // API
 ##############################################
@@ -28,7 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 
