@@ -67,7 +67,16 @@ class proyectoController extends controller
         $historicoEstudiantes = $this->historicoEstudiantes();
         $historicoProyectos = $this->historicoProyecto();
 
+        $listaEstudiantes = $this->estudiantes->pendientesAProyecto();
 
+        $dataEstudiantes = [];
+        foreach ($listaEstudiantes as $estudiante) {
+            $info = [
+                'nombre' => $estudiante['cedula'] . ' - ' . $estudiante['nombre'] . ' ' . $estudiante['apellido'],
+                'value' => $estudiante['cedula']
+            ];
+            array_push($dataEstudiantes, $info);
+        }
 
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
@@ -78,7 +87,7 @@ class proyectoController extends controller
             'trayectos' => $trayectos,
             'historicoProyectos' => $historicoProyectos,
             'historicoEstudiantes' => $historicoEstudiantes,
-
+            'estudiantes' => $dataEstudiantes
         ]);
     }
 
@@ -234,10 +243,7 @@ class proyectoController extends controller
     function pendingStudents(Request $request): void
     {
         try {
-            $idFase = $request->get('idFase');
-            $trayecto = $this->trayectos->findByFase($idFase);
-
-            $estudiantes = $this->estudiantes->listPendingForProject($trayecto['codigo_trayecto']);
+            $estudiantes = $this->estudiantes->pendientesAProyecto();
 
             http_response_code(200);
             echo json_encode($estudiantes);

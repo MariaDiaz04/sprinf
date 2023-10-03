@@ -32,8 +32,6 @@ class estudiante extends model
         }
     }
 
-
-
     function setestudianteId(): void
     {
         $this->id = 'e-' . $this->persona_id;
@@ -96,10 +94,10 @@ class estudiante extends model
     }
 
 
-    public function listPendingForProject(string $codigoTrayecto)
+    public function pendientesAProyecto()
     {
         try {
-            $estudiantes = $this->select('detalles_estudiantes', [['id', 'NOT IN', '(SELECT estudiante_id FROM integrante_proyecto)'], ['trayecto_id', '=', '"' . $idTrayecto . '"']]);
+            $estudiantes = $this->select('estudiantes_pendientes_a_proyecto');
             return $estudiantes ? $estudiantes : null;
         } catch (Exception $th) {
             return $th;

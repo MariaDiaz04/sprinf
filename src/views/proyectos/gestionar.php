@@ -110,7 +110,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 mb-3">
                   <div class="row form-group">
 
                     <div class="col-lg-6">
@@ -149,41 +149,9 @@
 
                   </div>
                 </div>
+                <hr class="border-light m-0">
+                <div class="transferEstudiantes">
 
-                <div class="col-12">
-                  <div class="row form-group align-items-end">
-
-                    <div class="col-lg-10">
-                      <label class="form-label">Estudiantes *</label>
-                      <select class="form-select" id="selectEstudiante">
-                        <?php foreach ($estudiantes as $estudiante) : ?>
-                          <option value="<?= $estudiante->id ?>" data-cedula="<?= $estudiante->cedula ?>" data-nombre="<?= $estudiante->nombre ?>" data-apellido="<?= $estudiante->apellido ?>"><?= "$estudiante->cedula - $estudiante->nombre $estudiante->apellido" ?></option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-
-                    <div class="col-lg-1 align-middle">
-                      <button class="btn btn-primary" id="anadirEstudiante">Añadir</button>
-                    </div>
-
-                  </div>
-                </div>
-                <div class="col-12 mb-4">
-                  <div class="row form-group justify-content-center">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">C.I.</th>
-                          <th scope="col">Nombre</th>
-                          <th scope="col">Apellido</th>
-                          <th scope="col">Remover</th>
-                        </tr>
-                      </thead>
-                      <tbody id="cuerpoTablaEstudiantes">
-
-                      </tbody>
-                    </table>
-                  </div>
                 </div>
                 <hr class="border-light m-0">
                 <div class="text-right mt-3">
@@ -334,6 +302,7 @@
   <script>
     let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
 
+    // select de historico de estudiantes
     var groupDataArray1 = <?= json_encode($historicoEstudiantes); ?>;
     var settings3 = {
       groupDataArray: groupDataArray1,
@@ -351,7 +320,18 @@
 
     var transfer = $(".transfer").transfer(settings3);
 
+    // select de estudiantes
 
+    var estudiantes = <?= json_encode($estudiantes); ?>;
+    var estudiantesSettings = {
+      itemName: "nombre",
+      valueName: "value",
+      rightTabNameText: 'Integrantes',
+      tabNameText: 'Estudiantes',
+      dataArray: estudiantes,
+    };
+
+    var transfer2 = $(".transferEstudiantes").transfer(estudiantesSettings);
 
 
     $(document).ready(() => {
