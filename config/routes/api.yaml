@@ -1,4 +1,0 @@
-# Rutas para el blog
-api_auth:
-  path: /auth
-  controller: API\auth::class
