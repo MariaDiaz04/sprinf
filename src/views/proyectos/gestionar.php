@@ -96,11 +96,6 @@
                 <div class="col-12">
                   <div class="row form-group">
                     <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre">
-                    </div>
-
-                    <div class="col-lg-6">
                       <label class="form-label" for="fase_id">Fase *</label>
                       <select class="form-select" name="fase_id" id="selectFaseId">
 
@@ -108,6 +103,10 @@
                           <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
                         <?php endforeach; ?>
                       </select>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Nombre *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre">
                     </div>
                   </div>
                 </div>
@@ -139,18 +138,8 @@
                     </div>
 
                     <div class="col-lg-3">
-                      <label class="form-label" for="tlf_tin">Teléfono</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="tlf_tin" id="tlf_tin">
-                    </div>
-
-                    <div class="col-lg-3">
                       <label class="form-label" for="tutor_ex">Tutor Externo</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex">
-                    </div>
-
-                    <div class="col-lg-3">
-                      <label class="form-label" for="tlf_tex">Teléfono</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="tlf_ex" id="tlf_tex">
                     </div>
 
                     <div class="col-lg-6">
