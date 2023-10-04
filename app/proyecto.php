@@ -164,7 +164,7 @@ class proyecto extends model
      *
      * @return String - código de materia creada
      */
-    function insertTransaction(): String
+    function insertTransaction(): bool
     {
         try {
             parent::beginTransaction();
@@ -173,11 +173,10 @@ class proyecto extends model
             $team = $this->saveTeam();
 
             parent::commit();
-            return $codigo;
+            return true;
         } catch (Exception $e) {
-            echo $e->getMessage();
             parent::rollBack();
-            return '';
+            return false;
         }
     }
 

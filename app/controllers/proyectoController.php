@@ -214,8 +214,7 @@ class proyectoController extends controller
             $tutor_ex = $nuevoProyecto->request->get('tutor_ex');
             $id = $nuevoProyecto->request->get('id');
 
-
-            $this->proyecto->setProyectData([
+            $proyectData = [
                 'nombre' => $nombre,
                 'comunidad' => $comunidad,
                 'fase_id' => $fase_id,
@@ -227,10 +226,18 @@ class proyectoController extends controller
                 'parroquia' => $parroquia,
                 'tutor_in' => $tutor_in,
                 'tutor_ex' => $tutor_ex,
-                'id' => $id,
                 'integrantes' => $idEstudiantes
-            ]);
-            $this->proyecto->insertTransaction();
+            ];
+
+            if (isset($id)) {
+                $proyectData['id'] = $id;
+            }
+
+
+            $this->proyecto->setProyectData($proyectData);
+            $result = $this->proyecto->insertTransaction();
+
+            if (!$result) throw new Exception('Ha ocurrido un error al crear proyecto');
 
             http_response_code(200);
             echo json_encode($this->proyecto);

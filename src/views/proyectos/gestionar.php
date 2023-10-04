@@ -106,45 +106,46 @@
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre">
+                      <input type="text" class="form-control mb-1" placeholder="..." required name="nombre">
                     </div>
                   </div>
                 </div>
                 <div class="col-12 mb-3">
                   <div class="row form-group">
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="resumen">Dirección</label>
-                      <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 50px"></textarea>
-                    </div>
-
                     <div class="col-lg-3">
                       <label class="form-label" for="municipio">Municipio</label>
-                      <select class="form-select" name="municipio" id="selectmunicipio">
-
-                      </select>
+                      <input type="text" class="form-control mb-1" placeholder="..." required name="municipio">
                     </div>
-
                     <div class="col-lg-3">
                       <label class="form-label" for="parroquia">Parroquia</label>
-                      <select class="form-select" name="parroquia" id="selectparroquia">
-
-                      </select>
+                      <input type="text" class="form-control mb-1" placeholder="..." required name="parroquia">
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="resumen">Dirección</label>
+                      <textarea class="form-control" placeholder="..." required id="resumen" name="direccion" style="height: 50px"></textarea>
                     </div>
 
                     <div class="col-lg-3">
                       <label class="form-label" for="tutor_in">Tutor Interno</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_in">
+                      <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_in">
                     </div>
 
                     <div class="col-lg-3">
                       <label class="form-label" for="tutor_ex">Tutor Externo</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex">
+                      <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex">
                     </div>
 
                     <div class="col-lg-6">
                       <label class="form-label" for="comunidad">Comunidad</label>
-                      <textarea class="form-control" placeholder="..." id="comunidad" name="comunidad" style="height: 50px "></textarea>
+                      <textarea class="form-control" placeholder="..." required id="comunidad" name="comunidad" style="height: 50px "></textarea>
+                    </div>
+                    <div class="col-lg-3">
+                      <label class="form-label" for="motor_productivo">Motor Productivo</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." required name="motor_productivo">
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="resumen">Resumen</label>
+                      <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" style="height: 50px "></textarea>
                     </div>
 
                   </div>
@@ -154,8 +155,14 @@
 
                 </div>
                 <hr class="border-light m-0">
-                <div class="text-right mt-3">
-                  <input type="submit" class="btn btn-primary" value='Guardar Registro' />&nbsp;
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <input type="submit" class="btn btn-primary" value="Guardar" id="submit">
+                  <div id="loading">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="sr-only"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -438,14 +445,32 @@
         });
       })
 
-      $('#guardar').submit(function(e) {
+      $('#proyectoGuardar').submit(function(e) {
         e.preventDefault()
 
-        toggleLoading(true);
+        toggleLoading(true, '#proyectoGuardar');
+
+        formData = $(this).serializeArray();
+        items = transfer2.getSelectedItems();
+        data = [...formData];
+        counter = 0
+        for (const idIntegrante in items) {
+          integrante = {}
+          if (Object.hasOwnProperty.call(items, idIntegrante)) {
+            const element = items[idIntegrante];
+            integrante.name = `integrantes[${counter}]`
+            integrante.value = element.value
+            counter++
+            data.push(integrante)
+          }
+        }
 
 
         url = $(this).attr('action');
-        data = $(this).serializeArray();
+
+        console.log(data);
+
+        toggleLoading(false)
 
         $.ajax({
           type: "POST",
@@ -465,10 +490,9 @@
           },
           success: function(data, status) {
             table.ajax.reload();
-            // usar sweetalerts
-            document.getElementById("guardar").reset();
             // actualizar tabla
             toggleLoading(false)
+            document.getElementById("proyectoGuardar").reset();
           },
         });
 
@@ -494,128 +518,5 @@
 
       }
 
-      $('#anadirEstudiante').click(function(e) {
-        e.preventDefault();
-
-        let studentsAlreadyAppened = document.getElementById("cuerpoTablaEstudiantes").children.length;
-
-
-
-        if (studentsAlreadyAppened >= 5) {
-          alert('limite de estudiantes alcanzado');
-        } else {
-          let selectedStudent = $('#selectEstudiante option:selected');
-
-          let studentId = $(selectedStudent).val();
-
-          if (studentId) {
-
-            if ($("#cuerpoTablaEstudiantes").find(`#appenedStudent-${studentId}`).length > 0) {
-              alert('Estudiante ya ha sido añadido')
-              return false;
-            }
-
-            let fila = `<tr id="appenedStudent-${studentId}" class="studentRow">
-                      <th scope="row">
-                      <input type="text" name="integrantes[]" class="form-control-plaintext" value="${studentId}" hidden>
-                      ${$(selectedStudent).data('cedula')}
-                      </th>
-                      <td>${$(selectedStudent).data('nombre')}</td>
-                      <td>${$(selectedStudent).data('apellido')}</td>
-                      <td><button type="button" class="btn btn-secondary" onClick="removeStudent('${studentId}')">Eliminar</button></td>
-                    </tr>`;
-            $('#cuerpoTablaEstudiantes').append(fila);
-          }
-        }
-      })
-
-      $('#proyectoGuardar').submit(function(e) {
-        e.preventDefault()
-        url = $(this).attr('action');
-        data = $(this).serializeArray();
-
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: data,
-          error: function(error, status) {
-            toggleLoading(false)
-            Swal.fire({
-              position: 'bottom-end',
-              icon: 'error',
-              title: error.responseText,
-              showConfirmButton: false,
-              toast: true,
-              timer: 2000
-            })
-
-          },
-          success: function(data, status) {
-            table.ajax.reload();
-            // usar sweetalerts
-            document.getElementById("proyectoGuardar").reset();
-            // actualizar tabla
-            toggleLoading(false)
-          },
-        });
-      })
-
-      $('#selectFaseId').change(function(e) {
-        let selectedFase = $('#selectFaseId option:selected');
-
-        let faseId = $(selectedFase).val();
-
-        fetchEstudiantes(faseId);
-      })
-
-      function fetchEstudiantes(idFase) {
-        $.ajax({
-          type: "POST",
-          url: fetchStudentsUrl,
-          data: {
-            'idFase': idFase
-          },
-          error: function(error, status) {
-            toggleLoading(false)
-            Swal.fire({
-              position: 'bottom-end',
-              icon: 'error',
-              title: error.responseText,
-              showConfirmButton: false,
-              toast: true,
-              timer: 2000
-            })
-
-          },
-          success: function(data, status) {
-            estudiantes = JSON.parse(data)
-            if (estudiantes) {
-              renderSelectList(estudiantes)
-            } else {
-              $('#selectEstudiante').find('option').remove()
-            }
-          },
-        });
-      }
-
-      function renderSelectList(data) {
-        $('#selectEstudiante').find('option').remove()
-        data.forEach(estudiante => {
-          let row = `<option 
-            value="${estudiante.id}" 
-            data-cedula="${estudiante.cedula}" 
-            data-nombre="${estudiante.nombre}" 
-            data-apellido="${estudiante.apellido}">
-            ${estudiante.cedula} - ${estudiante.nombre} ${estudiante.apellido}
-          </option>`;
-
-          $('#selectEstudiante').append(row);
-        });
-      }
-
     })
-
-    function removeStudent(id) {
-      $(`#appenedStudent-${id}`).remove()
-    }
   </script>
