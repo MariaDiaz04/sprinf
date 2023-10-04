@@ -70,12 +70,15 @@ class proyectoController extends controller
         $listaEstudiantes = $this->estudiantes->pendientesAProyecto();
 
         $dataEstudiantes = [];
-        foreach ($listaEstudiantes as $estudiante) {
-            $info = [
-                'nombre' => $estudiante['cedula'] . ' - ' . $estudiante['nombre'] . ' ' . $estudiante['apellido'],
-                'value' => $estudiante['cedula']
-            ];
-            array_push($dataEstudiantes, $info);
+        if (isset($listaEstudiantes)) {
+
+            foreach ($listaEstudiantes as $estudiante) {
+                $info = [
+                    'nombre' => $estudiante['cedula'] . ' - ' . $estudiante['nombre'] . ' ' . $estudiante['apellido'],
+                    'value' => $estudiante['cedula']
+                ];
+                array_push($dataEstudiantes, $info);
+            }
         }
 
         return $this->view('proyectos/gestionar', [
@@ -240,44 +243,10 @@ class proyectoController extends controller
             if (!$result) throw new Exception('Ha ocurrido un error al crear proyecto');
 
             http_response_code(200);
-            echo json_encode($this->proyecto);
+            echo json_encode('Proyecto creado exitosamente');
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());
-        }
-    }
-
-    function pendingStudents(Request $request): void
-    {
-        try {
-            $estudiantes = $this->estudiantes->pendientesAProyecto();
-
-            http_response_code(200);
-            echo json_encode($estudiantes);
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode($e->getMessage());
-        }
-    }
-
-    public function show(Request $request, $id)
-    {
-        try {
-            $proyecto = $this->proyecto->find($id);
-            $estudiantes = $this->estudiantes->byProject($id);
-
-            return $this->view('proyectos/show', [
-                'proyecto' => $proyecto,
-                'estudiantes' => $estudiantes
-            ]);
-        } catch (PDOException $pdoe) {
-            return $this->view('errors/501', [
-                'message' => 'Error inesperado',
-            ]);
-        } catch (Exception $e) {
-            return $this->view('errors/501', [
-                'message' => $e->getMessage(),
-            ]);
         }
     }
 

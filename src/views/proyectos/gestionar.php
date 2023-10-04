@@ -441,6 +441,7 @@
             document.getElementById("guardar").reset();
             // actualizar tabla
             toggleLoading(false, '#proyectoGuardarHistorico')
+
           },
         });
       })
@@ -468,7 +469,6 @@
 
         url = $(this).attr('action');
 
-        console.log(data);
 
         toggleLoading(false)
 
@@ -492,7 +492,16 @@
             table.ajax.reload();
             // actualizar tabla
             toggleLoading(false)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'success',
+              title: 'Creación Exitosa',
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
             document.getElementById("proyectoGuardar").reset();
+            $('#crear').modal('hide')
           },
         });
 
