@@ -180,6 +180,37 @@ class proyecto extends model
         }
     }
 
+    public function save($id = null)
+    {
+        $preparedSql = "";
+        if ($id) {
+            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, motor_productivo, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
+                . "VALUES (:id, :fase_id, :nombre, :comunidad, :motor_productivo, :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
+        } else {
+            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, motor_productivo, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
+                . "VALUES (:fase_id, :nombre, :comunidad, :motor_productivo, :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
+        }
+        $query = $this->prepare($preparedSql);
+
+        if ($id) {
+            $query->bindParam(":id", $this->id);
+        }
+        $query->bindParam(":fase_id", $this->fase_id);
+        $query->bindParam(":nombre", $this->nombre);
+        $query->bindParam(":comunidad", $this->comunidad);
+        $query->bindParam(":motor_productivo", $this->motor_productivo);
+        $query->bindParam(":resumen", $this->resumen);
+        $query->bindParam(":direccion", $this->direccion);
+        $query->bindParam(":municipio", $this->municipio);
+        $query->bindParam(":parroquia", $this->parroquia);
+        $query->bindParam(":tutor_in", $this->tutor_in);
+        $query->bindParam(":tutor_ex", $this->tutor_ex);
+        $query->execute();
+
+        $this->id = $this->lastInsertId();
+        return $this->id;
+    }
+
     /**
      * Recorre el array de integrantes y los añade a 
      * la tabla de integrantes de proyecto
@@ -230,26 +261,7 @@ class proyecto extends model
         }
     }
 
-    public function save($id = null)
-    {
-        $data = [];
 
-        foreach ($this->fillable as $key => $value) {
-            if (isset($this->{$value})) {
-                if (is_string($this->{$value})) {
-                    $data[$value] = '"' . $this->{$value} . '"';
-                } else {
-                    $data[$value] =  $this->{$value};
-                }
-            }
-        }
-
-
-        unset($data['integrantes']);
-        $this->set('proyecto', $data);
-        $this->id = $this->lastInsertId();
-        return $this->id;
-    }
 
     function remove($id): void
     {
