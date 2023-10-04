@@ -26,6 +26,10 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         array (
             'Utils\\' => 6,
         ),
+        'T' => 
+        array (
+            'Traits\\' => 7,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -52,6 +56,7 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         array (
             'MyCLabs\\Enum\\' => 13,
             'Monolog\\' => 8,
+            'Model\\' => 6,
             'Matrix\\' => 7,
         ),
         'G' => 
@@ -70,6 +75,7 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         ),
         'C' => 
         array (
+            'Controllers\\' => 12,
             'Complex\\' => 8,
         ),
         'B' => 
@@ -93,6 +99,10 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         'Utils\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app/utils',
+        ),
+        'Traits\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/traits',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -167,6 +177,10 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'Model\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/models',
+        ),
         'Matrix\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
@@ -190,6 +204,10 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/controllers',
         ),
         'Complex\\' => 
         array (
@@ -228,24 +246,24 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
     );
 
     public static $classMap = array (
-        'App\\controllers\\aspectosController' => __DIR__ . '/../..' . '/app/controllers/aspectosController.php',
-        'App\\controllers\\baremosController' => __DIR__ . '/../..' . '/app/controllers/baremosController.php',
-        'App\\controllers\\clasesController' => __DIR__ . '/../..' . '/app/controllers/clasesController.php',
-        'App\\controllers\\configuracionController' => __DIR__ . '/../..' . '/app/controllers/configuracionController.php',
-        'App\\controllers\\controller' => __DIR__ . '/../..' . '/app/controllers/controller.php',
-        'App\\controllers\\dimensionController' => __DIR__ . '/../..' . '/app/controllers/dimensionController.php',
-        'App\\controllers\\estudianteController' => __DIR__ . '/../..' . '/app/controllers/estudianteController.php',
-        'App\\controllers\\homeController' => __DIR__ . '/../..' . '/app/controllers/homeController.php',
-        'App\\controllers\\inscripcionController' => __DIR__ . '/../..' . '/app/controllers/inscripcionController.php',
-        'App\\controllers\\materiasController' => __DIR__ . '/../..' . '/app/controllers/materiasController.php',
-        'App\\controllers\\moduloController' => __DIR__ . '/../..' . '/app/controllers/moduloController.php',
-        'App\\controllers\\periodoController' => __DIR__ . '/../..' . '/app/controllers/periodoController.php',
-        'App\\controllers\\profesorController' => __DIR__ . '/../..' . '/app/controllers/profesorController.php',
-        'App\\controllers\\proyectoController' => __DIR__ . '/../..' . '/app/controllers/proyectoController.php',
-        'App\\controllers\\seccionController' => __DIR__ . '/../..' . '/app/controllers/seccionController.php',
-        'App\\controllers\\trayectosController' => __DIR__ . '/../..' . '/app/controllers/trayectosController.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Controllers\\aspectosController' => __DIR__ . '/../..' . '/app/controllers/aspectosController.php',
+        'Controllers\\baremosController' => __DIR__ . '/../..' . '/app/controllers/baremosController.php',
+        'Controllers\\clasesController' => __DIR__ . '/../..' . '/app/controllers/clasesController.php',
+        'Controllers\\configuracionController' => __DIR__ . '/../..' . '/app/controllers/configuracionController.php',
+        'Controllers\\controller' => __DIR__ . '/../..' . '/app/controllers/controller.php',
+        'Controllers\\dimensionController' => __DIR__ . '/../..' . '/app/controllers/dimensionController.php',
+        'Controllers\\estudianteController' => __DIR__ . '/../..' . '/app/controllers/estudianteController.php',
+        'Controllers\\homeController' => __DIR__ . '/../..' . '/app/controllers/homeController.php',
+        'Controllers\\inscripcionController' => __DIR__ . '/../..' . '/app/controllers/inscripcionController.php',
+        'Controllers\\materiasController' => __DIR__ . '/../..' . '/app/controllers/materiasController.php',
+        'Controllers\\moduloController' => __DIR__ . '/../..' . '/app/controllers/moduloController.php',
+        'Controllers\\periodoController' => __DIR__ . '/../..' . '/app/controllers/periodoController.php',
+        'Controllers\\profesorController' => __DIR__ . '/../..' . '/app/controllers/profesorController.php',
+        'Controllers\\proyectoController' => __DIR__ . '/../..' . '/app/controllers/proyectoController.php',
+        'Controllers\\seccionController' => __DIR__ . '/../..' . '/app/controllers/seccionController.php',
+        'Controllers\\trayectosController' => __DIR__ . '/../..' . '/app/controllers/trayectosController.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\ActualValueIsNotAnObjectException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ActualValueIsNotAnObjectException.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',

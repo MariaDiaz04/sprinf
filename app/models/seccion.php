@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace Model;
 
-use App\model;
+use Model\model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ class seccion extends model
         'codigo',
         'trayecto_id',
         'observacion',
-        
+
 
     ];
     private  $codigo;
@@ -43,7 +43,7 @@ class seccion extends model
         return $this;
     }
 
-     /**
+    /**
      * setData
      * 
      * Se encarga de asignar los valores en los campos
@@ -54,35 +54,35 @@ class seccion extends model
      * @return void
      */
     public function setData(array $data)
-  {
-    foreach ($data as $secc => $value) {
+    {
+        foreach ($data as $secc => $value) {
 
-      if (property_exists($this, $secc) && in_array($secc, $this->fillable)) {
-        $this->{$secc} = $value;
-      }
+            if (property_exists($this, $secc) && in_array($secc, $this->fillable)) {
+                $this->{$secc} = $value;
+            }
+        }
     }
-  }
 
-  /**
+    /**
      * Transaccion para inserción de materias
      *
      * @return String - código de materia creada
      */
-  function insertTransaction(): String
-  {
-      try {
+    function insertTransaction(): String
+    {
+        try {
 
-          parent::beginTransaction();
-          // almacenar seccion
-          $codigo = $this->save();
+            parent::beginTransaction();
+            // almacenar seccion
+            $codigo = $this->save();
 
-          parent::commit();
-          return $codigo;
-      } catch (Exception $e) {
-          parent::rollBack();
-          return null;
-      }
-  }
+            parent::commit();
+            return $codigo;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return null;
+        }
+    }
 
     /**
      * save
@@ -107,17 +107,15 @@ class seccion extends model
                 }
             }
         }
-            
-            $this->set('seccion', $data);
-            return $this->codigo;
-        
-        
+
+        $this->set('seccion', $data);
+        return $this->codigo;
     }
 
 
 
-    
-    
+
+
     public function Selectcod()
     {
 

@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\periodoController;
+use Controllers\periodoController;
 
 # GESTION DE PERIODOS
 $listaDeRutas['periodo_manage'] = new Route(

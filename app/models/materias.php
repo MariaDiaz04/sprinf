@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace Model;
 
-use App\model;
-use App\malla;
+use Model\model;
+use Model\malla;
 use Utils\Sanitizer;
 
 use Exception;

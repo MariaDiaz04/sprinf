@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace Model;
 
-use App\model;
+use Model\model;
 
-use App\Traits\Utility;
+use Traits\Utility;
 
 use Exception;
 
@@ -53,7 +53,7 @@ class persona extends model
 
   public function setPersona(array $data)
   {
-   
+
     foreach ($data as $prof => $value) {
 
       if (property_exists($this, $prof) && in_array($prof, $this->fillable)) {
@@ -79,6 +79,4 @@ class persona extends model
 
     return $this->cedula;
   }
-
-  
 }

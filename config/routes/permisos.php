@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\permisosController;
+use Controllers\permisosController;
 
 $listaDeRutas['/permisos'] = new Route(
 

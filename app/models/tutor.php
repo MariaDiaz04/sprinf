@@ -1,6 +1,8 @@
-<?php 
-namespace App;
-use App\model;
+<?php
+
+namespace Model;
+
+use Model\model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,4 +33,3 @@ class tutor extends model
         }
     }
 }
-

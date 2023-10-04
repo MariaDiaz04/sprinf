@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\homeController;
+use Controllers\homeController;
 
 // LOGIN
 $listaDeRutas['home'] = new Route(

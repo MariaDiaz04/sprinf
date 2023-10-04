@@ -1,10 +1,10 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use App\periodo;
+use Model\periodo;
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;

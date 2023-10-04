@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\userController;
+use Controllers\userController;
 
 $listaDeRutas['usuarioCrear'] = new Route(
   '/usuarioCrear',

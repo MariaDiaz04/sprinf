@@ -1,18 +1,18 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Bcrypt\Bcrypt;
 
-use App\baremos;
-use App\dimension;
-use App\materias;
-use App\malla;
-use App\tutor;
-use App\trayectos;
+use Model\baremos;
+use Model\dimension;
+use Model\materias;
+use Model\malla;
+use Model\tutor;
+use Model\trayectos;
 use Exception;
 
 class dimensionController extends controller

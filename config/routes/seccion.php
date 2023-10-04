@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\seccionController;
+use Controllers\seccionController;
 
 $listaDeRutas['seccion_manage'] = new Route(
   '/seccion',

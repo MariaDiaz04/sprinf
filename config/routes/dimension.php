@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\dimensionController;
+use Controllers\dimensionController;
 
 
 $listaDeRutas['dimension_edit'] = new Route(

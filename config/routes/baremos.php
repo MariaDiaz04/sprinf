@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\baremosController;
+use Controllers\baremosController;
 
 $listaDeRutas['baremos_manage'] = new Route(
   '/baremos',

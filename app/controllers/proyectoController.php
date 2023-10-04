@@ -1,6 +1,6 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -12,16 +12,16 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use App\proyectoHistorico;
-use App\proyecto;
-use App\periodo;
-use App\estudiante;
-use App\inscripcion;
-use App\baremos;
-use App\fase;
-use App\dimension;
-use App\tutor;
-use App\trayectos;
+use Model\proyectoHistorico;
+use Model\proyecto;
+use Model\periodo;
+use Model\estudiante;
+use Model\inscripcion;
+use Model\baremos;
+use Model\fase;
+use Model\dimension;
+use Model\tutor;
+use Model\trayectos;
 use Exception;
 use PDOException;
 

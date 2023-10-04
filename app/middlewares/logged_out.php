@@ -1,6 +1,7 @@
-<?php 
-namespace App;
+<?php
 
-	if (!isset($_SESSION['token'])) {
-		header('location:/');
-	}
+namespace Model;
+
+if (!isset($_SESSION['token'])) {
+	header('location:/');
+}

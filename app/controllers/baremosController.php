@@ -1,17 +1,17 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Bcrypt\Bcrypt;
 
-use App\baremos;
-use App\materias;
-use App\estudiante;
-use App\tutor;
-use App\trayectos;
+use Model\baremos;
+use Model\materias;
+use Model\estudiante;
+use Model\tutor;
+use Model\trayectos;
 use Exception;
 
 class baremosController extends controller

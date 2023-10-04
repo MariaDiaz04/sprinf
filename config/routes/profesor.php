@@ -1,8 +1,8 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\profesorController;
-use App\controllers\userController;
+use Controllers\profesorController;
+use Controllers\userController;
 
 
 $listaDeRutas['profesor'] = new Route(

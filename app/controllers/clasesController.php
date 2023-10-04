@@ -1,15 +1,15 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use App\clases;
-use App\profesor;
-use App\materias;
-use App\seccion;
-use App\inscripcion;
-use App\estudiante;
+use Model\clases;
+use Model\profesor;
+use Model\materias;
+use Model\seccion;
+use Model\inscripcion;
+use Model\estudiante;
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;

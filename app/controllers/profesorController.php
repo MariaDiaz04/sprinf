@@ -1,13 +1,13 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use App\profesor;
-use App\usuario;
-use App\persona;
-use App\Traits\Utility;
+use Model\profesor;
+use Model\usuario;
+use Model\persona;
+use Traits\Utility;
 
 
 use Exception;
@@ -42,16 +42,16 @@ class profesorController extends controller
 
   public function store(Request $nuevoprofesor)
   {
-    
+
     try {
       // DateValidator::checkPeriodDates($nuevoprofesor->get('fecha_inicio'), $nuevoprofesor->get('fecha_cierre'));
 
       // creación de usuario
       $email = $nuevoprofesor->request->get('email');
       $contrasena = $nuevoprofesor->request->get('contrasena');
-      var_dump($contrasena) ;
+      var_dump($contrasena);
       // encriptar contraseña de usuario
-       $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
+      $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
 
       $this->usuario->setUsuario([
         'rol_id' => 2, // profesores
@@ -59,7 +59,7 @@ class profesorController extends controller
         'contrasena' => $contrasena
       ]);
 
-      
+
 
       $idUsuario = $this->usuario->save();
 
@@ -72,10 +72,10 @@ class profesorController extends controller
       $direccion = $nuevoprofesor->request->get('direccion');
       $telefono = $nuevoprofesor->request->get('telefono');
 
-                  // // // encriptar datos de contacto
-                  $telefono = $this->encriptar($telefono);
-                  $direccion = $this->encriptar($direccion); 
-      
+      // // // encriptar datos de contacto
+      $telefono = $this->encriptar($telefono);
+      $direccion = $this->encriptar($direccion);
+
 
       $this->persona->setPersona([
         'cedula' => $cedula,
@@ -85,9 +85,9 @@ class profesorController extends controller
         'direccion' => $direccion,
         'telefono' => $telefono,
       ]);
-      
 
-      
+
+
 
 
       $idPersona = $this->persona->save();

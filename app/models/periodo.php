@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace Model;
 
-use App\model;
+use Model\model;
 
 use Exception;
 use Utils\Sanitizer;

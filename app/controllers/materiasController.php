@@ -1,14 +1,14 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
-use App\permisos;
-use App\materias;
-use App\trayectos;
-use App\clases;
-use App\fase;
-use App\malla;
-use App\controllers\controller;
+use Model\permisos;
+use Model\materias;
+use Model\trayectos;
+use Model\clases;
+use Model\fase;
+use Model\malla;
+use Controllers\controller;
 use Exception;
 
 use Symfony\Component\HttpFoundation\Request;

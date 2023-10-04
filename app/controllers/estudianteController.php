@@ -1,13 +1,13 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use App\estudiante;
-use App\usuario;
-use App\persona;
-use App\Traits\Utility;
+use Model\estudiante;
+use Model\usuario;
+use Model\persona;
+use Traits\Utility;
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;
@@ -26,8 +26,8 @@ class estudianteController extends controller
   function __construct()
   {
     $this->estudiante = new estudiante();
-    $this-> usuario = new usuario ();
-    $this -> persona = new persona ();
+    $this->usuario = new usuario();
+    $this->persona = new persona();
   }
 
   public function index()
@@ -48,10 +48,10 @@ class estudianteController extends controller
       // creación de usuario
       $email = $newestudiante->request->get('email');
       $contrasena = $newestudiante->request->get('contrasena');
-      var_dump($contrasena) ;
+      var_dump($contrasena);
 
       // encriptar contraseña de usuario
-       $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
+      $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
 
       $this->usuario->setUsuario([
         'rol_id' => 4, // estudiantes
@@ -60,7 +60,7 @@ class estudianteController extends controller
       ]);
 
       $idUsuario = $this->usuario->save();
- 
+
       // creacion de persona
 
       $cedula = $newestudiante->request->get('cedula');
@@ -71,7 +71,7 @@ class estudianteController extends controller
       $telefono = $newestudiante->request->get('telefono');
 
 
-        $this->persona->setPersona([
+      $this->persona->setPersona([
         'cedula' => $cedula,
         'usuario_id' => $usuario_id,
         'nombre' => $nombre,
@@ -79,8 +79,8 @@ class estudianteController extends controller
         'direccion' => $direccion,
         'telefono' => $telefono,
       ]);
-      
-       $idPersona = $this->persona->save();
+
+      $idPersona = $this->persona->save();
 
       $this->estudiante->setestudiante(['persona_id' => $idPersona]);
       $this->estudiante->setestudianteId();
@@ -93,8 +93,6 @@ class estudianteController extends controller
       http_response_code(500);
       echo json_encode($e->getMessage());
     }
-
-
   }
 
   function showDetails(Request $estudiante): void

@@ -2,9 +2,9 @@
 
 namespace API;
 
-use App\usuario;
-use App\controllers\controller;
-use App\Traits\Utility;
+use Model\usuario;
+use Controllers\controller;
+use Traits\Utility;
 
 use Firebase\JWT\JWT;
 

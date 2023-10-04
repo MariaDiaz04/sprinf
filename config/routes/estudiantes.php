@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\estudianteController;
+use Controllers\estudianteController;
 
 $listaDeRutas['estudiante_manage'] =  new Route(
 

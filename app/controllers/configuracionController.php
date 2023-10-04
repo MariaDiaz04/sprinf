@@ -1,14 +1,14 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
-use App\permisos;
-use App\periodo;
-use App\proyectoHistorico;
-use App\materias;
-use App\trayectos;
-use App\proyecto;
-use App\controllers\controller;
+use Model\permisos;
+use Model\periodo;
+use Model\proyectoHistorico;
+use Model\materias;
+use Model\trayectos;
+use Model\proyecto;
+use Controllers\controller;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace Model;
 
-use App\model;
+use Model\model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;

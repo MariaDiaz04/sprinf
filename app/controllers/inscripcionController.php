@@ -1,12 +1,12 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use App\inscripcion;
-use App\materias;
-use App\periodo;
+use Model\inscripcion;
+use Model\materias;
+use Model\periodo;
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;

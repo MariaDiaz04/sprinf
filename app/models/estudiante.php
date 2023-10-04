@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace Model;
 
-use App\usuario;
-use App\model;
+use Model\usuario;
+use Model\model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;

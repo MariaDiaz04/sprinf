@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace Model;
 
-use App\conexion;
+use Model\conexion;
 use BadMethodCallException;
 use Exception;
 use Utils\SSP;

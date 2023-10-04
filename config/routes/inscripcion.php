@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\inscripcionController;
+use Controllers\inscripcionController;
 
 // GESTION DE INSCRIPCION
 $listaDeRutas['inscripcion/ssp/{idMateria}'] =  new Route(

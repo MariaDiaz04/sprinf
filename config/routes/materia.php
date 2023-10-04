@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\materiasController;
+use Controllers\materiasController;
 
 
 $listaDeRutas['materias'] = new Route(

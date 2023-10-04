@@ -1,26 +1,22 @@
-<?php 
-use App\bitacora;
-use App\controllers\controller;
+<?php
+
+use Model\bitacora;
+use Controllers\controller;
 
 class bitacoraController extends controller
 {
 	public $BITACORA;
 
-	function __construct () {	
+	function __construct()
+	{
 		$this->BITACORA = new bitacora();
-
-
 	}
 
-	public function index() {
+	public function index()
+	{
 
 		$bitacora = $this->BITACORA->bitacora_all();
 
-		return $this->view('security/bitacora', ['bitacora'=>$bitacora]); 
-
+		return $this->view('security/bitacora', ['bitacora' => $bitacora]);
+	}
 }
-
-  
-
-}
- ?>

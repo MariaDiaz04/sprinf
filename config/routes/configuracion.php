@@ -1,8 +1,8 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\configuracionController;
-use App\controllers\proyectoController;
+use Controllers\configuracionController;
+use Controllers\proyectoController;
 
 $listaDeRutas['configuracion/cerrar'] = new Route(
   '/configuracion/cerrar',

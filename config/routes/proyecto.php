@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\proyectoController;
+use Controllers\proyectoController;
 # FIN DE GESTIÓN DE BAREMOS
 
 # GESTION DE PROYECTOS

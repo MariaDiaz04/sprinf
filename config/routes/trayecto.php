@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\trayectosController;
+use Controllers\trayectosController;
 # GESTION DE TRAYECTOS
 $listaDeRutas['trayecto_manage'] =  new Route(
 

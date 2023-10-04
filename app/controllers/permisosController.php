@@ -1,9 +1,9 @@
 <?php
 
-use App\rol;
-use App\modulo;
-use App\permisos;
-use App\controllers\controller;
+use Model\rol;
+use Model\modulo;
+use Model\permisos;
+use Controllers\controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class permisosController extends controller
@@ -65,7 +65,7 @@ class permisosController extends controller
         $modulos = $this->MODULO->all();
 
         if ($permisos) {
-            return $this->view('permisos/editar', ['permisos' => $permisos->fillable, 'roles' => $roles, 'modulos'=>$modulos]);
+            return $this->view('permisos/editar', ['permisos' => $permisos->fillable, 'roles' => $roles, 'modulos' => $modulos]);
         } else {
             return $this->page('errors/404');
         }
@@ -77,15 +77,15 @@ class permisosController extends controller
         if (!$permisos = $this->PERMISOS->find($id)) {
             return $this->page('errors/404');
         }
-       $permisos->actualizar([
-            'consultar' => '"' . $request->request->get('consultar'). '"',
-            'actualizar' => '"' . $request->request->get('actualizar'). '"',
+        $permisos->actualizar([
+            'consultar' => '"' . $request->request->get('consultar') . '"',
+            'actualizar' => '"' . $request->request->get('actualizar') . '"',
             'crear' => '"' . $request->request->get('crear') . '"',
             'eliminar' => '"' .  $request->request->get('eliminar')  . '"',
             'rol_id' => '"' . $request->request->get('rol_id') . '"',
-            'modulo_id'=> '"'.$request->request->get('modulo_id') .'"',  
+            'modulo_id' => '"' . $request->request->get('modulo_id') . '"',
         ]);
-        return $this->redirect(APP_URL.'permisos');
+        return $this->redirect(APP_URL . 'permisos');
     }
 
     // ======================== DELETE=========================

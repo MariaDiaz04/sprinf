@@ -1,9 +1,9 @@
 <?php
 
-use App\controllers\controller;
-use App\permisos;
-use App\usuario;
-use App\rol;
+use Controllers\controller;
+use Model\permisos;
+use Model\usuario;
+use Model\rol;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -75,8 +75,8 @@ class userController extends controller
     public function store(Request $usuario)
     {
         //return var_dump(1);
-       // return $usuario;
-            if ($usuario['rol'] == '2') {
+        // return $usuario;
+        if ($usuario['rol'] == '2') {
 
             $nombre = substr($usuario['nombre'], 0, 2);
             $apellido = substr($usuario['apellido'], 0, 3);
@@ -96,28 +96,28 @@ class userController extends controller
                 'direccion' => $usuario['direccion'],
                 'estatus' => 1,
 
-  
+
 
 
             ])->save();
-        } else { 
-        $contrasena = password_hash($usuario->request->get('contrasena'), PASSWORD_DEFAULT);
+        } else {
+            $contrasena = password_hash($usuario->request->get('contrasena'), PASSWORD_DEFAULT);
 
-        $user =  $this->USUARIO->create([
-            'email' => $usuario->request->get('email'),
-            'contrasena' => $contrasena,
-            'rol_id' => $usuario->request->get('rol'),
-            'nombre' => $usuario->request->get('nombre'),
-            'apellido' => $usuario->request->get('apellido'),
-            'cedula' => $usuario->request->get('cedula'),
-            'telefono' => $usuario->request->get('telefono'),
-            'nacimiento' =>  $usuario->request->get('nacimiento'),
-            'direccion' => $usuario->request->get('direccion'),
-            'estatus' => 1,
-        ])->save();
-           } 
-    // $codigo = $this->USUARIO->insertTransaction();
-       // return var_dump($user);
+            $user =  $this->USUARIO->create([
+                'email' => $usuario->request->get('email'),
+                'contrasena' => $contrasena,
+                'rol_id' => $usuario->request->get('rol'),
+                'nombre' => $usuario->request->get('nombre'),
+                'apellido' => $usuario->request->get('apellido'),
+                'cedula' => $usuario->request->get('cedula'),
+                'telefono' => $usuario->request->get('telefono'),
+                'nacimiento' =>  $usuario->request->get('nacimiento'),
+                'direccion' => $usuario->request->get('direccion'),
+                'estatus' => 1,
+            ])->save();
+        }
+        // $codigo = $this->USUARIO->insertTransaction();
+        // return var_dump($user);
 
         switch ($usuario->request->get('rol')) {
             case '2':

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
-use App\periodo;
+use Model\periodo;
 use Symfony\Component\HttpFoundation\Request;
 
-use App\trayectos;
+use Model\trayectos;
 use Exception;
 
 class trayectosController extends controller

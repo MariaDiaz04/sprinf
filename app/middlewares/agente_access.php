@@ -1,6 +1,7 @@
-<?php 
-namespace App;
+<?php
 
-if (!( $_SESSION['rol_id'] == 1 || $_SESSION['rol_id'] == 2)) {
-	header('location:?r='.$home);
+namespace Model;
+
+if (!($_SESSION['rol_id'] == 1 || $_SESSION['rol_id'] == 2)) {
+	header('location:?r=' . $home);
 }

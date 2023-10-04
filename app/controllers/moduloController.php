@@ -1,8 +1,8 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
-use App\modulo;
+use Model\modulo;
 use Symfony\Component\HttpFoundation\Request;
 
 use Exception;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\controllers;
+namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use App\seccion;
+use Model\seccion;
 use Exception;
-use App\trayectos;
+use Model\trayectos;
 
 class seccionController extends controller
 {
@@ -18,7 +18,6 @@ class seccionController extends controller
     {
         $this->seccion = new seccion();
         $this->TRAYECTO = new trayectos();
-        
     }
 
     public function index()
@@ -41,8 +40,8 @@ class seccionController extends controller
         return $this->view('seccion/gestionar', ['seccion' => $seccion, 'trayectos' => $trayectos]);
     }
 
-    public function store( Request $seccion)
-    
+    public function store(Request $seccion)
+
     {
         try {
             $codigo = $seccion->get('codigo');
@@ -62,12 +61,9 @@ class seccionController extends controller
             http_response_code(500);
             echo json_encode($e->getMessage());
         }
+    }
 
 
-        
-        }
-    
-    
     function ssp(Request $query): void
     {
         try {

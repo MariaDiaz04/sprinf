@@ -2,7 +2,7 @@
 
 namespace App\middlewares;
 
-use App\controllers\controller;
+use Controllers\controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class logged_in extends controller
@@ -19,10 +19,9 @@ class logged_in extends controller
 	{
 
 		if (isset($_SESSION['token'])) {
-			return  new RedirectResponse('/'.$_ENV['HOME']);
+			return  new RedirectResponse('/' . $_ENV['HOME']);
 
 			exit();
-			
-		} 
+		}
 	}
 }

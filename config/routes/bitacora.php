@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Routing\Route;
-use App\controllers\bitacoraController;
+use Controllers\bitacoraController;
 # FIN DE GESTIÓN DE BAREMOS
 
 $listaDeRutas['bitacora'] =  new Route(

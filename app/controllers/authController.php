@@ -1,6 +1,7 @@
 <?php
-use App\usuario;
-use App\controllers\controller;
+
+use Model\usuario;
+use Controllers\controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -87,7 +88,7 @@ class authController extends controller
     }
     public function logout()
     {
-        
+
         $end_session =   $this->USUARIO->end_session();
         if ($end_session) {
             session_destroy();
