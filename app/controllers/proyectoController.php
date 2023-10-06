@@ -192,6 +192,7 @@ class proyectoController extends controller
 
             foreach ($integrantes as $cedula) {
                 $dataEstudiante = $this->estudiantes->findByCedula($cedula);
+                if (empty($dataEstudiante)) throw new Exception("Estudiante $cedula no existe");
                 // VERIFICAR QUE UN ESTUDIANTE NO PERTENEZCA A OTRO GRUPO DE PROYECTO
                 if ($dataEstudiante['proyecto_id'] != null) {
                     throw new Exception("Estudiante " . $dataEstudiante['nombre'] . " " . $dataEstudiante['apellido'] . " ya pertenece a un proyecto");

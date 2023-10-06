@@ -6,12 +6,13 @@ use Model\model;
 use Utils\Sanitizer;
 
 use Exception;
+use PDOException;
 
 class proyecto extends model
 {
 
     public $fillable = [
-        'estatus',
+        'cerrado',
         'nombre',
         'fase_id',
         'comunidad',
@@ -26,7 +27,7 @@ class proyecto extends model
         'area',
         'integrantes',
     ];
-    private int $id;
+    public int $id;
     public int $tutor_id;
     public string $fase_id;
     public string $nombre;
@@ -38,6 +39,7 @@ class proyecto extends model
     public string $motor_productivo;
     public string $tutor_in;
     public string $tutor_ex;
+    public int $cerrado;
 
     public array $integrantes; // has many
 
@@ -85,27 +87,80 @@ class proyecto extends model
         $query->bindParam(":parroquia", $this->parroquia);
         $query->bindParam(":tutor_in", $this->tutor_in);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
-        $query->execute();
 
-        $this->id = $this->lastInsertId();
-        return $this->id;
+
+        if ($query->execute()) {
+
+            $this->id = $this->lastInsertId();
+            return $this->id;
+        } else {
+            throw new Exception();
+        }
     }
 
-    /**
-     * Recorre el array de integrantes y los añade a 
-     * la tabla de integrantes de proyecto
-     *
-     * @return void
-     */
-    public function saveTeam()
+    public function actualizar()
     {
-        foreach ($this->integrantes as $integrante) {
+        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad, motor_productivo=:motor_productivo, resumen=:resumen, direccion=:direccion, municipio=:municipio, parroquia=:parroquia, tutor_in=:tutor_in, tutor_ex=:tutor_ex, cerrado= :cerrado WHERE id=:id";
 
-            $this->set('integrante_proyecto', [
-                'proyecto_id' => $this->id,
-                'estudiante_id' => "'" . $integrante . "'"
-            ]);
+        $query = $this->prepare($preparedSql);
+
+        $query->bindParam(":id", $this->id);
+        $query->bindParam(":fase_id", $this->fase_id);
+        $query->bindParam(":nombre", $this->nombre);
+        $query->bindParam(":comunidad", $this->comunidad);
+        $query->bindParam(":motor_productivo", $this->motor_productivo);
+        $query->bindParam(":resumen", $this->resumen);
+        $query->bindParam(":direccion", $this->direccion);
+        $query->bindParam(":municipio", $this->municipio);
+        $query->bindParam(":parroquia", $this->parroquia);
+        $query->bindParam(":tutor_in", $this->tutor_in);
+        $query->bindParam(":tutor_ex", $this->tutor_ex);
+        $query->bindParam(":cerrado", $this->cerrado);
+
+        return $query->execute();
+    }
+
+
+
+    function guardarIntegrante(string $integrante): bool
+    {
+        $query = $this->prepare("INSERT INTO integrante_proyecto (proyecto_id, estudiante_id) VALUES (:proyecto_id, :estudiante_id)");
+        $query->bindParam(":proyecto_id", $this->id);
+        $query->bindParam(":estudiante_id", $integrante);
+        return $query->execute();
+    }
+
+    function removerIntegrante(string $integrante): bool
+    {
+        $query = $this->prepare("DELETE FROM integrante_proyecto WHERE proyecto_id=:proyecto_id AND estudiante_id=:estudiante_id");
+        $query->bindParam(":proyecto_id", $this->id);
+        $query->bindParam(":estudiante_id", $integrante);
+
+        return $query->execute();
+    }
+
+    function removerIntegrantes($id): bool
+    {
+        try {
+
+            $query = $this->prepare("DELETE FROM integrante_proyecto WHERE proyecto_id=:proyecto_id");
+            $query->bindParam(":proyecto_id", $id);
+
+            $query->execute();
+            return $query->rowCount() > 0 ? true : false;
+        } catch (Exception $e) {
+            return false;
         }
+    }
+
+    function removerProyecto($id): bool
+    {
+        $query = $this->prepare("DELETE FROM proyecto WHERE id=:id");
+        $query->bindParam(":id", $id);
+
+        $query->execute();
+
+        return $query->rowCount() > 0 ? true : false;
     }
 
     public function all()
@@ -122,8 +177,11 @@ class proyecto extends model
      */
     public function find($id): array
     {
-        $proyectos = $this->selectOne("detalles_proyecto", [['id', '=', $id]]);
-        return !$proyectos ? [] : $proyectos;
+        $query = $this->prepare("SELECT * FROM detalles_proyecto WHERE id = :id");
+        $query->bindParam(":id", $id);
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
     }
 
     /**
@@ -134,8 +192,11 @@ class proyecto extends model
      */
     function findByStudent(string $estudiante_id): array
     {
-        $proyectos = $this->selectOne("integrante_proyecto", [['estudiante_id', '=', $estudiante_id]]);
-        return !$proyectos ? [] : $proyectos;
+        $query = $this->prepare("SELECT * FROM integrante_proyecto WHERE estudiante_id = :estudiante_id");
+        $query->bindParam(":estudiante_id", $estudiante_id);
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
     }
 
     /**
@@ -158,8 +219,11 @@ class proyecto extends model
      */
     function obtenerIntegrantes(int $id): array
     {
-        $integrantes = $this->select('detalles_integrantes', [['proyecto_id', '=', $id]]);
-        return !$integrantes ? [] : $integrantes;
+        $query = $this->prepare("SELECT * FROM detalles_integrantes WHERE proyecto_id = :id");
+        $query->bindParam(":id", $id);
+        $query->execute();
+        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
     }
 
 
@@ -201,12 +265,16 @@ class proyecto extends model
         try {
             parent::beginTransaction();
             // almacenar materia
-            $codigo = $this->save();
-            $team = $this->saveTeam();
-
+            $this->id = $this->save((isset($this->id) ? $this->id : null));
+            foreach ($this->integrantes as $integrante) {
+                $resultado = $this->guardarIntegrante($integrante);
+                if (!$resultado) {
+                    throw new Exception('No se ha podido añadir el integrante ' . $integrante);
+                }
+            }
             parent::commit();
             return true;
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             parent::rollBack();
             return false;
         }
@@ -220,6 +288,8 @@ class proyecto extends model
      */
     function historicalTransaction(): string
     {
+        echo 'ejecutando insert';
+
         try {
             parent::beginTransaction();
             $proyectos = $this->all();
@@ -270,34 +340,49 @@ class proyecto extends model
         $this->update('proyecto', ['cerrado' => 1], [['id', '=', $idProyecto]]);
     }
 
-    public function updateTeam($idProyecto, array $participantes)
+    public function actualizarIntegrantes(): bool
     {
-        $participantesActuales = $this->select('integrante_proyecto', [['proyecto_id', '=', $idProyecto]]);
+        try {
+            parent::beginTransaction();
+            $participantesActuales = $this->obtenerIntegrantes($this->id);
 
-        $idParticipantesActuales = array_column($participantesActuales, 'estudiante_id');
+            $idParticipantesActuales = array_column($participantesActuales, 'estudiante_id');
 
-        $delete_list = array_diff($idParticipantesActuales, $participantes);
-        $insert_list = array_diff($participantes, $idParticipantesActuales);
+            $delete_list = array_diff($idParticipantesActuales, $this->integrantes);
+            $insert_list = array_diff($this->integrantes, $idParticipantesActuales);
 
-        foreach ($delete_list as $item) {
-            $this->delete('integrante_proyecto', [['estudiante_id', '=', $item], ['proyecto_id', '=', $idProyecto]]);
-            // delete $item from DB
-        }
+            foreach ($delete_list as $item) {
+                $this->removerIntegrante($item);
+            }
 
-        foreach ($insert_list as $item) {
-            $this->set('integrante_proyecto', [
-                'proyecto_id' => $idProyecto,
-                'estudiante_id' => $item
-            ]);
+            foreach ($insert_list as $item) {
+                $this->guardarIntegrante($item);
+            }
+
+            parent::commit();
+            return true;
+        } catch (Exception $th) {
+            parent::rollBack();
+            return false;
         }
     }
 
 
 
-    function remove($id): void
+    function remover($id): bool
     {
-        $this->delete('integrante_proyecto', [['proyecto_id', '=', $id]]);
-        $this->delete('proyecto', [['id', '=', $id]]);
+        try {
+            $resultado = $this->removerIntegrantes($id);
+
+            if (!$resultado) throw new Exception('error borrando integrantes');
+
+            $resultado = $this->removerProyecto($id);
+            if (!$resultado) throw new Exception('error borrando proyecto');
+            return true;
+        } catch (Exception $e) {
+            var_dump($e->getMessage());
+            return false;
+        }
     }
 
 
