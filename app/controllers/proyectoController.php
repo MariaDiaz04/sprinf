@@ -445,7 +445,7 @@ class proyectoController extends controller
             $msg = '';
             if ($fase['siguiente_fase']) {
                 // actualizar proyecto
-                $this->proyecto->updateFase($proyecto['id'], $fase['siguiente_fase']);
+                $this->proyecto->actualizarFase($proyecto['id'], $fase['siguiente_fase']);
                 $msg = 'Fase actualizada';
             } else {
                 $this->proyecto->cerrar($proyecto['id']);
