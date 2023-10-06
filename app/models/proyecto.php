@@ -43,6 +43,8 @@ class proyecto extends model
 
     public array $integrantes; // has many
 
+    public string $error;
+
     /**
      * Definir los valores del proyecto
      *
@@ -149,6 +151,7 @@ class proyecto extends model
             $query->execute();
             return $query->rowCount() > 0 ? true : false;
         } catch (Exception $e) {
+            $this->error = $e->getMessage();
             return false;
         }
     }
@@ -275,6 +278,7 @@ class proyecto extends model
             parent::commit();
             return true;
         } catch (PDOException $e) {
+            $this->error = $e->getMessage();
             parent::rollBack();
             return false;
         }
@@ -284,12 +288,10 @@ class proyecto extends model
      * Transaccion que recorre todos los proyectos para
      * enviar su información al historico
      *
-     * @return string
+     * @return bool
      */
-    function historicalTransaction(): string
+    function historicalTransaction(): bool
     {
-        echo 'ejecutando insert';
-
         try {
             parent::beginTransaction();
             $proyectos = $this->all();
@@ -327,11 +329,11 @@ class proyecto extends model
                 }
             }
             parent::commit();
-            return '';
+            return true;
         } catch (Exception $e) {
-            print($e->getMessage());
+            $this->error = $e->getMessage();
             parent::rollBack();
-            return '';
+            return false;
         }
     }
 
@@ -380,7 +382,7 @@ class proyecto extends model
             if (!$resultado) throw new Exception('error borrando proyecto');
             return true;
         } catch (Exception $e) {
-            var_dump($e->getMessage());
+            $this->error = $e->getMessage();
             return false;
         }
     }

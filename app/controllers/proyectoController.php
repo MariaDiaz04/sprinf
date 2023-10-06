@@ -281,14 +281,12 @@ class proyectoController extends controller
         try {
             if (!array_key_exists('estudiantes', $proyecto->request->all())) throw new Exception('No puede crear proyecto sin integrantes');
 
-            $estudiantes = $proyecto->request->all()['estudiantes'];
             $idProyecto = $proyecto->request->get('id');
 
             $this->proyecto->setProyectData($proyecto->request->all());
             $this->proyecto->save($idProyecto);
 
-            $estudiantes = $proyecto->request->all()['estudiantes'];
-            $this->proyecto->updateTeam($idProyecto, $estudiantes);
+            $this->proyecto->actualizarIntegrantes();
 
             http_response_code(200);
             echo json_encode($this->proyecto);
@@ -304,7 +302,7 @@ class proyectoController extends controller
 
             $idProyecto = $proyecto->request->get('id');
 
-            $this->proyecto->remove($idProyecto);
+            $this->proyecto->remover($idProyecto);
 
             http_response_code(200);
             echo json_encode($this->proyecto);
