@@ -3,14 +3,7 @@
 namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Bcrypt\Bcrypt;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Model\proyectoHistorico;
 use Model\proyecto;
@@ -245,6 +238,26 @@ class proyectoController extends controller
 
             http_response_code(200);
             echo json_encode('Proyecto creado exitosamente');
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    function obtener(Request $request, $id): void
+    {
+        try {
+
+            $idProyecto = trim($id);
+            $proyecto = $this->proyecto->find($idProyecto);
+
+            $integrantes = $this->proyecto->obtenerIntegrantes($idProyecto);
+
+            http_response_code(200);
+            echo json_encode([
+                'proyecto' => $proyecto,
+                'integrantes' => $integrantes
+            ]);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());

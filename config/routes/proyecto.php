@@ -99,6 +99,6 @@ $listaDeRutas['proyectos_show'] = new Route(
   '/proyectos/{id}',
   [
     'controller' => proyectoController::class,
-    'method' => 'show',
+    'method' => 'obtener',
   ]
 );

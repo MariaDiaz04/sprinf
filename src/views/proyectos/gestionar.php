@@ -36,7 +36,6 @@
 
   <?php
 
-  use PHPUnit\Util\Json;
 
   if ($cerrarFase) : ?>
     <div class="alert alert-primary" role="alert">

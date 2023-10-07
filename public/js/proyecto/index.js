@@ -60,15 +60,13 @@ $(document).ready(function (e) {
                     }">
                     ${
                       row[6] == 0
-                        ? ` <a class="dropdown-item" href="<?= APP_URL ?>proyectos/assessment/${row[0]}">Evaluar</a>`
+                        ? ` <a class="dropdown-item" href="<?= APP_URL ?>proyectos/assessment/${row[0]}">Evaluar</a>
+                        <a class="dropdown-item" onClick="editarInformacionProyecto('${row[0]}')" href="#">Editar Proyecto</a>
+                        <a class="dropdown-item" onClick="editarIntegrantes('${row[0]}')" href="#">Editar Integrantes</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>`
                         : ``
                     }
-                      <a class="dropdown-item" onClick="edit('${
-                        row[0]
-                      }')" href="#">Editar</a>
-                      <a class="dropdown-item text-danger" onClick="remove('${
-                        row[0]
-                      }') href="#">Eliminar</a>
+                      
                     </div>
                   </div>`;
         }, // combino los botons de acción
@@ -189,14 +187,6 @@ $(document).ready(function (e) {
     });
   });
 
-  function edit(id) {
-    alert(`Editing ${id}`);
-  }
-
-  function remove(id) {
-    alert(`Removing ${id}`);
-  }
-
   // TOGGLE BUTTON AND SPINNER
   function toggleLoading(show, form = "") {
     if (show) {
@@ -208,3 +198,15 @@ $(document).ready(function (e) {
     }
   }
 });
+
+function editarIntegrantes(id) {
+  alert(`Editing ${id}`);
+}
+
+function editarInformacionProyecto(id) {
+  alert(`Editing ${id}`);
+}
+
+function remove(id) {
+  alert(`Removing ${id}`);
+}
