@@ -11,6 +11,7 @@ class dimension extends model
 {
 
   public $fillable = [
+    'id',
     'unidad_id',
     'nombre',
     'grupal',
@@ -87,7 +88,7 @@ class dimension extends model
     $query = $this->prepare("SELECT * FROM indicadores WHERE dimension_id = :dimension_id");
     $query->bindParam(":dimension_id", $dimensionId);
     $query->execute();
-    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    $result = $query->fetchAll(\PDO::FETCH_ASSOC);
     return ($result) ? $result : [];
   }
 
@@ -127,6 +128,57 @@ class dimension extends model
     return true;
   }
 
+
+
+  public function actualizar()
+  {
+    $preparedSql = "UPDATE dimension SET unidad_id=:unidad_id, nombre=:nombre, grupal=:grupal WHERE id=:id";
+
+    $query = $this->prepare($preparedSql);
+
+    $query->bindParam(":id", $this->id);
+    $query->bindParam(":unidad_id", $this->unidad_id);
+    $query->bindParam(":nombre", $this->nombre);
+    $query->bindParam(":grupal", $this->grupal);
+
+    return $query->execute();
+  }
+
+  public function actualizarIndicadores(): bool|PDOException
+  {
+    try {
+      parent::beginTransaction();
+      $listaIndicadores = array_combine(array_column($this->indicadores, 'id'), $this->indicadores);
+
+      foreach ($listaIndicadores as $indicador) {
+        $result = $this->actualizarIndicador($indicador['id'], $indicador['nombre'], $indicador['ponderacion']);
+
+        if (!$result) throw new Exception('Indicador no actualizado');
+      }
+
+      parent::commit();
+      return true;
+    } catch (Exception $Exception) {
+      parent::rollBack();
+      $this->error = [
+        'code' => $Exception->getCode(),
+        'message' => $Exception->getMessage(),
+        'stackTrace' => $Exception->getTraceAsString()
+      ];
+      return false;
+    }
+  }
+
+  function actualizarIndicador(int $id, string $nombre, float $ponderacion): bool
+  {
+    $query = $this->prepare("UPDATE indicadores SET  nombre=:nombre, ponderacion=:ponderacion WHERE id=:id AND dimension_id = :dimension_id");
+    $query->bindParam(":dimension_id", $this->id);
+    $query->bindParam(":id", $id);
+    $query->bindParam(":nombre", $nombre);
+    $query->bindParam(":ponderacion", $ponderacion);
+    return $query->execute();
+  }
+
   function guardarIndicador(int $dimensionId, string $nombre, float $ponderacion): bool
   {
     $query = $this->prepare("INSERT INTO indicadores (dimension_id, nombre, ponderacion) VALUES (:dimension_id, :nombre, :ponderacion)");
@@ -134,6 +186,25 @@ class dimension extends model
     $query->bindParam(":nombre", $nombre);
     $query->bindParam(":ponderacion", $ponderacion);
     return $query->execute();
+  }
+
+  function removerInidicador(int $id): bool
+  {
+    $query = $this->prepare("DELETE FROM indicadores WHERE id=:id AND dimension_id = :dimension_id");
+    $query->bindParam(":id", $id);
+    $query->bindParam(":dimension_id", $this->id);
+
+    return $query->execute();
+  }
+
+
+  function obtenerInidicadores(): array
+  {
+    $query = $this->prepare("SELECT * FROM indicadores WHERE dimension_id = :dimension_id");
+    $query->bindParam(":dimension_id", $this->id);
+    $query->execute();
+    $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
   }
 
 

@@ -83,6 +83,70 @@ class dimensionController extends controller
     }
   }
 
+  function update(Request $dimension): void
+  {
+    try {
+
+      $id = $dimension->request->get('id');
+      $unidad_id = $dimension->request->get('unidad_id');
+      $nombre = $dimension->request->get('nombre');
+      $grupal = $dimension->request->get('grupal');
+      $indicadores = isset($dimension->request->all()['indicadores']) ? $dimension->request->all()['indicadores'] : [];
+
+
+      $this->dimension->setData([
+        'id' => $id,
+        'unidad_id' => $unidad_id,
+        'nombre' => $nombre,
+        'grupal' => $grupal,
+        'indicadores' => $indicadores
+      ]);
+      $resultado = $this->dimension->actualizar();
+
+      if (!$resultado) throw new Exception($this->dimension->error['message'], $this->dimension->error['code']);
+
+      $resultado = $this->dimension->actualizarIndicadores();
+
+      $dimensionCreada = $this->dimension->find($this->dimension->id);
+      $indicadoresActualizados = $this->dimension->obtenerIndicadores($this->dimension->id);
+
+      http_response_code(200);
+      echo json_encode([
+        'data' => [
+          'dimension' => $dimensionCreada,
+          'indicadores' => $indicadoresActualizados
+        ]
+      ]);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode(['error' => [
+        'code' => $e->getCode(),
+        'message' => $e->getMessage(),
+        'stackTrace' => $e->getTraceAsString()
+      ]]);
+    }
+  }
+
+  function obtener(Request $request, $id): void
+  {
+    try {
+
+      $idDimension = trim($id);
+      $dimension = $this->dimension->find($idDimension);
+
+      $indicadores = $this->dimension->obtenerInidicadores($idDimension);
+
+      http_response_code(200);
+      echo json_encode([
+        'dimension' => $dimension,
+        'indicadores' => $indicadores
+      ]);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
+    }
+  }
+
   function ssp(Request $query, $idTrayecto): void
   {
     try {
