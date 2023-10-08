@@ -44,7 +44,7 @@ $listaDeRutas['proyectos_update'] = new Route(
   ]
 );
 $listaDeRutas['proyectos_delete'] = new Route(
-  '/proyectos/delete',
+  '/proyectos/borrar',
   [
     'controller' => proyectoController::class,
     'method' => 'delete',

@@ -338,13 +338,25 @@ class proyectoController extends controller
         try {
             $idProyecto = $proyecto->request->get('id');
 
-            $this->proyecto->remover($idProyecto);
+            $verificarProyecto = $this->proyecto->find($idProyecto);
+
+            if (!$verificarProyecto) throw new Exception('Proyecto no encontrado', 404);
+
+            $resultado = $this->proyecto->remover($idProyecto);
+
+            if (!$resultado) {
+                throw new PDOException($this->proyecto->error['message'], $this->proyecto->error['code']);
+            }
 
             http_response_code(200);
-            echo json_encode($this->proyecto);
+            echo json_encode(true);
         } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode($e->getMessage());
+            http_response_code($e->getCode() ?? 500);
+            echo json_encode(['error' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ]]);
         }
     }
 

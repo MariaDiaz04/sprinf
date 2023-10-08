@@ -144,14 +144,18 @@ class proyecto extends model
     function removerIntegrantes($id): bool
     {
         try {
-
             $query = $this->prepare("DELETE FROM integrante_proyecto WHERE proyecto_id=:proyecto_id");
             $query->bindParam(":proyecto_id", $id);
 
             $query->execute();
             return $query->rowCount() > 0 ? true : false;
         } catch (Exception $e) {
-            $this->error = $e->getMessage();
+            $this->error = [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ];
+
             return false;
         }
     }
@@ -278,7 +282,11 @@ class proyecto extends model
             parent::commit();
             return true;
         } catch (PDOException $e) {
-            $this->error = $e->getMessage();
+            $this->error = [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ];
             parent::rollBack();
             return false;
         }
@@ -331,7 +339,11 @@ class proyecto extends model
             parent::commit();
             return true;
         } catch (Exception $e) {
-            $this->error = $e->getMessage();
+            $this->error = [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ];
             parent::rollBack();
             return false;
         }
@@ -381,13 +393,18 @@ class proyecto extends model
         try {
             $resultado = $this->removerIntegrantes($id);
 
-            if (!$resultado) throw new Exception('error borrando integrantes');
+            if (!$resultado) return false;
 
             $resultado = $this->removerProyecto($id);
-            if (!$resultado) throw new Exception('error borrando proyecto');
+            if (!$resultado) return false;
             return true;
         } catch (Exception $e) {
-            $this->error = $e->getMessage();
+
+            $this->error = [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ];
             return false;
         }
     }
