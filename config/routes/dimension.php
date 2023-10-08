@@ -13,6 +13,15 @@ $listaDeRutas['dimension_edit'] = new Route(
   ]
 );
 
+$listaDeRutas['dimension_delete'] = new Route(
+
+  '/dimensiones/borrar',
+  [
+    'controller' => dimensionController::class,
+    'method' => 'borrar',
+  ]
+);
+
 $listaDeRutas['/dimensiones/guardar'] = new Route(
 
   '/dimensiones/guardar',

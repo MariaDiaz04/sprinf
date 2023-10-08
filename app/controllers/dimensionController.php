@@ -147,6 +147,36 @@ class dimensionController extends controller
     }
   }
 
+  function borrar(Request $dimension): void
+  {
+    try {
+
+      $idDimension = $dimension->request->get('id');
+
+      $this->dimension->setData(['id' => $idDimension]);
+
+      $verificarDimension = $this->dimension->find($idDimension);
+
+      if (!$verificarDimension) throw new Exception('Dimension no encontrada', 404);
+
+      $resultado = $this->dimension->remover($idDimension);
+
+      if (!$resultado) {
+        throw new Exception($this->dimension->error['message'], (int)$this->dimension->error['code']);
+      }
+
+      http_response_code(200);
+      echo json_encode(true);
+    } catch (Exception $e) {
+      http_response_code($e->getCode() ?? 500);
+      echo json_encode(['error' => [
+        'code' => $e->getCode(),
+        'message' => $e->getMessage(),
+        'stackTrace' => $e->getTraceAsString()
+      ]]);
+    }
+  }
+
   function ssp(Request $query, $idTrayecto): void
   {
     try {

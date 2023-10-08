@@ -247,6 +247,40 @@ class dimension extends model
     return true;
   }
 
+  function remover($id): bool
+  {
+    try {
+      parent::beginTransaction();
+      $indicadores = $this->obtenerInidicadores();
+
+      foreach ($indicadores as $indicador) {
+        $this->removerInidicador($indicador['id']);
+      }
+      $resultado = $this->removerDimension();
+      if (!$resultado) return false;
+      parent::commit();
+      return true;
+    } catch (Exception $e) {
+      parent::rollBack();
+      echo $e->getMessage();
+      exit();
+      $this->error = [
+        'code' => $e->getCode(),
+        'message' => $e->getMessage(),
+        'stackTrace' => $e->getTraceAsString()
+      ];
+      return false;
+    }
+  }
+
+  function removerDimension(): bool
+  {
+    $query = $this->prepare("DELETE FROM dimension WHERE id=:id");
+    $query->bindParam(":id", $this->id);
+    $query->execute();
+    return $query->rowCount() > 0 ? true : false;
+  }
+
 
   /**
    * Retorna un array de las materias que se están cursando por baremos
