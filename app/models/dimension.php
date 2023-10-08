@@ -5,6 +5,7 @@ namespace Model;
 use Model\model;
 use Utils\Sanitizer;
 use Exception;
+use PDOException;
 
 class dimension extends model
 {
@@ -17,11 +18,14 @@ class dimension extends model
     'indicadores', // has many
   ];
 
-  private $id;
-  private $indicadores;
+  public $id;
   private $unidad_id;
   private $nombre;
   private $grupal;
+
+  private $indicadores; // has many
+
+  public array $error; // has many
 
   public function all()
   {
@@ -33,6 +37,15 @@ class dimension extends model
     }
   }
 
+  function find($id): array
+  {
+    $query = $this->prepare("SELECT * FROM detalles_dimension WHERE id = :id");
+    $query->bindParam(":id", $id);
+    $query->execute();
+    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
+  }
+
   /**
    * Obtener las dimensiones por fase
    *
@@ -41,8 +54,11 @@ class dimension extends model
    */
   function findByFase(string $codFase): array
   {
-    $dimensiones = $this->select('detalles_dimension', [['codigo_fase', '=', "'" . $codFase . "'"]]);
-    return !$dimensiones ? [] : $dimensiones;
+    $query = $this->prepare("SELECT * FROM detalles_dimension WHERE codigo_fase = :codigo_fase");
+    $query->bindParam(":codigo_fase", $codFase);
+    $query->execute();
+    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
   }
 
   /**
@@ -53,8 +69,11 @@ class dimension extends model
    */
   function findBySubject(string $codMateria): array
   {
-    $dimensiones = $this->select('detalles_dimension', [['unidad_id', '=', "'" . $codMateria . "'"]]);
-    return !$dimensiones ? [] : $dimensiones;
+    $query = $this->prepare("SELECT * FROM detalles_dimension WHERE unidad_id = :unidad_id");
+    $query->bindParam(":unidad_id", $codMateria);
+    $query->execute();
+    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
   }
 
   /**
@@ -65,21 +84,56 @@ class dimension extends model
    */
   function obtenerIndicadores(int $dimensionId): array
   {
-    $indicadores = $this->select('indicadores', [['dimension_id', '=', "'" . $dimensionId . "'"]]);
-    return !$indicadores ? [] : $indicadores;
+    $query = $this->prepare("SELECT * FROM indicadores WHERE dimension_id = :dimension_id");
+    $query->bindParam(":dimension_id", $dimensionId);
+    $query->execute();
+    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
   }
 
-  function saveItems(): void
+  /**
+   * Transaccion para inserción de dimensiones
+   *
+   * @return bool - exito de ejecución
+   */
+  function insertTransaction(): bool
   {
+    try {
+      parent::beginTransaction();
+      // almacenar materia
 
-    foreach ($this->indicadores as $value) {
+      $this->save();
+      $this->guardarIndicadores();
 
-      $this->set('indicadores', [
-        'dimension_id' => $this->id,
-        'nombre' => "'" . $value['nombre'] . "'",
-        'ponderacion' => $value['ponderacion'],
-      ]);
+      parent::commit();
+      return true;
+    } catch (PDOException $e) {
+      $this->error = [
+        'code' => $e->getCode(),
+        'message' => $e->getMessage(),
+        'stackTrace' => $e->getTraceAsString()
+      ];
+      parent::rollBack();
+      return false;
     }
+  }
+
+  function guardarIndicadores(): bool
+  {
+    foreach ($this->indicadores as $indicador) {
+      $resultado = $this->guardarIndicador($this->id, $indicador['nombre'], $indicador['ponderacion']);
+      if (!$resultado) return false;
+    }
+    return true;
+  }
+
+  function guardarIndicador(int $dimensionId, string $nombre, float $ponderacion): bool
+  {
+    $query = $this->prepare("INSERT INTO indicadores (dimension_id, nombre, ponderacion) VALUES (:dimension_id, :nombre, :ponderacion)");
+    $query->bindParam(":dimension_id", $dimensionId);
+    $query->bindParam(":nombre", $nombre);
+    $query->bindParam(":ponderacion", $ponderacion);
+    return $query->execute();
   }
 
 
@@ -109,34 +163,20 @@ class dimension extends model
    * Se encarga de tomar los valores que fueron asignados al modelo
    * previamente y realizar la consulta SQL
    *
-   * @param [type] $id
-   * @return integer ID de elemento creado o actualizado
+   * @return bool - ejecucion exitosa
    */
-  public function save($id = null): int
+  public function save(): int
   {
-    $data = [];
-
-    foreach ($this->fillable as $key => $value) {
-      if (isset($this->{$value})) {
-        if (is_string($this->{$value})) {
-          $data[$value] = '"' . Sanitizer::sanitize($this->{$value}) . '"';
-        } else {
-          $data[$value] =  $this->{$value};
-        }
-      }
-    }
-
-    unset($data['indicadores']);
-
-    if ($id) {
-      $this->update('dimension', $data, [['id', '=', $id]]);
-      return $id;
-    } else {
-      $this->set('dimension', $data);
-      $this->id = $this->lastInsertId();
-      return $this->id;
-    }
+    $query = $this->prepare("INSERT INTO dimension(unidad_id, nombre, grupal) VALUES (:unidad_id, :nombre, :grupal)");
+    $query->bindParam(":unidad_id", $this->unidad_id);
+    $query->bindParam(":nombre", $this->nombre);
+    $query->bindParam(":grupal", $this->grupal);
+    $query->execute();
+    $this->id = $this->lastInsertId();
+    return true;
   }
+
+
   /**
    * Retorna un array de las materias que se están cursando por baremos
    *

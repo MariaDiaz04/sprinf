@@ -265,7 +265,7 @@ class proyecto extends model
     /**
      * Transaccion para inserción de proyectos
      *
-     * @return String - código de materia creada
+     * @return bool - exito de ejecución
      */
     function insertTransaction(): bool
     {

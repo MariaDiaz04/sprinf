@@ -52,16 +52,34 @@ class dimensionController extends controller
   {
     try {
 
-      $this->dimension->setData($dimension->request->all());
+      $unidad_id = $dimension->request->get('unidad_id');
+      $nombre = $dimension->request->get('nombre');
+      $grupal = $dimension->request->get('grupal');
+      $indicadores = isset($dimension->request->all()['indicadores']) ? $dimension->request->all()['indicadores'] : [];
 
-      $id = $this->dimension->save();
-      $id = $this->dimension->saveItems();
+
+      $this->dimension->setData([
+        'unidad_id' => $unidad_id,
+        'nombre' => $nombre,
+        'grupal' => $grupal,
+        'indicadores' => $indicadores
+      ]);
+
+      $resultado = $this->dimension->insertTransaction();
+
+      if (!$resultado) throw new Exception($this->dimension->error['message'], $this->dimension->error['code']);
+
+      $dimensionCreada = $this->dimension->find($this->dimension->id);
 
       http_response_code(200);
-      echo json_encode($id);
+      echo json_encode(['data' => $dimensionCreada]);
     } catch (Exception $e) {
       http_response_code(500);
-      echo json_encode($e->getMessage());
+      echo json_encode(['error' => [
+        'code' => $e->getCode(),
+        'message' => $e->getMessage(),
+        'stackTrace' => $e->getTraceAsString()
+      ]]);
     }
   }
 
