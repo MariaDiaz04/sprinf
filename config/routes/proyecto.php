@@ -13,11 +13,11 @@ $listaDeRutas['proyectos'] = new Route(
   ]
 );
 
-$listaDeRutas['proyectos_edit'] = new Route(
-  '/proyectos/edit/{id}',
+$listaDeRutas['proyectos_actualizar'] = new Route(
+  '/proyectos/actualizar',
   [
     'controller' => proyectoController::class,
-    'method' => 'edit',
+    'method' => 'update',
   ]
 );
 

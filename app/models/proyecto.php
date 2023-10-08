@@ -43,7 +43,7 @@ class proyecto extends model
 
     public array $integrantes; // has many
 
-    public string $error;
+    public array $error;
 
     /**
      * Definir los valores del proyecto
@@ -342,7 +342,7 @@ class proyecto extends model
         $this->update('proyecto', ['cerrado' => 1], [['id', '=', $idProyecto]]);
     }
 
-    public function actualizarIntegrantes(): bool
+    public function actualizarIntegrantes(): bool|PDOException
     {
         try {
             parent::beginTransaction();
@@ -363,8 +363,13 @@ class proyecto extends model
 
             parent::commit();
             return true;
-        } catch (Exception $th) {
+        } catch (Exception $Exception) {
             parent::rollBack();
+            $this->error = [
+                'code' => $Exception->getCode(),
+                'message' => $Exception->getMessage(),
+                'stackTrace' => $Exception->getTraceAsString()
+            ];
             return false;
         }
     }

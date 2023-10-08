@@ -264,55 +264,78 @@ class proyectoController extends controller
         }
     }
 
-    public function edit(Request $request, $id)
-    {
-        try {
-
-            $proyecto = $this->proyecto->find($id);
-            $estudiantes = $this->estudiantes->byProject($id);
-            $tutores = $this->tutores->all();
-
-
-            return $this->view('proyectos/edit', [
-                'proyecto' => $proyecto,
-                'estudiantes' => $estudiantes,
-                'tutores' => $tutores
-            ]);
-        } catch (PDOException $pdoe) {
-            return $this->view('errors/501', [
-                'message' => 'Error inesperado',
-            ]);
-        } catch (Exception $e) {
-            return $this->view('errors/501', [
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-
     function update(Request $proyecto): void
     {
         try {
-            if (!array_key_exists('estudiantes', $proyecto->request->all())) throw new Exception('No puede crear proyecto sin integrantes');
+            if (!array_key_exists('integrantes', $proyecto->request->all())) throw new Exception('No puede crear proyecto sin integrantes');
 
-            $idProyecto = $proyecto->request->get('id');
+            $id = $proyecto->request->get('id');
+            $nombre = $proyecto->request->get('nombre');
+            $comunidad = $proyecto->request->get('comunidad');
+            $fase_id = $proyecto->request->get('fase_id');
+            $estatus = $proyecto->request->get('estatus');
+            $resumen = $proyecto->request->get('resumen');
+            $municipio = $proyecto->request->get('municipio');
+            $direccion = $proyecto->request->get('direccion');
+            $motor_productivo = $proyecto->request->get('motor_productivo');
+            $parroquia = $proyecto->request->get('parroquia');
+            $tutor_in = $proyecto->request->get('tutor_in');
+            $tutor_ex = $proyecto->request->get('tutor_ex');
+            $cerrado = $proyecto->request->get('cerrado');
 
-            $this->proyecto->setProyectData($proyecto->request->all());
-            $this->proyecto->save($idProyecto);
 
-            $this->proyecto->actualizarIntegrantes();
+            $integrantes = $proyecto->request->all()['integrantes'];
+            $idEstudiantes = [];
+
+            foreach ($integrantes as $cedula) {
+                $dataEstudiante = $this->estudiantes->findByCedula($cedula);
+                array_push($idEstudiantes, $dataEstudiante['id']);
+            }
+
+            $this->proyecto->setProyectData([
+                'id' => $id,
+                'nombre' => $nombre,
+                'comunidad' => $comunidad,
+                'fase_id' => $fase_id,
+                'estatus' => $estatus,
+                'direccion' => $direccion,
+                'resumen' => $resumen,
+                'municipio' => $municipio,
+                'motor_productivo' => $motor_productivo,
+                'parroquia' => $parroquia,
+                'tutor_in' => $tutor_in,
+                'tutor_ex' => $tutor_ex,
+                'cerrado' => $cerrado,
+                'integrantes' => $idEstudiantes
+            ]);
+            $integrantes = $proyecto->request->all()['integrantes'];
+            $this->proyecto->actualizar();
+
+
+            $resultadoTransaccion = $this->proyecto->actualizarIntegrantes();
+
+            if (!$resultadoTransaccion) {
+                throw new Exception('No se pueden actualizar los integrantes a este proyecto', $this->proyecto->error['code']);
+            }
+
+            $informacionActualizada = $this->proyecto->find($id);
+            $integrantesActualizados = $this->proyecto->obtenerIntegrantes($id);
 
             http_response_code(200);
-            echo json_encode($this->proyecto);
+            echo json_encode(['data' => ['proyecto' => $informacionActualizada, 'integrantes' => $integrantesActualizados]]);
         } catch (Exception $e) {
             http_response_code(500);
-            echo json_encode($e->getMessage());
+            echo json_encode(['error' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ]]);
         }
     }
 
     function delete(Request $proyecto): void
     {
         try {
-
             $idProyecto = $proyecto->request->get('id');
 
             $this->proyecto->remover($idProyecto);
