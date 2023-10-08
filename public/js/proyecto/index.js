@@ -199,12 +199,46 @@ $(document).ready(function (e) {
   }
 });
 
-function editarIntegrantes(id) {
-  alert(`Editing ${id}`);
+async function obtenerProyecto(id) {
+  let result;
+  try {
+    result = await $.ajax({
+      url: obtenerProyectosURL + id,
+      type: "POST",
+      data: { id: id },
+    });
+    return JSON.parse(result);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }
 
-function editarInformacionProyecto(id) {
-  alert(`Editing ${id}`);
+async function editarIntegrantes(id) {
+  let proyecto = await obtenerProyecto(id);
+  console.log("Editando integrantes, ");
+  console.log(proyecto);
+  const {
+    estatus,
+    fase_id,
+    nombre,
+    municipio,
+    parroquia,
+    direccion,
+    tutor_in,
+    tutor_ex,
+    comunidad,
+    motor_productivo,
+    resumen,
+  } = proyecto.proyecto;
+
+  console.log(nombre);
+}
+
+async function editarInformacionProyecto(id) {
+  let proyecto = await obtenerProyecto(id);
+  console.log("Editando integrantes, ");
+  console.log(proyecto);
 }
 
 function remove(id) {

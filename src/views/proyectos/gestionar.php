@@ -281,13 +281,16 @@
       </div>
     </div>
   </div>
-
+  <?php
+  include 'modules/actualizar.php';
+  ?>
   <script src="<?= APP_URL ?>assets/js/jquery.transfer.js"></script>
   <script>
     // select de historico de estudiantes
     var groupDataArray1 = <?= json_encode($historicoEstudiantes); ?>;
     var estudiantes = <?= json_encode($estudiantes); ?>;
     var proyectosSSP = '<?= $this->Route('proyectos/ssp') ?>';
+    var obtenerProyectosURL = '<?= $this->Route('proyectos/') ?>';
 
     // GROUPABLE AND SEARCHABLE SELECTS
     var settings3 = {
