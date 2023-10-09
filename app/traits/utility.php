@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace Traits;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;

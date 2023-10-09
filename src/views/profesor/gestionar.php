@@ -83,7 +83,7 @@
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="contrasena">Contraseña</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="contrasena" id="contrasena">
+                      <input type="password" class="form-control mb-1" placeholder="..." name="contrasena" id="contrasena">
                     </div>
                   </div>
                 </div>
