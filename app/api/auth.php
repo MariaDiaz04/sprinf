@@ -7,7 +7,7 @@ use Controllers\controller;
 use Traits\Utility;
 
 use Firebase\JWT\JWT;
-
+use PHPUnit\Util\Json;
 use Symfony\Component\HttpFoundation\Request;
 
 class auth extends controller
@@ -25,12 +25,13 @@ class auth extends controller
   function login(Request $credenciales): void
   {
     try {
-      $correo = trim($credenciales->request->get('correo'));
-      $contrasena = $credenciales->request->get('contrasena');
+      $data = $credenciales->toArray();
+      // $correo = trim($data['data']);
 
-      $infoUsuario = $this->usuarios->findByEmail($correo);
+      $data = json_decode($this->desencriptar($data['data']));
+      $infoUsuario = $this->usuarios->findByEmail($data->correo);
 
-      if (!$infoUsuario || !password_verify($contrasena, $infoUsuario['contrasena'])) {
+      if (!$infoUsuario || !password_verify($data->contrasena, $infoUsuario['contrasena'])) {
         http_response_code(400);
         echo json_encode('Bad Request');
       } else {
@@ -48,7 +49,10 @@ class auth extends controller
 
         $jwt = JWT::encode($payload, $key, 'HS256');
 
-        echo json_encode($jwt);
+
+        $encryptedToken = $this->encriptar($jwt);
+
+        echo json_encode(['request_token' => $encryptedToken]);
       }
     } catch (\Exception $th) {
       http_response_code(500);

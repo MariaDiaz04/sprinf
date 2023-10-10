@@ -26,8 +26,6 @@
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/fonts/boxicons.css" />
 
-
-
   <!-- Core CSS -->
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/css/core.css" class="template-customizer-core-css" />
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
