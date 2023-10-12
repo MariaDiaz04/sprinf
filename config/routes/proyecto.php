@@ -13,6 +13,14 @@ $listaDeRutas['proyectos'] = new Route(
   ]
 );
 
+$listaDeRutas['proyectos_evaluar'] = new Route(
+  '/proyectos/assessment/{id}',
+  [
+    'controller' => proyectoController::class,
+    'method' => 'assessment'
+  ]
+);
+
 $listaDeRutas['proyectos_actualizar'] = new Route(
   '/proyectos/actualizar',
   [
@@ -62,13 +70,7 @@ $listaDeRutas['proyectos_ssp'] = new Route(
 
 // EVALUACION DE PROYECTO
 
-$listaDeRutas['proyectos_evaluar'] = new Route(
-  '/proyectos/assessment/{id}',
-  [
-    'controller' => proyectoController::class,
-    'method' => 'assessment'
-  ]
-);
+
 
 $listaDeRutas['proyectos_subir-notas_baremos'] = new Route(
   '/proyectos/subir-notas',

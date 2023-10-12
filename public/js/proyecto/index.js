@@ -60,10 +60,18 @@ $(document).ready(function (e) {
                     }">
                     ${
                       row[6] == 0
-                        ? ` <a class="dropdown-item" href="<?= APP_URL ?>proyectos/assessment/${row[0]}">Evaluar</a>
-                        <a class="dropdown-item" onClick="editarInformacionProyecto('${row[0]}')" href="#">Editar Proyecto</a>
-                        <a class="dropdown-item" onClick="editarIntegrantes('${row[0]}')" href="#">Editar Integrantes</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>`
+                        ? ` <a class="dropdown-item" href="${
+                            urlEvaluar + row[0]
+                          }">Evaluar</a>
+                        <a class="dropdown-item" onClick="editarInformacionProyecto('${
+                          row[0]
+                        }')" href="#">Editar Proyecto</a>
+                        <a class="dropdown-item" onClick="editarIntegrantes('${
+                          row[0]
+                        }')" href="#">Editar Integrantes</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${
+                          row[0]
+                        }') href="#">Eliminar</a>`
                         : ``
                     }
                       

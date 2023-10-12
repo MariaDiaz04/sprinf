@@ -73,7 +73,7 @@ class dimension extends model
     $query = $this->prepare("SELECT * FROM detalles_dimension WHERE unidad_id = :unidad_id");
     $query->bindParam(":unidad_id", $codMateria);
     $query->execute();
-    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    $result = $query->fetchAll(\PDO::FETCH_ASSOC);
     return ($result) ? $result : [];
   }
 

@@ -368,6 +368,7 @@ class proyectoController extends controller
         try {
             $proyecto = $this->proyecto->find($id);
             $integrantes = $this->proyecto->obtenerIntegrantes($id);
+
             if (empty($proyecto)) {
                 throw new Exception('Proyecto no existe');
             }
@@ -403,10 +404,12 @@ class proyectoController extends controller
                 }
             }
 
+
             foreach ($materiasDeDimension as $key => $materia) {
                 $dimensiones = $this->dimension->findBySubject($materia['codigo']);
 
                 $baremos[$materia['codigo']]['nombre'] = $materia['nombre'];
+
 
                 foreach ($dimensiones as $key => $dimension) {
 
@@ -442,6 +445,7 @@ class proyectoController extends controller
                 }
             }
 
+
             // echo json_encode($baremos);
             // exit();
 
@@ -456,7 +460,7 @@ class proyectoController extends controller
         } catch (Exception $e) {
 
             return $this->view('errors/501', [
-                'message' => $e->getMessage(),
+                'message' => $e->getMessage() . ' ' . $e->getTraceAsString(),
             ]);
         }
     }
@@ -558,6 +562,7 @@ class proyectoController extends controller
         try {
             $trayectoId = $request->get('trayecto_id');
             $integrantes = $this->proyecto->IntegrastesPorTrayecto($trayectoId);
+
             $spreadsheet = new Spreadsheet();
             $styleArray = [
                 'font' => [

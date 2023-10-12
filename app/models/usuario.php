@@ -225,7 +225,7 @@ class usuario extends model
 
     function findByEmail($correo): array
     {
-        $usuario = $this->selectOne("usuario", [['email', '=', "'$correo'"]]);
+        $usuario = $this->selectOne("detalles_usuarios", [['email', '=', "'$correo'"]]);
         return !$usuario ? [] : $usuario;
     }
 

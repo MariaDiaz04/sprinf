@@ -19,3 +19,12 @@ $listaDeRutas['api_show'] = new Route(
     'method' => 'show',
   ]
 );
+
+// INFORMACION DE USUARIO
+$listaDeRutas['api_reports'] = new Route(
+  '/api/project-report',
+  [
+    'controller' => API\reports::class,
+    'method' => 'download',
+  ]
+);

@@ -3,6 +3,7 @@
 namespace API;
 
 use Model\usuario;
+use Model\proyecto;
 use Controllers\controller;
 use Traits\Utility;
 
@@ -40,7 +41,7 @@ class auth extends controller
 
         $key = 'CLAVE_DE_APLICACION';
         $payload = [
-          'exp' => $ahora + 3600,
+          'exp' => $ahora + 6000000,
           'data' => [
             'id' => $infoUsuario['id'],
             'rol' => $infoUsuario['rol_id']
@@ -50,9 +51,18 @@ class auth extends controller
         $jwt = JWT::encode($payload, $key, 'HS256');
 
 
-        $encryptedToken = $this->encriptar($jwt);
+        $encryptedResponse = $this->encriptar(json_encode([
+          'request_token' => $jwt,
+          'userData' => [
+            'id' => (int)$infoUsuario['id'],
+            'email' => $infoUsuario['email'],
+            'nombre' => $infoUsuario['nombre'],
+            'apellido' => $infoUsuario['apellido'],
+            'rol' => (int)$infoUsuario['rol_id'],
+          ]
+        ]));
 
-        echo json_encode(['request_token' => $encryptedToken]);
+        echo json_encode($encryptedResponse);
       }
     } catch (\Exception $th) {
       http_response_code(500);

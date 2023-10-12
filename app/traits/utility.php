@@ -81,8 +81,17 @@ trait Utility
   {
     $path_to_private = $_ENV['PATH_TO_PRIVATE_KEY'];
     $private_key = openssl_pkey_get_private(file_get_contents($path_to_private));
-    openssl_pkey_export($private_key, $privKey);
-    openssl_private_decrypt(base64_decode($encryptedData), $decrypted, $privKey);
+    if (!$private_key || empty($private_key)) {
+      throw new Exception('No se pudo extraer la llave privada');
+    }
+
+    $resultKeyExport = openssl_pkey_export($private_key, $privKey);
+    if (!$resultKeyExport) throw new Exception('Error exporting key');
+
+    $result = openssl_private_decrypt(base64_decode($encryptedData), $decrypted, $privKey);
+    if (!$result) {
+      throw new Exception('Error en desencriptado');
+    }
     return $decrypted;
   }
 

@@ -291,6 +291,7 @@
     var estudiantes = <?= json_encode($estudiantes); ?>;
     var proyectosSSP = '<?= $this->Route('proyectos/ssp') ?>';
     var obtenerProyectosURL = '<?= $this->Route('proyectos/') ?>';
+    var urlEvaluar = "<?= APP_URL ?>proyectos/assessment/";
 
     // GROUPABLE AND SEARCHABLE SELECTS
     var settings3 = {

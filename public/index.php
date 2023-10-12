@@ -106,10 +106,10 @@ try {
     var_dump($exception->getMessage());
     $response = new Response('Not Found', 404);
 
-    $viewController = new \App\controllers\controller;
+    $viewController = new controllers\controller;
     $viewController->page('errors/404');
 } catch (Throwable $throwable) {
-    var_dump($throwable->getMessage());
+    echo $throwable->getMessage() . ' ' . $throwable->getTraceAsString();
     $response = new Response('An error occurred', 500);
 }
 //require_once '../config/handler.php';
