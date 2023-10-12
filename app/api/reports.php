@@ -33,7 +33,6 @@ class reports extends controller
       if ($user = $this->obtenerTokenJWT()) {
 
         $infoUsuario = $this->usuarios->find($user->data->id);
-
         if ($infoUsuario['rol_id'] == 1) {
           $requestData = $data->toArray();
 
@@ -45,11 +44,12 @@ class reports extends controller
 
           $this->reporteProyectos($integrantes);
           http_response_code(200);
-
           echo json_encode(true);
         } else {
           throw new Exception('Permisos insuficientes', 401);
         }
+      } else {
+        die();
       }
     } catch (\Exception $th) {
       http_response_code($th->getCode() ?? 500);
