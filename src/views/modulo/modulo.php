@@ -27,8 +27,8 @@
           <tbody>
 
             <?php foreach ($modulo as $objmodulo) : ?>
-              <tr class="CUser CU <?= $objmodulo->modulo_id ?>" id="i<?= $objmodulo->modulo_id ?>">
-                <td><?= $objmodulo->modulo_id ?></td>
+              <tr class="CUser CU <?= $objmodulo->id ?>" id="i<?= $objmodulo->id ?>">
+                <td><?= $objmodulo->id ?></td>
                 <td><?= $objmodulo->nombre ?></td>
                 <td class="text-center">
                   <div class="btn-group">

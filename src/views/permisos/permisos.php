@@ -31,8 +31,8 @@
           </thead>
           <tbody>
             <?php foreach ($permisos as $objpermisos) : ?>
-              <tr class="CUser CU<?= $objpermisos->idpermisos ?>" id="i<?= $objpermisos->idpermisos ?>">
-                <td><?= $objpermisos->idpermisos ?></td>
+              <tr class="CUser CU<?= $objpermisos->id ?>" id="i<?= $objpermisos->id ?>">
+                <td><?= $objpermisos->id ?></td>
                 <td><?= $objpermisos->nombre ?> </td>
                 <td><?= $objpermisos->nombmodulo ?></td>
                 <td>

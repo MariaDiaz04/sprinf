@@ -95,6 +95,21 @@ class estudiante extends model
         return !$estudiante ? [] : $estudiante;
     }
 
+    public function fin($id) {
+        try {
+            $estudiante = $this->selectOne('estudiante',[['cedula','=', $id]]);
+        if($estudiante){
+            foreach ($estudiante[0] as $key => $value) {
+                $this->fillable[$key] = $value;
+            }
+                return $this;
+            }else{
+                return null;
+            }
+        } catch (Exception $th) {
+            return $th;
+        }
+    }
 
     public function listPendingForProject(string $codigoTrayecto)
     {
@@ -106,6 +121,26 @@ class estudiante extends model
         }
     }
 
+    public function eliminar()
+    {
+
+        try {
+
+            $this->delete('estudiante', [['id', '=',  $this->fillable['id']]]);
+            
+            return $this;
+            
+         } catch (Exception $th) {
+            return $th;
+        }
+    }
+
+    public function actualizar($estudiante) {
+
+        $this->update('estudiante', $estudiante, [['id', '=', $this->fillable['id'] ]]);
+        return $this;
+    
+    }
 
     public function byProject($id)
     {
@@ -116,6 +151,8 @@ class estudiante extends model
             return $th;
         }
     }
+
+
 
     /**
      * generarSSP

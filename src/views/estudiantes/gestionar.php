@@ -104,6 +104,36 @@
 
 
   <script>
+
+  function remove(id) {
+        console.log(id)
+        url = $(this).attr('action');
+        data = id;
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            
+
+            console.log(error, status)
+          },
+          success: function(data, status) {
+            //table.ajax.reload();
+            // usar sweetalerts
+            document.getElementById("guardar").reset();
+            Swal.fire({ // Para Alerta de Guardado 
+              position: 'bottom-end',
+              icon: 'success',
+              title: "Eliminado con Exito",
+              showConfirmButton: false,
+              toast: true,
+              timer: 5000
+            })
+          }
+        })
+      }
     let showDetailsUrl = "<?= APP_URL . $this->Route('profesores/showDetails') ?>";
     $(document).ready(() => {
 
@@ -132,7 +162,7 @@
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
                         <a class="dropdown-item" onClick="showDetails('${row[4]}')" href="#">Mostrar Datos de Contacto</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}');" href="#">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -155,14 +185,7 @@
           data: data,
           error: function(error, status) {
             toggleLoading(false)
-            Swal.fire({
-              position: 'bottom-end',
-              icon: 'error',
-              title: error.responseText,
-              showConfirmButton: false,
-              toast: true,
-              timer: 2000
-            })
+            
 
             console.log(error, status)
           },
@@ -170,6 +193,14 @@
             table.ajax.reload();
             // usar sweetalerts
             document.getElementById("guardar").reset();
+            Swal.fire({ // Para Alerta de Guardado 
+              position: 'bottom-end',
+              icon: 'success',
+              title: "Guardado con Exito",
+              showConfirmButton: false,
+              toast: true,
+              timer: 5000
+            })
             // actualizar tabla
             toggleLoading(false)
             console.log(data, status)
@@ -183,9 +214,6 @@
         alert(`Editing ${id}`)
       }
 
-      function remove(id) {
-        alert(`Removing ${id}`)
-      }
 
       // TOGGLE BUTTON AND SPINNER
       function toggleLoading(show) {

@@ -35,7 +35,8 @@
   <link rel="stylesheet" href="<?= APP_URL ?>assets/css/jquery.transfer.css" />
   <link rel="stylesheet" type="text/css" href="assets/icon_font/css/icon_font.css" />
 
-
+    <!-- Alerta -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />

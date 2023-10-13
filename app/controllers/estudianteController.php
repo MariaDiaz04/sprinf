@@ -89,12 +89,39 @@ class estudianteController extends controller
 
       http_response_code(200);
       echo json_encode($idestudiante);
-    } catch (Exception $e) {
+        } catch (Exception $e) {
       http_response_code(500);
       echo json_encode($e->getMessage());
     }
 
 
+  }
+
+      /* ****FUNCION QUE LLAMA A LA VISTA*** */
+      public function edit($request){
+        $estudiante = $this->estudiante->find($request['estudiante']);
+        if ($estudiante) {
+            return $this->view('estudiante/editar');
+
+            } else {
+
+            return $this->page('errors/404');
+
+        }
+
+
+    }
+
+    /* ****FUNCION QUE EJECUTA EL UPDATE*** */
+    public function update($request) {
+
+
+      if(!$estudiante = $this->estudiante->find($_GET['id'])) { return $this->page('errors/404'); }
+      $estudiante->actualizar([
+          'nombre'=> '"'.$request['nombre'].'"',
+          'estatus'=> '"'.$request['estatus'].'"',  
+      ]);
+      return $this->redirect('estudiante');
   }
 
   function showDetails(Request $estudiante): void
@@ -133,6 +160,13 @@ class estudianteController extends controller
       http_response_code(500);
       echo json_encode($e->getMessage());
     }
+  }
+
+  public function delete($request)
+  {
+
+      $estudiante = $this->estudiante->fin($request['id']);
+      return $estudiante ? $estudiante->eliminar() : $this->page('errors/404');
   }
 
   public function E501()

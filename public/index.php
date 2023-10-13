@@ -131,6 +131,15 @@ $routes->add('estudiante_edit', new Route(
     ]
 ));
 
+$routes->add('estudiante_delete', new Route(
+
+    '/estudiantes/eliminar',
+    [
+        'controller' => estudianteController::class,
+        'method' => 'delete',
+    ]
+));
+
 $routes->add('/estudiantes/guardar', new Route(
 
     '/estudiantes/guardar',
