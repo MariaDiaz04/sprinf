@@ -22,7 +22,7 @@ $listaDeRutas['api_show'] = new Route(
 
 // INFORMACION DE USUARIO
 $listaDeRutas['api_reports'] = new Route(
-  '/api/project-report',
+  '/api/project-report/{idTrayecto}',
   [
     'controller' => API\reports::class,
     'method' => 'download',

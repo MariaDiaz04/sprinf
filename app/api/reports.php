@@ -27,17 +27,16 @@ class reports extends controller
     $this->proyecto = new proyecto();
   }
 
-  function download(Request $data): void
+  function download(Request $data, $idTrayecto): void
   {
     try {
       if ($user = $this->obtenerTokenJWT()) {
 
         $infoUsuario = $this->usuarios->find($user->data->id);
         if ($infoUsuario['rol_id'] == 1) {
-          $requestData = $data->toArray();
 
 
-          $trayectoId = $requestData['trayecto_id'];
+          $trayectoId = $idTrayecto;
           $integrantes = $this->proyecto->IntegrastesPorTrayecto($trayectoId);
 
           if (!$integrantes) throw new Exception('No hay integrantes en el trayecto seleccionado', 400);

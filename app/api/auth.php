@@ -34,7 +34,7 @@ class auth extends controller
 
       if (!$infoUsuario || !password_verify($data->contrasena, $infoUsuario['contrasena'])) {
         http_response_code(400);
-        echo json_encode('Bad Request');
+        echo json_encode('Credenciales Incorrectas');
       } else {
 
         $ahora = strtotime("now");
