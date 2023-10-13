@@ -90,6 +90,8 @@
 
 
   <script>
+    let noteUrl = "<?= APP_URL . $this->Route('notes/pdf') ?>";
+
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -117,7 +119,7 @@
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
-                        <a class="dropdown-item" onClick="return descargarNotasEstudiante('${row[0]}')" href="#">Notas</a>
+                        <a class="dropdown-item" onClick="return descargarNotasEstudiante('${row[0]}')" href="${noteUrl+'/'+row[0]}" target="_blank">Notas</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>
                     </div>`;

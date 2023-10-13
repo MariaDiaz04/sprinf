@@ -150,6 +150,16 @@ $routes->add('estudiante_ssp', new Route(
 ));
 
 
+$routes->add('notes/pdf/{id}', new Route(
+
+    '/notes/pdf/{id}',
+    [
+        'controller' => estudianteController::class,
+        'method' => 'notePDF',
+    ]
+));
+
+
 // GESTION DE PROFESORES
 $routes->add('profesor_manage', new Route(
 

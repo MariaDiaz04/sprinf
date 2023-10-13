@@ -70,8 +70,8 @@
                         <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <ul class="dropdown-menu dropdown-menu-end " data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 41px);">
-                        <li><a class="dropdown-item" href="<?=APP_URL.$this->Route("permisos/editar/$objpermisos->idpermisos") ?>"><i class="fas fa-user-edit"></i> Editar</a></li>
-                        <li><a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarpermisos(<?= $objpermisos->idpermisos ?>)" id='<?= $objpermisos->idpermisos ?>'><i class="fas fa-user-minus"></i> Eliminar </a></li>
+                        <li><a class="dropdown-item" href="<?=APP_URL.$this->Route("permisos/editar/$objpermisos->id") ?>"><i class="fas fa-user-edit"></i> Editar</a></li>
+                        <li><a class="dropdown-item " href="javascript:void(0)" onClick="return eliminarpermisos(<?= $objpermisos->id ?>)" id='<?= $objpermisos->id?>'><i class="fas fa-user-minus"></i> Eliminar </a></li>
                       </ul>
                     </div>
                   </div>

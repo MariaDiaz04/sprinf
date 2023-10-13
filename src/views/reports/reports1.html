@@ -1,62 +1,149 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    
+
     <title>Reporte de Ventas</title>
     <link rel="stylesheet" href="{{link_css}}">
 </head>
+
 <body>
     <div class="container">
         <table style="padding-bottom: 12px; padding-top: 10px;">
             <thead>
                 <tr>
-                    <th align="left">{{nombre_comercial}}</th>
-                    <th align="center">{{titulo_reporte}}</th>
-                    <th align="right" >{{fechas}}</th>
+                    <th align="left">nombre_comercial</th>
+                    <th align="center">titulo_reporte</th>
+                    <th align="right">fechas</th>
                 </tr>
             </thead>
         </table>
-         
-        <table  class="tablepe">
+
+        <table class="tablepe">
             <thead>
                 <tr class="body">
                     <th class="center th" width="5%">#</th>
                     <th class="center th" width="8%">Fecha</th>
-                    <th class="center th"  width="6%">Serie</th>
-                    <th class="center th"  width="6%">Numero</th>
-                    <th class="center th"  width="12%">Cliente</th>
+                    <th class="center th" width="6%">Serie</th>
+                    <th class="center th" width="6%">Numero</th>
+                    <th class="center th" width="12%">Cliente</th>
                     <!-- <th class="center th">Productos Vendidos</th> -->
                     <th class="center th">
                         <table>
-                        <tbody>
-                            <tr >
-                                <td class="center" colspan="5"> Productos Vendidos </td>
-                            </tr>
-                            <tr >
-                                <td  class="center"  width="16%" >Codigo</td>
-                                <td class="center" width=39%"  >Nombre Producto</td>
-                                <td class="center" width="12%" >Cantidad</td>
-                                <td class="center" width="16%"  >Precio</td >
-                                <td class="center"   >Sub.Total</td >
-                                <!-- <td  class="center" width="15%" style="background-color: red;">Codigo</td>
+                            <tbody>
+                                <tr>
+                                    <td class="center" colspan="5"> Productos Vendidos </td>
+                                </tr>
+                                <tr>
+                                    <td class="center" width="16%">Codigo</td>
+                                    <td class="center" width=39%">Nombre Producto</td>
+                                    <td class="center" width="12%">Cantidad</td>
+                                    <td class="center" width="16%">Precio</td>
+                                    <td class="center">Sub.Total</td>
+                                    <!-- <td  class="center" width="15%" style="background-color: red;">Codigo</td>
                                 <td class="center" width=45%" style="background-color: teal;">Nombre Producto</td>
                                 <td class="center" width="12%" style="background-color: red">Cantidad</td>
                                 <td class="center" width="16%" style="background-color: crimson;" >Precio</td >
                                 <td class="center" width="14%" style="background-color: red;">Sub.Total</td > -->
-                            </tr>
-                        </tbody>
+                                </tr>
+                            </tbody>
                         </table>
-                    </td>
+                        </td>
                     <th class="center th" width="8%">Total</th>
                 </tr>
             </thead>
-            <tbody>
-                {{table_products_sale}}
+            <!--  <tbody>
+                {{table_products_sale}} -->
             </tbody>
         </table>
-       
+
     </div>
-     
+
 </body>
+<style>
+    html {
+        margin-left: 22px;
+        margin-right: 22px;
+        margin-top: 28px;
+        margin-bottom: 28px;
+    }
+
+    *,
+    ::before,
+    ::after {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-size: 12px;
+        font-weight: 400;
+        color: #212529;
+    }
+
+    body,
+    html {
+        font-family: sans-serif;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    /* table {
+    display: table;
+    border-collapse: collapse;
+    border-color: grey;
+} */
+
+    .th {
+        font-size: 14px;
+        color: #fff;
+        line-height: 1.4;
+        background-color: #6c7ae0;
+        /*#6c7ae0 */
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .head {
+        /* padding-top: 12px;
+    padding-bottom: 12px; */
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    .tablepe>tr:nth-child(even) {
+        background-color: #f8f6ff;
+    }
+
+    .tablepe {
+        /* border: 1px solid black;*/
+        border-collapse: collapse;
+    }
+
+    .body>th {
+        /*  border: 1px solid rgb(49, 49, 49);*/
+        border: 1px solid rgb(29, 29, 29);
+        /*#6c7ae0*/
+    }
+
+    .body>td {
+        border: 1px solid rgb(29, 29, 29);
+    }
+</style>
+
 </html>
