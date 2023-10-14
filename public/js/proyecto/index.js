@@ -69,6 +69,7 @@ $(document).ready(function (e) {
                         <a class="dropdown-item" onClick="editarIntegrantes('${
                           row[0]
                         }')" href="#">Editar Integrantes</a>
+                        <a class="dropdown-item" " href="${noteUrl+'/'+row[0]}" target="_blank">Notas</a>
                         <a class="dropdown-item text-danger" onClick="remove('${
                           row[0]
                         }') href="#">Eliminar</a>`
