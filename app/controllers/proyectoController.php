@@ -659,10 +659,12 @@ class proyectoController extends controller
         try {
             $date = date('d-m-Y');
             $notas = $this->proyecto->NotasIntegrastesProyecto($id);
+            
             $url =  "data:image/png;base64," . APP_URL . 'assets/img/illustrations/logoUptaeb.png';
             $imagen = '<img src="' . $url . '" height="60">';
             $name_comprobante = 'Calificacion grupal';
             $dompdf = new Dompdf();
+            
             $html = '<!DOCTYPE html>
         <html lang="es">
         
@@ -720,7 +722,7 @@ class proyectoController extends controller
 
             $html2 = '</tr>
                       </tbody>
-                  /table>
+                      </table>
         
             </div>
         
@@ -811,7 +813,9 @@ class proyectoController extends controller
         </style>
         
         </html>';
-            $dompdf->loadHtml(utf8_decode($html . $concat . $html2));
+            $render = iconv('UTF-8','ISO-8859-1//TRANSLIT',$html . $concat . $html2);
+            //var_dump($render);exit();
+            $dompdf->loadHtml($render);
             $dompdf->render();
             $dompdf->stream($name_comprobante, array("Attachment" => false));
             http_response_code(200);
