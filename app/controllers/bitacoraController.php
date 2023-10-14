@@ -7,9 +7,8 @@ class bitacoraController extends controller
 	public $BITACORA;
 
 	function __construct () {	
+		$this->tokenExist();
 		$this->BITACORA = new bitacora();
-
-
 	}
 
 	public function index() {

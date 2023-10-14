@@ -40,6 +40,8 @@ class proyectoController extends controller
 
     function __construct()
     {
+
+        $this->tokenExist();
         $this->proyecto = new proyecto();
         $this->estudiantes = new estudiante();
         $this->dimension = new dimension();
@@ -478,10 +480,10 @@ class proyectoController extends controller
                         'A3'         // Top left coordinate of the worksheet range where
                         //    we want to set these values (default is A1)
                     );
-            }else{
-            $spreadsheet->getActiveSheet()->setCellValue('H3', 'SIN DATOS');
-            $spreadsheet->getActiveSheet()->getStyle('H3')->getFont()->setBold(true)->setSize(16);
-            $spreadsheet->getActiveSheet()->getStyle('H3')->getAlignment()->setHorizontal('center');
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValue('H3', 'SIN DATOS');
+                $spreadsheet->getActiveSheet()->getStyle('H3')->getFont()->setBold(true)->setSize(16);
+                $spreadsheet->getActiveSheet()->getStyle('H3')->getAlignment()->setHorizontal('center');
             }
             header('Content-Type: application/vnd.ms-excel');
             header('Content-Disposition: attachment;filename="matriz de proyectos.xlsx"');
@@ -504,14 +506,14 @@ class proyectoController extends controller
 
     public function noteProyectPDF(Request $request, $id)
     {
-      try {
-        $date = date('d-m-Y');
-        $notas = $this->proyecto->NotasIntegrastesProyecto($id);
-        $url =  "data:image/png;base64,".APP_URL.'assets/img/illustrations/logoUptaeb.png';
-        $imagen = '<img src="'.$url.'" height="60">';
-        $name_comprobante = 'Calificacion grupal';
-        $dompdf = new Dompdf();
-        $html = '<!DOCTYPE html>
+        try {
+            $date = date('d-m-Y');
+            $notas = $this->proyecto->NotasIntegrastesProyecto($id);
+            $url =  "data:image/png;base64," . APP_URL . 'assets/img/illustrations/logoUptaeb.png';
+            $imagen = '<img src="' . $url . '" height="60">';
+            $name_comprobante = 'Calificacion grupal';
+            $dompdf = new Dompdf();
+            $html = '<!DOCTYPE html>
         <html lang="es">
         
         <head>
@@ -546,28 +548,27 @@ class proyectoController extends controller
                     </thead>
                       <tbody>
                         <tr>';
-                        
 
-                        $concat = '';
-        
-                        foreach ($notas as $student) {
-        
-                            //Concatenamos las tablas en una variable, también podriamos hacer el "echo" directamente
-                            $concat .= '<tr>';
 
-                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['fase_id'] .'</td>';
-                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['nombre_fase'] .'</td>';
-                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['proyecto_nombre'] .'</td>';
-                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['cedula'] .'</td>';
-                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['nombre'] .' '. $student['apellido'].'</td>';
-                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['ponderado'] .'/'. $student['calificacion'].'</td>';
-                            $concat .= '</tr>';
+            $concat = '';
 
-                        }
-        
-                         $concat;
-                    
-                         $html2='</tr>
+            foreach ($notas as $student) {
+
+                //Concatenamos las tablas en una variable, también podriamos hacer el "echo" directamente
+                $concat .= '<tr>';
+
+                $concat .= '<td  class="center" style="font-size: 14px;">' . $student['fase_id'] . '</td>';
+                $concat .= '<td  class="center" style="font-size: 14px;">' . $student['nombre_fase'] . '</td>';
+                $concat .= '<td  class="center" style="font-size: 14px;">' . $student['proyecto_nombre'] . '</td>';
+                $concat .= '<td  class="center" style="font-size: 14px;">' . $student['cedula'] . '</td>';
+                $concat .= '<td  class="center" style="font-size: 14px;">' . $student['nombre'] . ' ' . $student['apellido'] . '</td>';
+                $concat .= '<td  class="center" style="font-size: 14px;">' . $student['ponderado'] . '/' . $student['calificacion'] . '</td>';
+                $concat .= '</tr>';
+            }
+
+            $concat;
+
+            $html2 = '</tr>
                       </tbody>
                   /table>
         
@@ -660,14 +661,14 @@ class proyectoController extends controller
         </style>
         
         </html>';
-        $dompdf->loadHtml(utf8_decode($html.$concat.$html2));
-        $dompdf->render();
-        $dompdf->stream($name_comprobante, array("Attachment" => false));
-        http_response_code(200);
-        echo json_encode($id);
-      } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode($e->getMessage());
-      }
+            $dompdf->loadHtml(utf8_decode($html . $concat . $html2));
+            $dompdf->render();
+            $dompdf->stream($name_comprobante, array("Attachment" => false));
+            http_response_code(200);
+            echo json_encode($id);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
     }
 }

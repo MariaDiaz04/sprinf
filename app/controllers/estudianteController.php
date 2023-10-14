@@ -17,6 +17,7 @@ class estudianteController extends controller
 
   function __construct()
   {
+    $this->tokenExist();
     $this->estudiante = new estudiante();
   }
 

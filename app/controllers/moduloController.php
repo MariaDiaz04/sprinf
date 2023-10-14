@@ -13,6 +13,7 @@ class moduloController extends controller
 
     function __construct()
     {
+        $this->tokenExist();
         $this->MODULO = new modulo();
     }
 

@@ -35,6 +35,7 @@ class materiasController extends controller
     public function index(Request $materia, $idTrayecto)
     {
 
+        $this->tokenExist();
         $materias = $this->MATERIAS->all();
         $trayectos = $this->TRAYECTO->all();
         $trayecto = $this->TRAYECTO->find($idTrayecto);

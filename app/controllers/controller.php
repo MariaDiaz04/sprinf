@@ -117,4 +117,13 @@ class controller
     {
         return date_format(date_create($date), $format);
     }
+
+    public function tokenExist(){
+        if (!isset($_SESSION['token'])) {
+            ob_start(); //this should be first line of your page
+            header('location:/');
+            ob_end_flush(); //this should be last line of your page
+            exit();
+          }
+    }
 }

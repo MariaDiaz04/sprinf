@@ -26,6 +26,7 @@ class dimensionController extends controller
 
   function __construct()
   {
+    $this->tokenExist();
     $this->baremos = new baremos();
     $this->dimension = new dimension();
     $this->trayectos = new trayectos();

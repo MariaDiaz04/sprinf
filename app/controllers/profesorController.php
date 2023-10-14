@@ -16,6 +16,7 @@ class profesorController extends controller
 
   function __construct()
   {
+    $this->tokenExist();
     $this->profesor = new profesor();
   }
 

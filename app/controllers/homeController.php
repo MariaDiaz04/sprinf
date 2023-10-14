@@ -15,7 +15,7 @@ class homeController extends controller
 
     function __construct()
     {
-
+        $this->tokenExist();
         $this->USUARIO = new usuario();
     }
     public function index()

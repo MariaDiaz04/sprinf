@@ -18,6 +18,7 @@ class userController extends controller
     function __construct()
     {
 
+
         $this->USUARIO = new usuario();
         $this->ROL = new rol();
         // $this->PERMISOS = new permisos();

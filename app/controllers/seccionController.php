@@ -14,6 +14,7 @@ class seccionController extends controller
 
     function __construct()
     {
+        $this->tokenExist();
         $this->seccion = new seccion();
     }
 
