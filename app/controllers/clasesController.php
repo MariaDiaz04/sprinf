@@ -26,6 +26,7 @@ class clasesController extends controller
 
   function __construct()
   {
+		$this->tokenExist();
     $this->clases = new clases();
     $this->profesores = new profesor();
     $this->materias = new materias();

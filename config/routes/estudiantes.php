@@ -38,3 +38,12 @@ $listaDeRutas['estudiante_ssp'] =  new Route(
     'method' => 'ssp',
   ]
 );
+
+$listaDeRutas['notas_estudiante'] =  new Route(
+
+  '/notes/pdf/{id}',
+  [
+    'controller' => estudianteController::class,
+    'method' => 'notePDF',
+  ]
+);

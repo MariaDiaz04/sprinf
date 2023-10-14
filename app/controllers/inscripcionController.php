@@ -20,6 +20,7 @@ class inscripcionController extends controller
 
   function __construct()
   {
+    $this->tokenExist();
     $this->periodo = new periodo();
     $this->inscripciones = new inscripcion();
     $this->materias = new materias();

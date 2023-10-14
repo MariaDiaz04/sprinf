@@ -10,7 +10,7 @@
         Editar Modulo
       </h5>
       <div class="card-body">
-        <form action="<?=APP_URL.$this->Route("modulos/actualizar/$modulo->modulo_id")?>" method="POST" id="moduloeditar">
+        <form action="<?=APP_URL.$this->Route("modulos/actualizar/$modulo->id")?>" method="POST" id="moduloeditar">
           <div class="container-fluid">               
             <div class="row pb-2">
                 <div class="col-12">
