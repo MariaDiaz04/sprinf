@@ -145,10 +145,10 @@ class estudianteController extends controller
           }
       
           /* table {
-          display: table;
-          border-collapse: collapse;
-          border-color: grey;
-      } */
+              display: table;
+              border-collapse: collapse;
+              border-color: grey;
+            } */
       
           .th {
               font-size: 14px;

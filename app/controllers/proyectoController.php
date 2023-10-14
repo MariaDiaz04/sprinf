@@ -501,4 +501,173 @@ class proyectoController extends controller
 
         return $this->page('errors/501');
     }
+
+    public function noteProyectPDF(Request $request, $id)
+    {
+      try {
+        $date = date('d-m-Y');
+        $notas = $this->proyecto->NotasIntegrastesProyecto($id);
+        $url =  "data:image/png;base64,".APP_URL.'assets/img/illustrations/logoUptaeb.png';
+        $imagen = '<img src="'.$url.'" height="60">';
+        $name_comprobante = 'Calificacion grupal';
+        $dompdf = new Dompdf();
+        $html = '<!DOCTYPE html>
+        <html lang="es">
+        
+        <head>
+            <meta charset="UTF-8">
+        
+            <title>Reporte de Ventas</title>
+            <link rel="stylesheet" href="{{link_css}}">
+        </head>
+        
+        <body>
+            <div class="container">
+                <table style="padding-bottom: 12px; padding-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th align="left">SPRINF</th>
+                            <th align="center" style="font-size: 18px;">Notas por equipo </th>
+                            <th align="right">' . $date . '</th>
+                        </tr>
+                    </thead>
+                </table>
+        
+                <table class="tablepe">
+                    <thead>
+                        <tr class="body">
+                            <th class="center th" width="5%">Fase</th>
+                            <th class="center th" width="6%">Nombre fase</th>
+                            <th class="center th" width="8%">Proyecto</th>
+                            <th class="center th" width="5%">Cedula</th>
+                            <th class="center th" width="10%">Nombre</th>
+                            <th class="center th" width="8%">Puntos</th>
+                        </tr>
+                    </thead>
+                      <tbody>
+                        <tr>';
+                        
+
+                        $concat = '';
+        
+                        foreach ($notas as $student) {
+        
+                            //Concatenamos las tablas en una variable, también podriamos hacer el "echo" directamente
+                            $concat .= '<tr>';
+
+                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['fase_id'] .'</td>';
+                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['nombre_fase'] .'</td>';
+                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['proyecto_nombre'] .'</td>';
+                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['cedula'] .'</td>';
+                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['nombre'] .' '. $student['apellido'].'</td>';
+                            $concat .= '<td  class="center" style="font-size: 14px;">' . $student['ponderado'] .'/'. $student['calificacion'].'</td>';
+                            $concat .= '</tr>';
+
+                        }
+        
+                         $concat;
+                    
+                         $html2='</tr>
+                      </tbody>
+                  /table>
+        
+            </div>
+        
+        </body>
+        <style>
+            html {
+                margin-left: 22px;
+                margin-right: 22px;
+                margin-top: 28px;
+                margin-bottom: 28px;
+            }
+        
+            *,
+            ::before,
+            ::after {
+                margin: 0px;
+                padding: 0px;
+                box-sizing: border-box;
+            }
+        
+            body {
+                font-size: 12px;
+                font-weight: 400;
+                color: #212529;
+            }
+        
+            body,
+            html {
+                font-family: sans-serif;
+            }
+        
+            table {
+                width: 100%;
+            }
+        
+            /* table {
+                display: table;
+                border-collapse: collapse;
+                border-color: grey;
+              } */
+        
+            .th {
+                font-size: 14px;
+                color: #fff;
+                line-height: 1.4;
+                background-color: #005abd;
+                /*#6c7ae0 */
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+        
+            .head {
+                /* padding-top: 12px;
+            padding-bottom: 12px; */
+            }
+        
+            .center {
+                text-align: center;
+            }
+        
+            p {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        
+            ul {
+                list-style-type: none;
+            }
+        
+            .tablepe>tr:nth-child(even) {
+                background-color: #f8f6ff;
+            }
+        
+            .tablepe {
+                /* border: 1px solid black;*/
+                border-collapse: collapse;
+            }
+        
+            .body>th {
+                /*  border: 1px solid rgb(49, 49, 49);*/
+                border: 1px solid rgb(29, 29, 29);
+                /*#6c7ae0*/
+            }
+        
+            .body>td {
+                border: 1px solid rgb(29, 29, 29);
+            }
+        </style>
+        
+        </html>';
+        $dompdf->loadHtml(utf8_decode($html.$concat.$html2));
+        $dompdf->render();
+        $dompdf->stream($name_comprobante, array("Attachment" => false));
+        http_response_code(200);
+        echo json_encode($id);
+      } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode($e->getMessage());
+      }
+    }
 }

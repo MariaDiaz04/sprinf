@@ -160,6 +160,9 @@ $routes->add('notes/pdf/{id}', new Route(
 ));
 
 
+
+
+
 // GESTION DE PROFESORES
 $routes->add('profesor_manage', new Route(
 
@@ -527,7 +530,14 @@ $routes->add('proyectos_evaluar', new Route(
     ]
 ));
 
+$routes->add('proyectnotes/pdf/{id}', new Route(
 
+    '/proyectnotes/pdf/{id}',
+    [
+        'controller' => proyectoController::class,
+        'method' => 'noteProyectPDF',
+    ]
+));
 
 # FIN DE GESTIÓN DE PROYECTOS
 

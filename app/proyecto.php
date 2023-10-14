@@ -280,7 +280,20 @@ class proyecto extends model
             return $th;
         } 
     }
-
+    /*
+    *consulta para el reporte notas PDF
+    * @return array para los integrantes de los poryetcos segun su trayecto
+    */
+    function NotasIntegrastesProyecto($id){
+        try {
+            $notas = $this->querys("SELECT detalles_notas_baremos.fase_id,detalles_notas_baremos.nombre_fase, detalles_notas_baremos.cedula,
+            detalles_notas_baremos.ponderado,detalles_notas_baremos.calificacion, persona.nombre, persona.apellido, proyecto.nombre as proyecto_nombre 
+            FROM detalles_notas_baremos LEFT JOIN persona ON persona.cedula = detalles_notas_baremos.cedula LEFT JOIN proyecto ON proyecto.id = detalles_notas_baremos.proyecto_id WHERE detalles_notas_baremos.proyecto_id = $id");
+            return $notas ? $notas : null;
+        } catch (Exception $th) {
+            return $th;
+        }
+    }
 
     /**
      * generarSSP

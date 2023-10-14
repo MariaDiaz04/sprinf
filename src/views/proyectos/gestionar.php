@@ -153,7 +153,9 @@
 
 
   <script>
-    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";;
+    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
+    let noteUrl = "<?= APP_URL . $this->Route('proyectnotes/pdf') ?>";
+
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -194,6 +196,7 @@
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
                       ${ row[6] == 0 ? ` <a class="dropdown-item" href="<?= APP_URL ?>proyectos/assessment/${row[0]}">Evaluar</a>` : ``}
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
+                        <a class="dropdown-item" " href="${noteUrl+'/'+row[0]}" target="_blank">Notas</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>
                     </div>`;

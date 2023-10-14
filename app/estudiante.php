@@ -116,8 +116,7 @@ class estudiante extends model
         } catch (Exception $th) {
             return $th;
         }
-       /*  $notas = $this->selectOne("detalles_notas_baremos", [['cedula', '=', "'" . $cedula . "'"]]);
-        return !$notas ? [] : $notas; */
+
     }
 
 }
