@@ -88,7 +88,7 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `direccion` varchar(255),
   `municipio` varchar(255),
   `parroquia` varchar(255),
-  `tutor_in` varchar(255),
+  `tutor_in` int,
   `tutor_ex` varchar(255),
   `tlf_tin` int,
   `tlf_tex` int,
@@ -212,6 +212,8 @@ ALTER TABLE `sprinf_bd`.`inscripcion` ADD FOREIGN KEY (`unidad_curricular_id`) R
 ALTER TABLE `sprinf_bd`.`inscripcion` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`fase_id`) REFERENCES `sprinf_bd`.`fase` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`tutor_in`) REFERENCES `sprinf_bd`.`profesor` (`persona_id`);
 
 ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
 
@@ -1344,7 +1346,7 @@ values (
   'Av. Los Horcones, Av. La Salle, Barquisimeto 3001, Lara', 
   'iribarren', 
   'Ana Soto', 
-  'Sonia',  
+  135482354,
   'Jose Sequera',  
   '041254875',  
   '041255478',   

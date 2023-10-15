@@ -124,24 +124,30 @@
                       <textarea class="form-control" placeholder="..." required id="resumen" name="direccion" style="height: 50px"></textarea>
                     </div>
 
-                    <div class="col-lg-3">
-                      <label class="form-label" for="tutor_in">Tutor Interno</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_in">
+
+                    <div class="col-lg-6">
+                      <label class="form-label" for="tutor_in">Tutor In *</label>
+                      <select class="form-select" name="tutor_in" id="selectFaseId">
+
+                        <?php foreach ($profesores as $profesor) : ?>
+                          <option value="<?= $profesor->cedula ?>"><?= "$profesor->cedula - $profesor->nombre $profesor->apellido" ?></option>
+                        <?php endforeach; ?>
+                      </select>
                     </div>
 
                     <div class="col-lg-3">
                       <label class="form-label" for="tutor_ex">Tutor Externo</label>
                       <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex">
                     </div>
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="comunidad">Comunidad</label>
-                      <textarea class="form-control" placeholder="..." required id="comunidad" name="comunidad" style="height: 50px "></textarea>
-                    </div>
                     <div class="col-lg-3">
                       <label class="form-label" for="motor_productivo">Motor Productivo</label>
                       <input type="text" class="form-control mb-1" placeholder="..." required name="motor_productivo">
                     </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="comunidad">Comunidad</label>
+                      <textarea class="form-control" placeholder="..." required id="comunidad" name="comunidad" style="height: 50px "></textarea>
+                    </div>
+
                     <div class="col-lg-6">
                       <label class="form-label" for="resumen">Resumen</label>
                       <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" style="height: 50px "></textarea>
@@ -295,7 +301,7 @@
     let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
     let noteUrl = "<?= APP_URL . $this->Route('proyectnotes/pdf') ?>";
 
-   
+
 
     // GROUPABLE AND SEARCHABLE SELECTS
     var settings3 = {
@@ -325,6 +331,5 @@
     };
 
     var transfer2 = $(".transferEstudiantes").transfer(estudiantesSettings);
-
   </script>
   <script src="<?= APP_URL ?>js/proyecto/index.js"></script>
