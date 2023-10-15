@@ -28,3 +28,11 @@ $listaDeRutas['api_reports'] = new Route(
     'method' => 'download',
   ]
 );
+
+$listaDeRutas['api_proyectos'] = new Route(
+  '/api/proyectos',
+  [
+    'controller' => API\proyectos::class,
+    'method' => 'obtener',
+  ]
+);
