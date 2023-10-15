@@ -7,6 +7,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Model\proyectoHistorico;
 use Model\proyecto;
+use Model\profesor;
 use Model\periodo;
 use Model\estudiante;
 use Model\inscripcion;
@@ -27,6 +28,7 @@ class proyectoController extends controller
     private $estudiantes;
     private $dimension;
     private $tutores;
+    private $profesores;
     private $baremos;
     private $fase;
     private $periodo;
@@ -42,6 +44,7 @@ class proyectoController extends controller
         $this->estudiantes = new estudiante();
         $this->dimension = new dimension();
         $this->tutores = new tutor();
+        $this->profesores = new profesor();
         $this->trayectos = new trayectos();
         $this->baremos = new baremos();
         $this->fase = new fase();
@@ -55,6 +58,7 @@ class proyectoController extends controller
         $proyectos = $this->proyecto->all();
         $pendientes = $this->proyecto->pendientesACerrar();
         $tutores = $this->tutores->all();
+        $profesores = $this->profesores->all();
         $trayectos = $this->trayectos->all();
 
         $fases = $this->fase->getPrimerFaseDeTrayectos();
@@ -81,6 +85,7 @@ class proyectoController extends controller
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'periodo' => $periodo,
+            'profesores' => $profesores,
             'fases' => $fases,
             'cerrarFase' => empty($pendientes) && !empty($proyectos),
             'tutores' => $tutores,
@@ -659,12 +664,12 @@ class proyectoController extends controller
         try {
             $date = date('d-m-Y');
             $notas = $this->proyecto->NotasIntegrastesProyecto($id);
-            
+
             $url =  "data:image/png;base64," . APP_URL . 'assets/img/illustrations/logoUptaeb.png';
             $imagen = '<img src="' . $url . '" height="60">';
             $name_comprobante = 'Calificacion grupal';
             $dompdf = new Dompdf();
-            
+
             $html = '<!DOCTYPE html>
         <html lang="es">
         
@@ -813,7 +818,7 @@ class proyectoController extends controller
         </style>
         
         </html>';
-            $render = iconv('UTF-8','ISO-8859-1//TRANSLIT',$html . $concat . $html2);
+            $render = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $html . $concat . $html2);
             //var_dump($render);exit();
             $dompdf->loadHtml($render);
             $dompdf->render();

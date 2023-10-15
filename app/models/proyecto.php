@@ -7,6 +7,7 @@ use Utils\Sanitizer;
 
 use Exception;
 use PDOException;
+use PHPUnit\Framework\Constraint\ObjectHasProperty;
 
 class proyecto extends model
 {
@@ -289,6 +290,9 @@ class proyecto extends model
             parent::beginTransaction();
             // almacenar materia
             $this->id = $this->save((isset($this->id) ? $this->id : null));
+            if (!property_exists($this, 'integrantes') || empty($this->integrantes)) {
+                throw new Exception('No se puede generar un proyecto sin integrantes');
+            }
             foreach ($this->integrantes as $integrante) {
                 $resultado = $this->guardarIntegrante($integrante);
                 if (!$resultado) {
@@ -297,7 +301,7 @@ class proyecto extends model
             }
             parent::commit();
             return true;
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             $this->error = [
                 'code' => $e->getCode(),
                 'message' => $e->getMessage(),
