@@ -130,7 +130,7 @@
                       <select class="form-select" name="tutor_in" id="selectFaseId">
 
                         <?php foreach ($profesores as $profesor) : ?>
-                          <option value="<?= $profesor->cedula ?>"><?= "$profesor->cedula - $profesor->nombre $profesor->apellido" ?></option>
+                          <option value="<?= $profesor->codigo ?>"><?= "$profesor->cedula - $profesor->nombre $profesor->apellido" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
