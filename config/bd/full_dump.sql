@@ -1447,6 +1447,7 @@ SELECT
   proyecto.parroquia, 
   proyecto.tutor_ex,
   proyecto.tutor_in,
+  proyecto.cerrado,
   concat(tutor_info.nombre, ' ', tutor_info.apellido) as tutor_in_nombre,
   tutor_info.cedula as tutor_in_cedula,
   trayecto.nombre as nombre_trayecto,
