@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>Pagina no encontrada</title>
- <!-- Fonts -->
- <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/apex-charts/apex-charts.css" />
 </head>
 
-<body>
+<body  onload="temporizadorDeRetraso() ">
 
   <div>
     <!-- Main Style -->
@@ -44,14 +44,26 @@
                 <h5><span>Ooooops!</span> Lo sentimos, no encontramos tus credenciales</h5>
               </div>
               <div class="description">
-                <span>Volver a intentarlo <a href="<?=$_SESSION ? APP_URL. $this->Route('home') : APP_URL. $this->Route('') ?>">Pagina principal</a></span>
+                <span>Volver a intentarlo <a href="<?= $_SESSION ? APP_URL . $this->Route('home') : APP_URL . $this->Route('') ?>">Pagina principal</a></span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  
+
 </body>
+
+<script>
+  let identificadorTiempoDeEspera;
+
+  function temporizadorDeRetraso() {
+    identificadorTiempoDeEspera = setTimeout(funcionConRetraso, 1500);
+  }
+
+  function funcionConRetraso() {
+    window.location.href = '/'
+  }
+</script>
 
 </html>

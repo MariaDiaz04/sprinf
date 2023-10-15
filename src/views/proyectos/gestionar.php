@@ -292,6 +292,10 @@
     var proyectosSSP = '<?= $this->Route('proyectos/ssp') ?>';
     var obtenerProyectosURL = '<?= $this->Route('proyectos/') ?>';
     var urlEvaluar = "<?= APP_URL ?>proyectos/assessment/";
+    let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
+    let noteUrl = "<?= APP_URL . $this->Route('proyectnotes/pdf') ?>";
+
+   
 
     // GROUPABLE AND SEARCHABLE SELECTS
     var settings3 = {
@@ -321,5 +325,6 @@
     };
 
     var transfer2 = $(".transferEstudiantes").transfer(estudiantesSettings);
+
   </script>
   <script src="<?= APP_URL ?>js/proyecto/index.js"></script>

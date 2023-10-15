@@ -27,8 +27,8 @@
           <tbody>
 
             <?php foreach ($modulo as $objmodulo) : ?>
-              <tr class="CUser CU <?= $objmodulo->modulo_id ?>" id="i<?= $objmodulo->modulo_id ?>">
-                <td><?= $objmodulo->modulo_id ?></td>
+              <tr class="CUser CU <?= $objmodulo->id ?>" id="i<?= $objmodulo->id ?>">
+                <td><?= $objmodulo->id ?></td>
                 <td><?= $objmodulo->nombre ?></td>
                 <td class="text-center">
                   <div class="btn-group">
@@ -36,7 +36,7 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end " data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 41px);">
-                        <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("modulos/editar/$objmodulo->modulo_id") ?>"><i class="fas fa-user-edit"></i> Editar</a></li>
+                        <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("modulos/editar/$objmodulo->id") ?>"><i class="fas fa-user-edit"></i> Editar</a></li>
                       </ul>
                   </div>
                 </td>

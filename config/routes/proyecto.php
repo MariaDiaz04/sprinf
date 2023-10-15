@@ -87,6 +87,14 @@ $listaDeRutas['proyectos_evaluar_baremos'] = new Route(
   ]
 );
 
+$listaDeRutas['proyectos_notas'] = new Route(
+  'proyectnotes/pdf/{id}',
+  [
+    'controller' => proyectoController::class,
+    'method' => 'noteProyectPDF',
+  ]
+);
+
 // HISTORICO
 
 $listaDeRutas['proyectos_historico'] = new Route(

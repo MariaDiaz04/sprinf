@@ -16,6 +16,7 @@ class periodoController extends controller
 
   function __construct()
   {
+    $this->tokenExist();
     $this->periodo = new periodo();
   }
 

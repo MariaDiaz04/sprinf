@@ -105,6 +105,8 @@
 
   <script>
     let showDetailsUrl = "<?= APP_URL . $this->Route('profesores/showDetails') ?>";
+    let noteUrl = "<?= APP_URL . $this->Route('notes/pdf') ?>";
+
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -132,6 +134,7 @@
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
                         <a class="dropdown-item" onClick="showDetails('${row[4]}')" href="#">Mostrar Datos de Contacto</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
+                        <a class="dropdown-item" " href="${noteUrl+'/'+row[0]}" target="_blank">Notas</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>
                     </div>`;
@@ -181,6 +184,11 @@
 
       function edit(id) {
         alert(`Editing ${id}`)
+      }
+
+      function descargarNotasEstudiante(id) {
+        alert(`Editing ${id}`)
+        console.log('aasddff');
       }
 
       function remove(id) {

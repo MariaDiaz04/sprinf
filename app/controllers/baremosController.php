@@ -23,6 +23,7 @@ class baremosController extends controller
 
   function __construct()
   {
+    $this->tokenExist();
     $this->baremos = new baremos();
     $this->materias = new materias();
     $this->trayectos = new trayectos();

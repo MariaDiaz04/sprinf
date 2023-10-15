@@ -14,6 +14,7 @@ class permisosController extends controller
 
     function __construct()
     {
+        $this->tokenExist();
         $this->PERMISOS = new permisos();
         $this->ROL = new rol();
         $this->MODULO = new modulo();
