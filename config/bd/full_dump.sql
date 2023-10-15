@@ -1435,12 +1435,33 @@ INNER JOIN materias ON  materias.codigo = malla_curricular.materia_id;
 
 DROP VIEW IF EXISTS detalles_proyecto;
 CREATE VIEW detalles_proyecto AS
-SELECT proyecto.*, trayecto.nombre as nombre_trayecto,trayecto.codigo as codigo_trayecto, fase.nombre as nombre_fase, fase.codigo as codigo_fase, count(integrante_proyecto.id) as integrantes,
-periodo.fecha_inicio, periodo.fecha_cierre
+SELECT 
+  proyecto.id, 
+  proyecto.fase_id, 
+  proyecto.nombre, 
+  proyecto.comunidad, 
+  proyecto.motor_productivo, 
+  proyecto.resumen, 
+  proyecto.direccion, 
+  proyecto.municipio, 
+  proyecto.parroquia, 
+  proyecto.tutor_ex,
+  proyecto.tutor_in,
+  concat(tutor_info.nombre, ' ', tutor_info.apellido) as tutor_in_nombre,
+  tutor_info.cedula as tutor_in_cedula,
+  trayecto.nombre as nombre_trayecto,
+  trayecto.codigo as codigo_trayecto, 
+  fase.nombre as nombre_fase, 
+  fase.codigo as codigo_fase, 
+  count(integrante_proyecto.id) as integrantes,
+  periodo.fecha_inicio, 
+  periodo.fecha_cierre
 FROM proyecto
 INNER JOIN fase ON fase.codigo = proyecto.fase_id 
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 INNER JOIN periodo ON periodo.id = trayecto.periodo_id
+INNER JOIN profesor as tutor ON tutor.codigo = proyecto.tutor_in
+INNER JOIN persona as tutor_info ON tutor_info.cedula = tutor.persona_id
 LEFT OUTER JOIN integrante_proyecto ON integrante_proyecto.proyecto_id = proyecto.id
 GROUP BY proyecto_id;
 
