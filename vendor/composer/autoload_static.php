@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9cd802c7dc4d89566ebab3f01f399dfc
+class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -70,7 +70,6 @@ class ComposerStaticInit9cd802c7dc4d89566ebab3f01f399dfc
         'F' => 
         array (
             'FontLib\\' => 8,
-            'Firebase\\JWT\\' => 13,
         ),
         'D' => 
         array (
@@ -210,10 +209,6 @@ class ComposerStaticInit9cd802c7dc4d89566ebab3f01f399dfc
         'FontLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
-        ),
-        'Firebase\\JWT\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
         'Dotenv\\' => 
         array (
@@ -942,10 +937,10 @@ class ComposerStaticInit9cd802c7dc4d89566ebab3f01f399dfc
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9cd802c7dc4d89566ebab3f01f399dfc::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9cd802c7dc4d89566ebab3f01f399dfc::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit9cd802c7dc4d89566ebab3f01f399dfc::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit9cd802c7dc4d89566ebab3f01f399dfc::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$classMap;
 
         }, null, ClassLoader::class);
     }
