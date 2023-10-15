@@ -499,7 +499,7 @@ class proyectoController extends controller
     }
 
     public function E501()
-    {
+        {
 
         return $this->page('errors/501');
     }
@@ -570,7 +570,7 @@ class proyectoController extends controller
 
             $html2 = '</tr>
                       </tbody>
-                  /table>
+                 </table>
         
             </div>
         

@@ -16,6 +16,7 @@ class trayectosController extends controller
 
   function __construct()
   {
+    $this->tokenExist();
     $this->trayecto = new trayectos();
     $this->periodo = new periodo();
   }
