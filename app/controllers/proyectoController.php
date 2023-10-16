@@ -474,6 +474,55 @@ class proyectoController extends controller
         }
     }
 
+    function obtenerBaremos(Request $request, $codigo): void
+    {
+        $errors = [];
+        try {
+            $fases = $this->fase->getByTrayecto($codigo);
+            $baremos = [];
+            foreach ($fases as $fase) {
+
+                $materiasDeDimension = $this->dimension->materiasDeBaremos($fase['codigo_fase']);
+
+                if (empty($materiasDeDimension)) {
+                    throw new Exception('Baremos no cuenta con dimensiones');
+                }
+
+                foreach ($materiasDeDimension as $materia) {
+                    $dimensiones = $this->dimension->findBySubject($materia['codigo']);
+
+                    $fase['materias'] = [];
+                    $materia['infoDimensiones'] = [];
+
+                    foreach ($dimensiones as $dimension) {
+
+                        $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
+
+                        if (empty($indicadores)) {
+                            $errors['danger'][] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
+                        } else {
+                            // configurar informacion de indicador
+                            $dimension['indicadores'] = $indicadores;
+                            array_push($materia['infoDimensiones'], $dimension);
+                        }
+                    }
+                    array_push($fase['materias'], $materia);
+                }
+                array_push($baremos, $fase);
+            }
+
+            echo json_encode($baremos);
+        } catch (Exception $e) {
+
+            http_response_code(500);
+            echo json_encode(['error' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ]]);
+        }
+    }
+
 
 
 
