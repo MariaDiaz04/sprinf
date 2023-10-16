@@ -8,9 +8,7 @@ use Controllers\controller;
 use Exception;
 use Traits\Excel;
 use Traits\Utility;
-
 use Firebase\JWT\JWT;
-
 use Symfony\Component\HttpFoundation\Request;
 
 class proyectos extends controller
@@ -27,21 +25,26 @@ class proyectos extends controller
     $this->proyecto = new proyecto();
   }
 
-  function obtener(Request $peticion): void
+  /**
+ * funcion para obtener datos de proyectos.
+ *
+ * @param string $nombre
+ * @param string $trayecto 
+ * @return int $tutor 
+ */
+  function obtener(Request $peticion)
   {
 
     try {
       if ($user = $this->obtenerTokenJWT()) {
         $infoUsuario = $this->usuarios->find($user->data->id);
-
         if ($infoUsuario['rol_id'] == 1) {
 
-          $data = $peticion->toArray();
-          // $data = json_decode($this->desencriptar($data['data']));
+            $proyectos = $this->proyecto->all();
 
-
+          if (!$proyectos) throw new Exception('No hay proyectos que mostrar', 400);
           http_response_code(200);
-          echo json_encode($data);
+          echo json_encode($proyectos);
         } else {
           throw new Exception('Permisos insuficientes', 401);
         }
