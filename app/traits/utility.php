@@ -118,4 +118,31 @@ trait Utility
       return false;
     }
   }
+
+  /**
+   * LIMPIAR DATOS
+   */
+  public function limpiaCadena($cadena)
+  {
+    $cadena = trim($cadena); //Elimina espacios al inicio y al final de la cadena
+    $cadena = stripcslashes($cadena); //Elimina Barras Invertidas de la cadena
+    $cadena = str_replace('<script>', '', $cadena);
+    $cadena = str_replace('</script>', '', $cadena);
+    $cadena = str_replace('<script src', '', $cadena);
+    $cadena = str_replace('<script type', '', $cadena);
+    $cadena = str_replace('SELECT * FROM', '', $cadena);
+    $cadena = str_replace('DELETE FROM', '', $cadena);
+    $cadena = str_replace('INSERT INTO', '', $cadena);
+    $cadena = str_replace('--', '', $cadena);
+    $cadena = str_replace('^', '', $cadena);
+    $cadena = str_replace('(', '', $cadena);
+    $cadena = str_replace(')', '', $cadena);
+    $cadena = str_replace('[', '', $cadena);
+    $cadena = str_replace(']', '', $cadena);
+    $cadena = str_replace('{', '', $cadena);
+    $cadena = str_replace('}', '', $cadena);
+    $cadena = str_replace('==', '', $cadena);
+
+    return $cadena;
+  }
 }
