@@ -36,3 +36,11 @@ $listaDeRutas['api_proyectos'] = new Route(
     'method' => 'obtener',
   ]
 );
+
+ $listaDeRutas['api_proyectos'] = new Route(
+  '/api/proyecto/{proyecto_id}',
+  [
+    'controller' => API\proyectos::class,
+    'method' => 'obtenerUno',
+  ]
+);

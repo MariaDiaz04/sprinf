@@ -288,6 +288,7 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'Controllers\\periodoController' => __DIR__ . '/../..' . '/app/controllers/periodoController.php',
         'Controllers\\profesorController' => __DIR__ . '/../..' . '/app/controllers/profesorController.php',
         'Controllers\\proyectoController' => __DIR__ . '/../..' . '/app/controllers/proyectoController.php',
+        'Controllers\\respaldoController' => __DIR__ . '/../..' . '/app/controllers/respaldoController.php',
         'Controllers\\seccionController' => __DIR__ . '/../..' . '/app/controllers/seccionController.php',
         'Controllers\\trayectosController' => __DIR__ . '/../..' . '/app/controllers/trayectosController.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',

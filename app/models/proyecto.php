@@ -453,7 +453,6 @@ class proyecto extends model
     }
 
  
-    }
 
     /**
      * generarSSP
