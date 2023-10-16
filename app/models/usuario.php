@@ -70,6 +70,12 @@ class usuario extends model
         }
     }
 
+    function checkUser(string $password): bool
+    {
+        $usuario = $this->find($_SESSION['usuario_id']);
+        return password_verify($password, $usuario['contrasena']);
+    }
+
     public function new_session(Request $request)
     {
         $email = $request->request->get('email');

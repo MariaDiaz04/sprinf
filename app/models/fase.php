@@ -54,4 +54,10 @@ class fase extends model
 
     return !$fase ? [] : $fase;
   }
+
+  function getByTrayecto(string $codigo): array
+  {
+    $estudiantes = $this->select('detalles_fase', [['codigo_trayecto', '=', '"' . $codigo . '"']]);
+    return $estudiantes ? $estudiantes : [];
+  }
 }

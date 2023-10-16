@@ -32,7 +32,7 @@ class proyectos extends controller
  * @param string $trayecto 
  * @return int $tutor 
  */
-  function obtener(Request $peticion)
+  function obtener():void
   {
 
     try {

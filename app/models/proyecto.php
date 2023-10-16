@@ -452,26 +452,7 @@ class proyecto extends model
         }
     }
 
-    
- /** 
-     *consulta para el reporte excel
-     * @return array para los integrantes de los poryetcos segun su trayecto
-     */
-    function filtrarProyectoPorParametro($trayectoId)
-    {
-        try {
-            $dataExcel = $this->querys('SELECT DISTINCT detalles_inscripciones.seccion_id, detalles_estudiantes.cedula,detalles_estudiantes.apellido, detalles_estudiantes.nombre,
-            detalles_estudiantes.telefono, detalles_estudiantes.email,detalles_proyecto.comunidad, detalles_integrantes.proyecto_nombre, 
-            detalles_proyecto.municipio, detalles_proyecto.motor_productivo, detalles_proyecto.resumen, detalles_proyecto.direccion, 
-            detalles_proyecto.parroquia FROM detalles_proyecto 
-            INNER JOIN detalles_integrantes ON detalles_proyecto.id = detalles_integrantes.proyecto_id 
-            INNER JOIN detalles_estudiantes ON detalles_integrantes.estudiante_id = detalles_estudiantes.id 
-            INNER JOIN detalles_inscripciones ON detalles_estudiantes.id = detalles_inscripciones.estudiante_id 
-            WHERE detalles_proyecto.codigo_trayecto ="' . $trayectoId . '"' . ' ORDER BY detalles_estudiantes.apellido');
-            return $dataExcel ? $dataExcel : null;
-        } catch (\PDOException $th) {
-            return $th;
-        }
+ 
     }
 
     /**

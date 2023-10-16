@@ -86,6 +86,13 @@ $listaDeRutas['proyectos_evaluar_baremos'] = new Route(
     'method' => 'evaluar',
   ]
 );
+$listaDeRutas['proyectos_obtener_baremos'] = new Route(
+  '/proyectos/obtener-baremos/{codigo}',
+  [
+    'controller' => proyectoController::class,
+    'method' => 'obtenerBaremos',
+  ]
+);
 
 $listaDeRutas['proyectos_notas'] = new Route(
   'proyectnotes/pdf/{id}',
