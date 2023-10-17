@@ -36,3 +36,26 @@ $listaDeRutas['api_proyectos'] = new Route(
     'method' => 'obtener',
   ]
 );
+
+$listaDeRutas['api_baremos'] = new Route(
+  '/api/baremos',
+  [
+    'controller' => API\baremos::class,
+    'method' => 'obtener',
+  ]
+);
+
+$listaDeRutas['api_estudiantes'] = new Route(
+  '/api/estudiantes',
+  [
+    'controller' => API\estudiantes::class,
+    'method' => 'obtener',
+  ]
+);
+$listaDeRutas['api_estudiantes_listar'] = new Route(
+  '/api/estudiantes/listar',
+  [
+    'controller' => API\estudiantes::class,
+    'method' => 'listar',
+  ]
+);
