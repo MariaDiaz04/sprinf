@@ -59,3 +59,10 @@ $listaDeRutas['api_estudiantes_listar'] = new Route(
     'method' => 'listar',
   ]
 );
+$listaDeRutas['api_proyectos'] = new Route(
+  '/api/proyecto/{proyecto_id}',
+  [
+    'controller' => API\proyectos::class,
+    'method' => 'obtenerUno',
+  ]
+);

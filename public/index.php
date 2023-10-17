@@ -112,4 +112,3 @@ try {
     echo $throwable->getMessage() . ' ' . $throwable->getTraceAsString();
     $response = new Response('An error occurred', 500);
 }
-//require_once '../config/handler.php';
