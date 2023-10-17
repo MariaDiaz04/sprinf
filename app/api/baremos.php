@@ -54,7 +54,7 @@ class baremos extends controller
           foreach ($materiasDeDimension as $materia) {
             $dimensiones = $this->dimension->findBySubject($materia['codigo']);
 
-            $fase['materias'] = [];
+            $fase['baremos'] = [];
             $materia['infoDimensiones'] = [];
 
             foreach ($dimensiones as $dimension) {
@@ -69,7 +69,7 @@ class baremos extends controller
                 array_push($materia['infoDimensiones'], $dimension);
               }
             }
-            array_push($fase['materias'], $materia);
+            array_push($fase['baremos'], $materia);
           }
           array_push($baremos, $fase);
         }
