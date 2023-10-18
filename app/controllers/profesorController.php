@@ -50,7 +50,7 @@ class profesorController extends controller
       // creación de usuario
       $email = $nuevoprofesor->request->get('email');
       $contrasena = $nuevoprofesor->request->get('contrasena');
-      var_dump($contrasena);
+      //var_dump($contrasena);
       // encriptar contraseña de usuario
       $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
 

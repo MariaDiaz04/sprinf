@@ -21,7 +21,7 @@ class permisos extends model
     public function all()
     {
         try {
-            $permisos = $this->querys('SELECT permisos.idpermisos, permisos.consultar, permisos.actualizar, permisos.crear, permisos.eliminar, permisos.rol_id, permisos.modulo_id, roles.nombre, modulo.nombre AS nombmodulo FROM permisos INNER JOIN roles ON permisos.rol_id = roles.id INNER JOIN modulo ON permisos.modulo_id = modulo.modulo_id ');
+            $permisos = $this->querys('SELECT permisos.id, permisos.consultar, permisos.actualizar, permisos.crear, permisos.eliminar, permisos.rol_id, permisos.modulo_id, roles.nombre, modulo.nombre AS nombmodulo FROM permisos INNER JOIN roles ON permisos.rol_id = roles.id INNER JOIN modulo ON permisos.modulo_id = modulo.id ');
             return $permisos ? $permisos : null;
         } catch (\PDOException $th) {
             return $th;

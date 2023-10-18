@@ -161,6 +161,17 @@ CREATE TABLE `sprinf_bd`.`proyecto_historico` (
   `periodo_final` date
 );
 
+CREATE TABLE `sprinf_bd`.`pregunta` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `pregunta` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`respuestas` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `respuesta` varchar(255),
+  `preguntas_id` int,
+  `usuario_id` int,
+);
 ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`periodo_id`) REFERENCES `sprinf_bd`.`periodo` (`id`);
 
 ALTER TABLE `sprinf_bd`.`fase` ADD FOREIGN KEY (`trayecto_id`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
@@ -206,3 +217,8 @@ ALTER TABLE `sprinf_bd`.`usuario` ADD FOREIGN KEY (`rol_id`) REFERENCES `sprinf_
 ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`rol_id`) REFERENCES `sprinf_bd`.`roles` (`id`);
 
 ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`modulo_id`) REFERENCES `sprinf_bd`.`modulo` (`id`);
+
+ALTER TABLE `sprinf_bd`.`respuestas` ADD FOREIGN KEY (`pregunta_id`) REFERENCES `sprinf_bd`.`pregunta` (`id`);
+
+ALTER TABLE `sprinf_bd`.`respuestas` ADD FOREIGN KEY (`usuario_id`) REFERENCES `sprinf_bd`.`usuario` (`id`);
+

@@ -1,14 +1,15 @@
 <?php
 
+namespace Controllers;
 use Model\bitacora;
-use Controllers\controller;
+
 
 class bitacoraController extends controller
 {
 	public $BITACORA;
 
 	function __construct () {	
-		$this->tokenExist();
+	//	$this->tokenExist();
 		$this->BITACORA = new bitacora();
 	}
 
