@@ -72,6 +72,7 @@
             <th>Fase</th>
             <th>Integrantes</th>
             <th>Estatus</th>
+            <th>Calificados</th>
             <th>Acción</th>
           </tr>
         </thead>

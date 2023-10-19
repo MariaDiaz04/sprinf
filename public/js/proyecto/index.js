@@ -41,7 +41,7 @@ $(document).ready(function (e) {
     columnDefs: [
       {
         visible: false,
-        targets: [0, 5],
+        targets: [0, 5, 7],
       },
       {
         data: null,
@@ -68,23 +68,26 @@ $(document).ready(function (e) {
                       row[6] == 0
                         ? ` <a class="dropdown-item" href="${
                             urlEvaluar + row[0]
-                          }">Evaluar</a>
-                        <a class="dropdown-item" onClick="editarIntegrantes('${
-                          row[0]
-                        }')" href="#">Editar</a>
-                        <a class="dropdown-item" href="${
-                          noteUrl + "/" + row[0]
-                        }" target="_blank">Notas</a>
-                        <a class="dropdown-item text-danger" onClick="removeProject('${
-                          row[0]
-                        }')" href="#">Eliminar</a>`
+                          }">Evaluar</a><a class="dropdown-item" onClick="editarIntegrantes('${
+                            row[0]
+                          }')" href="#">Editar</a>
+                          <a class="dropdown-item" href="${
+                            noteUrl + "/" + row[0]
+                          }" target="_blank">Notas</a>
+                        ${
+                          row[7].includes("_1")
+                            ? `
+                        
+                        <a class="dropdown-item text-danger" onClick="removeProject('${row[0]}')" href="#">Eliminar</a>`
+                            : ``
+                        } `
                         : ``
                     }
                       
                     </div>
                   </div>`;
         }, // combino los botons de acción
-        targets: 7, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+        targets: 8, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 8va
       },
     ],
   });
@@ -316,6 +319,14 @@ async function editarIntegrantes(id) {
     resumen,
   } = proyecto.proyecto;
 
+  if (!fase_id.includes("_1")) {
+    $("#actualizar #selectEstudiante").prop("disabled", "disabled");
+    $("#actualizar #anadirEstudiante").prop("disabled", "disabled");
+  } else {
+    $("#actualizar #selectEstudiante").removeAttr("disabled");
+    $("#actualizar #anadirEstudiante").removeAttr("disabled");
+  }
+
   const integrantes = proyecto.integrantes;
 
   $("#actualizar").modal("show");
@@ -432,11 +443,11 @@ function removeProject(id) {
           id: id,
         },
         error: function (error, status) {
-          toggleLoading(false);
+          error = JSON.parse(error.responseText);
           Swal.fire({
             position: "bottom-end",
             icon: "error",
-            title: error.responseText,
+            title: status + ": " + error.error.message,
             showConfirmButton: false,
             toast: true,
             timer: 2000,

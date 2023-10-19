@@ -249,6 +249,7 @@ class proyectoController extends controller
             echo json_encode('Proyecto creado exitosamente');
         } catch (Exception $e) {
             http_response_code(500);
+            var_dump($this->proyecto->error);
             echo json_encode($e->getMessage());
         }
     }

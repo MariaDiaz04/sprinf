@@ -67,11 +67,11 @@ class proyecto extends model
     {
         $preparedSql = "";
         if ($id) {
-            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, motor_productivo, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
-                . "VALUES (:id, :fase_id, :nombre, :comunidad, :motor_productivo, :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
+            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
+                . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
         } else {
-            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, motor_productivo, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
-                . "VALUES (:fase_id, :nombre, :comunidad, :motor_productivo, :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
+            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
+                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
         }
         $query = $this->prepare($preparedSql);
 
@@ -81,7 +81,6 @@ class proyecto extends model
         $query->bindParam(":fase_id", $this->fase_id);
         $query->bindParam(":nombre", $this->nombre);
         $query->bindParam(":comunidad", $this->comunidad);
-        $query->bindParam(":motor_productivo", $this->motor_productivo);
         $query->bindParam(":resumen", $this->resumen);
         $query->bindParam(":direccion", $this->direccion);
         $query->bindParam(":municipio", $this->municipio);
@@ -101,7 +100,7 @@ class proyecto extends model
 
     public function actualizar()
     {
-        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad, motor_productivo=:motor_productivo, resumen=:resumen, direccion=:direccion, municipio=:municipio, parroquia=:parroquia, tutor_in=:tutor_in, tutor_ex=:tutor_ex, cerrado= :cerrado WHERE id=:id";
+        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, municipio=:municipio, parroquia=:parroquia, tutor_in=:tutor_in, tutor_ex=:tutor_ex, cerrado= :cerrado WHERE id=:id";
 
         $query = $this->prepare($preparedSql);
 
@@ -109,7 +108,6 @@ class proyecto extends model
         $query->bindParam(":fase_id", $this->fase_id);
         $query->bindParam(":nombre", $this->nombre);
         $query->bindParam(":comunidad", $this->comunidad);
-        $query->bindParam(":motor_productivo", $this->motor_productivo);
         $query->bindParam(":resumen", $this->resumen);
         $query->bindParam(":direccion", $this->direccion);
         $query->bindParam(":municipio", $this->municipio);
@@ -327,7 +325,6 @@ class proyecto extends model
                 $data['nombre_proyecto'] = $proyecto['nombre'];
                 $data['comunidad'] = $proyecto['comunidad'];
                 $data['area'] = $proyecto['area'];
-                $data['motor_productivo'] = $proyecto['motor_productivo'];
                 $data['resumen'] = $proyecto['resumen'];
                 $data['direccion'] = $proyecto['direccion'];
                 $data['municipio'] = $proyecto['municipio'];
@@ -439,7 +436,7 @@ class proyecto extends model
         try {
             $dataExcel = $this->querys('SELECT DISTINCT detalles_inscripciones.seccion_id, detalles_estudiantes.cedula,detalles_estudiantes.apellido, detalles_estudiantes.nombre,
             detalles_estudiantes.telefono, detalles_estudiantes.email,detalles_proyecto.comunidad, detalles_integrantes.proyecto_nombre, 
-            detalles_proyecto.municipio, detalles_proyecto.motor_productivo, detalles_proyecto.resumen, detalles_proyecto.direccion, 
+            detalles_proyecto.municipio,  detalles_proyecto.resumen, detalles_proyecto.direccion, 
             detalles_proyecto.parroquia FROM detalles_proyecto 
             INNER JOIN detalles_integrantes ON detalles_proyecto.id = detalles_integrantes.proyecto_id 
             INNER JOIN detalles_estudiantes ON detalles_integrantes.estudiante_id = detalles_estudiantes.id 
@@ -490,6 +487,10 @@ class proyecto extends model
             array(
                 'db'        => 'cerrado',
                 'dt'        => 6
+            ),
+            array(
+                'db'        => 'fase_id',
+                'dt'        => 7
             )
         );
         return $this->getSSP('detalles_proyecto', 'id', $columns);
