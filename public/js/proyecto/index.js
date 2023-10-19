@@ -1,3 +1,9 @@
+const Toast = Swal.mixin({
+  toast: true,
+  position: "bottom-start",
+  showConfirmButton: false,
+});
+
 $(document).ready(function (e) {
   // cargar informacion en formulario de registro historico
   $("#cargarInformacion").click(function (e) {
@@ -69,7 +75,9 @@ $(document).ready(function (e) {
                         <a class="dropdown-item" onClick="editarIntegrantes('${
                           row[0]
                         }')" href="#">Editar Integrantes</a>
-                        <a class="dropdown-item" " href="${noteUrl+'/'+row[0]}" target="_blank">Notas</a>
+                        <a class="dropdown-item" " href="${
+                          noteUrl + "/" + row[0]
+                        }" target="_blank">Notas</a>
                         <a class="dropdown-item text-danger" onClick="remove('${
                           row[0]
                         }') href="#">Eliminar</a>`
@@ -208,6 +216,20 @@ $(document).ready(function (e) {
   }
 });
 
+async function obtenerEstudiantesPendientes() {
+  let result;
+  try {
+    result = await $.ajax({
+      url: fetchStudentsUrl,
+      type: "POST",
+    });
+    return JSON.parse(result);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 async function obtenerProyecto(id) {
   let result;
   try {
@@ -225,11 +247,31 @@ async function obtenerProyecto(id) {
 
 async function editarIntegrantes(id) {
   let proyecto = await obtenerProyecto(id);
+  let estudiantesPendientes = await obtenerEstudiantesPendientes();
+
+  $("#actualizar #selectEstudiante option").remove();
+  console.log($("#actualizar #selectEstudiante"));
+  $("cuerpoTablaActualizarEstudiante").empty();
+  console.log($("cuerpoTablaActualizarEstudiante"));
+
+  estudiantesPendientes.forEach((estudiante) => {
+    let option = `<option value="${estudiante.cedula}" data-cedula="${
+      estudiante.cedula
+    }" data-nombre="${estudiante.nombre}" data-apellido="${
+      estudiante.apellido
+    }">${
+      estudiante.cedula + " " + estudiante.nombre + " " + estudiante.apellido
+    }</option>`;
+
+    $("#actualizar #selectEstudiante").append(option);
+  });
+  console.log(estudiantesPendientes);
   console.log("Editando integrantes, ");
   console.log(proyecto);
   const {
     estatus,
     fase_id,
+    cerrado,
     nombre,
     municipio,
     parroquia,
@@ -241,9 +283,104 @@ async function editarIntegrantes(id) {
     resumen,
   } = proyecto.proyecto;
 
+  const integrantes = proyecto.integrantes;
+
+  $("#actualizar").modal("show");
+
+  $("#actualizar #id").val(id);
+  $("#actualizar #fase_id").val(fase_id);
+  $("#actualizar #nombre").val(nombre);
+  $("#actualizar #municipio").val(municipio);
+  $("#actualizar #parroquia").val(parroquia);
+  $("#actualizar #direccion").val(direccion);
+  $("#actualizar #comunidad").val(comunidad);
+  $("#actualizar #tutor_in").val(tutor_in);
+  $("#actualizar #tutor_ex").val(tutor_ex);
+  $("#actualizar #motor_productivo").val(motor_productivo);
+  $("#actualizar #resumen").val(resumen);
+  $("#actualizar #cerrado").val(cerrado);
+
+  integrantes.forEach((integrante) => {
+    // imprimir tabla
+    let row = `<tr id="appenedStudent-${integrante.cedula}">
+    <th scope="row">
+      <input type="text" name="integrantes[]" class="form-control-plaintext" value="${
+        integrante.cedula
+      }" hidden>
+      ${integrante.cedula}
+    </th>
+    <td>${integrante.nombre}</td>
+    <td>${integrante.apellido}</td>
+    ${
+      integrante.calificaciones == null
+        ? `<td><button class="btn btn-secondary eliminarEstudiante" onClick="removeStudent(${integrante.cedula}); return false" data-id="${integrante.cedula}">Eliminar</button></td>`
+        : '<td><button class="btn btn-secondary" disabled >Eliminar</button></td>'
+    }
+    
+  </tr>`;
+
+    $("#cuerpoTablaActualizarEstudiante").append(row);
+  });
+
   console.log(nombre);
 }
 
+$("#anadirEstudiante").click(function (e) {
+  e.preventDefault();
+
+  let studentsAlreadyAppened = document.getElementById(
+    "cuerpoTablaActualizarEstudiante"
+  ).children.length;
+
+  if (studentsAlreadyAppened >= 5) {
+    alert("limite de estudiantes alcanzado");
+  } else {
+    let selectedStudent = $("#selectEstudiante option:selected");
+
+    let studentId = $(selectedStudent).val();
+
+    if (
+      $("#cuerpoTablaActualizarEstudiante").find(`#appenedStudent-${studentId}`)
+        .length > 0
+    ) {
+      alert("Estudiante ya ha sido añadido");
+      return false;
+    }
+
+    console.log($(selectedStudent).data("nombre"));
+    let fila = `<tr id="appenedStudent-${studentId}">
+                <th scope="row">
+                <input type="text" name="integrantes[]" class="form-control-plaintext" value="${studentId}" hidden>
+                ${$(selectedStudent).data("cedula")}
+                </th>
+                <td>${$(selectedStudent).data("nombre")}</td>
+                <td>${$(selectedStudent).data("apellido")}</td>
+                <td><button class="btn btn-secondary eliminarEstudiante" data-id="${studentId}">Eliminar</button></td>
+              </tr>`;
+    $("#cuerpoTablaActualizarEstudiante").append(fila);
+
+    //$(`#selectEstudiante option[value='${studentId}']`).remove();
+  }
+});
+function removeStudent(id) {
+  Swal.fire({
+    title: "¿Seguro que desea eliminar integrante de equipo de proyecto?",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    cancelButtonText: "Cancelar",
+    confirmButtonText: "Continuar",
+  }).then((result) => {
+    if (result.value) {
+      $(`#appenedStudent-${id}`).remove();
+    }
+  });
+}
+
+$(".eliminarEstudiante").click(function (e) {
+  e.preventDefault;
+});
 async function editarInformacionProyecto(id) {
   let proyecto = await obtenerProyecto(id);
   console.log("Editando integrantes, ");

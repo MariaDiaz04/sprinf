@@ -369,6 +369,27 @@ class proyectoController extends controller
         }
     }
 
+    function pendingStudents(): void
+    {
+        try {
+            $resultado = $this->estudiantes->pendientesAProyecto();
+
+            if (!$resultado) {
+                throw new PDOException($this->proyecto->error['message'], $this->proyecto->error['code']);
+            }
+
+            http_response_code(200);
+            echo json_encode($resultado);
+        } catch (Exception $e) {
+            http_response_code($e->getCode() ?? 500);
+            echo json_encode(['error' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ]]);
+        }
+    }
+
     function assessment(Request $request, $id)
     {
 

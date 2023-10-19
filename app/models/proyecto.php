@@ -18,7 +18,6 @@ class proyecto extends model
         'fase_id',
         'comunidad',
         'direccion',
-        'motor_productivo',
         'resumen',
         'municipio',
         'parroquia',
@@ -37,7 +36,6 @@ class proyecto extends model
     public string $resumen;
     public string $municipio;
     public string $comunidad;
-    public string $motor_productivo;
     public string $tutor_in;
     public string $tutor_ex;
     public int $cerrado;
@@ -223,12 +221,13 @@ class proyecto extends model
     *consulta para el reporte notas PDF
     * @return array para los integrantes de los poryetcos segun su trayecto
     */
-    function NotasIntegrastesProyecto($id): array{
+    function NotasIntegrastesProyecto($id): array
+    {
         try {
             $notas = $this->querys("SELECT detalles_notas_baremos.fase_id,detalles_notas_baremos.nombre_fase, detalles_notas_baremos.cedula,
             detalles_notas_baremos.ponderado,detalles_notas_baremos.calificacion, persona.nombre, persona.apellido, proyecto.nombre as proyecto_nombre 
             FROM detalles_notas_baremos LEFT JOIN persona ON persona.cedula = detalles_notas_baremos.cedula LEFT JOIN proyecto ON proyecto.id = detalles_notas_baremos.proyecto_id WHERE detalles_notas_baremos.proyecto_id = $id");
-            
+
             return $notas ? $notas : [];
         } catch (Exception $th) {
             return $th;
@@ -452,7 +451,7 @@ class proyecto extends model
         }
     }
 
- 
+
 
     /**
      * generarSSP

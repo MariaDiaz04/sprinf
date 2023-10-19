@@ -1494,11 +1494,13 @@ ORDER BY codigo_trayecto;
 DROP VIEW IF EXISTS detalles_integrantes;
 
 CREATE VIEW detalles_integrantes AS
-SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.cedula
+SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.apellido, persona.cedula, SUM(notas_integrante_proyecto.calificacion) as calificaciones
 FROM integrante_proyecto
 INNER JOIN estudiante ON estudiante.id = integrante_proyecto.estudiante_id
 INNER JOIN persona on persona.cedula = estudiante.persona_id
-INNER JOIN proyecto on proyecto.id = integrante_proyecto.proyecto_id;
+INNER JOIN proyecto on proyecto.id = integrante_proyecto.proyecto_id
+LEFT JOIN notas_integrante_proyecto ON notas_integrante_proyecto.integrante_id = integrante_proyecto.id
+GROUP BY integrante_proyecto.id, notas_integrante_proyecto.integrante_id;
 
 DROP VIEW IF EXISTS detalles_fase;
 

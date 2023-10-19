@@ -7,20 +7,18 @@
       </div>
       <div class="modal-body">
         <form action="<?= APP_URL . $this->Route('proyectos/actualizar') ?>" method="post" id="proyectoGuardar">
-          <input type="hidden" readonly name="estatus" value="1">
+          <input type="hidden" readonly name="estatus">
+          <input type="hidden" readonly name="id" id="id">
+          <input type="hidden" readonly name="fase_id" id="fase_id">
+          <input type="hidden" readonly name="cerrado" id="cerrado">
           <div class="container-fluid">
             <div class="row pb-2">
               <div class="col-12">
                 <div class="row form-group">
-                  <div class="col-lg-6">
-                    <label class="form-label" for="fase_id">Fase *</label>
-                    <select class="form-select" readonly name="fase_id" id="selectFaseId" readonly>
-                    </select>
-                  </div>
 
-                  <div class="col-lg-6">
+                  <div class="col-lg-12">
                     <label class="form-label" for="nombre">Nombre *</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required readonly name="nombre">
+                    <input type="text" class="form-control mb-1" placeholder="..." required name="nombre" id="nombre">
                   </div>
                 </div>
               </div>
@@ -28,46 +26,71 @@
                 <div class="row form-group">
                   <div class="col-lg-3">
                     <label class="form-label" for="municipio">Municipio</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required readonly name="municipio">
+                    <input type="text" class="form-control mb-1" placeholder="..." required name="municipio" id="municipio">
                   </div>
                   <div class="col-lg-3">
                     <label class="form-label" for="parroquia">Parroquia</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required readonly name="parroquia">
+                    <input type="text" class="form-control mb-1" placeholder="..." required name="parroquia" id="parroquia">
                   </div>
                   <div class="col-lg-6">
                     <label class="form-label" for="resumen">Dirección</label>
-                    <textarea class="form-control" placeholder="..." required id="resumen" readonly name="direccion" style="height: 50px"></textarea>
+                    <textarea class="form-control" placeholder="..." required name="direccion" id="direccion" style="height: 70px"></textarea>
                   </div>
 
                   <div class="col-lg-3">
                     <label class="form-label" for="tutor_in">Tutor Interno</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required readonly name="tutor_in">
+                    <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_in" id="tutor_in">
                   </div>
 
                   <div class="col-lg-3">
                     <label class="form-label" for="tutor_ex">Tutor Externo</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required readonly name="tutor_ex">
+                    <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex">
                   </div>
 
                   <div class="col-lg-6">
                     <label class="form-label" for="comunidad">Comunidad</label>
-                    <textarea class="form-control" placeholder="..." required id="comunidad" readonly name="comunidad" style="height: 50px "></textarea>
+                    <textarea class="form-control" placeholder="..." required name="comunidad" id="comunidad" style="height: 70px "></textarea>
                   </div>
-                  <div class="col-lg-3">
-                    <label class="form-label" for="motor_productivo">Motor Productivo</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required readonly name="motor_productivo">
-                  </div>
+
                   <div class="col-lg-6">
                     <label class="form-label" for="resumen">Resumen</label>
-                    <textarea class="form-control" placeholder="..." required id="resumen" readonly name="resumen" style="height: 50px "></textarea>
+                    <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" id="resumen" style="height: 70px "></textarea>
                   </div>
                 </div>
               </div>
-              <hr class="border-light m-0">
-              <div class="transferEstudiantes">
 
-              </div>
               <hr class="border-light m-0">
+              <div class="col-12">
+                <div class="row form-group align-items-end">
+
+                  <div class="col-lg-10">
+                    <label class="form-label">Estudiantes *</label>
+                    <select class="form-select" id="selectEstudiante">
+
+                    </select>
+                  </div>
+
+                  <div class="col-lg-1 align-middle">
+                    <button class="btn btn-primary" id="anadirEstudiante">Añadir</button>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row form-group justify-content-center">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">C.I.</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Apellido</th>
+                      <th scope="col">Remover</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cuerpoTablaActualizarEstudiante">
+
+                  </tbody>
+                </table>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <input type="submit" class="btn btn-primary" value="Guardar" id="submit">

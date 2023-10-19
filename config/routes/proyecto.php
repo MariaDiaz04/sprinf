@@ -13,6 +13,14 @@ $listaDeRutas['proyectos'] = new Route(
   ]
 );
 
+$listaDeRutas['proyectos/pending-students'] = new Route(
+  '/proyectos/pending-students',
+  [
+    'controller' => proyectoController::class,
+    'method' => 'pendingStudents',
+  ]
+);
+
 $listaDeRutas['proyectos_evaluar'] = new Route(
   '/proyectos/assessment/{id}',
   [
