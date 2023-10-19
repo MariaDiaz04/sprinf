@@ -204,6 +204,45 @@ $(document).ready(function (e) {
     });
   });
 
+  $("#proyectoActualizar").submit(function (e) {
+    e.preventDefault();
+
+    formData = $(this).serializeArray();
+    url = $(this).attr("action");
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: formData,
+      error: function (error, status) {
+        toggleLoading(false);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "error",
+          title: error.responseText,
+          showConfirmButton: false,
+          toast: true,
+          timer: 2000,
+        });
+      },
+      success: function (data, status) {
+        table.ajax.reload();
+        // actualizar tabla
+        toggleLoading(false);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Actualización Exitosa",
+          showConfirmButton: false,
+          toast: true,
+          timer: 2000,
+        });
+        document.getElementById("proyectoGuardar").reset();
+        $("#actualizar").modal("hide");
+      },
+    });
+  });
+
   // TOGGLE BUTTON AND SPINNER
   function toggleLoading(show, form = "") {
     if (show) {
@@ -248,11 +287,10 @@ async function obtenerProyecto(id) {
 async function editarIntegrantes(id) {
   let proyecto = await obtenerProyecto(id);
   let estudiantesPendientes = await obtenerEstudiantesPendientes();
-
   $("#actualizar #selectEstudiante option").remove();
-  console.log($("#actualizar #selectEstudiante"));
-  $("cuerpoTablaActualizarEstudiante").empty();
-  console.log($("cuerpoTablaActualizarEstudiante"));
+  $("#cuerpoTablaActualizarEstudiante tr").remove();
+  console.log($("#actualizar #selectEstudiante option"));
+  console.log($("#cuerpoTablaActualizarEstudiante tr"));
 
   estudiantesPendientes.forEach((estudiante) => {
     let option = `<option value="${estudiante.cedula}" data-cedula="${
@@ -265,9 +303,7 @@ async function editarIntegrantes(id) {
 
     $("#actualizar #selectEstudiante").append(option);
   });
-  console.log(estudiantesPendientes);
-  console.log("Editando integrantes, ");
-  console.log(proyecto);
+
   const {
     estatus,
     fase_id,
@@ -321,8 +357,6 @@ async function editarIntegrantes(id) {
 
     $("#cuerpoTablaActualizarEstudiante").append(row);
   });
-
-  console.log(nombre);
 }
 
 $("#anadirEstudiante").click(function (e) {
@@ -347,7 +381,6 @@ $("#anadirEstudiante").click(function (e) {
       return false;
     }
 
-    console.log($(selectedStudent).data("nombre"));
     let fila = `<tr id="appenedStudent-${studentId}">
                 <th scope="row">
                 <input type="text" name="integrantes[]" class="form-control-plaintext" value="${studentId}" hidden>
@@ -355,13 +388,12 @@ $("#anadirEstudiante").click(function (e) {
                 </th>
                 <td>${$(selectedStudent).data("nombre")}</td>
                 <td>${$(selectedStudent).data("apellido")}</td>
-                <td><button class="btn btn-secondary eliminarEstudiante" data-id="${studentId}">Eliminar</button></td>
+                <td><button class="btn btn-secondary eliminarEstudiante" onClick="removeStudent(${studentId}); return false" data-id="${studentId}">Eliminar</button></td>
               </tr>`;
     $("#cuerpoTablaActualizarEstudiante").append(fila);
-
-    //$(`#selectEstudiante option[value='${studentId}']`).remove();
   }
 });
+
 function removeStudent(id) {
   Swal.fire({
     title: "¿Seguro que desea eliminar integrante de equipo de proyecto?",
@@ -378,9 +410,6 @@ function removeStudent(id) {
   });
 }
 
-$(".eliminarEstudiante").click(function (e) {
-  e.preventDefault;
-});
 async function editarInformacionProyecto(id) {
   let proyecto = await obtenerProyecto(id);
   console.log("Editando integrantes, ");

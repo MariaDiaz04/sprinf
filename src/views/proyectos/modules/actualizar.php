@@ -6,7 +6,7 @@
 
       </div>
       <div class="modal-body">
-        <form action="<?= APP_URL . $this->Route('proyectos/actualizar') ?>" method="post" id="proyectoGuardar">
+        <form action="<?= APP_URL . $this->Route('proyectos/actualizar') ?>" method="post" id="proyectoActualizar">
           <input type="hidden" readonly name="estatus">
           <input type="hidden" readonly name="id" id="id">
           <input type="hidden" readonly name="fase_id" id="fase_id">
@@ -92,8 +92,8 @@
                 </table>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <input type="submit" class="btn btn-primary" value="Guardar" id="submit">
+                <button type="button" class="btn btn-outline-secondary" onClick="return false;" data-bs-dismiss="modal">Cancelar</button>
+                <input type="submit" class="btn btn-primary" value="Actualizar" id="submit">
                 <div id="loading">
                   <div class="spinner-border text-primary" role="status">
                     <span class="sr-only"></span>
