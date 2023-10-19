@@ -56,6 +56,12 @@ class inscripcion extends model
     return !$inscripcion ? [] : $inscripcion;
   }
 
+  function findByStudent(string $codigoEstudiante): array
+  {
+    $inscripcion = $this->select('detalles_inscripciones', [['estudiante_id', '=', '"' . $codigoEstudiante . '"']]);
+    return !$inscripcion ? [] : $inscripcion;
+  }
+
 
   /**
    * setData

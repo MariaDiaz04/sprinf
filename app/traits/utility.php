@@ -99,11 +99,13 @@ trait Utility
   {
     try {
       $headers  = apache_request_headers();
+
       $key = 'CLAVE_DE_APLICACION';
-      if (!isset($headers['Authorization'])) {
+      if (!isset($headers['Authorization']) && !isset($headers['authorization'])) {
         throw new Exception('Peticion no autenticada');
       }
-      $jwt = explode(" ", $headers['Authorization'])[1];
+
+      $jwt = (!isset($headers['Authorization'])) ? explode(" ", $headers['authorization'])[1] : explode(" ", $headers['Authorization'])[1];
       $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
       return $decoded;
