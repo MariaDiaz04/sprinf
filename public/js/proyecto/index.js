@@ -134,10 +134,12 @@ $(document).ready(function (e) {
           title: "Creación Exitosa",
           showConfirmButton: false,
           toast: true,
-          timer: 2000,
+          timer: 1000,
+        }).then(function () {
+          location.reload();
         });
 
-        $("#historico").modal("hide");
+        // $("#historico").modal("hide");
         table.ajax.reload();
         // usar sweetalerts
         document.getElementById("guardar").reset();
@@ -196,10 +198,10 @@ $(document).ready(function (e) {
           title: "Creación Exitosa",
           showConfirmButton: false,
           toast: true,
-          timer: 2000,
-        });
+          timer: 1000,
+        }).then(() => location.reload());
         document.getElementById("proyectoGuardar").reset();
-        $("#crear").modal("hide");
+        // $("#crear").modal("hide");
       },
     });
   });
@@ -235,8 +237,8 @@ $(document).ready(function (e) {
           title: "Actualización Exitosa",
           showConfirmButton: false,
           toast: true,
-          timer: 2000,
-        });
+          timer: 1000,
+        }).then(() => location.reload());
         document.getElementById("proyectoGuardar").reset();
         $("#actualizar").modal("hide");
       },
