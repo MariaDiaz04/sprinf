@@ -300,6 +300,7 @@
     var urlEvaluar = "<?= APP_URL ?>proyectos/assessment/";
     let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
     let noteUrl = "<?= APP_URL . $this->Route('proyectnotes/pdf') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('proyectos/borrar') ?>";
 
 
 

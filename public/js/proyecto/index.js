@@ -69,18 +69,15 @@ $(document).ready(function (e) {
                         ? ` <a class="dropdown-item" href="${
                             urlEvaluar + row[0]
                           }">Evaluar</a>
-                        <a class="dropdown-item" onClick="editarInformacionProyecto('${
-                          row[0]
-                        }')" href="#">Editar Proyecto</a>
                         <a class="dropdown-item" onClick="editarIntegrantes('${
                           row[0]
-                        }')" href="#">Editar Integrantes</a>
-                        <a class="dropdown-item" " href="${
+                        }')" href="#">Editar</a>
+                        <a class="dropdown-item" href="${
                           noteUrl + "/" + row[0]
                         }" target="_blank">Notas</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${
+                        <a class="dropdown-item text-danger" onClick="removeProject('${
                           row[0]
-                        }') href="#">Eliminar</a>`
+                        }')" href="#">Eliminar</a>`
                         : ``
                     }
                       
@@ -416,6 +413,47 @@ async function editarInformacionProyecto(id) {
   console.log(proyecto);
 }
 
-function remove(id) {
-  alert(`Removing ${id}`);
+function removeProject(id) {
+  Swal.fire({
+    title:
+      "Se eliminará el proyecto indicado, ¿está seguro de realizar la acción?",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    cancelButtonText: "Cancelar",
+    confirmButtonText: "Continuar",
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        type: "POST",
+        url: deleteUrl,
+        data: {
+          id: id,
+        },
+        error: function (error, status) {
+          toggleLoading(false);
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+        },
+        success: function (data, status) {
+          // actualizar tabla
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Proyecto Eliminado Exitosamente",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          }).then(() => location.reload());
+        },
+      });
+    }
+  });
 }
