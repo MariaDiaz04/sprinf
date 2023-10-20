@@ -1504,6 +1504,7 @@ INNER JOIN materias ON  materias.codigo = malla_curricular.materia_id;
 
 DROP VIEW IF EXISTS detalles_proyecto;
 CREATE VIEW detalles_proyecto AS
+
 SELECT 
   proyecto.id, 
   proyecto.fase_id, 
@@ -1512,8 +1513,9 @@ SELECT
   proyecto.motor_productivo, 
   proyecto.resumen, 
   proyecto.direccion, 
-  proyecto.municipio, 
-  proyecto.parroquia, 
+  municipios.nombre as municipio, 
+  parroquias.nombre as parroquia, 
+  proyecto.parroquia_id, 
   proyecto.tutor_ex,
   proyecto.tutor_in,
   proyecto.cerrado,
@@ -1532,6 +1534,8 @@ INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id
 INNER JOIN periodo ON periodo.id = trayecto.periodo_id
 INNER JOIN profesor as tutor ON tutor.codigo = proyecto.tutor_in
 INNER JOIN persona as tutor_info ON tutor_info.cedula = tutor.persona_id
+INNER JOIN parroquias ON parroquias.id = proyecto.parroquia_id
+INNER JOIN municipios ON municipios.id = parroquias.municipio
 LEFT OUTER JOIN integrante_proyecto ON integrante_proyecto.proyecto_id = proyecto.id
 GROUP BY proyecto_id;
 

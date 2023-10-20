@@ -24,22 +24,28 @@
               </div>
               <div class="col-12 mb-3">
                 <div class="row form-group">
-                  <div class="col-lg-3">
-                    <label class="form-label" for="municipio">Municipio</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required name="municipio" id="municipio">
-                  </div>
-                  <div class="col-lg-3">
-                    <label class="form-label" for="parroquia">Parroquia</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required name="parroquia" id="parroquia">
+                  <div class="col-lg-6">
+                    <label class="form-label" for="parroquia_id">Parroquia *</label>
+                    <select class="form-select" name="parroquia_id" id="selectParroquia" required>
+
+                      <?php foreach ($parroquias as $parroquia) : ?>
+                        <option value="<?= $parroquia->parroquia_id ?>"><?= "$parroquia->municipio_nombre - $parroquia->parroquia_nombre" ?></option>
+                      <?php endforeach; ?>
+                    </select>
                   </div>
                   <div class="col-lg-6">
                     <label class="form-label" for="resumen">Dirección</label>
                     <textarea class="form-control" placeholder="..." required name="direccion" id="direccion" style="height: 70px"></textarea>
                   </div>
 
-                  <div class="col-lg-3">
-                    <label class="form-label" for="tutor_in">Tutor Interno</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_in" id="tutor_in">
+                  <div class="col-lg-6">
+                    <label class="form-label" for="tutor_in">Tutor In *</label>
+                    <select class="form-select" name="tutor_in" id="selectTutorIn">
+
+                      <?php foreach ($profesores as $profesor) : ?>
+                        <option value="<?= $profesor->codigo ?>"><?= "$profesor->cedula - $profesor->nombre $profesor->apellido" ?></option>
+                      <?php endforeach; ?>
+                    </select>
                   </div>
 
                   <div class="col-lg-3">

@@ -288,10 +288,9 @@ class proyectoController extends controller
             $fase_id = $proyecto->request->get('fase_id');
             $estatus = $proyecto->request->get('estatus');
             $resumen = $proyecto->request->get('resumen');
-            $municipio = $proyecto->request->get('municipio');
             $direccion = $proyecto->request->get('direccion');
             $motor_productivo = $proyecto->request->get('motor_productivo');
-            $parroquia = $proyecto->request->get('parroquia');
+            $parroquia_id = $proyecto->request->get('parroquia_id');
             $tutor_in = $proyecto->request->get('tutor_in');
             $tutor_ex = $proyecto->request->get('tutor_ex');
             $cerrado = $proyecto->request->get('cerrado');
@@ -313,9 +312,8 @@ class proyectoController extends controller
                 'estatus' => $estatus,
                 'direccion' => $direccion,
                 'resumen' => $resumen,
-                'municipio' => $municipio,
                 'motor_productivo' => $motor_productivo,
-                'parroquia' => $parroquia,
+                'parroquia_id' => $parroquia_id,
                 'tutor_in' => $tutor_in,
                 'tutor_ex' => $tutor_ex,
                 'cerrado' => $cerrado,

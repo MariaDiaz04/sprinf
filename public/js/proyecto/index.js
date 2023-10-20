@@ -235,39 +235,50 @@ $(document).ready(function (e) {
     e.preventDefault();
 
     formData = $(this).serializeArray();
-    url = $(this).attr("action");
+    if ($("#cuerpoTablaActualizarEstudiante").children("tr").length <= 0) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe ingresar integrantes",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+    } else {
+      url = $(this).attr("action");
 
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: formData,
-      error: function (error, status) {
-        toggleLoading(false);
-        Swal.fire({
-          position: "bottom-end",
-          icon: "error",
-          title: error.responseText,
-          showConfirmButton: false,
-          toast: true,
-          timer: 2000,
-        });
-      },
-      success: function (data, status) {
-        table.ajax.reload();
-        // actualizar tabla
-        toggleLoading(false);
-        Swal.fire({
-          position: "bottom-end",
-          icon: "success",
-          title: "Actualización Exitosa",
-          showConfirmButton: false,
-          toast: true,
-          timer: 1000,
-        }).then(() => location.reload());
-        document.getElementById("proyectoGuardar").reset();
-        $("#actualizar").modal("hide");
-      },
-    });
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: formData,
+        error: function (error, status) {
+          toggleLoading(false);
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+        },
+        success: function (data, status) {
+          table.ajax.reload();
+          // actualizar tabla
+          toggleLoading(false);
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Actualización Exitosa",
+            showConfirmButton: false,
+            toast: true,
+            timer: 1000,
+          });
+          document.getElementById("proyectoGuardar").reset();
+          $("#actualizar").modal("hide");
+        },
+      });
+    }
   });
 
   // TOGGLE BUTTON AND SPINNER
@@ -338,6 +349,7 @@ async function editarIntegrantes(id) {
     nombre,
     municipio,
     parroquia,
+    parroquia_id,
     direccion,
     tutor_in,
     tutor_ex,
@@ -370,6 +382,14 @@ async function editarIntegrantes(id) {
   $("#actualizar #motor_productivo").val(motor_productivo);
   $("#actualizar #resumen").val(resumen);
   $("#actualizar #cerrado").val(cerrado);
+
+  $(`#proyectoActualizar #selectParroquia option[value="${parroquia_id}"]`)
+    .prop("selected", "selected")
+    .change();
+
+  $(`#proyectoActualizar #selectTutorIn option[value="${tutor_in}"]`)
+    .prop("selected", "selected")
+    .change();
 
   integrantes.forEach((integrante) => {
     // imprimir tabla
