@@ -1379,6 +1379,7 @@ insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-39263'
 -- insert into integrante_proyecto (proyecto_id, estudiante_id) values (2,'e-60621');
 -- insert into integrante_proyecto (proyecto_id, estudiante_id) values (2,'e-61587');
 
+INSERT INTO `pregunta` (`id`, `pregunta` ) VALUES (NULL, 'Nombre de tu mascota?'), (NULL, 'Donde estudiaste?'), (NULL, 'Color favorito?');
 INSERT INTO `respuestas` (`id`, `respuesta`, `pregunta_id`, `usuario_id`) VALUES (NULL, 'onix', '1', '1'), (NULL, 'juan jose landaeta', '2', '1'), (NULL, 'azul', '3', '1');
 -- vistas
 DROP VIEW IF EXISTS detalles_inscripciones;
@@ -1501,12 +1502,15 @@ SELECT
   materias.hrs_acad,
   materias.cursable,
   count(malla_curricular.codigo) as count_malla,
-  count(dimension.id) as dimensiones
+  count(dimension.id) as dimensiones,
+  count(inscripcion.id) as inscripciones
 FROM materias
 LEFT JOIN malla_curricular on malla_curricular.materia_id = materias.codigo
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN inscripcion ON inscripcion.unidad_curricular_id = malla_curricular.codigo
+
 GROUP BY materias.codigo
 ORDER BY codigo_trayecto;
 

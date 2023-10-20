@@ -3,15 +3,6 @@
 use Symfony\Component\Routing\Route;
 use Controllers\materiasController;
 
-
-$listaDeRutas['materias'] = new Route(
-  '/materias/{idTrayecto}',
-  [
-    'controller' => materiasController::class,
-    'method' => 'index',
-  ]
-);
-
 $listaDeRutas['materia_guardar'] = new Route(
   '/materias/guardar',
   [
@@ -49,5 +40,15 @@ $listaDeRutas['materia_ssp'] = new Route(
   [
     'controller' => materiasController::class,
     'method' => 'ssp',
+  ]
+);
+
+
+
+$listaDeRutas['materias'] = new Route(
+  '/materias/{idTrayecto}',
+  [
+    'controller' => materiasController::class,
+    'method' => 'index',
   ]
 );
