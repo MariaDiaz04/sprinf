@@ -99,54 +99,67 @@ $(document).ready(function (e) {
     items = transfer.getSelectedItems();
     data = [...formData];
     counter = 0;
-    for (const idIntegrante in items) {
-      integrante = {};
-      if (Object.hasOwnProperty.call(items, idIntegrante)) {
-        const element = items[idIntegrante];
-        integrante.name = `integrantes[${counter}]`;
-        integrante.value = element.value;
-        counter++;
-        data.push(integrante);
+
+    if (items.length <= 0) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe añadir integrantes",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+    } else {
+      for (const idIntegrante in items) {
+        integrante = {};
+        if (Object.hasOwnProperty.call(items, idIntegrante)) {
+          const element = items[idIntegrante];
+          integrante.name = `integrantes[${counter}]`;
+          integrante.value = element.value;
+          counter++;
+          data.push(integrante);
+        }
       }
+
+      url = $(this).attr("action");
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        error: function (error, status) {
+          toggleLoading(false, "#proyectoGuardarHistorico");
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+        },
+        success: function (data, status) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Creación Exitosa",
+            showConfirmButton: false,
+            toast: true,
+            timer: 1000,
+          }).then(function () {
+            location.reload();
+          });
+
+          // $("#historico").modal("hide");
+          table.ajax.reload();
+          // usar sweetalerts
+          document.getElementById("guardar").reset();
+          // actualizar tabla
+          toggleLoading(false, "#proyectoGuardarHistorico");
+        },
+      });
     }
-
-    url = $(this).attr("action");
-
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: data,
-      error: function (error, status) {
-        toggleLoading(false, "#proyectoGuardarHistorico");
-        Swal.fire({
-          position: "bottom-end",
-          icon: "error",
-          title: error.responseText,
-          showConfirmButton: false,
-          toast: true,
-          timer: 2000,
-        });
-      },
-      success: function (data, status) {
-        Swal.fire({
-          position: "bottom-end",
-          icon: "success",
-          title: "Creación Exitosa",
-          showConfirmButton: false,
-          toast: true,
-          timer: 1000,
-        }).then(function () {
-          location.reload();
-        });
-
-        // $("#historico").modal("hide");
-        table.ajax.reload();
-        // usar sweetalerts
-        document.getElementById("guardar").reset();
-        // actualizar tabla
-        toggleLoading(false, "#proyectoGuardarHistorico");
-      },
-    });
   });
 
   $("#proyectoGuardar").submit(function (e) {

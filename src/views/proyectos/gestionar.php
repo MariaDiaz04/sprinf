@@ -195,7 +195,7 @@
                   <div class="row form-group mb-3">
                     <div class="col-lg-12">
                       <label class="form-label" for="nombre">Proyecto </label>
-                      <select class="form-select" name="id" id="selectProyecto">
+                      <select class="form-select" name="id" id="selectProyecto" required>
                         <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
                           <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-municipio="<?= $proyecto->municipio ?>" data-parroquia="<?= $proyecto->parroquia ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>"><?= "$proyecto->display" ?></option>
                         <?php endforeach; ?>
@@ -205,7 +205,7 @@
                   <div class="row form-group">
                     <div class="col-lg-4">
                       <label class="form-label" for="fase_id">Trayecto</label>
-                      <select class="form-select" name="fase_id" id="selectTrayecto">
+                      <select class="form-select" name="fase_id" id="selectTrayecto" required>
 
                         <?php foreach ($fases as $fase) : ?>
                           <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
@@ -222,49 +222,49 @@
                   <div class="row form-group">
                     <div class="col-lg-12">
                       <label class="form-label" for="nombre">Nombre</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" readonly>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" readonly required>
                     </div>
                   </div>
                   <div class="row form-group mb-2">
                     <div class="col-lg-3">
                       <label class="form-label" for="motor_productivo">Motor Productivo</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="motor_productivo" id="motor_productivo" readonly>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="motor_productivo" id="motor_productivo" readonly required>
                     </div>
                     <div class="col-lg-9">
                       <label class="form-label" for="direccion">Resumen</label>
-                      <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 50px" readonly></textarea>
+                      <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 50px" readonly required></textarea>
                     </div>
                   </div>
                   <div class="row form-group">
                     <div class="col-lg-3">
                       <label class="form-label" for="parroquia">Municipio</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="municipio" id="municipio" readonly>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="municipio" id="municipio" readonly required>
                     </div>
                     <div class="col-lg-3">
                       <label class="form-label" for="parroquia">Parroquia</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="parroquia" id="parroquia" readonly>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="parroquia" id="parroquia" readonly required>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="comunidad">Comunidad</label>
-                      <textarea class="form-control" placeholder="..." id="comunidad" name="comunidad" style="height: 50px " readonly></textarea>
+                      <textarea class="form-control" placeholder="..." id="comunidad" name="comunidad" style="height: 50px " readonly required></textarea>
                     </div>
                   </div>
 
                   <div class="row form-group mb-2">
                     <div class="col-lg-12">
                       <label class="form-label" for="direccion">Dirección</label>
-                      <textarea class="form-control" placeholder="..." id="direccion" name="direccion" style="height: 50px" readonly></textarea>
+                      <textarea class="form-control" placeholder="..." id="direccion" name="direccion" style="height: 50px" readonly required></textarea>
                     </div>
                   </div>
                   <div class="row form-group mb-2">
                     <div class="col-lg-6">
                       <label class="form-label" for="tutor_in">Tutor Interno</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_in" id="tutor_in">
+                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_in" id="tutor_in" required>
                     </div>
 
                     <div class="col-lg-6">
                       <label class="form-label" for="tutor_ex">Tutor Externo</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex">
+                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex" required>
                     </div>
 
                   </div>
