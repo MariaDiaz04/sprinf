@@ -10,7 +10,7 @@
       Editar permisos
     </h5>
     <div class="card-body">
-      <form action="<?= APP_URL . $this->Route("permisos/actualizar/$permisos->idpermisos") ?>" method="POST" id="permisoseditar">
+      <form action="<?= APP_URL . $this->Route("permisos/actualizar/$permisos->id") ?>" method="POST" id="permisoseditar">
         <div class="container-fluid">
           <div class="row pb-2">
             <div class="col-12">
@@ -27,7 +27,7 @@
                   <label class="form-label">Modulo</label>
                   <select class="form-select" name="modulo_id" id="modulo_id">
                     <?php foreach ($modulos as $modulo) : ?>
-                      <option <?php if ($permisos->modulo_id == $modulo->modulo_id) echo "selected"; ?>disabled readonly value="<?= $modulo->modulo_id ?>"><?= $modulo->nombre ?></option>
+                      <option <?php if ($permisos->modulo_id == $modulo->id) echo "selected"; ?>disabled readonly value="<?= $modulo->id ?>"><?= $modulo->nombre ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>

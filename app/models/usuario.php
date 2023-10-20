@@ -108,6 +108,7 @@ class usuario extends model
 
                 $this->update('usuario', ['token' => "'" . $token . "'"], [['id', '=', $usuariopersona['usuario_id']]]);
                 $_SESSION['token'] = $token;
+                $_SESSION['rol_id'] = $credenciales['rol_id'];
 
                 $navegador = $_SERVER['HTTP_USER_AGENT'] . "\n\n";
                 $hora = new \DateTimeZone("America/Caracas");

@@ -25,7 +25,6 @@ class authController extends controller
     {
 
         $response = $this->USUARIO->new_session($usuario);
-
         switch ($response['estatus']) {
 
             case '0':

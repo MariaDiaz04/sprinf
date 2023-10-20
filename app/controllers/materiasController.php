@@ -24,6 +24,7 @@ class materiasController extends controller
 
     function __construct()
     {
+        $this->tokenExist();
         $this->MATERIAS = new materias();
         $this->CLASES = new clases();
         $this->PERMISOS = new permisos();
@@ -35,7 +36,11 @@ class materiasController extends controller
     public function index(Request $materia, $idTrayecto)
     {
 
-        $this->tokenExist();
+        $permisos = $this->PERMISOS->consult(2,$_SESSION['rol_id']);
+        
+
+        if ($permisos != null) { $newpermisos = $permisos->fillable;}
+        elseif($permisos == null){  $newpermisos = $permisos;}
         $materias = $this->MATERIAS->all();
         $trayectos = $this->TRAYECTO->all();
         $trayecto = $this->TRAYECTO->find($idTrayecto);
@@ -45,7 +50,8 @@ class materiasController extends controller
             'trayecto' => $trayecto,
             'idTrayecto' => $idTrayecto,
             'materias' => $materias,
-            'trayectos' => $trayectos
+            'trayectos' => $trayectos,
+            'permisos' => $newpermisos,
         ]);
     }
 

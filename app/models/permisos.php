@@ -62,7 +62,7 @@ class permisos extends model
     public function find($idpermisos)
     {
         try {
-            $permisos = $this->select('permisos', [['idpermisos', '=', $idpermisos]]);
+            $permisos = $this->select('permisos', [['id', '=', $idpermisos]]);
             if ($permisos) {
                 foreach ($permisos[0] as $key => $value) {
                     $this->fillable[$key] = $value;
@@ -79,7 +79,7 @@ class permisos extends model
     // ======================== UPDATE=========================
     public function actualizar($permisos)
     {
-        $this->update('permisos', $permisos, [['idpermisos', '=', $this->fillable['idpermisos']]]);
+        $this->update('permisos', $permisos, [['id', '=', $this->fillable['id']]]);
         return $this;
     }
 
@@ -87,7 +87,7 @@ class permisos extends model
     public function eliminar()
     {
         try {
-            $this->delete('permisos', [['idpermisos', '=',  $this->fillable['idpermisos']]]);
+            $this->delete('permisos', [['id', '=',  $this->fillable['id']]]);
             return $this;
         } catch (\PDOException $th) {
             return $th;
@@ -96,10 +96,10 @@ class permisos extends model
 
 
     // ======================== CONSULT=========================
-    public function consult($idmodulo, $idusuario)
+    public function consult($idmodulo, $rol_id)
     {
         try {
-            $permisos_usuario = $this->querys('SELECT * FROM permisos WHERE permisos.idmodulo = ' . $idmodulo . ' AND permisos.idusuario = ' . $idusuario . '');
+            $permisos_usuario = $this->querys('SELECT * FROM permisos WHERE permisos.modulo_id = ' . $idmodulo . ' AND permisos.rol_id = ' . $rol_id . '');
             if ($permisos_usuario) {
                 foreach ($permisos_usuario[0] as $key => $value) {
                     $this->fillable[$key] = $value;
