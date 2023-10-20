@@ -48,8 +48,8 @@
                     </select>
                   </div>
 
-                  <div class="col-lg-3">
-                    <label class="form-label" for="tutor_ex">Tutor Externo</label>
+                  <div class="col-lg-6">
+                    <label class="form-label" for="tutor_ex">Nombre Tutor Externo</label>
                     <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex">
                   </div>
 
@@ -59,6 +59,11 @@
                   </div>
 
                   <div class="col-lg-6">
+                    <label class="form-label" for="tlf_tex">Telefono Tutor Externo</label>
+                    <input type="text" class="form-control mb-1" placeholder="..." required name="tlf_tex" id="tlf_tex">
+                  </div>
+
+                  <div class="col-lg-12">
                     <label class="form-label" for="resumen">Resumen</label>
                     <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" id="resumen" style="height: 70px "></textarea>
                   </div>

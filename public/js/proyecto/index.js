@@ -353,6 +353,7 @@ async function editarIntegrantes(id) {
     direccion,
     tutor_in,
     tutor_ex,
+    tlf_tex,
     comunidad,
     motor_productivo,
     resumen,
@@ -365,6 +366,8 @@ async function editarIntegrantes(id) {
     $("#actualizar #selectEstudiante").removeAttr("disabled");
     $("#actualizar #anadirEstudiante").removeAttr("disabled");
   }
+
+  console.log(tlf_tex);
 
   const integrantes = proyecto.integrantes;
 
@@ -379,6 +382,7 @@ async function editarIntegrantes(id) {
   $("#actualizar #comunidad").val(comunidad);
   $("#actualizar #tutor_in").val(tutor_in);
   $("#actualizar #tutor_ex").val(tutor_ex);
+  $("#actualizar #tlf_tex").val(tlf_tex);
   $("#actualizar #motor_productivo").val(motor_productivo);
   $("#actualizar #resumen").val(resumen);
   $("#actualizar #cerrado").val(cerrado);

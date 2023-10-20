@@ -1517,6 +1517,7 @@ SELECT
   parroquias.nombre as parroquia, 
   proyecto.parroquia_id, 
   proyecto.tutor_ex,
+  proyecto.tlf_tex,
   proyecto.tutor_in,
   proyecto.cerrado,
   concat(tutor_info.nombre, ' ', tutor_info.apellido) as tutor_in_nombre,
