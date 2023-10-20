@@ -184,7 +184,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title font-weight-bold" id="historicoLabel">Nuevo Proyecto Histórico - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?></h5>
+          <h5 class="modal-title font-weight-bold" id="historicoLabel"><b>Continuación de Proyecto - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?></b></h5>
         </div>
         <div class="modal-body">
           <form action="<?= APP_URL . $this->Route('proyectos/guardar') ?>" method="post" id="proyectoGuardarHistorico">
@@ -193,25 +193,24 @@
               <div class="row pb-2">
                 <div class="col-12">
                   <div class="row form-group mb-3">
-                    <div class="col-lg-12">
-                      <label class="form-label" for="nombre">Proyecto </label>
+                    <div class="col-lg-9">
+                      <label class="form-label" for="nombre"><b>Proyecto *</b></label>
                       <select class="form-select" name="id" id="selectProyecto" required>
                         <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
                           <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-municipio="<?= $proyecto->municipio ?>" data-parroquia="<?= $proyecto->parroquia ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>"><?= "$proyecto->display" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-4">
-                      <label class="form-label" for="fase_id">Trayecto</label>
-                      <select class="form-select" name="fase_id" id="selectTrayecto" required>
+                    <div class="col-lg-3">
+                      <label class="form-label" for="fase_id"><b>Trayecto A Ingresar *</b></label>
+                      <select class="form-select" name="fase_id" id="selectTrayecto" required readonly>
 
-                        <?php foreach ($fases as $fase) : ?>
-                          <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
-                        <?php endforeach; ?>
+
                       </select>
                     </div>
+                  </div>
+                  <div class="row form-group">
+
                     <div class="col-lg-4 d-flex align-items-end" style="margin-left: auto;">
 
                       <button class="btn btn-primary" id="cargarInformacion">Cargar Informacion</button>
@@ -221,49 +220,50 @@
                   <hr>
                   <div class="row form-group">
                     <div class="col-lg-12">
-                      <label class="form-label" for="nombre">Nombre</label>
+                      <label class="form-label" for="nombre"><b>Nombre *</b></label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" readonly required>
                     </div>
                   </div>
                   <div class="row form-group mb-2">
-                    <div class="col-lg-3">
-                      <label class="form-label" for="motor_productivo">Motor Productivo</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="motor_productivo" id="motor_productivo" readonly required>
-                    </div>
-                    <div class="col-lg-9">
-                      <label class="form-label" for="direccion">Resumen</label>
+                    <div class="col-lg-12">
+                      <label class="form-label" for="direccion"><b>Resumen *</b></label>
                       <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 50px" readonly required></textarea>
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-3">
-                      <label class="form-label" for="parroquia">Municipio</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="municipio" id="municipio" readonly required>
-                    </div>
-                    <div class="col-lg-3">
-                      <label class="form-label" for="parroquia">Parroquia</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="parroquia" id="parroquia" readonly required>
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="comunidad">Comunidad</label>
-                      <textarea class="form-control" placeholder="..." id="comunidad" name="comunidad" style="height: 50px " readonly required></textarea>
                     </div>
                   </div>
 
                   <div class="row form-group mb-2">
-                    <div class="col-lg-12">
-                      <label class="form-label" for="direccion">Dirección</label>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="parroquia_id"><b>Parroquia *</b></label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="parroquia_id" id="parroquia_id" readonly required>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="direccion"><b>Dirección *</b></label>
                       <textarea class="form-control" placeholder="..." id="direccion" name="direccion" style="height: 50px" readonly required></textarea>
                     </div>
                   </div>
                   <div class="row form-group mb-2">
                     <div class="col-lg-6">
-                      <label class="form-label" for="tutor_in">Tutor Interno</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_in" id="tutor_in" required>
+                      <label class="form-label" for="tutor_ex"><b>Comunidad *</b></label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex" required readonly>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                      <label class="form-label" for="tutor_ex"><b>Tutor Externo *</b></label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex" required>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="tutor_in"><b>Tutor Interno *</b></label>
+                      <select class="form-select" name="tutor_in" id="selectFaseId">
+
+                        <?php foreach ($profesores as $profesor) : ?>
+                          <option value="<?= $profesor->codigo ?>"><?= "$profesor->cedula - $profesor->nombre $profesor->apellido" ?></option>
+                        <?php endforeach; ?>
+                      </select>
                     </div>
 
                     <div class="col-lg-6">
-                      <label class="form-label" for="tutor_ex">Tutor Externo</label>
+                      <label class="form-label" for="tutor_ex"><b>Telefono Tutor Externo *</b></label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex" required>
                     </div>
 
@@ -314,7 +314,7 @@
       groupArrayName: "integrantes",
       itemName: "nombre",
       valueName: "value",
-      rightTabNameText: "Estudiantes Seleccionados",
+      rightTabNameText: "Integrantes",
       tabNameText: "Estudiantes del Historico",
       searchPlaceholderText: "Buscar Estudiantes",
       callable: function(items) {
