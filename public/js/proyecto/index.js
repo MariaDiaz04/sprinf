@@ -158,52 +158,64 @@ $(document).ready(function (e) {
     items = transfer2.getSelectedItems();
     data = [...formData];
     counter = 0;
-    for (const idIntegrante in items) {
-      integrante = {};
-      if (Object.hasOwnProperty.call(items, idIntegrante)) {
-        const element = items[idIntegrante];
-        integrante.name = `integrantes[${counter}]`;
-        integrante.value = element.value;
-        counter++;
-        data.push(integrante);
+    if (items.length <= 0) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe añadir integrantes",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+    } else {
+      for (const idIntegrante in items) {
+        integrante = {};
+        if (Object.hasOwnProperty.call(items, idIntegrante)) {
+          const element = items[idIntegrante];
+          integrante.name = `integrantes[${counter}]`;
+          integrante.value = element.value;
+          counter++;
+          data.push(integrante);
+        }
       }
+
+      url = $(this).attr("action");
+
+      toggleLoading(false);
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        error: function (error, status) {
+          toggleLoading(false);
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+        },
+        success: function (data, status) {
+          table.ajax.reload();
+          // actualizar tabla
+          toggleLoading(false);
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Creación Exitosa",
+            showConfirmButton: false,
+            toast: true,
+            timer: 1000,
+          }).then(() => location.reload());
+          document.getElementById("proyectoGuardar").reset();
+          // $("#crear").modal("hide");
+        },
+      });
     }
-
-    url = $(this).attr("action");
-
-    toggleLoading(false);
-
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: data,
-      error: function (error, status) {
-        toggleLoading(false);
-        Swal.fire({
-          position: "bottom-end",
-          icon: "error",
-          title: error.responseText,
-          showConfirmButton: false,
-          toast: true,
-          timer: 2000,
-        });
-      },
-      success: function (data, status) {
-        table.ajax.reload();
-        // actualizar tabla
-        toggleLoading(false);
-        Swal.fire({
-          position: "bottom-end",
-          icon: "success",
-          title: "Creación Exitosa",
-          showConfirmButton: false,
-          toast: true,
-          timer: 1000,
-        }).then(() => location.reload());
-        document.getElementById("proyectoGuardar").reset();
-        // $("#crear").modal("hide");
-      },
-    });
   });
 
   $("#proyectoActualizar").submit(function (e) {
