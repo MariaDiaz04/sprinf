@@ -293,6 +293,7 @@ class proyectoController extends controller
             $parroquia_id = $proyecto->request->get('parroquia_id');
             $tutor_in = $proyecto->request->get('tutor_in');
             $tutor_ex = $proyecto->request->get('tutor_ex');
+            $tlf_tex = $proyecto->request->get('tlf_tex');
             $cerrado = $proyecto->request->get('cerrado');
 
 
@@ -315,6 +316,7 @@ class proyectoController extends controller
                 'motor_productivo' => $motor_productivo,
                 'parroquia_id' => $parroquia_id,
                 'tutor_in' => $tutor_in,
+                'tlf_tex' => $tlf_tex,
                 'tutor_ex' => $tutor_ex,
                 'cerrado' => $cerrado,
                 'integrantes' => $idEstudiantes
