@@ -78,6 +78,23 @@ CREATE TABLE `sprinf_bd`.`inscripcion` (
   `estatus` int DEFAULT 1
 );
 
+CREATE TABLE `sprinf_bd`.`municipios` (
+    id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+    estado VARCHAR(255) NOT NULL,
+    capital INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE `sprinf_bd`.`parroquias` (
+    id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+    municipio INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
+
+
 CREATE TABLE `sprinf_bd`.`proyecto` (
   `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
   `fase_id` varchar(255),
@@ -86,6 +103,7 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `motor_productivo` varchar(255),
   `resumen` varchar(255),
   `direccion` varchar(255),
+  `parroquia_id` int,
   `municipio` varchar(255),
   `parroquia` varchar(255),
   `tutor_in` varchar(255),
@@ -224,9 +242,13 @@ ALTER TABLE `sprinf_bd`.`inscripcion` ADD FOREIGN KEY (`unidad_curricular_id`) R
 
 ALTER TABLE `sprinf_bd`.`inscripcion` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
 
+ALTER TABLE `sprinf_bd`.`parroquias` ADD FOREIGN KEY (`municipio`) REFERENCES `sprinf_bd`.`municipios` (`id`);
+
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`fase_id`) REFERENCES `sprinf_bd`.`fase` (`codigo`);
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`tutor_in`) REFERENCES `sprinf_bd`.`profesor` (`codigo`);
+
+ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`parroquia_id`) REFERENCES `sprinf_bd`.`parroquias` (`id`);
 
 ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
 
@@ -266,7 +288,7 @@ insert into modulo (id, nombre) values (2, 'Materias');
 
 -- permisos
 insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo_id) values (1, 1, 1, 1, 1, 1, 1);
-insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo_id) values (1, 1, 1, 1, 1, 1, 2);
+insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo_id) values (2, 1, 1, 1, 1, 1, 2);
 
 
 
@@ -1339,6 +1361,11 @@ insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudian
 -- 10_proyectos.sql
 delete from integrante_proyecto where true;
 delete from proyecto where true;
+delete from parroquias where true;
+delete from municipios where true;
+
+insert into municipios(id,nombre) values (1, 'Iribarren');
+insert into parroquias(id,municipio,nombre) values (1,1, 'Ana Soto');
 -- TRAYECTO 4 PROYECTO GESTION DE PROYECTOS
 insert into proyecto (
   id, 
@@ -1349,6 +1376,7 @@ insert into proyecto (
   resumen, 
   direccion, 
   municipio, 
+  parroquia_id,
   parroquia, 
   tutor_in,
   tutor_ex,
@@ -1365,6 +1393,7 @@ values (
   'Gestión de proyectos para el PNF en informática', 
   'Av. Los Horcones, Av. La Salle, Barquisimeto 3001, Lara', 
   'iribarren', 
+  1,
   'Ana Soto', 
   'p-135482354',
   'Jose Sequera',  

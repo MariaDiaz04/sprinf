@@ -1,45 +1,45 @@
 <div>
-<?php if ($permisos == null) : ?>
+  <?php if ($permisos == null) : ?>
     <div class="col-12 text-muted py-5 my-5">
-        <h4 class="text-center my-5">No tiene permisos para ver este modulo (contacte con soporte tecnico)</h4>
+      <h4 class="text-center my-5">No tiene permisos para ver este modulo (contacte con soporte tecnico)</h4>
     </div>
-<?php elseif ($permisos->consultar != 1) : ?>
+  <?php elseif ($permisos->consultar != 1) : ?>
     <div class="col-12 text-muted py-5 my-5">
-        <h4 class="text-center my-5">No tiene permisos para ver este modulo (contacte con soporte tecnico) </h4>
+      <h4 class="text-center my-5">No tiene permisos para ver este modulo (contacte con soporte tecnico) </h4>
     </div>
-<?php elseif ($permisos->consultar == 1) : ?>
+  <?php elseif ($permisos->consultar == 1) : ?>
 
-  <div>
-    <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
-      <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Materias / <?= $trayecto->nombre ?> </span>/ Gestión</div>
-        <?php if ($permisos->crear == 1) : ?>
+    <div>
+      <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
+        <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
+          <div><span class="text-muted font-weight-light">Materias / <?= $trayecto->nombre ?> </span>/ Gestión</div>
+          <?php if ($permisos->crear == 1) : ?>
 
-        <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
-        <?php endif; ?>
+            <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+          <?php endif; ?>
 
-      </h4>
+        </h4>
+      </div>
     </div>
-  </div>
 
-  <div class="card">
-    <h6 class="card-header bg-primary text-white">Materias</h6>
-    <div class="card-body px-3 pt-3">
-      <table id="example" class="display" style="width:100%">
-        <thead>
-          <tr>
-            <th>Trayecto</th>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Periodo</th>
-            <th>Fase</th>
-            <th>Estatus en Baremos</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-      </table>
+    <div class="card">
+      <h6 class="card-header bg-primary text-white">Materias</h6>
+      <div class="card-body px-3 pt-3">
+        <table id="example" class="display" style="width:100%">
+          <thead>
+            <tr>
+              <th>Trayecto</th>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Periodo</th>
+              <th>Fase</th>
+              <th>Estatus en Baremos</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
-  </div>
   <?php endif; ?>
 
   <!-- MODAL CREAR -->
@@ -272,10 +272,10 @@
                         ${(row[5] ? `<a class="dropdown-item" href="<?= APP_URL . $this->Route('inscripcion') ?>/${row[1]}">Inscripciones</a>`:'' )}
                         <?php if ($permisos->actualizar == 1) : ?>
                         <a class="dropdown-item" onClick="edit('${row[1]}')" href="#">Editar</a>
-                        <?php endif;?>
+                        <?php endif; ?>
                         <?php if ($permisos->eliminar == 1) : ?>
                         <a class="dropdown-item text-danger" onClick="remove('${row[1]}')" href="#">Eliminar</a>
-                        <?php endif;?>
+                        <?php endif; ?>
 
                       </div>
                     </div>`;
@@ -325,7 +325,7 @@
               toast: true,
               timer: 1500
 
-            })
+            }).then(() => location.reload())
             $('#crear').modal('hide');
             $('#crear').modal('closed');
             document.getElementById("guardar").reset();
@@ -459,13 +459,13 @@
         success: function(data, status) {
           console.log(data);
           Swal.fire({
-              position: 'bottom-end',
-              icon: 'success',
-              title: 'Materia borrada con exito',
-              showConfirmButton: false,
-              toast: true,
-              timer: 1500
-            })
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Materia borrada con exito',
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500
+          })
           $('#example').DataTable().ajax.reload();
         },
       });
