@@ -1366,6 +1366,26 @@ delete from municipios where true;
 
 insert into municipios(id,nombre) values (1, 'Iribarren');
 insert into parroquias(id,municipio,nombre) values (1,1, 'Ana Soto');
+insert into parroquias(id,municipio,nombre) values (2,1, 'Santa Rosa');
+insert into parroquias(id,municipio,nombre) values (3,1, 'Tamaca');
+insert into parroquias(id,municipio,nombre) values (4,1, 'Catedral');
+insert into parroquias(id,municipio,nombre) values (5,1, 'Concepción');
+insert into parroquias(id,municipio,nombre) values (6,1, 'El Cují');
+insert into parroquias(id,municipio,nombre) values (7,1, 'Buena Vista');
+insert into parroquias(id,municipio,nombre) values (8,1, 'Aguedo Felipe Alvarado');
+insert into parroquias(id,municipio,nombre) values (9,1, 'Unión');
+
+insert into municipios(id,nombre) values (2, 'Jiménez');
+insert into parroquias(id,municipio,nombre) values (10,2, 'Coronel Mariano Peraza');
+insert into parroquias(id,municipio,nombre) values (11,2, 'Juan Bautista Rodríguez');
+insert into parroquias(id,municipio,nombre) values (12,2, 'Cuara');
+insert into parroquias(id,municipio,nombre) values (13,2, 'Diego de Lozada');
+insert into parroquias(id,municipio,nombre) values (14,2, 'Paraíso de San José');
+insert into parroquias(id,municipio,nombre) values (15,2, 'San Miguel');
+insert into parroquias(id,municipio,nombre) values (16,2, 'Tintorero');
+insert into parroquias(id,municipio,nombre) values (17,2, 'José Bernardo Dorante');
+
+
 -- TRAYECTO 4 PROYECTO GESTION DE PROYECTOS
 insert into proyecto (
   id, 
