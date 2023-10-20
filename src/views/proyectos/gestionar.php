@@ -84,7 +84,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nuevo Proyecto</h5>
+          <h5 class="modal-title" id="crearLabel"><b>Nuevo Proyecto</b></h5>
 
         </div>
         <div class="modal-body">
@@ -95,7 +95,7 @@
                 <div class="col-12">
                   <div class="row form-group">
                     <div class="col-lg-3">
-                      <label class="form-label" for="fase_id">Trayecto *</label>
+                      <label class="form-label" for="fase_id"><b>Trayecto *</b></label>
                       <select class="form-select" name="fase_id" id="selectFaseId" required>
 
                         <?php foreach ($fases as $fase) : ?>
@@ -104,7 +104,7 @@
                       </select>
                     </div>
                     <div class="col-lg-9">
-                      <label class="form-label" for="nombre">Nombre *</label>
+                      <label class="form-label" for="nombre"><b>Nombre *</b></label>
                       <input type="text" class="form-control mb-1" placeholder="..." required name="nombre">
                     </div>
                   </div>
@@ -112,7 +112,7 @@
                 <div class="col-12 mb-3">
                   <div class="row form-group">
                     <div class="col-lg-6">
-                      <label class="form-label" for="parroquia_id">Parroquia *</label>
+                      <label class="form-label" for="parroquia_id"><b>Parroquia *</b></label>
                       <select class="form-select" name="parroquia_id" id="selectParroquia" required>
 
                         <?php foreach ($parroquias as $parroquia) : ?>
@@ -121,13 +121,13 @@
                       </select>
                     </div>
                     <div class="col-lg-6">
-                      <label class="form-label" for="resumen">Dirección</label>
+                      <label class="form-label" for="resumen"><b>Dirección</b></label>
                       <textarea class="form-control" placeholder="..." required id="resumen" name="direccion" style="height: 50px"></textarea>
                     </div>
 
 
                     <div class="col-lg-6">
-                      <label class="form-label" for="tutor_in">Tutor In *</label>
+                      <label class="form-label" for="tutor_in"><b>Tutor Interno *</b></label>
                       <select class="form-select" name="tutor_in" id="selectFaseId">
 
                         <?php foreach ($profesores as $profesor) : ?>
@@ -137,22 +137,22 @@
                     </div>
 
                     <div class="col-lg-6">
-                      <label class="form-label" for="tutor_ex">Nombre Tutor Externo</label>
+                      <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
                       <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex">
                     </div>
                     <div class="col-lg-6">
-                      <label class="form-label" for="comunidad">Comunidad</label>
+                      <label class="form-label" for="comunidad"><b>Comunidad *</b></label>
                       <textarea class="form-control" placeholder="..." required id="comunidad" name="comunidad" style="height: 50px "></textarea>
                     </div>
                     <div class="col-lg-6">
-                      <label class="form-label" for="tlf_tex">Telefono Tutor Externo</label>
+                      <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
                       <input type="text" class="form-control mb-1" placeholder="..." required name="tlf_tex">
                     </div>
 
 
 
                     <div class="col-lg-12">
-                      <label class="form-label" for="resumen">Resumen</label>
+                      <label class="form-label" for="resumen"><b>Resumen *</b></label>
                       <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" style="height: 50px"></textarea>
                     </div>
 
