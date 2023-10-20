@@ -19,8 +19,7 @@ class proyecto extends model
         'comunidad',
         'direccion',
         'resumen',
-        'municipio',
-        'parroquia',
+        'parroquia_id',
         'tutor_in',
         'tutor_ex',
         'id',
@@ -32,9 +31,8 @@ class proyecto extends model
     public string $fase_id;
     public string $nombre;
     public string $direccion;
-    public string $parroquia;
+    public int $parroquia_id;
     public string $resumen;
-    public string $municipio;
     public string $comunidad;
     public string $tutor_in;
     public string $tutor_ex;
@@ -67,13 +65,14 @@ class proyecto extends model
     {
         $preparedSql = "";
         if ($id) {
-            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
-                . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
+            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, parroquia_id,direccion, tutor_in, tutor_ex, cerrado) "
+                . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :parroquia_id,:direccion,  :tutor_in, :tutor_ex, 0)";
         } else {
-            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
-                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
+            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen,parroquia_id, direccion, tutor_in, tutor_ex, cerrado) "
+                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :parroquia_id, :direccion, :tutor_in, :tutor_ex, 0)";
         }
         $query = $this->prepare($preparedSql);
+
 
         if ($id) {
             $query->bindParam(":id", $this->id);
@@ -83,8 +82,7 @@ class proyecto extends model
         $query->bindParam(":comunidad", $this->comunidad);
         $query->bindParam(":resumen", $this->resumen);
         $query->bindParam(":direccion", $this->direccion);
-        $query->bindParam(":municipio", $this->municipio);
-        $query->bindParam(":parroquia", $this->parroquia);
+        $query->bindParam(":parroquia_id", $this->parroquia_id);
         $query->bindParam(":tutor_in", $this->tutor_in);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
 
@@ -100,7 +98,7 @@ class proyecto extends model
 
     public function actualizar()
     {
-        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, municipio=:municipio, parroquia=:parroquia, tutor_in=:tutor_in, tutor_ex=:tutor_ex, cerrado= :cerrado WHERE id=:id";
+        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, parroquia_id=:parroquia_id, tutor_in=:tutor_in, tutor_ex=:tutor_ex, cerrado= :cerrado WHERE id=:id";
 
         $query = $this->prepare($preparedSql);
 
@@ -110,8 +108,7 @@ class proyecto extends model
         $query->bindParam(":comunidad", $this->comunidad);
         $query->bindParam(":resumen", $this->resumen);
         $query->bindParam(":direccion", $this->direccion);
-        $query->bindParam(":municipio", $this->municipio);
-        $query->bindParam(":parroquia", $this->parroquia);
+        $query->bindParam(":parroquia_id", $this->parroquia_id);
         $query->bindParam(":tutor_in", $this->tutor_in);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
         $query->bindParam(":cerrado", $this->cerrado);

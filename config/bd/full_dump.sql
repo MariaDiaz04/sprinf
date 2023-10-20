@@ -81,8 +81,6 @@ CREATE TABLE `sprinf_bd`.`inscripcion` (
 CREATE TABLE `sprinf_bd`.`municipios` (
     id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(255) NOT NULL,
-    estado VARCHAR(255) NOT NULL,
-    capital INT NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -1663,3 +1661,7 @@ ORDER BY periodo_final DESC;
 DROP VIEW IF EXISTS detalles_usuarios;
 CREATE VIEW detalles_usuarios AS
 SELECT u.id,u.rol_id, u.email, u.contrasena, p.nombre, p.apellido, p.cedula FROM `usuario`  as u INNER JOIN persona as p ON p.usuario_id = u.id;
+
+DROP VIEW IF EXISTS detalles_parroquia;
+CREATE VIEW detalles_parroquia AS
+SELECT parroquias.id as parroquia_id, parroquias.nombre as parroquia_nombre, municipios.id as municipio_id, municipios.nombre as municipio_nombre FROM `parroquias` INNER JOIN municipios ON municipios.id = parroquias.municipio;

@@ -15,6 +15,7 @@ use Model\baremos;
 use Model\fase;
 use Model\dimension;
 use Model\tutor;
+use Model\parroquia;
 use Model\trayectos;
 use Dompdf\Dompdf;
 
@@ -34,6 +35,7 @@ class proyectoController extends controller
     private $periodo;
     private $trayectos;
     private $inscripcion;
+    private $parroquia;
 
     function __construct()
     {
@@ -42,6 +44,7 @@ class proyectoController extends controller
         $this->tokenExist();
         $this->proyecto = new proyecto();
         $this->estudiantes = new estudiante();
+        $this->parroquia = new parroquia();
         $this->dimension = new dimension();
         $this->tutores = new tutor();
         $this->profesores = new profesor();
@@ -60,6 +63,7 @@ class proyectoController extends controller
         $tutores = $this->tutores->all();
         $profesores = $this->profesores->all();
         $trayectos = $this->trayectos->all();
+        $parroquias = $this->parroquia->all();
 
         $fases = $this->fase->getPrimerFaseDeTrayectos();
 
@@ -84,6 +88,7 @@ class proyectoController extends controller
 
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
+            'parroquias' => $parroquias,
             'periodo' => $periodo,
             'profesores' => $profesores,
             'fases' => $fases,
@@ -212,10 +217,9 @@ class proyectoController extends controller
             $fase_id = $nuevoProyecto->request->get('fase_id');
             $estatus = $nuevoProyecto->request->get('estatus');
             $resumen = $nuevoProyecto->request->get('resumen');
-            $municipio = $nuevoProyecto->request->get('municipio');
             $direccion = $nuevoProyecto->request->get('direccion');
             $motor_productivo = $nuevoProyecto->request->get('motor_productivo');
-            $parroquia = $nuevoProyecto->request->get('parroquia');
+            $parroquia_id = $nuevoProyecto->request->get('parroquia_id');
             $tutor_in = $nuevoProyecto->request->get('tutor_in');
             $tutor_ex = $nuevoProyecto->request->get('tutor_ex');
             $id = $nuevoProyecto->request->get('id');
@@ -227,9 +231,8 @@ class proyectoController extends controller
                 'estatus' => $estatus,
                 'direccion' => $direccion,
                 'resumen' => $resumen,
-                'municipio' => $municipio,
                 'motor_productivo' => $motor_productivo,
-                'parroquia' => $parroquia,
+                'parroquia_id' => (int)$parroquia_id,
                 'tutor_in' => $tutor_in,
                 'tutor_ex' => $tutor_ex,
                 'integrantes' => $idEstudiantes

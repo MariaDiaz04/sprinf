@@ -36,7 +36,6 @@
 
   <?php
 
-
   if ($cerrarFase) : ?>
     <div class="alert alert-primary" role="alert">
       <p>Todos los proyectos han sido evaluados! 🥳</p>
@@ -95,16 +94,16 @@
               <div class="row pb-2">
                 <div class="col-12">
                   <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="fase_id">Fase *</label>
-                      <select class="form-select" name="fase_id" id="selectFaseId">
+                    <div class="col-lg-3">
+                      <label class="form-label" for="fase_id">Trayecto *</label>
+                      <select class="form-select" name="fase_id" id="selectFaseId" required>
 
                         <?php foreach ($fases as $fase) : ?>
                           <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-9">
                       <label class="form-label" for="nombre">Nombre *</label>
                       <input type="text" class="form-control mb-1" placeholder="..." required name="nombre">
                     </div>
@@ -112,13 +111,14 @@
                 </div>
                 <div class="col-12 mb-3">
                   <div class="row form-group">
-                    <div class="col-lg-3">
-                      <label class="form-label" for="municipio">Municipio</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." required name="municipio">
-                    </div>
-                    <div class="col-lg-3">
-                      <label class="form-label" for="parroquia">Parroquia</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." required name="parroquia">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="parroquia_id">Parroquia *</label>
+                      <select class="form-select" name="parroquia_id" id="selectParroquia" required>
+
+                        <?php foreach ($parroquias as $parroquia) : ?>
+                          <option value="<?= $parroquia->parroquia_id ?>"><?= "$parroquia->municipio_nombre - $parroquia->parroquia_nombre" ?></option>
+                        <?php endforeach; ?>
+                      </select>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="resumen">Dirección</label>
@@ -136,22 +136,24 @@
                       </select>
                     </div>
 
-                    <div class="col-lg-3">
-                      <label class="form-label" for="tutor_ex">Tutor Externo</label>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="tutor_ex">Nombre Tutor Externo</label>
                       <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex">
-                    </div>
-                    <div class="col-lg-3">
-                      <label class="form-label" for="motor_productivo">Motor Productivo</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." required name="motor_productivo">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="comunidad">Comunidad</label>
                       <textarea class="form-control" placeholder="..." required id="comunidad" name="comunidad" style="height: 50px "></textarea>
                     </div>
-
                     <div class="col-lg-6">
+                      <label class="form-label" for="tlf_tex">Telefono Tutor Externo</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." required name="tlf_tex">
+                    </div>
+
+
+
+                    <div class="col-lg-12">
                       <label class="form-label" for="resumen">Resumen</label>
-                      <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" style="height: 50px "></textarea>
+                      <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" style="height: 50px"></textarea>
                     </div>
 
                   </div>
