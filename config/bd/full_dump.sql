@@ -183,6 +183,19 @@ CREATE TABLE `sprinf_bd`.`bitacora` (
   CONSTRAINT `fk_bitacora_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `sprinf_bd`.`pregunta` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `pregunta` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`respuestas` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `respuesta` varchar(255) NOT NULL,
+  `pregunta_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL
+);
+
+
 ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`periodo_id`) REFERENCES `sprinf_bd`.`periodo` (`id`);
 
 ALTER TABLE `sprinf_bd`.`fase` ADD FOREIGN KEY (`trayecto_id`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
@@ -231,6 +244,11 @@ ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`rol_id`) REFERENCES `sprinf
 
 ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`modulo_id`) REFERENCES `sprinf_bd`.`modulo` (`id`);
 
+ALTER TABLE `sprinf_bd`.`respuestas` ADD FOREIGN KEY (`usuario_id`) REFERENCES `sprinf_bd`.`usuario` (`id`);
+
+ALTER TABLE `sprinf_bd`.`respuestas` ADD FOREIGN KEY (`pregunta_id`) REFERENCES `sprinf_bd`.`pregunta` (`id`);
+
+
 use sprinf_bd;
 -- 1_usuarios
 delete from permisos where true;
@@ -244,9 +262,11 @@ insert into roles (id, nombre) values (1, 'administrador'), (2, 'profesor'), (3,
 
 -- modulos
 insert into modulo (id, nombre) values (1, 'Proyecto');
+insert into modulo (id, nombre) values (2, 'Materias');
 
 -- permisos
 insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo_id) values (1, 1, 1, 1, 1, 1, 1);
+insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo_id) values (1, 1, 1, 1, 1, 1, 2);
 
 
 
@@ -1361,6 +1381,8 @@ insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-39263'
 -- insert into integrante_proyecto (proyecto_id, estudiante_id) values (2,'e-60621');
 -- insert into integrante_proyecto (proyecto_id, estudiante_id) values (2,'e-61587');
 
+INSERT INTO `pregunta` (`id`, `pregunta` ) VALUES (NULL, 'Nombre de tu mascota?'), (NULL, 'Donde estudiaste?'), (NULL, 'Color favorito?');
+INSERT INTO `respuestas` (`id`, `respuesta`, `pregunta_id`, `usuario_id`) VALUES (NULL, 'onix', '1', '1'), (NULL, 'juan jose landaeta', '2', '1'), (NULL, 'azul', '3', '1');
 -- vistas
 DROP VIEW IF EXISTS detalles_inscripciones;
 CREATE VIEW detalles_inscripciones AS
@@ -1482,12 +1504,15 @@ SELECT
   materias.hrs_acad,
   materias.cursable,
   count(malla_curricular.codigo) as count_malla,
-  count(dimension.id) as dimensiones
+  count(dimension.id) as dimensiones,
+  count(inscripcion.id) as inscripciones
 FROM materias
 LEFT JOIN malla_curricular on malla_curricular.materia_id = materias.codigo
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN inscripcion ON inscripcion.unidad_curricular_id = malla_curricular.codigo
+
 GROUP BY materias.codigo
 ORDER BY codigo_trayecto;
 

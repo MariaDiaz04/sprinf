@@ -275,6 +275,7 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Controllers\\aspectosController' => __DIR__ . '/../..' . '/app/controllers/aspectosController.php',
         'Controllers\\baremosController' => __DIR__ . '/../..' . '/app/controllers/baremosController.php',
+        'Controllers\\bitacoraController' => __DIR__ . '/../..' . '/app/controllers/bitacoraController.php',
         'Controllers\\clasesController' => __DIR__ . '/../..' . '/app/controllers/clasesController.php',
         'Controllers\\configuracionController' => __DIR__ . '/../..' . '/app/controllers/configuracionController.php',
         'Controllers\\controller' => __DIR__ . '/../..' . '/app/controllers/controller.php',
@@ -285,6 +286,7 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         'Controllers\\materiasController' => __DIR__ . '/../..' . '/app/controllers/materiasController.php',
         'Controllers\\moduloController' => __DIR__ . '/../..' . '/app/controllers/moduloController.php',
         'Controllers\\periodoController' => __DIR__ . '/../..' . '/app/controllers/periodoController.php',
+        'Controllers\\permisosController' => __DIR__ . '/../..' . '/app/controllers/permisosController.php',
         'Controllers\\profesorController' => __DIR__ . '/../..' . '/app/controllers/profesorController.php',
         'Controllers\\proyectoController' => __DIR__ . '/../..' . '/app/controllers/proyectoController.php',
         'Controllers\\respaldoController' => __DIR__ . '/../..' . '/app/controllers/respaldoController.php',
@@ -924,8 +926,6 @@ class ComposerStaticInit618a48457cdaa31dbfc9d731b1aa7746
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'authController' => __DIR__ . '/../..' . '/app/controllers/authController.php',
-        'bitacoraController' => __DIR__ . '/../..' . '/app/controllers/bitacoraController.php',
-        'permisosController' => __DIR__ . '/../..' . '/app/controllers/permisosController.php',
         'userController' => __DIR__ . '/../..' . '/app/controllers/userController.php',
     );
 

@@ -1,9 +1,9 @@
 <?php
+namespace Controllers;
 
 use Model\rol;
 use Model\modulo;
 use Model\permisos;
-use Controllers\controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class permisosController extends controller

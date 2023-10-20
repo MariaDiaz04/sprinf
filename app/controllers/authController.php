@@ -2,6 +2,7 @@
 
 use Model\usuario;
 use Controllers\controller;
+use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -24,7 +25,6 @@ class authController extends controller
     {
 
         $response = $this->USUARIO->new_session($usuario);
-
         switch ($response['estatus']) {
 
             case '0':
@@ -104,5 +104,50 @@ class authController extends controller
     public function invalid()
     {
         return $this->page('auth/invalid');
+    }
+
+
+    public function forgot()
+    {
+        return $this->page('auth/forgot-password');
+    }
+
+
+    public function verification($usuario)
+    {
+
+        $response = $this->USUARIO->veificationDates($usuario);
+        if (isset($response['estatus'])) {
+            switch ($response['estatus']) {
+                case '0':
+                    $this->redirect('invalid');
+                    break;
+                case '2':
+                    $this->redirect('inactive');
+                    break;
+                default:
+                    $this->redirect('501');
+                    break;
+            }
+        } else {
+            $email = $usuario->request->get('email');
+            return $this->page('auth/reset-password', ['usuario_id' => $response[0]['usuario_id'], 'email' => $email]);
+        }
+    }
+
+    public function actualizarContrasena($usuario)
+    {
+        $usuario_id = $usuario->request->get('usuario_id');
+
+        if (!$usuarioAct = $this->USUARIO->findById($usuario_id)) {
+            return $this->page('errors/404');
+        }
+        $contrasena = password_hash($usuario->request->get('contrasena'), PASSWORD_DEFAULT);
+
+        $usuarioAct->actualizarPassword([
+            'contrasena' => '"' . $contrasena . '"',
+        ]);
+
+        return $this->redirect(APP_URL);
     }
 }

@@ -1,10 +1,22 @@
 <div>
+<?php if ($permisos == null) : ?>
+    <div class="col-12 text-muted py-5 my-5">
+        <h4 class="text-center my-5">No tiene permisos para ver este modulo (contacte con soporte tecnico)</h4>
+    </div>
+<?php elseif ($permisos->consultar != 1) : ?>
+    <div class="col-12 text-muted py-5 my-5">
+        <h4 class="text-center my-5">No tiene permisos para ver este modulo (contacte con soporte tecnico) </h4>
+    </div>
+<?php elseif ($permisos->consultar == 1) : ?>
+
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
         <div><span class="text-muted font-weight-light">Materias / <?= $trayecto->nombre ?> </span>/ Gestión</div>
+        <?php if ($permisos->crear == 1) : ?>
 
         <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+        <?php endif; ?>
 
       </h4>
     </div>
@@ -28,6 +40,7 @@
       </table>
     </div>
   </div>
+  <?php endif; ?>
 
   <!-- MODAL CREAR -->
   <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
@@ -257,8 +270,13 @@
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[1]}">
                         ${(row[5] ? `<a class="dropdown-item" href="<?= APP_URL . $this->Route('inscripcion') ?>/${row[1]}">Inscripciones</a>`:'' )}
+                        <?php if ($permisos->actualizar == 1) : ?>
                         <a class="dropdown-item" onClick="edit('${row[1]}')" href="#">Editar</a>
+                        <?php endif;?>
+                        <?php if ($permisos->eliminar == 1) : ?>
                         <a class="dropdown-item text-danger" onClick="remove('${row[1]}')" href="#">Eliminar</a>
+                        <?php endif;?>
+
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -296,8 +314,20 @@
           },
           success: function(data, status) {
             table.ajax.reload();
+
             // usar sweetalerts
-            console.log(data)
+            // console.log(data)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'success',
+              title: 'Materia creada con exito',
+              showConfirmButton: false,
+              toast: true,
+              timer: 1500
+
+            })
+            $('#crear').modal('hide');
+            $('#crear').modal('closed');
             document.getElementById("guardar").reset();
             // actualizar tabla
             toggleLoading(false, '#guardar')
@@ -333,6 +363,14 @@
           },
           success: function(data, status) {
             table.ajax.reload();
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'success',
+              title: 'Materia editada con exito',
+              showConfirmButton: false,
+              toast: true,
+              timer: 1500
+            })
             // actualizar tabla
             toggleLoading(false, '#actualizar')
 
@@ -389,7 +427,7 @@
       // seleccionar periodo
       $(`#actualizar #periodo option[value='${data.materia.periodo}']`).attr("selected", true);
 
-      $(`#actualizar #codigo`).val(data.materia.materia_id);
+      $(`#actualizar #codigo`).val(data.materia.codigo);
       $(`#actualizar #nombre`).val(data.materia.nombre);
       $(`#actualizar #eje`).val(data.materia.eje);
 
@@ -419,7 +457,15 @@
 
         },
         success: function(data, status) {
-          alert('Materia borrada exitosamente')
+          console.log(data);
+          Swal.fire({
+              position: 'bottom-end',
+              icon: 'success',
+              title: 'Materia borrada con exito',
+              showConfirmButton: false,
+              toast: true,
+              timer: 1500
+            })
           $('#example').DataTable().ajax.reload();
         },
       });
