@@ -10,7 +10,8 @@ CREATE TABLE `sprinf_bd`.`periodo` (
 CREATE TABLE `sprinf_bd`.`trayecto` (
   `codigo` varchar(255) UNIQUE PRIMARY KEY,
   `periodo_id` int,
-  `nombre` varchar(255)
+  `nombre` varchar(255),
+  `siguiente_trayecto` varchar(255)
 );
 
 CREATE TABLE `sprinf_bd`.`fase` (
@@ -170,14 +171,14 @@ CREATE TABLE `sprinf_bd`.`proyecto_historico` (
   `cedula_estudiante` int,
   `nombre_proyecto` varchar(255),
   `nombre_trayecto` varchar(255),
+  `codigo_trayecto` varchar(255),
+  `parroquia_id` varchar(255),
   `comunidad` varchar(255),
   `tutor_in` varchar(255),
   `tutor_ex` varchar(255),
   `motor_productivo` varchar(255),
   `resumen` varchar(255),
   `direccion` varchar(255),
-  `municipio` varchar(255),
-  `parroquia` varchar(255),
   `nota_fase_1` float,
   `nota_fase_2` float,
   `periodo_inicio` date,
@@ -213,6 +214,8 @@ CREATE TABLE `sprinf_bd`.`respuestas` (
 
 
 ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`periodo_id`) REFERENCES `sprinf_bd`.`periodo` (`id`);
+
+ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`siguiente_trayecto`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
 
 ALTER TABLE `sprinf_bd`.`fase` ADD FOREIGN KEY (`trayecto_id`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
 
@@ -1024,21 +1027,21 @@ delete from periodo where true;
 insert into periodo (id, fecha_inicio, fecha_cierre) values (1, '2023-03-01', '2024-02-01');
 
 -- 5_trayecto-fase.sql
-insert into trayecto (codigo, periodo_id, nombre) values ('TR1',1,'Trayecto I');
-insert into fase (codigo, trayecto_id, nombre) values ('TR1_2','TR1','Fase 2');
-insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR1_1','TR1','Fase 1', 'TR1_2'); 
+insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR4',1,'Trayecto IV', NULL);
+insert into fase (codigo, trayecto_id, nombre) values ('TR4_2','TR4','Fase 2'); 
+insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR4_1','TR4','Fase 1', 'TR4_2');
 
-insert into trayecto (codigo, periodo_id, nombre) values ('TR2',1,'Trayecto II');
+insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR3',1,'Trayecto III', 'TR4');
+insert into fase (codigo, trayecto_id, nombre) values ('TR3_2','TR3','Fase 2'); 
+insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR3_1','TR3','Fase 1', 'TR3_2'); 
+
+insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR2',1,'Trayecto II', 'TR3');
 insert into fase (codigo, trayecto_id, nombre) values ('TR2_2','TR2','Fase 2');
 insert into fase (codigo, trayecto_id, nombre,siguiente_fase) values ('TR2_1','TR2','Fase 1', 'TR2_2');
 
-insert into trayecto (codigo, periodo_id, nombre) values ('TR3',1,'Trayecto III');
-insert into fase (codigo, trayecto_id, nombre) values ('TR3_2','TR3','Fase 2'); 
-insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR3_1','TR3','Fase 1', 'TR3_2'); 
-	
-insert into trayecto (codigo, periodo_id, nombre) values ('TR4',1,'Trayecto IV');
-insert into fase (codigo, trayecto_id, nombre) values ('TR4_2','TR4','Fase 2'); 
-insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR4_1','TR4','Fase 1', 'TR4_2'); 
+insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR1',1,'Trayecto I', 'TR2');
+insert into fase (codigo, trayecto_id, nombre) values ('TR1_2','TR1','Fase 2');
+insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR1_1','TR1','Fase 1', 'TR1_2');
 
 -- 6_seccion.sql
 -- // Trayecto 1

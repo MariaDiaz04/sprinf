@@ -322,13 +322,13 @@ class proyecto extends model
             $proyectos = $this->all();
 
             foreach ($proyectos as $proyecto) {
+                $data['codigo_trayecto'] = $proyecto['codigo_trayecto'];
                 $data['nombre_proyecto'] = $proyecto['nombre'];
+                $data['parroquia_id'] = $proyecto['parroquia_id'];
                 $data['comunidad'] = $proyecto['comunidad'];
                 $data['area'] = $proyecto['area'];
                 $data['resumen'] = $proyecto['resumen'];
                 $data['direccion'] = $proyecto['direccion'];
-                $data['municipio'] = $proyecto['municipio'];
-                $data['parroquia'] = $proyecto['parroquia'];
                 $data['periodo_inicio'] = $proyecto['fecha_inicio'];
                 $data['periodo_final'] = $proyecto['fecha_cierre'];
 

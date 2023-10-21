@@ -95,7 +95,7 @@
           },
           success: function(data, status) {
             alert('Nuevo Periodo Creado')
-            window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
+            // window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
           },
         });
       })

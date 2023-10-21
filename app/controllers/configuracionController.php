@@ -60,8 +60,8 @@ class configuracionController extends controller
       $this->proyectoHistorico->historicalTransaction();
 
       // actualizar periodo de trayecto
-      $this->periodo->setData($nuevoPeriodo->request->all());
-      $this->periodo->save(1); // update first record
+      // $this->periodo->setData($nuevoPeriodo->request->all());
+      // $this->periodo->save(1); // update first record
 
       http_response_code(200);
       echo json_encode(true);

@@ -12,6 +12,7 @@ class proyectoHistorico extends model
 
   public $fillable = [
     'id_proyecto',
+    'codigo_trayecto',
     'nombre_estudiante',
     'nombre_trayecto',
     'cedula_estudiante',
@@ -20,8 +21,7 @@ class proyectoHistorico extends model
     'motor_productivo',
     'direccion',
     'area',
-    'municipio',
-    'parroquia',
+    'parroquia_id',
     'tutor_in',
     'tutor_ex',
     'nota_fase_1',
@@ -31,6 +31,7 @@ class proyectoHistorico extends model
     'integrantes',
   ];
   private int $id_proyecto;
+  public string $codigo_trayecto;
   public string $nombre_estudiante;
   public string $nombre_trayecto;
   public int $cedula_estudiante;
@@ -39,11 +40,9 @@ class proyectoHistorico extends model
   public string $nombre;
   public string $resumen;
   public string $comunidad;
-  public string $motor_productivo;
   public string $direccion;
   public string $area;
-  public string $municipio;
-  public string $parroquia;
+  public int $parroquia_id;
   public string $tutor_in;
   public string $tutor_ex;
   public float $nota_fase_1;
@@ -77,15 +76,14 @@ class proyectoHistorico extends model
 
 
       foreach ($proyectos as $proyecto) {
+        $this->codigo_trayecto = $proyecto['codigo_trayecto'];
         $this->id_proyecto = $proyecto['id'];
         $this->nombre_proyecto = $proyecto['nombre'];
         $this->comunidad = $proyecto['comunidad'];
         $this->nombre_trayecto = $proyecto['nombre_trayecto'];
-        $this->motor_productivo = $proyecto['motor_productivo'];
         $this->resumen = $proyecto['resumen'];
         $this->direccion = $proyecto['direccion'];
-        $this->municipio = $proyecto['municipio'];
-        $this->parroquia = $proyecto['parroquia'];
+        $this->parroquia_id = $proyecto['parroquia_id'];
         $this->tutor_in = $proyecto['tutor_in'];
         $this->tutor_ex = $proyecto['tutor_ex'];
         $this->periodo_inicio = $proyecto['fecha_inicio'];
@@ -113,13 +111,13 @@ class proyectoHistorico extends model
       }
 
       // remove data from inscripcion
-      $this->delete('inscripcion');
+      // $this->delete('inscripcion');
       // remove data from notas_integrante_proyecto
-      $this->delete('notas_integrante_proyecto');
+      // $this->delete('notas_integrante_proyecto');
       // remove data from integrante_proyecto
-      $this->delete('integrante_proyecto');
+      // $this->delete('integrante_proyecto');
       // remove data from proyecto
-      $this->delete('proyecto');
+      // $this->delete('proyecto');
 
       parent::commit();
       return '';
