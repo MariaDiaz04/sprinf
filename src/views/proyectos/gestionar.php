@@ -207,8 +207,8 @@
                       <label class="form-label" for="fase_id"><b>Trayecto A Ingresar *</b></label>
                       <select class="form-select" name="fase_id" id="selectTrayecto" required disabled>
                         <option disabled selected value> -- </option>
-                        <?php foreach ($trayectos as $trayecto) : ?>
-                          <option value="<?= $trayecto->codigo ?>"><?= $trayecto->nombre ?></option>
+                        <?php foreach ($fases as $fase) : ?>
+                          <option value="<?= $fase->codigo_fase ?>"><?= "$fase->nombre_trayecto" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>

@@ -40,7 +40,7 @@ $(document).ready(function (e) {
       .change();
 
     $(
-      `#proyectoGuardarHistorico #selectTrayecto option[value="${codigoSiguienteTrayecto}"]`
+      `#proyectoGuardarHistorico #selectTrayecto option[value="${codigoSiguienteTrayecto}_1"]`
     )
       .prop("selected", "selected")
       .change();
@@ -130,10 +130,12 @@ $(document).ready(function (e) {
   $("#proyectoGuardarHistorico").submit(function (e) {
     e.preventDefault();
     toggleLoading(true, "#proyectoGuardarHistorico");
+    $(this).find("select").prop("disabled", false);
     formData = $(this).serializeArray();
     items = transfer.getSelectedItems();
     data = [...formData];
     counter = 0;
+    $(this).find("select").prop("disabled", true);
 
     if (items.length <= 0) {
       Swal.fire({
@@ -164,11 +166,12 @@ $(document).ready(function (e) {
         url: url,
         data: data,
         error: function (error, status) {
-          toggleLoading(false, "#proyectoGuardarHistorico");
+          toggleLoading(false);
+          error = JSON.parse(error.responseText);
           Swal.fire({
             position: "bottom-end",
             icon: "error",
-            title: error.responseText,
+            title: status + ": " + error.error.message,
             showConfirmButton: false,
             toast: true,
             timer: 2000,
@@ -191,7 +194,7 @@ $(document).ready(function (e) {
           // usar sweetalerts
           document.getElementById("guardar").reset();
           // actualizar tabla
-          toggleLoading(false, "#proyectoGuardarHistorico");
+          toggleLoading(false);
         },
       });
     }
@@ -208,10 +211,11 @@ $(document).ready(function (e) {
     data = [...formData];
     counter = 0;
     if (items.length <= 0) {
+      error = JSON.parse(error.responseText);
       Swal.fire({
         position: "bottom-end",
         icon: "error",
-        title: "Debe añadir integrantes",
+        title: status + ": " + error.error.message,
         showConfirmButton: false,
         toast: true,
         timer: 2000,

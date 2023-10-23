@@ -226,6 +226,7 @@ class proyectoController extends controller
             $parroquia_id = $nuevoProyecto->request->get('parroquia_id');
             $tutor_in = $nuevoProyecto->request->get('tutor_in');
             $tutor_ex = $nuevoProyecto->request->get('tutor_ex');
+            $tlf_tex = $nuevoProyecto->request->get('tlf_tex');
             $id = $nuevoProyecto->request->get('id');
 
             $proyectData = [
@@ -239,6 +240,7 @@ class proyectoController extends controller
                 'parroquia_id' => (int)$parroquia_id,
                 'tutor_in' => $tutor_in,
                 'tutor_ex' => $tutor_ex,
+                'tlf_tex' => $tlf_tex,
                 'integrantes' => $idEstudiantes
             ];
 
@@ -247,8 +249,10 @@ class proyectoController extends controller
             }
 
 
+
             $this->proyecto->setProyectData($proyectData);
             $result = $this->proyecto->insertTransaction();
+
 
             if (!$result) throw new Exception('Ha ocurrido un error al crear proyecto');
 
@@ -256,8 +260,13 @@ class proyectoController extends controller
             echo json_encode('Proyecto creado exitosamente');
         } catch (Exception $e) {
             http_response_code(500);
-            var_dump($this->proyecto->error);
-            echo json_encode($e->getMessage());
+
+
+            echo json_encode(['error' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ]]);
         }
     }
 

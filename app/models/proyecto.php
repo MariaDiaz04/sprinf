@@ -87,6 +87,7 @@ class proyecto extends model
         $query->bindParam(":parroquia_id", $this->parroquia_id);
         $query->bindParam(":tutor_in", $this->tutor_in);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
+        $query->bindParam(":tlf_tex", $this->tlf_tex);
 
 
         if ($query->execute()) {
