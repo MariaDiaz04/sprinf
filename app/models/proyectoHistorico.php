@@ -18,7 +18,7 @@ class proyectoHistorico extends model
     'cedula_estudiante',
     'nombre_proyecto',
     'comunidad',
-    'motor_productivo',
+    'resumen',
     'direccion',
     'area',
     'parroquia_id',

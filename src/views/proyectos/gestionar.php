@@ -205,7 +205,7 @@
                     </div>
                     <div class="col-lg-3">
                       <label class="form-label" for="fase_id"><b>Trayecto A Ingresar *</b></label>
-                      <select class="form-select" name="fase_id" id="selectTrayecto" required readonly>
+                      <select class="form-select" name="fase_id" id="selectTrayecto" required disabled>
                         <option disabled selected value> -- </option>
                         <?php foreach ($trayectos as $trayecto) : ?>
                           <option value="<?= $trayecto->codigo ?>"><?= $trayecto->nombre ?></option>
@@ -238,7 +238,12 @@
                   <div class="row form-group mb-2">
                     <div class="col-lg-6">
                       <label class="form-label" for="parroquia_id"><b>Parroquia *</b></label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="parroquia_id" id="parroquia_id" readonly required>
+                      <select class="form-select" name="parroquia_id" id="selectParroquia" required disabled>
+
+                        <?php foreach ($parroquias as $parroquia) : ?>
+                          <option value="<?= $parroquia->parroquia_id ?>"><?= "$parroquia->municipio_nombre - $parroquia->parroquia_nombre" ?></option>
+                        <?php endforeach; ?>
+                      </select>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="direccion"><b>Dirección *</b></label>

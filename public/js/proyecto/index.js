@@ -11,22 +11,27 @@ $(document).ready(function (e) {
 
     let proyectoSeleccionado = $("#selectProyecto option:selected").data();
 
-    console.log(proyectoSeleccionado);
-
     const {
       nombre,
       tutor_in,
       tutor_ex,
       direccion,
       resumen,
+      parroquiaId,
       tlf_tex,
       comunidad,
       codigoSiguienteTrayecto,
     } = proyectoSeleccionado;
 
-    console.log(resumen);
+    console.log($("#transfer-double-list-search"));
 
     $("#historico #nombre").val(nombre);
+
+    $(
+      `#proyectoGuardarHistorico #selectParroquia option[value="${parroquiaId}"]`
+    )
+      .prop("selected", "selected")
+      .change();
 
     $(
       `#proyectoGuardarHistorico #selectTrayecto option[value="${codigoSiguienteTrayecto}"]`
