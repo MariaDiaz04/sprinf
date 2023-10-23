@@ -124,6 +124,7 @@ class proyectoController extends controller
                     $group[$item['id_proyecto']]['resumen'] = $item['resumen'];
                     $group[$item['id_proyecto']]['direccion'] = $item['direccion'];
                     $group[$item['id_proyecto']]['parroquia_id'] = $item['parroquia_id'];
+                    $group[$item['id_proyecto']]['codigo_siguiente_trayecto'] = $item['codigo_siguiente_trayecto'];
                 }
             }
         }
