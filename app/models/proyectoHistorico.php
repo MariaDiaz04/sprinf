@@ -22,6 +22,7 @@ class proyectoHistorico extends model
     'direccion',
     'area',
     'parroquia_id',
+    'codigo_siguiente_trayecto',
     'tutor_in',
     'tutor_ex',
     'nota_fase_1',
@@ -44,6 +45,7 @@ class proyectoHistorico extends model
   public string $area;
   public int $parroquia_id;
   public string $tutor_in;
+  public string $codigo_siguiente_trayecto;
   public string $tutor_ex;
   public float $nota_fase_1;
   public float $nota_fase_2;
@@ -86,6 +88,7 @@ class proyectoHistorico extends model
         $this->resumen = $proyecto['resumen'];
         $this->direccion = $proyecto['direccion'];
         $this->parroquia_id = $proyecto['parroquia_id'];
+        $this->codigo_siguiente_trayecto = $proyecto['codigo_siguiente_trayecto'];
         $this->tutor_in = $proyecto['tutor_in'];
         $this->tutor_ex = $proyecto['tutor_ex'];
         $this->periodo_inicio = $proyecto['fecha_inicio'];
