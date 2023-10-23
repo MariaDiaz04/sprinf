@@ -196,6 +196,7 @@
                     <div class="col-lg-9">
                       <label class="form-label" for="nombre"><b>Proyecto *</b></label>
                       <select class="form-select" name="id" id="selectProyecto" required>
+                        <option disabled selected value> -- Seleccione un Proyecto -- </option>
                         <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
                           <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-municipio="<?= $proyecto->municipio ?>" data-parroquia="<?= $proyecto->parroquia ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>"><?= "$proyecto->display" ?></option>
                         <?php endforeach; ?>

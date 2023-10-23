@@ -67,7 +67,11 @@ class configuracionController extends controller
       echo json_encode(true);
     } catch (Exception $e) {
       http_response_code(500);
-      echo json_encode(false);
+      echo json_encode(['error' => [
+        'code' => $e->getCode(),
+        'message' => $e->getMessage(),
+        'stackTrace' => $e->getTraceAsString()
+      ]]);
     }
   }
 }

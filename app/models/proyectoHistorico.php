@@ -52,6 +52,8 @@ class proyectoHistorico extends model
 
   public array $integrantes; // has many
 
+  public array $error;
+
   public function all()
   {
     try {
@@ -123,6 +125,11 @@ class proyectoHistorico extends model
       return '';
     } catch (Exception $e) {
       parent::rollBack();
+      $this->error = [
+        'code' => $e->getCode(),
+        'message' => $e->getMessage(),
+        'stackTrace' => $e->getTraceAsString()
+      ];
       return '';
     }
   }

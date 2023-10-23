@@ -83,19 +83,27 @@
           url: url,
           data: data,
           error: function(error, status) {
+            error = JSON.parse(error.responseText);
             Swal.fire({
-              position: 'bottom-end',
-              icon: 'error',
-              title: error.responseText,
+              position: "bottom-end",
+              icon: "error",
+              title: status + ": " + error.error.message,
               showConfirmButton: false,
               toast: true,
-              timer: 2000
-            })
+              timer: 2000,
+            });
 
           },
           success: function(data, status) {
-            alert('Nuevo Periodo Creado')
-            // window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Nuevo Periodo Aperturado Exitosamente",
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000,
+            })
+            //.then(() => window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>"));
           },
         });
       })
