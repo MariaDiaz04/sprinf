@@ -198,15 +198,18 @@
                       <select class="form-select" name="id" id="selectProyecto" required>
                         <option disabled selected value> -- Seleccione un Proyecto -- </option>
                         <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
-                          <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-municipio="<?= $proyecto->municipio ?>" data-parroquia="<?= $proyecto->parroquia ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>"><?= "$proyecto->display" ?></option>
+                          <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-parroquia-id="<?= $proyecto->parroquia_id ?>" data-codigo-siguiente-trayecto="<?= $proyecto->codigo_siguiente_trayecto ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>">
+                            <?= "$proyecto->display" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
                     <div class="col-lg-3">
                       <label class="form-label" for="fase_id"><b>Trayecto A Ingresar *</b></label>
                       <select class="form-select" name="fase_id" id="selectTrayecto" required readonly>
-
-
+                        <option disabled selected value> -- </option>
+                        <?php foreach ($trayectos as $trayecto) : ?>
+                          <option value="<?= $trayecto->codigo ?>"><?= $trayecto->nombre ?></option>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>

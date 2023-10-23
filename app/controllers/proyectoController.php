@@ -86,6 +86,9 @@ class proyectoController extends controller
             }
         }
 
+        // echo json_encode($historicoProyectos);
+        // exit();
+
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'parroquias' => $parroquias,
@@ -120,10 +123,10 @@ class proyectoController extends controller
                     $group[$item['id_proyecto']]['nombre_trayecto'] = $item['nombre_trayecto'];
                     $group[$item['id_proyecto']]['tutor_in'] = $item['tutor_in'];
                     $group[$item['id_proyecto']]['tutor_ex'] = $item['tutor_ex'];
-                    $group[$item['id_proyecto']]['motor_productivo'] = $item['motor_productivo'];
                     $group[$item['id_proyecto']]['resumen'] = $item['resumen'];
                     $group[$item['id_proyecto']]['direccion'] = $item['direccion'];
                     $group[$item['id_proyecto']]['parroquia_id'] = $item['parroquia_id'];
+                    $group[$item['id_proyecto']]['codigo_trayecto'] = $item['codigo_trayecto'];
                     $group[$item['id_proyecto']]['codigo_siguiente_trayecto'] = $item['codigo_siguiente_trayecto'];
                 }
             }

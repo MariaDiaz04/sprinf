@@ -15,12 +15,12 @@ $(document).ready(function (e) {
     $("#historico #motor_productivo").val(
       proyectoSeleccionado.motor_productivo
     );
-    $("#historico #parroquia").val(proyectoSeleccionado.parroquia);
-    $("#historico #municipio").val(proyectoSeleccionado.municipio);
+    // $("#historico #parroquia").val(proyectoSeleccionado.parroquia);
+    // $("#historico #municipio").val(proyectoSeleccionado.municipio);
     $("#historico #direccion").val(proyectoSeleccionado.direccion);
     $("#historico #resumen").val(proyectoSeleccionado.resumen);
     $("#historico #comunidad").val(proyectoSeleccionado.comunidad);
-    $("#historico #tutor_in").val(proyectoSeleccionado.tutor_in);
+    // $("#historico #tutor_in").val(proyectoSeleccionado.tutor_in);
     $("#historico #tutor_ex").val(proyectoSeleccionado.tutor_ex);
   });
 
