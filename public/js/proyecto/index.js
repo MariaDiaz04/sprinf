@@ -22,8 +22,14 @@ $(document).ready(function (e) {
       comunidad,
       codigoSiguienteTrayecto,
     } = proyectoSeleccionado;
+    id = $("#proyectoGuardarHistorico .transfer-double-list-search input").attr(
+      "id"
+    );
 
-    console.log($("#transfer-double-list-search"));
+    $(`#${id}`).val(nombre);
+    transfer.manualSearch();
+
+    $(`#${id}`).trigger("keyup");
 
     $("#historico #nombre").val(nombre);
 
@@ -197,6 +203,7 @@ $(document).ready(function (e) {
     toggleLoading(true, "#proyectoGuardar");
 
     formData = $(this).serializeArray();
+
     items = transfer2.getSelectedItems();
     data = [...formData];
     counter = 0;
