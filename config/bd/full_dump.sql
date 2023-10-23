@@ -177,6 +177,7 @@ CREATE TABLE `sprinf_bd`.`proyecto_historico` (
   `comunidad` varchar(255),
   `tutor_in` varchar(255),
   `tutor_ex` varchar(255),
+  `tlf_tex` varchar(255),
   `motor_productivo` varchar(255),
   `resumen` varchar(255),
   `direccion` varchar(255),

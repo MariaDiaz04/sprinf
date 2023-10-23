@@ -25,6 +25,7 @@ class proyectoHistorico extends model
     'codigo_siguiente_trayecto',
     'tutor_in',
     'tutor_ex',
+    'tlf_tex',
     'nota_fase_1',
     'nota_fase_2',
     'periodo_inicio',
@@ -44,6 +45,7 @@ class proyectoHistorico extends model
   public string $direccion;
   public string $area;
   public int $parroquia_id;
+  public int $tlf_tex;
   public string $tutor_in;
   public string $codigo_siguiente_trayecto;
   public string $tutor_ex;
@@ -91,6 +93,7 @@ class proyectoHistorico extends model
         $this->codigo_siguiente_trayecto = $proyecto['codigo_siguiente_trayecto'];
         $this->tutor_in = $proyecto['tutor_in'];
         $this->tutor_ex = $proyecto['tutor_ex'];
+        $this->tlf_tex = $proyecto['tlf_tex'];
         $this->periodo_inicio = $proyecto['fecha_inicio'];
         $this->periodo_final = $proyecto['fecha_cierre'];
 

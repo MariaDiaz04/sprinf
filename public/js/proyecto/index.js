@@ -11,17 +11,41 @@ $(document).ready(function (e) {
 
     let proyectoSeleccionado = $("#selectProyecto option:selected").data();
 
-    $("#historico #nombre").val(proyectoSeleccionado.nombre);
-    $("#historico #motor_productivo").val(
-      proyectoSeleccionado.motor_productivo
-    );
-    // $("#historico #parroquia").val(proyectoSeleccionado.parroquia);
-    // $("#historico #municipio").val(proyectoSeleccionado.municipio);
-    $("#historico #direccion").val(proyectoSeleccionado.direccion);
-    $("#historico #resumen").val(proyectoSeleccionado.resumen);
-    $("#historico #comunidad").val(proyectoSeleccionado.comunidad);
-    // $("#historico #tutor_in").val(proyectoSeleccionado.tutor_in);
-    $("#historico #tutor_ex").val(proyectoSeleccionado.tutor_ex);
+    console.log(proyectoSeleccionado);
+
+    const {
+      nombre,
+      tutor_in,
+      tutor_ex,
+      direccion,
+      resumen,
+      tlf_tex,
+      comunidad,
+      codigoSiguienteTrayecto,
+    } = proyectoSeleccionado;
+
+    console.log(resumen);
+
+    $("#historico #nombre").val(nombre);
+
+    $(
+      `#proyectoGuardarHistorico #selectTrayecto option[value="${codigoSiguienteTrayecto}"]`
+    )
+      .prop("selected", "selected")
+      .change();
+
+    $(`#proyectoGuardarHistorico #selectTutorIn option[value="${tutor_in}"]`)
+      .prop("selected", "selected")
+      .change();
+    // $("#historico #motor_productivo").val(motor_productivo);
+    // $("#historico #parroquia").val(parroquia);
+    // $("#historico #municipio").val(municipio);
+    $("#proyectoGuardarHistorico #direccion").val(direccion);
+    $("#proyectoGuardarHistorico #resumen").val(resumen);
+    $("#proyectoGuardarHistorico #comunidad").val(comunidad);
+    $("#proyectoGuardarHistorico #tlf_tex").val(tlf_tex);
+    // $("#historico #tutor_in").val(tutor_in);
+    $("#proyectoGuardarHistorico #tutor_ex").val(tutor_ex);
   });
 
   toggleLoading(false);
@@ -366,8 +390,6 @@ async function editarIntegrantes(id) {
     $("#actualizar #selectEstudiante").removeAttr("disabled");
     $("#actualizar #anadirEstudiante").removeAttr("disabled");
   }
-
-  console.log(tlf_tex);
 
   const integrantes = proyecto.integrantes;
 

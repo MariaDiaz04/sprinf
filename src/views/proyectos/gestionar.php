@@ -198,7 +198,7 @@
                       <select class="form-select" name="id" id="selectProyecto" required>
                         <option disabled selected value> -- Seleccione un Proyecto -- </option>
                         <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
-                          <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-parroquia-id="<?= $proyecto->parroquia_id ?>" data-codigo-siguiente-trayecto="<?= $proyecto->codigo_siguiente_trayecto ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>">
+                          <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-tlf_tex="<?= $proyecto->tlf_tex ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-resumen="<?= $proyecto->resumen ?>" data-direccion="<?= $proyecto->direccion ?>" data-parroquia-id="<?= $proyecto->parroquia_id ?>" data-codigo-siguiente-trayecto="<?= $proyecto->codigo_siguiente_trayecto ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>">
                             <?= "$proyecto->display" ?></option>
                         <?php endforeach; ?>
                       </select>
@@ -247,8 +247,8 @@
                   </div>
                   <div class="row form-group mb-2">
                     <div class="col-lg-6">
-                      <label class="form-label" for="tutor_ex"><b>Comunidad *</b></label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex" required readonly>
+                      <label class="form-label" for="comunidad"><b>Comunidad *</b></label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="comunidad" id="comunidad" required readonly>
                     </div>
 
 
@@ -258,7 +258,7 @@
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="tutor_in"><b>Tutor Interno *</b></label>
-                      <select class="form-select" name="tutor_in" id="selectFaseId">
+                      <select class="form-select" name="tutor_in" id="selectTutorIn">
 
                         <?php foreach ($profesores as $profesor) : ?>
                           <option value="<?= $profesor->codigo ?>"><?= "$profesor->cedula - $profesor->nombre $profesor->apellido" ?></option>
@@ -267,8 +267,8 @@
                     </div>
 
                     <div class="col-lg-6">
-                      <label class="form-label" for="tutor_ex"><b>Telefono Tutor Externo *</b></label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex" required>
+                      <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="tlf_tex" id="tlf_tex" required>
                     </div>
 
                   </div>

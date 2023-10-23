@@ -123,6 +123,7 @@ class proyectoController extends controller
                     $group[$item['id_proyecto']]['nombre_trayecto'] = $item['nombre_trayecto'];
                     $group[$item['id_proyecto']]['tutor_in'] = $item['tutor_in'];
                     $group[$item['id_proyecto']]['tutor_ex'] = $item['tutor_ex'];
+                    $group[$item['id_proyecto']]['tlf_tex'] = $item['tlf_tex'];
                     $group[$item['id_proyecto']]['resumen'] = $item['resumen'];
                     $group[$item['id_proyecto']]['direccion'] = $item['direccion'];
                     $group[$item['id_proyecto']]['parroquia_id'] = $item['parroquia_id'];
