@@ -36,7 +36,7 @@
 
   <?php foreach ($baremos as $materia) : ?>
     <div class="card mb-3">
-      <h6 class="card-header bg-primary text-white"><?= $materia->nombre ?></h6>
+      <h6 class="card-header bg-primary text-white"><?= $materia->nombre ?> - <?= $materia->ponderado ?>%</h6>
       <form action="<?= APP_URL . $this->Route('proyectos/editarNotaBaremos') ?>" method="post" class="editarNotaBaremos">
         <input type="hidden" name="proyecto_id" value="<?= $proyecto_id ?>">
         <div class="card-body px-3 pt-3">
@@ -46,20 +46,14 @@
                 <div class="row">
                   <strong>GRUPAL - <?= $dimension->nombre ?></strong>
                 </div>
-                <!-- <div class="row mb-3">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                  <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3">
-                  </div>
-                </div> -->
 
                 <div class="row">
                   <hr>
                   <?php foreach ($dimension->indicadores as $indicador) : ?>
 
-                    <label class="form-label col-sm-10 col-form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> pts</b></label>
+                    <label class="form-label col-sm-10 col-form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> %</b></label>
                     <div class="col-sm-2">
-                      <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : $indicador->ponderacion ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
+                      <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
                     </div>
                   <?php endforeach; ?>
 
@@ -102,7 +96,7 @@
 
                         <tr>
                           <th scope="row"><?= $indicador->nombre ?></th>
-                          <td><?= $indicador->ponderacion ?></td>
+                          <td><b><?= $indicador->ponderacion ?> %</b></td>
 
 
                           <?php foreach ($integrantes as $idIntegrante => $integrante) : ?>

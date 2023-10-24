@@ -1217,6 +1217,7 @@ insert into dimension (id, unidad_id, nombre, grupal) values(7,'ASESOR3078303_1'
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de menú amigable al usuario', 2);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de inserción o captura de datos', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de confirmación de eliminación de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de consultar con filtros de búsqueda', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Demuestra conocimiento en la programación modular del Sistema', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Modulo de reportes básicos', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Utiliza modelo vista-controlador', 2);

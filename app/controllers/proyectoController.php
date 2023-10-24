@@ -460,10 +460,10 @@ class proyectoController extends controller
                 $baremos[$materia['codigo']]['nombre'] = $materia['nombre'];
 
 
+                $totalPonderado = 0;
                 foreach ($dimensiones as $key => $dimension) {
 
                     $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
-
 
                     if (empty($indicadores)) {
                         $errors['danger'][] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
@@ -472,6 +472,7 @@ class proyectoController extends controller
                         if ($dimension['grupal'] == 1) {
                             $baremos[$materia['codigo']]['grupal'][$dimension['id']]['nombre'] = $dimension['nombre'];
                             foreach ($indicadores as $key => $indicador) {
+                                $totalPonderado += $indicador['ponderacion'];
                                 $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrantes[0]['id']);
                                 if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
                             }
@@ -483,6 +484,7 @@ class proyectoController extends controller
                             $dimension['indicadores'] = [];
                             foreach ($indicadores as $key => $indicador) {
                                 $indicador['calificacion'] = [];
+                                $totalPonderado += $indicador['ponderacion'];
                                 foreach ($integrantes as $key => $integrante) {
 
                                     $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
@@ -490,10 +492,14 @@ class proyectoController extends controller
                                 }
                                 array_push($dimension['indicadores'], $indicador);
                             }
+
                             array_push($baremos[$materia['codigo']]['individual'], $dimension);
                         }
                     }
+
+                    // TODO CALCULAR TOTAL PONDERADO POR DIMENSION
                 }
+                $baremos[$materia['codigo']]['ponderado'] = $totalPonderado;
             }
 
 
