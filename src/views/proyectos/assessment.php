@@ -36,26 +36,38 @@
 
   <?php foreach ($baremos as $materia) : ?>
     <div class="card mb-3">
-      <h6 class="card-header bg-primary text-white"><?= $materia->nombre ?> - <?= $materia->ponderado ?>%</h6>
+      <h5 class="card-header bg-primary text-white " style="font-weight: bold;"><?= $materia->nombre ?> - <?= $materia->ponderado ?>%</h5>
       <form action="<?= APP_URL . $this->Route('proyectos/editarNotaBaremos') ?>" method="post" class="editarNotaBaremos">
         <input type="hidden" name="proyecto_id" value="<?= $proyecto_id ?>">
         <div class="card-body px-3 pt-3">
           <?php if (property_exists($materia, 'grupal') && !empty($materia->grupal)) : ?>
             <?php foreach ($materia->grupal as $dimension) : ?>
-              <div class="container">
-                <div class="row">
-                  <strong>GRUPAL - <?= $dimension->nombre ?></strong>
-                </div>
+              <div class="container mb-5  ">
+
 
                 <div class="row">
-                  <hr>
-                  <?php foreach ($dimension->indicadores as $indicador) : ?>
 
-                    <label class="form-label col-sm-10 col-form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> %</b></label>
-                    <div class="col-sm-2">
-                      <input required type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
-                    </div>
-                  <?php endforeach; ?>
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col"><?= $dimension->nombre ?></th>
+                        <th scope="col">Ponderación</th>
+                        <th scope="col" style="width:  8.33%">Calificación</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($dimension->indicadores as $indicador) : ?>
+
+                        <tr>
+                          <th scope="row"><?= $indicador->nombre ?></th>
+                          <td><b><?= $indicador->ponderacion ?> %</b></td>
+                          <td><input required type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]"></td>
+                        </tr>
+
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+
 
                 </div>
               </div>
@@ -71,16 +83,10 @@
 
             <?php foreach ($materia->individual as $dimension) : ?>
               <div class="container">
-                <div class="row">
-                  <div class="col-12">
-                    <strong>INDIVIDUAL - <?= $dimension->nombre ?></strong>
-                  </div>
-                </div>
-                <div class="row">
-                  <hr>
 
+                <div class="row">
 
-                  <table class="table">
+                  <table class="table table-hover">
                     <thead>
                       <tr>
                         <th scope="col"><?= $dimension->nombre ?></th>
