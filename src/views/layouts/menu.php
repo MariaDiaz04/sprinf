@@ -46,7 +46,7 @@
           <img src="<?= APP_URL ?>assets/img/illustrations/logoUptaeb.png" height="60" alt="View uptaeb">
 
         </span>
-        <span class="app-brand-text demo menu-text fw-bolder ms-2">SPRINF</span>
+        <span class="app-brand-text demo menu-text fw-bolder ms-2" style="text-transform: uppercase;">PNFI</span>
       </a>
 
       <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -224,7 +224,7 @@
       </li> -->
         <?php endif ?>
         <?php if ($_SESSION['rol_id'] == 2) : ?>
-          <li class="menu-header small text-uppercase">
+        <li class="menu-header small text-uppercase">
           <span class="menu-header-text">Organización Docente</span>
         </li>
         <li class="menu-item <?= $this->currentPath() == 'seccion' ? 'active' : '' ?>">
@@ -308,7 +308,7 @@
           </a>
         </li>
 
-        <?php endif ?>
+      <?php endif ?>
 
     </ul>
   </aside>

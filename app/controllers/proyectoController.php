@@ -787,7 +787,7 @@ class proyectoController extends controller
                 <table style="padding-bottom: 12px; padding-top: 10px;">
                     <thead>
                         <tr>
-                            <th align="left">SPRINF</th>
+                            <th align="left">PNFI</th>
                             <th align="center" style="font-size: 18px;">Notas por equipo </th>
                             <th align="right">' . $date . '</th>
                         </tr>

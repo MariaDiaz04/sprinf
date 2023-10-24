@@ -143,8 +143,8 @@ class estudianteController extends controller
       $proyecto_nombre = $estudiante[0]["proyecto_nombre"];
       $ponderado = $estudiante[0]["ponderado"];
       $calificacion = $estudiante[0]["calificacion"];
-      $url =  "data:image/png;base64,".APP_URL.'assets/img/illustrations/logoUptaeb.png';
-      $imagen = '<img src="'.$url.'" height="60">';
+      $url =  "data:image/png;base64," . APP_URL . 'assets/img/illustrations/logoUptaeb.png';
+      $imagen = '<img src="' . $url . '" height="60">';
       $name_comprobante = 'Calificacion';
       $dompdf = new Dompdf();
       $html = '<!DOCTYPE html>
@@ -162,9 +162,9 @@ class estudianteController extends controller
               <table style="padding-bottom: 12px; padding-top: 10px;">
                   <thead>
                       <tr>
-                      '.$imagen.'
-                          <th align="left">SPRINF</th>
-                          <th align="center" style="font-size: 18px;">Notas del estudiante : '. $nombre . ' ' . $apellido .'</th>
+                      ' . $imagen . '
+                          <th align="left">PNFI</th>
+                          <th align="center" style="font-size: 18px;">Notas del estudiante : ' . $nombre . ' ' . $apellido . '</th>
                           <th align="right">' . $date . '</th>
                       </tr>
                   </thead>

@@ -53,7 +53,7 @@
 
                     <label class="form-label col-sm-10 col-form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> %</b></label>
                     <div class="col-sm-2">
-                      <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
+                      <input required type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
                     </div>
                   <?php endforeach; ?>
 
@@ -100,7 +100,7 @@
 
 
                           <?php foreach ($integrantes as $idIntegrante => $integrante) : ?>
-                            <td><input type="number" class="form-control " min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]"></td>
+                            <td><input required type="number" class="form-control " min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]"></td>
                           <?php endforeach; ?>
                         </tr>
 
