@@ -427,6 +427,7 @@ class proyectoController extends controller
             $fase = $this->fase->find($proyecto['codigo_fase']);
             $materiasDeDimension = $this->dimension->materiasDeBaremos($proyecto['codigo_fase']);
             $baremos = [];
+            $nuevoBaremos = [];
 
             if (empty($materiasDeDimension)) {
                 throw new Exception('Baremos no cuenta con dimensiones');
@@ -469,34 +470,36 @@ class proyectoController extends controller
                     } else {
                         // configurar informacion de indicador
                         if ($dimension['grupal'] == 1) {
-                            $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['nombre'] = $dimension['nombre'];
+                            $baremos[$materia['codigo']]['grupal'][$dimension['id']]['nombre'] = $dimension['nombre'];
                             foreach ($indicadores as $key => $indicador) {
                                 $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrantes[0]['id']);
                                 if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
                             }
-                            $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['indicadores'] = $indicadores;
+                            $baremos[$materia['codigo']]['grupal'][$dimension['id']]['indicadores'] = $indicadores;
                         } else {
+                            $baremos[$materia['codigo']]['individual'] = [];
 
-                            $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['nombre'] = $dimension['nombre'];
-                            foreach ($integrantes as $key => $integrante) {
+                            // $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['nombre'] = $dimension['nombre'];
+                            $dimension['indicadores'] = [];
+                            foreach ($indicadores as $key => $indicador) {
+                                $indicador['calificacion'] = [];
+                                foreach ($integrantes as $key => $integrante) {
 
-                                foreach ($indicadores as $key => $indicador) {
                                     $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
-                                    if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
-                                    $indicadores[$key]['nombre_integrante'] = $integrante['nombre'];
-                                    $indicadores[$key]['cedula_integrante'] = $integrante['cedula'];
+                                    if (!empty($itemEstudiante)) $indicador['calificacion'][$integrante['id']] = $itemEstudiante['calificacion'];
                                 }
-                                $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['integrantes'][$integrante['id']]['indicadores'] = $indicadores;
+                                array_push($dimension['indicadores'], $indicador);
                             }
+                            array_push($baremos[$materia['codigo']]['individual'], $dimension);
                         }
                     }
                 }
             }
 
 
+
             // echo json_encode($baremos);
             // exit();
-
 
             return $this->view('proyectos/assessment', [
                 'proyecto_id' => $id,
@@ -618,6 +621,8 @@ class proyectoController extends controller
             $indicadoresGrupales = $request->get('indicador_grupal');
             $indicadoresIndividuales = $request->get('indicador_individual');
 
+
+
             foreach ($integrantes as $integrante) {
                 // indicadores grupales
                 if (!empty($indicadoresGrupales)) {
@@ -628,6 +633,9 @@ class proyectoController extends controller
                 }
                 if (!empty($indicadoresIndividuales)) {
 
+                    // echo json_encode($indicadoresIndividuales);
+                    // echo json_encode($indicadoresIndividuales[$integrante['id']]);
+                    // exit();
                     foreach ($indicadoresIndividuales[$integrante['id']] as $id => $value) {
                         $value = floatval($value);
                         $this->baremos->evaluarIndicador($id, $integrante['id'], $value);
