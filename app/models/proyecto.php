@@ -71,7 +71,7 @@ class proyecto extends model
                 . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :parroquia_id,:direccion,  :tutor_in, :tutor_ex,:tlf_tex, 0)";
         } else {
             $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen,parroquia_id, direccion, tutor_in, tutor_ex,tlf_tex, cerrado) "
-                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :parroquia_id, :direccion, :tutor_in, :tutor_ex,tlf_tex, 0)";
+                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :parroquia_id, :direccion, :tutor_in, :tutor_ex,:tlf_tex, 0)";
         }
         $query = $this->prepare($preparedSql);
 

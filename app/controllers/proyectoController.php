@@ -265,7 +265,8 @@ class proyectoController extends controller
             echo json_encode(['error' => [
                 'code' => $e->getCode(),
                 'message' => $e->getMessage(),
-                'stackTrace' => $e->getTraceAsString()
+                'stackTrace' => $e->getTraceAsString(),
+                (isset($this->proyecto->error)) ? ['errorDetails' =>  $this->proyecto->error] : null
             ]]);
         }
     }

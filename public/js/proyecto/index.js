@@ -243,10 +243,11 @@ $(document).ready(function (e) {
         data: data,
         error: function (error, status) {
           toggleLoading(false);
+          error = JSON.parse(error.responseText);
           Swal.fire({
             position: "bottom-end",
             icon: "error",
-            title: error.responseText,
+            title: status + ": " + error.error.message,
             showConfirmButton: false,
             toast: true,
             timer: 2000,
