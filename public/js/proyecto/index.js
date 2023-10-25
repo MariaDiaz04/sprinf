@@ -387,9 +387,7 @@ async function editarIntegrantes(id) {
     fase_id,
     cerrado,
     nombre,
-    municipio,
-    parroquia,
-    parroquia_id,
+    consejo_comunal_id,
     direccion,
     tutor_in,
     tutor_ex,
@@ -414,8 +412,6 @@ async function editarIntegrantes(id) {
   $("#actualizar #id").val(id);
   $("#actualizar #fase_id").val(fase_id);
   $("#actualizar #nombre").val(nombre);
-  $("#actualizar #municipio").val(municipio);
-  $("#actualizar #parroquia").val(parroquia);
   $("#actualizar #direccion").val(direccion);
   $("#actualizar #comunidad").val(comunidad);
   $("#actualizar #tutor_in").val(tutor_in);
@@ -425,7 +421,9 @@ async function editarIntegrantes(id) {
   $("#actualizar #resumen").val(resumen);
   $("#actualizar #cerrado").val(cerrado);
 
-  $(`#proyectoActualizar #selectParroquia option[value="${parroquia_id}"]`)
+  $(
+    `#proyectoActualizar #selectConsejoComunal option[value="${consejo_comunal_id}"]`
+  )
     .prop("selected", "selected")
     .change();
 

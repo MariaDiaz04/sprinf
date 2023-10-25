@@ -24,22 +24,22 @@
               </div>
               <div class="col-12 mb-3">
                 <div class="row form-group">
-                  <div class="col-lg-6">
-                    <label class="form-label" for="parroquia_id"><b>Parroquia *</b></label>
-                    <select class="form-select" name="parroquia_id" id="selectParroquia" required>
+                  <div class="col-lg-12 mb-3">
+                    <label class="form-label" for="consejo_comunal_id"><b>Consejo Comunal *</b></label>
+                    <select class="form-select" name="consejo_comunal_id" id="selectConsejoComunal" required>
 
-                      <?php foreach ($parroquias as $parroquia) : ?>
-                        <option value="<?= $parroquia->parroquia_id ?>"><?= "$parroquia->municipio_nombre - $parroquia->parroquia_nombre" ?></option>
+                      <?php foreach ($consejosComunales as $consejoComunal) : ?>
+                        <option value="<?= $consejoComunal->consejo_comunal_id ?>"><?= "$consejoComunal->municipio_nombre - $consejoComunal->parroquia_nombre - $consejoComunal->consejo_comunal_nombre" ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-lg-12">
                     <label class="form-label" for="resumen"><b>Dirección</b></label>
                     <textarea class="form-control" placeholder="..." required name="direccion" id="direccion" style="height: 70px"></textarea>
                   </div>
 
                   <div class="col-lg-6">
-                    <label class="form-label" for="tutor_in"><b>Tutor In *</b></label>
+                    <label class="form-label" for="tutor_in"><b>Tutor Interno *</b></label>
                     <select class="form-select" name="tutor_in" id="selectTutorIn">
 
                       <?php foreach ($profesores as $profesor) : ?>
