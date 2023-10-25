@@ -367,8 +367,6 @@ async function editarIntegrantes(id) {
   let estudiantesPendientes = await obtenerEstudiantesPendientes();
   $("#actualizar #selectEstudiante option").remove();
   $("#cuerpoTablaActualizarEstudiante tr").remove();
-  console.log($("#actualizar #selectEstudiante option"));
-  console.log($("#cuerpoTablaActualizarEstudiante tr"));
 
   estudiantesPendientes.forEach((estudiante) => {
     let option = `<option value="${estudiante.cedula}" data-cedula="${
@@ -420,7 +418,6 @@ async function editarIntegrantes(id) {
   $("#actualizar #motor_productivo").val(motor_productivo);
   $("#actualizar #resumen").val(resumen);
   $("#actualizar #cerrado").val(cerrado);
-
   $(
     `#proyectoActualizar #selectConsejoComunal option[value="${consejo_comunal_id}"]`
   )
@@ -503,12 +500,6 @@ function removeStudent(id) {
       $(`#appenedStudent-${id}`).remove();
     }
   });
-}
-
-async function editarInformacionProyecto(id) {
-  let proyecto = await obtenerProyecto(id);
-  console.log("Editando integrantes, ");
-  console.log(proyecto);
 }
 
 function removeProject(id) {

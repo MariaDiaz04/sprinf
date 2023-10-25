@@ -1421,6 +1421,10 @@ insert into sector_consejo_comunal(id, parroquia_id, nombre) VALUES (1, 1, 'Eje 
 
 insert into consejo_comunal(id, nombre, nombre_vocero, telefono, sector_id) VALUES (1, 'Consejo Comunal Pueblo Nuevo', 'Carlos Ramirez', 0426545456, 1);
 
+insert into sector_consejo_comunal(id, parroquia_id, nombre) VALUES (2, 4, 'Eje 3');
+
+insert into consejo_comunal(id, nombre, nombre_vocero, telefono, sector_id) VALUES (2, 'Consejo Comunal Concordia', 'Angela', 0426545456, 2);
+
 
 -- TRAYECTO 4 PROYECTO GESTION DE PROYECTOS
 insert into proyecto (
@@ -1549,6 +1553,7 @@ SELECT
   proyecto.motor_productivo, 
   proyecto.resumen, 
   proyecto.direccion, 
+  cc.id as consejo_comunal_id,
   cc.nombre as nombre_consejo_comunal,
   cc.nombre_vocero as nombre_vocero_consejo_comunal,
   cc.telefono as telefono_consejo_comunal,
