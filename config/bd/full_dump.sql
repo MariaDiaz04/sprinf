@@ -114,7 +114,6 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `motor_productivo` varchar(255),
   `resumen` varchar(255),
   `direccion` varchar(255),
-  `parroquia_id` int,
   `consejo_comunal_id` int,
   `observaciones` text,
   `tutor_in` varchar(255),
@@ -267,7 +266,6 @@ ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`fase_id`) REFERENCES `sprin
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`tutor_in`) REFERENCES `sprinf_bd`.`profesor` (`codigo`);
 
-ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`parroquia_id`) REFERENCES `sprinf_bd`.`parroquias` (`id`);
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`consejo_comunal_id`) REFERENCES `sprinf_bd`.`consejo_comunal` (`id`);
 
@@ -1433,7 +1431,6 @@ insert into proyecto (
   motor_productivo, 
   resumen, 
   direccion, 
-  parroquia_id,
   consejo_comunal_id,
   tutor_in,
   tutor_ex,
@@ -1450,7 +1447,6 @@ values (
   '', 
   'Gestión de proyectos para el PNF en informática', 
   'Av. Los Horcones, Av. La Salle, Barquisimeto 3001, Lara', 
-  1,
   1,
   'p-135482354',
   'Jose Sequera',  
@@ -1553,9 +1549,12 @@ SELECT
   proyecto.motor_productivo, 
   proyecto.resumen, 
   proyecto.direccion, 
+  cc.nombre as nombre_consejo_comunal,
+  cc.nombre_vocero as nombre_vocero_consejo_comunal,
+  cc.telefono as telefono_consejo_comunal,
   municipios.nombre as municipio, 
   parroquias.nombre as parroquia, 
-  proyecto.parroquia_id, 
+  parroquias.id as parroquia_id, 
   proyecto.tutor_ex,
   proyecto.tlf_tex,
   proyecto.tutor_in,
@@ -1576,7 +1575,9 @@ INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id
 INNER JOIN periodo ON periodo.id = trayecto.periodo_id
 INNER JOIN profesor as tutor ON tutor.codigo = proyecto.tutor_in
 INNER JOIN persona as tutor_info ON tutor_info.cedula = tutor.persona_id
-INNER JOIN parroquias ON parroquias.id = proyecto.parroquia_id
+inner join consejo_comunal cc on cc.id = proyecto.consejo_comunal_id 
+inner join sector_consejo_comunal scc on scc.id = cc.sector_id 
+INNER JOIN parroquias ON parroquias.id = scc.parroquia_id 
 INNER JOIN municipios ON municipios.id = parroquias.municipio
 LEFT OUTER JOIN integrante_proyecto ON integrante_proyecto.proyecto_id = proyecto.id
 GROUP BY proyecto_id;
