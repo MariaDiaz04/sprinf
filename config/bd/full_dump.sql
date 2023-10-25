@@ -92,7 +92,19 @@ CREATE TABLE `sprinf_bd`.`parroquias` (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE `sprinf_bd`.`sector_consejo_comunal` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `parroquia_id` int,
+  `nombre` varchar(255)
+);
 
+CREATE TABLE `sprinf_bd`.`consejo_comunal` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `nombre` varchar(255),
+  `nombre_vocero` varchar(255),
+  `telefono` varchar(255),
+  `sector_id` int
+);
 
 CREATE TABLE `sprinf_bd`.`proyecto` (
   `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
@@ -103,13 +115,13 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `resumen` varchar(255),
   `direccion` varchar(255),
   `parroquia_id` int,
-  `municipio` varchar(255),
-  `parroquia` varchar(255),
+  `consejo_comunal_id` int,
+  `observaciones` text,
   `tutor_in` varchar(255),
   `tutor_ex` varchar(255),
   `tlf_tin` int,
   `tlf_tex` int,
-
+  `estatus` int,
   `cerrado` bool DEFAULT false
 );
 
@@ -247,11 +259,17 @@ ALTER TABLE `sprinf_bd`.`inscripcion` ADD FOREIGN KEY (`estudiante_id`) REFERENC
 
 ALTER TABLE `sprinf_bd`.`parroquias` ADD FOREIGN KEY (`municipio`) REFERENCES `sprinf_bd`.`municipios` (`id`);
 
+ALTER TABLE `sprinf_bd`.`sector_consejo_comunal` ADD FOREIGN KEY (`parroquia_id`) REFERENCES `sprinf_bd`.`parroquias` (`id`);
+
+ALTER TABLE `sprinf_bd`.`consejo_comunal` ADD FOREIGN KEY (`sector_id`) REFERENCES `sprinf_bd`.`sector_consejo_comunal` (`id`);
+
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`fase_id`) REFERENCES `sprinf_bd`.`fase` (`codigo`);
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`tutor_in`) REFERENCES `sprinf_bd`.`profesor` (`codigo`);
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`parroquia_id`) REFERENCES `sprinf_bd`.`parroquias` (`id`);
+
+ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`consejo_comunal_id`) REFERENCES `sprinf_bd`.`consejo_comunal` (`id`);
 
 ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
 
@@ -1401,6 +1419,10 @@ insert into parroquias(id,municipio,nombre) values (15,2, 'San Miguel');
 insert into parroquias(id,municipio,nombre) values (16,2, 'Tintorero');
 insert into parroquias(id,municipio,nombre) values (17,2, 'José Bernardo Dorante');
 
+insert into sector_consejo_comunal(id, parroquia_id, nombre) VALUES (1, 1, 'Eje 1');
+
+insert into consejo_comunal(id, nombre, nombre_vocero, telefono, sector_id) VALUES (1, 'Consejo Comunal Pueblo Nuevo', 'Carlos Ramirez', 0426545456, 1);
+
 
 -- TRAYECTO 4 PROYECTO GESTION DE PROYECTOS
 insert into proyecto (
@@ -1411,14 +1433,14 @@ insert into proyecto (
   motor_productivo, 
   resumen, 
   direccion, 
-  municipio, 
   parroquia_id,
-  parroquia, 
+  consejo_comunal_id,
   tutor_in,
   tutor_ex,
   tlf_tin,
   tlf_tex,
-  cerrado
+  cerrado,
+  estatus
 )
 values (
   1,
@@ -1428,14 +1450,14 @@ values (
   '', 
   'Gestión de proyectos para el PNF en informática', 
   'Av. Los Horcones, Av. La Salle, Barquisimeto 3001, Lara', 
-  'iribarren', 
   1,
-  'Ana Soto', 
+  1,
   'p-135482354',
   'Jose Sequera',  
   '041254875',  
   '041255478',   
-  0);
+  0,
+  1);
 insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-15408');
 insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-63578');
 insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-39263');
