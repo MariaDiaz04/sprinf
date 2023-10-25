@@ -9,6 +9,7 @@ use Model\proyectoHistorico;
 use Model\proyecto;
 use Model\profesor;
 use Model\periodo;
+use Model\consejoComunal;
 use Model\estudiante;
 use Model\inscripcion;
 use Model\baremos;
@@ -36,6 +37,7 @@ class proyectoController extends controller
     private $trayectos;
     private $inscripcion;
     private $parroquia;
+    private $consejoComunal;
 
     function __construct()
     {
@@ -45,6 +47,7 @@ class proyectoController extends controller
         $this->proyecto = new proyecto();
         $this->estudiantes = new estudiante();
         $this->parroquia = new parroquia();
+        $this->consejoComunal = new consejoComunal();
         $this->dimension = new dimension();
         $this->tutores = new tutor();
         $this->profesores = new profesor();
@@ -64,6 +67,7 @@ class proyectoController extends controller
         $profesores = $this->profesores->all();
         $trayectos = $this->trayectos->all();
         $parroquias = $this->parroquia->all();
+        $consejosComunales = $this->consejoComunal->all();
 
         $fases = $this->fase->getPrimerFaseDeTrayectos();
 
@@ -92,6 +96,7 @@ class proyectoController extends controller
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'parroquias' => $parroquias,
+            'consejosComunales' => $consejosComunales,
             'periodo' => $periodo,
             'profesores' => $profesores,
             'fases' => $fases,
@@ -126,7 +131,7 @@ class proyectoController extends controller
                     $group[$item['id_proyecto']]['tlf_tex'] = $item['tlf_tex'];
                     $group[$item['id_proyecto']]['resumen'] = $item['resumen'];
                     $group[$item['id_proyecto']]['direccion'] = $item['direccion'];
-                    $group[$item['id_proyecto']]['parroquia_id'] = $item['parroquia_id'];
+                    $group[$item['id_proyecto']]['consejo_comunal_id'] = $item['consejo_comunal_id'];
                     $group[$item['id_proyecto']]['codigo_trayecto'] = $item['codigo_trayecto'];
                     $group[$item['id_proyecto']]['codigo_siguiente_trayecto'] = $item['codigo_siguiente_trayecto'];
                 }
@@ -223,7 +228,7 @@ class proyectoController extends controller
             $resumen = $nuevoProyecto->request->get('resumen');
             $direccion = $nuevoProyecto->request->get('direccion');
             $motor_productivo = $nuevoProyecto->request->get('motor_productivo');
-            $parroquia_id = $nuevoProyecto->request->get('parroquia_id');
+            $consejo_comunal_id = $nuevoProyecto->request->get('consejo_comunal_id');
             $tutor_in = $nuevoProyecto->request->get('tutor_in');
             $tutor_ex = $nuevoProyecto->request->get('tutor_ex');
             $tlf_tex = $nuevoProyecto->request->get('tlf_tex');
@@ -237,7 +242,7 @@ class proyectoController extends controller
                 'direccion' => $direccion,
                 'resumen' => $resumen,
                 'motor_productivo' => $motor_productivo,
-                'parroquia_id' => (int)$parroquia_id,
+                'consejo_comunal_id' => (int)$consejo_comunal_id,
                 'tutor_in' => $tutor_in,
                 'tutor_ex' => $tutor_ex,
                 'tlf_tex' => $tlf_tex,
@@ -304,7 +309,7 @@ class proyectoController extends controller
             $resumen = $proyecto->request->get('resumen');
             $direccion = $proyecto->request->get('direccion');
             $motor_productivo = $proyecto->request->get('motor_productivo');
-            $parroquia_id = $proyecto->request->get('parroquia_id');
+            $consejo_comunal_id = $proyecto->request->get('consejo_comunal_id');
             $tutor_in = $proyecto->request->get('tutor_in');
             $tutor_ex = $proyecto->request->get('tutor_ex');
             $tlf_tex = $proyecto->request->get('tlf_tex');
@@ -328,7 +333,7 @@ class proyectoController extends controller
                 'direccion' => $direccion,
                 'resumen' => $resumen,
                 'motor_productivo' => $motor_productivo,
-                'parroquia_id' => $parroquia_id,
+                'consejo_comunal_id' => $consejo_comunal_id,
                 'tutor_in' => $tutor_in,
                 'tlf_tex' => $tlf_tex,
                 'tutor_ex' => $tutor_ex,

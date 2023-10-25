@@ -1712,3 +1712,18 @@ SELECT u.id,u.rol_id, u.email, u.contrasena, p.nombre, p.apellido, p.cedula FROM
 DROP VIEW IF EXISTS detalles_parroquia;
 CREATE VIEW detalles_parroquia AS
 SELECT parroquias.id as parroquia_id, parroquias.nombre as parroquia_nombre, municipios.id as municipio_id, municipios.nombre as municipio_nombre FROM `parroquias` INNER JOIN municipios ON municipios.id = parroquias.municipio;
+
+DROP VIEW IF EXISTS detalles_consejo_comunal;
+CREATE VIEW detalles_consejo_comunal AS
+select 
+cc.id as consejo_comunal_id,
+cc.nombre as consejo_comunal_nombre,
+cc.telefono as consejo_comunal_telefono,
+scc.id as sector_id,
+scc.nombre  as sector_nombre,
+p.id as parroquia_id,
+p.nombre as parroquia_nombre,
+m.nombre as municipio_nombre
+from consejo_comunal cc inner join sector_consejo_comunal scc ON scc.id = cc.sector_id 
+inner join parroquias p on p.id = scc.parroquia_id 
+inner join municipios m on m.id = p.municipio;

@@ -211,11 +211,10 @@ $(document).ready(function (e) {
     data = [...formData];
     counter = 0;
     if (items.length <= 0) {
-      error = JSON.parse(error.responseText);
       Swal.fire({
         position: "bottom-end",
         icon: "error",
-        title: status + ": " + error.error.message,
+        title: "Debe ingresar integrantes",
         showConfirmButton: false,
         toast: true,
         timer: 2000,
