@@ -391,6 +391,7 @@ async function editarIntegrantes(id) {
     tutor_ex,
     tlf_tex,
     comunidad,
+    observaciones,
     motor_productivo,
     resumen,
   } = proyecto.proyecto;
@@ -412,6 +413,7 @@ async function editarIntegrantes(id) {
   $("#actualizar #nombre").val(nombre);
   $("#actualizar #direccion").val(direccion);
   $("#actualizar #comunidad").val(comunidad);
+  $("#actualizar #observaciones").val(observaciones);
   $("#actualizar #tutor_in").val(tutor_in);
   $("#actualizar #tutor_ex").val(tutor_ex);
   $("#actualizar #tlf_tex").val(tlf_tex);

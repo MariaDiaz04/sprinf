@@ -22,51 +22,53 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 mb-3">
-                <div class="row form-group">
-                  <div class="col-lg-12 mb-3">
-                    <label class="form-label" for="consejo_comunal_id"><b>Consejo Comunal *</b></label>
-                    <select class="form-select" name="consejo_comunal_id" id="selectConsejoComunal" required>
+              <div class="row form-group">
+                <div class="col-lg-12 mb-3">
+                  <label class="form-label" for="consejo_comunal_id"><b>Consejo Comunal *</b></label>
+                  <select class="form-select" name="consejo_comunal_id" id="selectConsejoComunal" required>
 
-                      <?php foreach ($consejosComunales as $consejoComunal) : ?>
-                        <option value="<?= $consejoComunal->consejo_comunal_id ?>"><?= "$consejoComunal->municipio_nombre - $consejoComunal->parroquia_nombre - $consejoComunal->consejo_comunal_nombre" ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                  <div class="col-lg-12">
-                    <label class="form-label" for="resumen"><b>Dirección</b></label>
-                    <textarea class="form-control" placeholder="..." required name="direccion" id="direccion" style="height: 70px"></textarea>
-                  </div>
+                    <?php foreach ($consejosComunales as $consejoComunal) : ?>
+                      <option value="<?= $consejoComunal->consejo_comunal_id ?>"><?= "$consejoComunal->municipio_nombre - $consejoComunal->parroquia_nombre - $consejoComunal->consejo_comunal_nombre" ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+                <div class="col-lg-12">
+                  <label class="form-label" for="resumen"><b>Dirección</b></label>
+                  <textarea class="form-control" placeholder="..." required name="direccion" id="direccion" style="height: 70px"></textarea>
+                </div>
 
-                  <div class="col-lg-6">
-                    <label class="form-label" for="tutor_in"><b>Tutor Interno *</b></label>
-                    <select class="form-select" name="tutor_in" id="selectTutorIn">
+                <div class="col-lg-6">
+                  <label class="form-label" for="tutor_in"><b>Tutor Interno *</b></label>
+                  <select class="form-select" name="tutor_in" id="selectTutorIn">
 
-                      <?php foreach ($profesores as $profesor) : ?>
-                        <option value="<?= $profesor->codigo ?>"><?= "$profesor->cedula - $profesor->nombre $profesor->apellido" ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
+                    <?php foreach ($profesores as $profesor) : ?>
+                      <option value="<?= $profesor->codigo ?>"><?= "$profesor->cedula - $profesor->nombre $profesor->apellido" ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
 
-                  <div class="col-lg-6">
-                    <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex">
-                  </div>
+                <div class="col-lg-6">
+                  <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
+                  <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex">
+                </div>
 
-                  <div class="col-lg-6">
-                    <label class="form-label" for="comunidad"><b>Comunidad *</b></label>
-                    <textarea class="form-control" placeholder="..." required name="comunidad" id="comunidad" style="height: 70px "></textarea>
-                  </div>
+                <div class="col-lg-6">
+                  <label class="form-label" for="comunidad"><b>Comunidad *</b></label>
+                  <textarea class="form-control" placeholder="..." required name="comunidad" id="comunidad" style="height: 70px "></textarea>
+                </div>
 
-                  <div class="col-lg-6">
-                    <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required name="tlf_tex" id="tlf_tex">
-                  </div>
+                <div class="col-lg-6">
+                  <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
+                  <input type="text" class="form-control mb-1" placeholder="..." required name="tlf_tex" id="tlf_tex">
+                </div>
 
-                  <div class="col-lg-12">
-                    <label class="form-label" for="resumen"><b>Resumen *</b></label>
-                    <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" id="resumen" style="height: 70px "></textarea>
-                  </div>
+                <div class="col-lg-6">
+                  <label class="form-label" for="resumen"><b>Resumen *</b></label>
+                  <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" id="resumen" style="height: 70px "></textarea>
+                </div>
+                <div class="col-lg-6">
+                  <label class="form-label" for="observaciones"><b>Observaciones *</b></label>
+                  <textarea class="form-control" placeholder="..." required id="observaciones" name="observaciones" id="observaciones" style="height: 70px "></textarea>
                 </div>
               </div>
 

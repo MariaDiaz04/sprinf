@@ -21,6 +21,7 @@ class proyecto extends model
         'consejo_comunal_id',
         'tutor_in',
         'tutor_ex',
+        'observaciones',
         'tlf_tex',
         'id',
         'area',
@@ -36,6 +37,7 @@ class proyecto extends model
     public string $comunidad;
     public string $tutor_in;
     public string $tutor_ex;
+    public string $observaciones;
     public string $tlf_tex;
     public int $cerrado;
 
@@ -66,11 +68,11 @@ class proyecto extends model
     {
         $preparedSql = "";
         if ($id) {
-            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, consejo_comunal_id,direccion, tutor_in, tutor_ex, tlf_tex,cerrado) "
-                . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :consejo_comunal_id,:direccion,  :tutor_in, :tutor_ex,:tlf_tex, 0)";
+            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, consejo_comunal_id , observaciones,direccion, tutor_in, tutor_ex, tlf_tex,cerrado) "
+                . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :consejo_comunal_id , :observaciones,:direccion,  :tutor_in, :tutor_ex,:tlf_tex, 0)";
         } else {
-            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen,consejo_comunal_id, direccion, tutor_in, tutor_ex,tlf_tex, cerrado) "
-                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :consejo_comunal_id, :direccion, :tutor_in, :tutor_ex,:tlf_tex, 0)";
+            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen,consejo_comunal_id , observaciones, direccion, tutor_in, tutor_ex,tlf_tex, cerrado) "
+                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :consejo_comunal_id , :observaciones, :direccion, :tutor_in, :tutor_ex,:tlf_tex, 0)";
         }
         $query = $this->prepare($preparedSql);
 
@@ -86,6 +88,7 @@ class proyecto extends model
         $query->bindParam(":consejo_comunal_id", $this->consejo_comunal_id);
         $query->bindParam(":tutor_in", $this->tutor_in);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
+        $query->bindParam(":observaciones", $this->observaciones);
         $query->bindParam(":tlf_tex", $this->tlf_tex);
 
 
@@ -100,7 +103,7 @@ class proyecto extends model
 
     public function actualizar()
     {
-        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, consejo_comunal_id=:consejo_comunal_id, tutor_in=:tutor_in, tutor_ex=:tutor_ex,tlf_tex=:tlf_tex, cerrado= :cerrado WHERE id=:id";
+        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, consejo_comunal_id=:consejo_comunal_id, observaciones=:observaciones, tutor_in=:tutor_in, tutor_ex=:tutor_ex,tlf_tex=:tlf_tex, cerrado= :cerrado WHERE id=:id";
 
         $query = $this->prepare($preparedSql);
 
@@ -114,6 +117,7 @@ class proyecto extends model
         $query->bindParam(":tutor_in", $this->tutor_in);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
         $query->bindParam(":tlf_tex", $this->tlf_tex);
+        $query->bindParam(":observaciones", $this->observaciones);
         $query->bindParam(":cerrado", $this->cerrado);
 
         return $query->execute();

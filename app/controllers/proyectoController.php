@@ -232,6 +232,7 @@ class proyectoController extends controller
             $tutor_in = $nuevoProyecto->request->get('tutor_in');
             $tutor_ex = $nuevoProyecto->request->get('tutor_ex');
             $tlf_tex = $nuevoProyecto->request->get('tlf_tex');
+            $observaciones = $nuevoProyecto->request->get('observaciones');
             $id = $nuevoProyecto->request->get('id');
 
             $proyectData = [
@@ -246,6 +247,7 @@ class proyectoController extends controller
                 'tutor_in' => $tutor_in,
                 'tutor_ex' => $tutor_ex,
                 'tlf_tex' => $tlf_tex,
+                'observaciones' => $observaciones,
                 'integrantes' => $idEstudiantes
             ];
 
@@ -313,6 +315,7 @@ class proyectoController extends controller
             $tutor_in = $proyecto->request->get('tutor_in');
             $tutor_ex = $proyecto->request->get('tutor_ex');
             $tlf_tex = $proyecto->request->get('tlf_tex');
+            $observaciones = $proyecto->request->get('observaciones');
             $cerrado = $proyecto->request->get('cerrado');
 
 
@@ -337,6 +340,7 @@ class proyectoController extends controller
                 'tutor_in' => $tutor_in,
                 'tlf_tex' => $tlf_tex,
                 'tutor_ex' => $tutor_ex,
+                'observaciones' => $observaciones,
                 'cerrado' => $cerrado,
                 'integrantes' => $idEstudiantes
             ]);
