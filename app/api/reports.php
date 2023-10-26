@@ -37,13 +37,55 @@ class reports extends controller
 
 
           $trayectoId = $idTrayecto;
-          $integrantes = $this->proyecto->IntegrastesPorTrayecto($trayectoId);
+          $proyectos = $this->proyecto->all();
 
+
+          foreach ($proyectos as $key => $proyecto) {
+            $integrantes = $this->proyecto->obtenerIntegrantes($proyecto['id']);
+
+            $proyectos[$key]['integrantes'] = $integrantes;
+            # code...
+          }
+          $ultimaCelda = 3;
+          $excelData = [];
+          foreach ($proyectos as $key => $proyecto) {
+            $celdaInicial = intval($key + $ultimaCelda);
+
+            $celdaFinal = intval($celdaInicial + count($proyecto['integrantes']));
+
+            foreach ($proyecto['integrantes'] as $key => $integrante) {
+              array_push($excelData, [
+                'UPTAEB',
+                $integrante['nombre'] .  ' ' . $integrante['apellido'],
+                $integrante['cedula'],
+                'Plan Nacional de Formación en Informática',
+                $integrante['telefono'],
+                $integrante['email'],
+                $proyecto['tutor_in_nombre'],
+                $proyecto['tutor_in_telefono'],
+                $proyecto['nombre'],
+                $proyecto['municipio'],
+                $proyecto['comunidad'],
+                $proyecto['motor_productivo'],
+                $proyecto['resumen'],
+                $proyecto['nombre_consejo_comunal'],
+                $proyecto['sector_consejo_comunal'],
+                $proyecto['nombre_vocero_consejo_comunal'],
+                $proyecto['telefono_consejo_comunal'],
+                $proyecto['estatus'],
+                $proyecto['observaciones'],
+
+              ]);
+            }
+
+            // var_dump("CELDAS[A" . $celdaInicial . ":A" . $celdaFinal . "]");
+            $ultimaCelda = $celdaFinal;
+          }
           if (!$integrantes) throw new Exception('No hay integrantes en el trayecto seleccionado', 400);
 
-          $this->reporteProyectos($integrantes);
+          $this->reporteProyectos($excelData);
           http_response_code(200);
-          echo json_encode(true);
+          // echo json_encode(true);
         } else {
           throw new Exception('Permisos insuficientes', 401);
         }

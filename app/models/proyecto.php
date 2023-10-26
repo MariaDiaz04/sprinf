@@ -240,7 +240,7 @@ class proyecto extends model
      */
     function obtenerIntegrantes(int $id): array
     {
-        $query = $this->prepare("SELECT * FROM detalles_integrantes WHERE proyecto_id = :id");
+        $query = $this->prepare("SELECT * FROM detalles_estudiantes WHERE proyecto_id = :id");
         $query->bindParam(":id", $id);
         $query->execute();
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
