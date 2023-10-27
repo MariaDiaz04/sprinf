@@ -106,7 +106,7 @@
 
 
                           <?php foreach ($integrantes as $idIntegrante => $integrante) : ?>
-                            <td><input required type="number" class="form-control " min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]"></td>
+                            <td><input required type="number" class="form-control " min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->integrante_id}) ? $indicador->calificacion->{$integrante->integrante_id} : 0 ?>" name="indicador_individual[<?= $integrante->integrante_id ?>][<?= $indicador->id ?>]"></td>
                           <?php endforeach; ?>
                         </tr>
 

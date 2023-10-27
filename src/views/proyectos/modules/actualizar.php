@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-lg-6">
                   <label class="form-label" for="observaciones"><b>Observaciones *</b></label>
-                  <textarea class="form-control" placeholder="..." required id="observaciones" name="observaciones" id="observaciones" style="height: 70px "></textarea>
+                  <textarea class="form-control" placeholder="..." id="observaciones" name="observaciones" id="observaciones" style="height: 70px "></textarea>
                 </div>
               </div>
 

@@ -380,7 +380,7 @@ class proyecto extends model
             parent::beginTransaction();
             $participantesActuales = $this->obtenerIntegrantes($this->id);
 
-            $idParticipantesActuales = array_column($participantesActuales, 'estudiante_id');
+            $idParticipantesActuales = array_column($participantesActuales, 'id');
 
             $delete_list = array_diff($idParticipantesActuales, $this->integrantes);
             $insert_list = array_diff($this->integrantes, $idParticipantesActuales);
