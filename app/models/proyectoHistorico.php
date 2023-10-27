@@ -12,49 +12,60 @@ class proyectoHistorico extends model
 
   public $fillable = [
     'id_proyecto',
+    'consejo_comunal_id',
     'codigo_trayecto',
+    'codigo_siguiente_trayecto',
     'nombre_estudiante',
-    'nombre_trayecto',
     'cedula_estudiante',
     'nombre_proyecto',
-    'comunidad',
+    'nombre_trayecto',
     'resumen',
     'direccion',
-    'area',
-    'parroquia_id',
-    'codigo_siguiente_trayecto',
+    'comunidad',
+    'motor_productivo',
+    'nombre_consejo_comunal',
+    'nombre_vocero_consejo_comunal',
+    'telefono_consejo_comunal',
+    'sector_consejo_comunal',
+    'municipio',
+    'parroquia',
+    'observaciones',
     'tutor_in',
     'tutor_ex',
     'tlf_tex',
     'nota_fase_1',
     'nota_fase_2',
+    'estatus',
     'periodo_inicio',
     'periodo_final',
-    'integrantes',
   ];
   private int $id_proyecto;
+  public int $consejo_comunal_id;
   public string $codigo_trayecto;
-  public string $nombre_estudiante;
-  public string $nombre_trayecto;
-  public int $cedula_estudiante;
-  public string $nombre_proyecto;
-  public string $cedula;
-  public string $nombre;
-  public string $resumen;
-  public string $comunidad;
-  public string $direccion;
-  public string $area;
-  public int $parroquia_id;
-  public int $tlf_tex;
-  public string $tutor_in;
   public string $codigo_siguiente_trayecto;
+  public string $nombre_estudiante;
+  public int $cedula_estudiante;
+  public string $nombre_trayecto;
+  public string $nombre_proyecto;
+  public string $resumen;
+  public string $direccion;
+  public string $comunidad;
+  public string $motor_productivo;
+  public string $nombre_consejo_comunal;
+  public string $nombre_vocero_consejo_comunal;
+  public string $telefono_consejo_comunal;
+  public string $sector_consejo_comunal;
+  public string $municipio;
+  public string $parroquia;
+  public string $observaciones;
+  public string $tutor_in;
+  public int $tlf_tex;
   public string $tutor_ex;
   public float $nota_fase_1;
   public float $nota_fase_2;
+  public int $estatus;
   public string $periodo_inicio;
   public string $periodo_final;
-
-  public array $integrantes; // has many
 
   public array $error;
 
