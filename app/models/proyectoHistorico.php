@@ -100,11 +100,20 @@ class proyectoHistorico extends model
         $this->nombre_trayecto = $proyecto['nombre_trayecto'];
         $this->resumen = $proyecto['resumen'];
         $this->direccion = $proyecto['direccion'];
-        $this->parroquia_id = $proyecto['parroquia_id'];
+        $this->consejo_comunal_id = $proyecto['consejo_comunal_id'];
+        $this->nombre_consejo_comunal = $proyecto['nombre_consejo_comunal'];
+        $this->nombre_vocero_consejo_comunal = $proyecto['nombre_vocero_consejo_comunal'];
+        $this->telefono_consejo_comunal = $proyecto['telefono_consejo_comunal'];
+        $this->sector_consejo_comunal = $proyecto['sector_consejo_comunal'];
         $this->codigo_siguiente_trayecto = $proyecto['codigo_siguiente_trayecto'];
+        $this->motor_productivo = $proyecto['motor_productivo'];
+        $this->municipio = $proyecto['municipio'];
+        $this->parroquia = $proyecto['parroquia'];
+        $this->observaciones = $proyecto['observaciones'];
         $this->tutor_in = $proyecto['tutor_in'];
         $this->tutor_ex = $proyecto['tutor_ex'];
         $this->tlf_tex = $proyecto['tlf_tex'];
+        $this->estatus = $proyecto['estatus'];
         $this->periodo_inicio = $proyecto['fecha_inicio'];
         $this->periodo_final = $proyecto['fecha_cierre'];
 
@@ -130,13 +139,13 @@ class proyectoHistorico extends model
       }
 
       // remove data from inscripcion
-      $this->delete('inscripcion');
+      // $this->delete('inscripcion');
       // remove data from notas_integrante_proyecto
-      $this->delete('notas_integrante_proyecto');
+      // $this->delete('notas_integrante_proyecto');
       // remove data from integrante_proyecto
-      $this->delete('integrante_proyecto');
+      // $this->delete('integrante_proyecto');
       // remove data from proyecto
-      $this->delete('proyecto');
+      // $this->delete('proyecto');
 
       parent::commit();
       return '';
