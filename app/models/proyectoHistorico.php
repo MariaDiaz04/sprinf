@@ -57,7 +57,7 @@ class proyectoHistorico extends model
   public string $sector_consejo_comunal;
   public string $municipio;
   public string $parroquia;
-  public string $observaciones;
+  public ?string $observaciones; //nullable property
   public string $tutor_in;
   public int $tlf_tex;
   public string $tutor_ex;
@@ -85,7 +85,7 @@ class proyectoHistorico extends model
     return $proyectos ? $proyectos : null;
   }
 
-  function historicalTransaction(): string
+  function historicalTransaction(): bool
   {
     try {
       parent::beginTransaction();
@@ -139,16 +139,16 @@ class proyectoHistorico extends model
       }
 
       // remove data from inscripcion
-      // $this->delete('inscripcion');
+      $this->delete('inscripcion');
       // remove data from notas_integrante_proyecto
-      // $this->delete('notas_integrante_proyecto');
+      $this->delete('notas_integrante_proyecto');
       // remove data from integrante_proyecto
-      // $this->delete('integrante_proyecto');
+      $this->delete('integrante_proyecto');
       // remove data from proyecto
-      // $this->delete('proyecto');
+      $this->delete('proyecto');
 
       parent::commit();
-      return '';
+      return true;
     } catch (Exception $e) {
       parent::rollBack();
       $this->error = [
@@ -156,7 +156,7 @@ class proyectoHistorico extends model
         'message' => $e->getMessage(),
         'stackTrace' => $e->getTraceAsString()
       ];
-      return '';
+      return false;
     }
   }
 

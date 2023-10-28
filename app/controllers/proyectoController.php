@@ -3,8 +3,6 @@
 namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use Model\proyectoHistorico;
 use Model\proyecto;
 use Model\profesor;
@@ -134,6 +132,7 @@ class proyectoController extends controller
                     $group[$item['id_proyecto']]['tutor_ex'] = $item['tutor_ex'];
                     $group[$item['id_proyecto']]['tlf_tex'] = $item['tlf_tex'];
                     $group[$item['id_proyecto']]['resumen'] = $item['resumen'];
+                    $group[$item['id_proyecto']]['motor_productivo'] = $item['motor_productivo'];
                     $group[$item['id_proyecto']]['direccion'] = $item['direccion'];
                     $group[$item['id_proyecto']]['consejo_comunal_id'] = $item['consejo_comunal_id'];
                     $group[$item['id_proyecto']]['codigo_trayecto'] = $item['codigo_trayecto'];

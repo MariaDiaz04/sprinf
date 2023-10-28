@@ -37,7 +37,7 @@ class proyecto extends model
     public string $comunidad;
     public string $tutor_in;
     public string $tutor_ex;
-    public string $observaciones;
+    public ?string $observaciones;
     public string $tlf_tex;
     public int $cerrado;
 

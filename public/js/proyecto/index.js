@@ -17,11 +17,13 @@ $(document).ready(function (e) {
       tutor_ex,
       direccion,
       resumen,
-      parroquiaId,
+      consejo_comunal_id,
+      motor_productivo,
       tlf_tex,
       comunidad,
       codigoSiguienteTrayecto,
     } = proyectoSeleccionado;
+
     id = $("#proyectoGuardarHistorico .transfer-double-list-search input").attr(
       "id"
     );
@@ -34,7 +36,7 @@ $(document).ready(function (e) {
     $("#historico #nombre").val(nombre);
 
     $(
-      `#proyectoGuardarHistorico #selectParroquia option[value="${parroquiaId}"]`
+      `#proyectoGuardarHistorico #selectConsejoComunal option[value="${consejo_comunal_id}"]`
     )
       .prop("selected", "selected")
       .change();
@@ -48,14 +50,12 @@ $(document).ready(function (e) {
     $(`#proyectoGuardarHistorico #selectTutorIn option[value="${tutor_in}"]`)
       .prop("selected", "selected")
       .change();
-    // $("#historico #motor_productivo").val(motor_productivo);
-    // $("#historico #parroquia").val(parroquia);
-    // $("#historico #municipio").val(municipio);
+
+    $("#proyectoGuardarHistorico #motor_productivo").val(motor_productivo);
     $("#proyectoGuardarHistorico #direccion").val(direccion);
     $("#proyectoGuardarHistorico #resumen").val(resumen);
     $("#proyectoGuardarHistorico #comunidad").val(comunidad);
     $("#proyectoGuardarHistorico #tlf_tex").val(tlf_tex);
-    // $("#historico #tutor_in").val(tutor_in);
     $("#proyectoGuardarHistorico #tutor_ex").val(tutor_ex);
   });
 
@@ -99,6 +99,9 @@ $(document).ready(function (e) {
                     <div class="dropdown-menu" aria-labelledby="dropdown-${
                       row[0]
                     }">
+                    <a class="dropdown-item" href="${
+                      noteUrl + "/" + row[0]
+                    }" target="_blank">Notas</a>
                     ${
                       row[6] == 0
                         ? ` <a class="dropdown-item" href="${
@@ -106,9 +109,7 @@ $(document).ready(function (e) {
                           }">Evaluar</a><a class="dropdown-item" onClick="editarIntegrantes('${
                             row[0]
                           }')" href="#">Editar</a>
-                          <a class="dropdown-item" href="${
-                            noteUrl + "/" + row[0]
-                          }" target="_blank">Notas</a>
+                          
                         ${
                           row[7].includes("_1")
                             ? `
@@ -118,7 +119,6 @@ $(document).ready(function (e) {
                         } `
                         : ``
                     }
-                      
                     </div>
                   </div>`;
         }, // combino los botons de acción

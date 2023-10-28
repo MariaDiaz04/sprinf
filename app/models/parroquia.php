@@ -6,8 +6,6 @@ use Model\model;
 use Utils\Sanitizer;
 
 use Exception;
-use PDOException;
-use PHPUnit\Framework\Constraint\ObjectHasProperty;
 
 class parroquia extends model
 {

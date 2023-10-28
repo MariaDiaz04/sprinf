@@ -57,11 +57,13 @@ class configuracionController extends controller
       if (!empty($pendientes)) throw new Exception('Hay proyectos pendientes por cerrar');
 
       // iniciar transaccion que envia información al historico
-      $this->proyectoHistorico->historicalTransaction();
+      $resultado = $this->proyectoHistorico->historicalTransaction();
+
+      if (!$resultado) throw new Exception('Ha ocurrido un error al crear proyecto');
 
       // actualizar periodo de trayecto
-      // $this->periodo->setData($nuevoPeriodo->request->all());
-      // $this->periodo->save(1); // update first record
+      $this->periodo->setData($nuevoPeriodo->request->all());
+      $this->periodo->save(1); // update first record
 
       http_response_code(200);
       echo json_encode(true);
@@ -70,7 +72,8 @@ class configuracionController extends controller
       echo json_encode(['error' => [
         'code' => $e->getCode(),
         'message' => $e->getMessage(),
-        'stackTrace' => $e->getTraceAsString()
+        'stackTrace' => $e->getTraceAsString(),
+        (isset($this->proyectoHistorico->error)) ? ['errorDetails' =>  $this->proyectoHistorico->error] : null
       ]]);
     }
   }
