@@ -56,7 +56,6 @@ $listaDeRutas['verification'] = new Route(
   ]
 );
 
-
 $listaDeRutas['actualizarContrasena'] = new Route(
   '/actualizarContrasena',
   [
@@ -65,3 +64,18 @@ $listaDeRutas['actualizarContrasena'] = new Route(
   ]
 );
 
+$listaDeRutas['questions'] = new Route(
+  '/questions',
+  [
+    'controller' => authController::class,
+    'method' => 'questions',
+  ]
+);
+
+$listaDeRutas['saveQuestions'] = new Route(
+  '/saveQuestions',
+  [
+    'controller' => authController::class,
+    'method' => 'saveQuestions',
+  ]
+);

@@ -38,13 +38,11 @@ class materiasController extends controller
 
         $permisos = $this->PERMISOS->consult(2,$_SESSION['rol_id']);
         
-
         if ($permisos != null) { $newpermisos = $permisos->fillable;}
         elseif($permisos == null){  $newpermisos = $permisos;}
         $materias = $this->MATERIAS->all();
         $trayectos = $this->TRAYECTO->all();
         $trayecto = $this->TRAYECTO->find($idTrayecto);
-
 
         return $this->view('materias/gestionar', [
             'trayecto' => $trayecto,

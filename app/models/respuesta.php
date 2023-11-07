@@ -4,11 +4,13 @@ namespace Model;
 
 use Model\model;
 
-class modulo extends model
+class respuesta extends model
 {
 
     public $fillable = [
-        'nombre',
+        'respuesta',
+        'pregunta_id',
+        'usuario_id',
     ];
 
 
@@ -16,8 +18,8 @@ class modulo extends model
     public function all()
     {
         try {
-            $modulo = $this->select('modulo');
-            return $modulo ? $modulo : null;
+            $respuestas = $this->select('respuestas');
+            return $respuestas ? $respuestas : null;
         } catch (\PDOException $th) {
             return $th;
         }
@@ -25,9 +27,9 @@ class modulo extends model
 
 
     // ======================== CREATE=========================
-    public function create($modulo)
+    public function create($respuesta)
     {
-        foreach ($modulo as $key => $value) {
+        foreach ($respuesta as $key => $value) {
             $this->fillable[$key] = $value;
         }
         return $this;
@@ -36,33 +38,25 @@ class modulo extends model
 
     public function save()
     {
-
         try {
-
-            $nombre_modulo = $this->querys('SELECT modulo.nombre FROM modulo WHERE modulo.nombre = "' . $this->fillable['nombre'] . '"');
-
-            if (!$nombre_modulo) {
-
-                $this->set('modulo', [
-                    'nombre' => '"' . $this->fillable['nombre'] . '"',
-
+                $this->set('respuestas', [
+                    'respuesta' => '"' . $this->fillable['respuesta'] . '"',
+                    'pregunta_id' => '"' . $this->fillable['pregunta_id'] . '"',
+                    'usuario_id' => '"' . $this->fillable['usuario_id'] . '"',
                 ]);
                 return $this;
-            } else {
-                return null;
-            }
         } catch (\PDOException $th) {
             return $th;
         }
     }
 
     //========================= FIND==========================
-    public function find($modulo_id)
+    public function find($respuesta_id)
     {
         try {
-            $modulo = $this->select('modulo', [['id', '=', $modulo_id]]);
-            if ($modulo) {
-                foreach ($modulo[0] as $key => $value) {
+            $respuesta = $this->select('respuestas', [['id', '=', $respuesta_id]]);
+            if ($respuesta) {
+                foreach ($respuesta[0] as $key => $value) {
                     $this->fillable[$key] = $value;
                 }
                 return $this;
@@ -75,10 +69,10 @@ class modulo extends model
     }
 
     // ======================== UPDATE=========================
-    public function actualizar($modulo)
+    public function actualizar($respuesta)
     {
 
-        $this->update('modulo', $modulo, [['id', '=', $this->fillable['modulo_id']]]);
+        $this->update('respuestas', $respuesta, [['id', '=', $this->fillable['respuesta_id']]]);
         return $this;
     }
 
@@ -86,7 +80,7 @@ class modulo extends model
     public function eliminar()
     {
         try {
-            $this->delete('modulo', [['id', '=',  $this->fillable['idmodulo']]]);
+            $this->delete('respuestas', [['id', '=',  $this->fillable['idrespuesta']]]);
             return $this;
         } catch (\PDOException $th) {
             return $th;

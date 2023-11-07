@@ -39,7 +39,6 @@ class permisosController extends controller
     public function store($permisos)
     {
         try {
-
             $this->PERMISOS->create([
                 'consultar' => $permisos->request->get('consultar'),
                 'actualizar' => $permisos->request->get('actualizar'),
@@ -48,7 +47,6 @@ class permisosController extends controller
                 'rol_id' => $permisos->request->get('rol_id'),
                 'modulo_id' => $permisos->request->get('modulo_id'),
             ])->save();
-
             return $this->redirect(APP_URL . 'permisos');
             http_response_code(200);
             echo json_encode($this->PERMISOS);
@@ -64,7 +62,6 @@ class permisosController extends controller
         $roles = $this->ROL->all();
         $permisos = $this->PERMISOS->find($id);
         $modulos = $this->MODULO->all();
-
         if ($permisos) {
             return $this->view('permisos/editar', ['permisos' => $permisos->fillable, 'roles' => $roles, 'modulos' => $modulos]);
         } else {
