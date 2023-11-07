@@ -1302,16 +1302,16 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los part
 -- --------------------- trayecto 3 fase 2 ------------------------------
 
 -- TUTORA
-insert into dimension (id, unidad_id, nombre, grupal) values(14,'ASESOR4078303_2','Desempeño Individual',0);
+insert into dimension (id, unidad_id, nombre, grupal) values(14,'ASESOR3078303_2','Desempeño Individual',0);
 insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'CRUD del sistema. (Por Modulo)', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Validación de datos. (Por Modulo)', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(15,'ASESOR4078303_2','Desempeño grupal',1);
+insert into dimension (id, unidad_id, nombre, grupal) values(15,'ASESOR3078303_2','Desempeño grupal',1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Responsabilidad', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Integración al grupo', 0.5);
 insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'proactividad', 0.5);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(16,'ASESOR4078303_2','Avances de programación (Por Modulo)', 0);
+insert into dimension (id, unidad_id, nombre, grupal) values(16,'ASESOR3078303_2','Avances de programación (Por Modulo)', 0);
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Instalación del software necesario para la ejecución de la aplicación o componentes', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Pantallas bien conectadas con la Base de datos', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Los módulos de modificación de base de datos garantizan la integridad referencial', 1);
@@ -1324,7 +1324,7 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Control 
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Gestión de bitácora', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Manejo de sesiones respecto a concurrencia de usuarios', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(17,'ASESOR4078303_2','Interfaz y estilo', 0);
+insert into dimension (id, unidad_id, nombre, grupal) values(17,'ASESOR3078303_2','Interfaz y estilo', 0);
 insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso adecuado de los colores en la aplicación', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Fondos claros y sencillos', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso de iamgenes', 1);
@@ -1362,6 +1362,39 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(21, 'Recomend
 
 insert into dimension (id, unidad_id, nombre, grupal) values(22,'PIPST078303_2','Capitulo V', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Anexos y Referencias', 2);
+
+-- --------------------- trayecto 4 fase 2 ---------------------------
+
+-- Auditoria Informatica
+insert into dimension (id, unidad_id, nombre, grupal) values(23,'ASESOR4078303_2','Desempeño Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Responsabilidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Asistencia', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Integración al grupo', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Sensibilidad Social', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(24,'ASESOR4078303_2','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Manejo de Conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Proactividad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Hábitos de Trabajo', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(25,'PIAUI078303_2','Auditoria Informatica', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Auditoría aplicada al sistema (Explicación del módulo auditado) Tipo de auditoría seleccionada.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Herramienta utilizada. ¿Cuál Utilizo?', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Metodología y técnica empleada. ', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Resultado en el sistema. (Visualizarlo).', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(26,'PIAUI078303_2','Plan de mantenimiento al sistema', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(26,'PIAUI078303_2','Mejoras  Aplicadas al Sistema según los requerimientos de trayecto IV ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
+
+
+-- Proyecto
 
 
 -- 9_clases.sql
@@ -1649,10 +1682,15 @@ SELECT
   fase.siguiente_fase, 
   trayecto.codigo as codigo_trayecto, 
   trayecto.nombre as nombre_trayecto, 
-  periodo.fecha_inicio, periodo.fecha_cierre 
+  periodo.fecha_inicio, periodo.fecha_cierre,
+  SUM(indicadores.ponderacion) as ponderado_baremos
 FROM `fase` 
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
-INNER JOIN periodo ON periodo.id = trayecto.periodo_id; 
+INNER JOIN periodo ON periodo.id = trayecto.periodo_id
+LEFT JOIN malla_curricular ON malla_curricular.fase_id = fase.codigo
+LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN indicadores ON indicadores.dimension_id = dimension.id
+GROUP BY fase.codigo;
 
 DROP VIEW IF EXISTS detalles_baremos;
 
@@ -1707,12 +1745,14 @@ materias.nombre,
 malla_curricular.codigo,
 fase.codigo as codigo_fase,
 fase.nombre as nombre_fase,
-count(dimension.id) as dimensiones
+count(dimension.id) as dimensiones,
+SUM(indicadores.ponderacion) as ponderado_baremos
 FROM malla_curricular
 INNER JOIN materias ON materias.codigo =  malla_curricular.materia_id
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN indicadores ON indicadores.dimension_id = dimension.id
 GROUP BY malla_curricular.codigo;
 
 
