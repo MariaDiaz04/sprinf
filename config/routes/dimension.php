@@ -39,9 +39,9 @@ $listaDeRutas['/dimensiones/actualizar'] = new Route(
   ]
 );
 
-$listaDeRutas['dimensiones/ssp/{idTrayecto}'] = new Route(
+$listaDeRutas['dimensiones/ssp/{codigoMateria}'] = new Route(
 
-  '/dimensiones/ssp/{idTrayecto}',
+  '/dimensiones/ssp/{codigoMateria}',
   [
     'controller' => dimensionController::class,
     'method' => 'ssp',
@@ -50,7 +50,7 @@ $listaDeRutas['dimensiones/ssp/{idTrayecto}'] = new Route(
 
 $listaDeRutas['dimension_manage'] = new Route(
 
-  '/dimensiones/{idTrayecto}',
+  '/dimensiones/{codigoMateria}',
   [
     'controller' => dimensionController::class,
     'method' => 'index',

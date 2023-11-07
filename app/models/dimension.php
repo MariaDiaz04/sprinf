@@ -342,7 +342,7 @@ class dimension extends model
    *
    * @return array
    */
-  public function generarComplexSSP(string $idTrayecto): array
+  public function generarComplexSSP(string $codigoMateria): array
   {
     $columns = array(
       array(
@@ -374,6 +374,6 @@ class dimension extends model
         'dt'        => 6
       )
     );
-    return $this->getComplexSSP('detalles_dimension', 'id', $columns, ['condition' => "codigo_trayecto = '$idTrayecto'"]);
+    return $this->getComplexSSP('detalles_dimension', 'id', $columns, ['condition' => "unidad_id = '$codigoMateria'"]);
   }
 }

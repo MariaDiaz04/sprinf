@@ -136,7 +136,7 @@
 
 
       let table = new DataTable('#example', {
-        ajax: '<?= $this->Route('ssp/' . $idTrayecto) ?>',
+        ajax: '<?= $this->Route('ssp/' . $codigoMateria) ?>',
         processing: true,
         serverSide: true,
         pageLength: 30,

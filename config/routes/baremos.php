@@ -4,16 +4,18 @@ use Symfony\Component\Routing\Route;
 use Controllers\baremosController;
 
 $listaDeRutas['baremos_manage'] = new Route(
-  '/baremos',
+  '/baremos/{idTrayecto}',
   [
     'controller' => baremosController::class,
     'method' => 'index',
   ]
 );
-$listaDeRutas['baremos_edit'] = new Route(
-  '/baremos/edit/{id}',
+
+$listaDeRutas['baremos/ssp/{idTrayecto}'] = new Route(
+
+  '/baremos/ssp/{idTrayecto}',
   [
     'controller' => baremosController::class,
-    'method' => 'edit',
+    'method' => 'ssp',
   ]
 );

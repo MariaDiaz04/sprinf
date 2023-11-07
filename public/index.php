@@ -103,11 +103,11 @@ try {
     $method = $route['method'];
     $response = $controller->$method($request, ...$parameters);
 } catch (ResourceNotFoundException $exception) {
-    $exception->getMessage();
+    echo $exception->getMessage();
     $response = new Response('Not Found', 404);
     //SI FALLA INSTACIAMOS EL CONTROLADOR Y ACCEDEMOS AL METODO PAGE PARA RETORNAR UN ERROR
     $viewController = new Controllers\controller;
-    $viewController->page('errors/404');
+    // $viewController->page('errors/404');
 } catch (Throwable $throwable) {
     echo $throwable->getMessage() . ' ' . $throwable->getTraceAsString();
     $response = new Response('An error occurred', 500);

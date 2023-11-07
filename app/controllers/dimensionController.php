@@ -34,17 +34,14 @@ class dimensionController extends controller
     $this->malla = new malla();
   }
 
-  public function index(Request $dimension, $idTrayecto)
+  public function index(Request $dimension, $codigoMateria)
   {
     $dimensiones = $this->dimension->all();
-    $materias = $this->malla->findByTrayecto($idTrayecto);
-    $trayecto = $this->trayectos->find($idTrayecto);
+    $unidad_curricular = $this->malla->findMateria($codigoMateria);
+    $trayecto = $this->trayectos->find($unidad_curricular['codigo_trayecto']);
 
     return $this->view('dimensiones/gestionar', [
-      'trayecto' => $trayecto,
-      'idTrayecto' => $idTrayecto,
-      'dimensiones' => $dimensiones,
-      'materias' => $materias,
+      'codigoMateria' => $codigoMateria,
     ]);
   }
 
@@ -178,11 +175,11 @@ class dimensionController extends controller
     }
   }
 
-  function ssp(Request $query, $idTrayecto): void
+  function ssp(Request $query, $codigoMateria): void
   {
     try {
       http_response_code(200);
-      echo json_encode($this->dimension->generarComplexSSP($idTrayecto));
+      echo json_encode($this->dimension->generarComplexSSP($codigoMateria));
     } catch (Exception $e) {
       http_response_code(500);
       echo json_encode($e->getMessage());
@@ -191,7 +188,6 @@ class dimensionController extends controller
 
   public function E501()
   {
-
     return $this->page('errors/501');
   }
 }
