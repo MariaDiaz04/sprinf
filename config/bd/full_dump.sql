@@ -1741,6 +1741,7 @@ DROP VIEW IF EXISTS detalles_malla;
 CREATE VIEW detalles_malla AS
 SELECT
 trayecto.codigo as codigo_trayecto,
+trayecto.nombre as nombre_trayecto,
 materias.nombre,
 malla_curricular.codigo,
 fase.codigo as codigo_fase,

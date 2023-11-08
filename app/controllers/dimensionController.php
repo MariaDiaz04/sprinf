@@ -42,6 +42,7 @@ class dimensionController extends controller
 
     return $this->view('dimensiones/gestionar', [
       'codigoMateria' => $codigoMateria,
+      'unidadCurricular' => $unidad_curricular,
     ]);
   }
 
