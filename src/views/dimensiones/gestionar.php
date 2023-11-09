@@ -99,6 +99,22 @@
         url = $(this).attr('action');
         data = $(this).serializeArray();
 
+        let indicadores = $('.nuevoIndicador');
+
+
+        if (indicadores.length == 0) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: 'Debe asignar indicadores al crear la dimensión',
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+          toggleLoading(false)
+          return false;
+        }
+
         $.ajax({
           type: "POST",
           url: url,
@@ -128,6 +144,7 @@
               toast: true,
               timer: 1000,
             }).then(() => location.reload());
+            $('#crear').modal('hide')
             toggleLoading(false)
           },
         });
@@ -170,6 +187,7 @@
               toast: true,
               timer: 1000,
             })
+            $('#actualizar').modal('hide')
             // .then(() => location.reload());
             toggleLoading(false)
           },
@@ -194,18 +212,41 @@
         let length = document.getElementById("cuerpoTablaItems").children.length;
 
         let nombreItem = $('#nombreItem').val();
-        let ponderacionItem = $('#ponderacionItem').val()
+        let ponderacionItem = parseFloat($('#ponderacionItem').val())
+        if (nombreItem.length == 0) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: 'Ingrese un nombre de indicador',
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          return false;
+        }
+        if (typeof ponderacionItem === 'number' && ponderacionItem < 100) {
 
-        let fila = `<tr id="appenedItem-${length}">
-                    <th scope="row">
-                    <input type="text" name="indicadores[${length}][nombre]" class="form-control-plaintext" value="${nombreItem}" hidden>
-                    <input type="text" name="indicadores[${length}][ponderacion]" class="form-control-plaintext" value="${ponderacionItem}" hidden>
-                    ${nombreItem}
-                    </th>
-                    <td>${ponderacionItem}</td>
-                    <td><a href="#" class="btn btn-secondary" onClick="removeItem(${length})">Eliminar</a href="javascript:void(0)"></td>
-                  </tr>`;
-        $('#cuerpoTablaItems').append(fila);
+          let fila = `<tr id="appenedItem-${length}" class="nuevoIndicador">
+                      <th scope="row">
+                      <input type="text" name="indicadores[${length}][nombre]" class="form-control-plaintext" value="${nombreItem}" hidden>
+                      <input type="text" name="indicadores[${length}][ponderacion]" class="form-control-plaintext" value="${ponderacionItem}" hidden>
+                      ${nombreItem}
+                      </th>
+                      <td>${ponderacionItem}</td>
+                      <td><a href="#" class="btn btn-secondary" onClick="removeItem(${length})">Eliminar</a href="javascript:void(0)"></td>
+                    </tr>`;
+          $('#cuerpoTablaItems').append(fila);
+        } else {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: 'Ponderación no valida',
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+        }
+
       })
 
     })

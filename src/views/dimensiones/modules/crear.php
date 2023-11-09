@@ -17,7 +17,7 @@
 
                   <div class="col-lg-12">
                     <label class="form-label" for="nombre">Nombre Dimensión *</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" required>
+                    <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" onkeydown="return /[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255" required>
                   </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -38,11 +38,11 @@
                 <div class="row form-group align-items-end">
                   <div class="col-lg-5">
                     <label class="form-label" for="nombreItem">Nombre Indicador *</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." id="nombreItem">
+                    <input type="text" class="form-control mb-1" placeholder="..." id="nombreItem" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255">
                   </div>
                   <div class="col-lg-4">
                     <label class="form-label" for="ponderacionItem">Ponderación (%) *</label>
-                    <input type="number" class="form-control mb-1" placeholder="..." id="ponderacionItem">
+                    <input type="number" class="form-control mb-1" placeholder="..." id="ponderacionItem" value="0" max="100">
                   </div>
                   <div class="col-lg-3 align-middle">
                     <button class="btn btn-primary" id="anadirItem">Añadir</button>

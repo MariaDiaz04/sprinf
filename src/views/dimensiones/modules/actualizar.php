@@ -18,7 +18,7 @@
 
                   <div class="col-12">
                     <label class="form-label" for="nombre">Nombre Dimensión *</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" required>
+                    <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255" required>
                   </div>
                 </div>
                 <div class="row form-group">
