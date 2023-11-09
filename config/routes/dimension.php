@@ -2,7 +2,8 @@
 
 use Symfony\Component\Routing\Route;
 use Controllers\dimensionController;
-
+use Controllers\indicadoresController;
+use Model\indicadores;
 
 $listaDeRutas['dimension_edit'] = new Route(
 
@@ -54,5 +55,23 @@ $listaDeRutas['dimension_manage'] = new Route(
   [
     'controller' => dimensionController::class,
     'method' => 'index',
+  ]
+);
+
+$listaDeRutas['indicadores_manage'] = new Route(
+
+  '/indicadores/{idDimension}',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'index',
+  ]
+);
+
+$listaDeRutas['indicadores_ssp'] = new Route(
+
+  '/indicadores/ssp/{idDimension}',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'ssp',
   ]
 );

@@ -49,6 +49,7 @@
       let editBtn = "<button class=\"btn btn-outline-secondary btn-color btn-bg-color col-xs-6 mx-2 edit\">Editar</button>";
       let deleteBtn = "<button class=\"btn btn-outline-danger btn-color btn-bg-color col-xs-6 mx-2 remove\">Eliminar</button>";
 
+      let UrlGestionarIndicadores = "<?= APP_URL . $this->Route('indicadores/'); ?>";
 
       let table = new DataTable('#example', {
         ajax: '<?= $this->Route('ssp/' . $codigoMateria) ?>',
@@ -58,7 +59,7 @@
 
         columnDefs: [{
           visible: false,
-          targets: [0]
+          targets: [0, 2, 4]
         }, {
           data: null,
           render: function(data, type, row, meta) {
@@ -73,6 +74,7 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
+                        <a class="dropdown-item" href="${UrlGestionarIndicadores + row[0]}">Gestionar Indicadores</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
                       </div>

@@ -247,23 +247,24 @@ class dimension extends model
     return true;
   }
 
-  function remover($id): bool
+  function remover(): bool
   {
     try {
       parent::beginTransaction();
       $indicadores = $this->obtenerInidicadores();
 
       foreach ($indicadores as $indicador) {
-        $this->removerInidicador($indicador['id']);
+        $resultadoIndicador = $this->removerInidicador($indicador['id']);
+        if (!$resultadoIndicador) throw new Exception('No se pudo borrar los indicadores');
       }
       $resultado = $this->removerDimension();
-      if (!$resultado) return false;
+
+      if (!$resultado) throw new Exception('No se pudo borrar la dimensión');
       parent::commit();
       return true;
     } catch (Exception $e) {
       parent::rollBack();
-      echo $e->getMessage();
-      exit();
+      var_dump($e->getMessage() . "\n" . $e->getTraceAsString());
       $this->error = [
         'code' => $e->getCode(),
         'message' => $e->getMessage(),
