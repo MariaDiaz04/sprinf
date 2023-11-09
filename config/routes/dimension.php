@@ -68,7 +68,7 @@ $listaDeRutas['indicadores_manage'] = new Route(
 );
 
 $listaDeRutas['indicadores_obtener'] = new Route(
-  '/indicador',
+  '/indicador/obtener/{id}',
   [
     'controller' => indicadoresController::class,
     'method' => 'obtener',
@@ -76,10 +76,18 @@ $listaDeRutas['indicadores_obtener'] = new Route(
 );
 
 $listaDeRutas['indicadores_create'] = new Route(
-  '/indicador/crear',
+  '/indicador/guardar',
   [
     'controller' => indicadoresController::class,
     'method' => 'store',
+  ]
+);
+
+$listaDeRutas['indicadores_update'] = new Route(
+  '/indicador/actualizar',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'update',
   ]
 );
 

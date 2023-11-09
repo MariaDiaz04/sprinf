@@ -17,17 +17,13 @@
           <tr>
             <th>id</th>
             <th>Nombre</th>
-            <th>Ponderación</th>
+            <th>Ponderación %</th>
             <th>Acción</th>
           </tr>
         </thead>
       </table>
     </div>
   </div>
-
-
-
-
   <script>
     let deleteUrl = "<?= APP_URL . $this->Route('indicadores/delete') ?>";
 
