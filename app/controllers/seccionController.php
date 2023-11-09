@@ -64,6 +64,61 @@ class seccionController extends controller
         }
     }
 
+    /**
+     * Obtiene la informacion necesaria para crear
+     * formulario de update retornado en formato JSON
+     *
+     * @param [type] $request
+     * @return void
+     */
+    function edit($request): void
+    {
+        try {
+            $data = [];
+            $codigo = $request->get('codigo');
+
+
+            $seccion = $this->seccion->find($codigo);
+
+            $data['seccion'] = $seccion;
+
+            http_response_code(200);
+            echo json_encode($data);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    public function update($request)
+    {
+        try {
+
+            $codigo = $request->get('codigo');
+            $observacion = $request->get('observacion');
+            $trayectoId = $request->get('trayecto_id');
+            if (!$seccion = $this->seccion->findOld($codigo)) {
+                return $this->page('errors/404');
+            };
+            // asignar valores de seccion
+            $seccion->actualizar([
+                'observacion' => '"' . $observacion . '"',
+                'trayecto_id' => '"' . $trayectoId . '"',
+            ]);
+
+
+
+            //if (empty($codigo)) throw new Exception('Error inesperado al actualizar la sección.');
+
+            http_response_code(200);
+            echo json_encode($codigo);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+
 
     function ssp(Request $query): void
     {

@@ -12,7 +12,7 @@ $listaDeRutas['seccion_manage'] = new Route(
 );
 # GESTION DE Secciones
 $listaDeRutas['seccion_edit'] = new Route(
-  '/seccion/edit/{id}',
+  '/seccion/edit',
   [
     'controller' => seccionController::class,
     'method' => 'edit',
@@ -32,5 +32,14 @@ $listaDeRutas['seccion_ssp'] = new Route(
   [
     'controller' => seccionController::class,
     'method' => 'ssp',
+  ]
+);
+
+# GESTION DE Secciones
+$listaDeRutas['seccion_update'] = new Route(
+  '/seccion/update',
+  [
+    'controller' => seccionController::class,
+    'method' => 'update',
   ]
 );

@@ -112,9 +112,33 @@ class seccion extends model
         return $this->codigo;
     }
 
+    /**
+     * Transaccion para la actualizacion de seccion
+     *
+     * @return String
+     */
+    function updateSeccion(): String
+    {
+        try {
+            parent::beginTransaction();
+            // actualizar tabla materia
+            $codigo = $this->save($this->codigo);
+            parent::commit();
+            return $codigo;
+        } catch (Exception $e) {
+            print($e);
+            parent::rollBack();
+            return '';
+        }
+    }
 
 
-
+    // ======================== UPDATE=========================
+    public function actualizar($seccion)
+    {
+        $this->update('seccion', $seccion, [['codigo', '=', '"' .$this->fillable['codigo'].'"' ]]);
+        return $this;
+    }
 
     public function Selectcod()
     {
@@ -158,8 +182,24 @@ class seccion extends model
      */
     public function find(string $codigo)
     {
-        $materias = $this->selectOne('detalles_seccion', [['codigo', '=', '"' . $codigo . '"']]);
-        return !$materias ? [] : $materias;
+        $seccion = $this->selectOne('detalles_seccion', [['codigo', '=', '"' . $codigo . '"']]);
+        return !$seccion ? [] : $seccion;
+    }
+
+    public function findOld(string $codigo){
+         try { 
+            $seccion = $this->select('seccion', [['codigo', '=', '"' . $codigo .'"' ]]);
+            if ($seccion) {
+                foreach ($seccion[0] as $key => $value) {
+                    $this->fillable[$key] = $value;
+                }
+                return $this;
+            } else {
+                return [];
+            }
+        } catch (\PDOException $th) {
+            return $th;
+        } 
     }
     //=========================/FIND==========================
 
@@ -167,12 +207,7 @@ class seccion extends model
     // ======================== / UPDATE=========================
 
     /* 
-public function actualizar($seccion) {
 
-$this->update('seccion', $seccion, [['id', '=', $this->fillable['id'] ]]);
-return $this;
-
-}
 
 public function eliminar()
 {

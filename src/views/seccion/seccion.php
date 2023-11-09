@@ -32,7 +32,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="crearLabel">Nueva Seccion</h5>
-
         </div>
         <form action="<?= APP_URL . $this->Route('trayectos/guardar') ?>" method="post" id="guardar">
           <div class="modal-body">
@@ -77,7 +76,6 @@
     </div>
   </div>
 
-
   <script>
     $(document).ready(() => {
 
@@ -90,15 +88,11 @@
       // luego en la función table.on(). verifico si la clase del boton en el que hice click
       // contiene el nombre de alguna acción que haya definido
 
-
-
-
       let table = new DataTable('#example', {
         ajax: '<?= $this->Route('seccion/ssp') ?>',
         processing: true,
         serverSide: true,
         pageLength: 30,
-
         columnDefs: [{
           data: null,
           render: function(data, type, row, meta) {
@@ -116,20 +110,11 @@
         }]
       });
 
-
-
       $('#guardar').submit(function(e) {
         e.preventDefault()
-
         toggleLoading(true);
-
-
         url = $(this).attr('action');
         data = $(this).serializeArray();
-
-
-
-
         $.ajax({
           type: "POST",
           url: url,
@@ -157,8 +142,30 @@
 
       })
 
-      function edit(id) {
-        alert(`Editing ${id}`)
+   function edit(id) {
+        console.log(id);
+        $.ajax({
+          type: "POST",
+          url: updateUrl,
+          data: {
+            'codigo': id
+          },
+          error: function(error, status) {
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
+          },
+          success: function(data, status) {
+
+            renderUpdateForm(JSON.parse(data))
+          },
+        });
       }
 
       function remove(id) {
