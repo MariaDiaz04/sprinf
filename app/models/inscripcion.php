@@ -11,13 +11,17 @@ class inscripcion extends model
 {
 
   public $fillable = [
-    'clase_id',
+    'profesor_id',
+    'seccion_id',
     'estudiante_id',
+    'unidad_curricular_id',
     'calificacion',
   ];
   private $id;
-  private $clase_id;
+  private $profesor_id;
+  private $seccion_id;
   private $estudiante_id;
+  private $unidad_curricular_id;
   private $calificacion;
 
   public function all()
@@ -37,9 +41,9 @@ class inscripcion extends model
    * @param string $codigo
    * @return array
    */
-  function findByClass(string $codigo): array
+  function findBySeccion(string $seccion_id): array
   {
-    $inscripcion = $this->select('detalles_inscripciones', [['codigo', '=', '"' . $codigo . '"']]);
+    $inscripcion = $this->select('inscripcion', [['seccion_id', '=', '"' . $seccion_id . '"']]);
     return !$inscripcion ? [] : $inscripcion;
   }
 

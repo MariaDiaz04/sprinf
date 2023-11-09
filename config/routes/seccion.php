@@ -43,3 +43,12 @@ $listaDeRutas['seccion_update'] = new Route(
     'method' => 'update',
   ]
 );
+
+# GESTION DE Secciones
+$listaDeRutas['seccion_delete'] = new Route(
+  '/seccion/delete',
+  [
+    'controller' => seccionController::class,
+    'method' => 'delete',
+  ]
+);

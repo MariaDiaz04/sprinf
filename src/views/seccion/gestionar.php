@@ -144,6 +144,8 @@
   </div>
   <script>
     let updateUrl = "<?= APP_URL . $this->Route('seccion/edit') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('seccion/delete') ?>";
+
     let regexSeccion = /^([A-Z]{2,3})([1-9]){4}/;
     $(document).ready(() => {
 
@@ -171,8 +173,8 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
-                        <a class="dropdown-item" onClick="editar('${row[0]}')" href="#">Editar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
+                        <a class="dropdown-item" onClick="editar('${row[0]}')" href="javascript:void(0)">Editar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="javascript:void(0)">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -282,7 +284,6 @@
         toggleLoading(true, '#actualizar');
         url = $(this).attr('action');
         data = $(this).serializeArray();
-console.log(data);
         $.ajax({
           type: "POST",
           url: url,
@@ -317,9 +318,7 @@ console.log(data);
 
       })
 
-      function remove(id) {
-        alert(`Removing ${id}`)
-      }
+   
 
         // TOGGLE BUTTON AND SPINNER
         function toggleLoading(show, form = '') {
@@ -367,6 +366,37 @@ console.log(data);
       });
     }
 
-    
+    function remove(id) {
+        $.ajax({
+        type: "POST",
+        url: deleteUrl,
+        data: {
+          'seccion_id': id
+        },
+        error: function(error, status) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 3000
+          })
+
+        },
+        success: function(data, status) {
+          console.log(data);
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Seccion borrada con exito',
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500
+          })
+          $('#example').DataTable().ajax.reload();
+        },
+      });
+      }
    
   </script>
