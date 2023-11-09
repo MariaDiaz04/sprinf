@@ -31,10 +31,14 @@
 
   <?php
   include 'modules/crear.php';
+  include 'modules/actualizar.php';
   ?>
 
 
   <script>
+    let UrlGestionarIndicadores = "<?= APP_URL . $this->Route('indicadores/'); ?>";
+    let obtenerDimensionUrl = "<?= APP_URL . $this->Route('dimensiones/obtener/'); ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('dimensiones/borrar') ?>";
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -49,7 +53,7 @@
       let editBtn = "<button class=\"btn btn-outline-secondary btn-color btn-bg-color col-xs-6 mx-2 edit\">Editar</button>";
       let deleteBtn = "<button class=\"btn btn-outline-danger btn-color btn-bg-color col-xs-6 mx-2 remove\">Eliminar</button>";
 
-      let UrlGestionarIndicadores = "<?= APP_URL . $this->Route('indicadores/'); ?>";
+
 
       let table = new DataTable('#example', {
         ajax: '<?= $this->Route('ssp/' . $codigoMateria) ?>',
@@ -76,7 +80,7 @@
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
                         <a class="dropdown-item" href="${UrlGestionarIndicadores + row[0]}">Gestionar Indicadores</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
+                        <a class="dropdown-item text-danger" onClick="removeDimension('${row[0]}')" href="#">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -94,9 +98,6 @@
 
         url = $(this).attr('action');
         data = $(this).serializeArray();
-
-
-
 
         $.ajax({
           type: "POST",
@@ -130,27 +131,61 @@
             toggleLoading(false)
           },
         });
-
       })
 
-      function edit(id) {
-        alert(`Editing ${id}`)
-      }
+      $('#dimensionActualizar').submit(function(e) {
+        e.preventDefault()
 
-      function remove(id) {
-        alert(`Removing ${id}`)
-      }
+        toggleLoading(true, '#actualizar');
+
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            // document.getElementById("guardar").reset();
+            // actualizar tabla
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Actualización Exitosa",
+              showConfirmButton: false,
+              toast: true,
+              timer: 1000,
+            })
+            // .then(() => location.reload());
+            toggleLoading(false)
+          },
+        });
+      });
+
 
       // TOGGLE BUTTON AND SPINNER
-      function toggleLoading(show) {
+      function toggleLoading(show, form = "") {
         if (show) {
-          $('#guardarLoading').show();
-          $('#guardarSubmit').hide();
+          $(`${form} #loading`).show();
+          $(`${form} #submit`).hide();
         } else {
-          $('#guardarLoading').hide();
-          $('#guardarSubmit').show();
+          $(`${form} #loading`).hide();
+          $(`${form} #submit`).show();
         }
-
       }
 
       $('#anadirItem').click(function(e) {
@@ -171,14 +206,94 @@
                     <td><a href="#" class="btn btn-secondary" onClick="removeItem(${length})">Eliminar</a href="javascript:void(0)"></td>
                   </tr>`;
         $('#cuerpoTablaItems').append(fila);
-
-
-
       })
 
     })
 
+    async function obtenerDimension(id) {
+      let result;
+      try {
+        result = await $.ajax({
+          url: obtenerDimensionUrl + id,
+          type: "POST",
+          data: {
+            id: id
+          },
+        });
+        return JSON.parse(result);
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    }
+
+    async function edit(id) {
+      let dimension = await obtenerDimension(id);
+
+      const {
+        nombre,
+        grupal
+      } = dimension.dimension;
+
+      $("#actualizar").modal("show");
+
+      $("#actualizar #id").val(id);
+      $("#actualizar #nombre").val(nombre);
+
+      if (grupal == 1) {
+        $('#actualizar #grupal').prop('checked', true);
+      } else {
+        $('#actualizar #grupal').prop('checked', false);
+      }
+
+      $("#actualizar").modal("show");
+    }
+
     function removeItem(id) {
       $(`#appenedItem-${id}`).remove()
+    }
+
+    function removeDimension(id) {
+      Swal.fire({
+        title: "Se eliminará la dimensión indicada junto con sus indicadores, ¿está seguro de realizar la acción?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Continuar",
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            type: "POST",
+            url: deleteUrl,
+            data: {
+              id: id,
+            },
+            error: function(error, status) {
+              error = JSON.parse(error.responseText);
+              Swal.fire({
+                position: "bottom-end",
+                icon: "error",
+                title: status + ": " + error.error.message,
+                showConfirmButton: false,
+                toast: true,
+                timer: 2000,
+              });
+            },
+            success: function(data, status) {
+              // actualizar tabla
+              Swal.fire({
+                position: "bottom-end",
+                icon: "success",
+                title: "Proyecto Eliminado Exitosamente",
+                showConfirmButton: false,
+                toast: true,
+                timer: 2000,
+              }).then(() => location.reload());
+            },
+          });
+        }
+      });
     }
   </script>

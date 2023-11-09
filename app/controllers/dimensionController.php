@@ -90,7 +90,6 @@ class dimensionController extends controller
       $unidad_id = $dimension->request->get('unidad_id');
       $nombre = $dimension->request->get('nombre');
       $grupal = $dimension->request->get('grupal');
-      $indicadores = isset($dimension->request->all()['indicadores']) ? $dimension->request->all()['indicadores'] : [];
 
 
       $this->dimension->setData([
@@ -98,22 +97,18 @@ class dimensionController extends controller
         'unidad_id' => $unidad_id,
         'nombre' => $nombre,
         'grupal' => $grupal,
-        'indicadores' => $indicadores
       ]);
+
       $resultado = $this->dimension->actualizar();
 
       if (!$resultado) throw new Exception($this->dimension->error['message'], $this->dimension->error['code']);
 
-      $resultado = $this->dimension->actualizarIndicadores();
-
-      $dimensionCreada = $this->dimension->find($this->dimension->id);
-      $indicadoresActualizados = $this->dimension->obtenerIndicadores($this->dimension->id);
+      $dimensionActualizada = $this->dimension->find($this->dimension->id);
 
       http_response_code(200);
       echo json_encode([
         'data' => [
-          'dimension' => $dimensionCreada,
-          'indicadores' => $indicadoresActualizados
+          'dimension' => $dimensionActualizada,
         ]
       ]);
     } catch (Exception $e) {
@@ -149,15 +144,12 @@ class dimensionController extends controller
   function borrar(Request $dimension): void
   {
     try {
-
       $idDimension = $dimension->request->get('id');
 
-      $this->dimension->setData(['id' => $idDimension]);
-
       $verificarDimension = $this->dimension->find($idDimension);
-
       if (!$verificarDimension) throw new Exception('Dimension no encontrada', 404);
 
+      $this->dimension->setData(['id' => $idDimension]);
       $resultado = $this->dimension->remover($idDimension);
 
       if (!$resultado) {

@@ -252,7 +252,7 @@ ALTER TABLE `sprinf_bd`.`profesor` ADD FOREIGN KEY (`persona_id`) REFERENCES `sp
 
 ALTER TABLE `sprinf_bd`.`dimension` ADD FOREIGN KEY (`unidad_id`) REFERENCES `sprinf_bd`.`malla_curricular` (`codigo`);
 
-ALTER TABLE `sprinf_bd`.`indicadores` ADD FOREIGN KEY (`dimension_id`) REFERENCES `sprinf_bd`.`dimension` (`id`);
+ALTER TABLE `sprinf_bd`.`indicadores` ADD FOREIGN KEY (`dimension_id`) REFERENCES `sprinf_bd`.`dimension` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `sprinf_bd`.`estudiante` ADD FOREIGN KEY (`persona_id`) REFERENCES `sprinf_bd`.`persona` (`cedula`);
 
@@ -281,7 +281,7 @@ ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) 
 
 ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`proyecto_id`) REFERENCES `sprinf_bd`.`proyecto` (`id`);
 
-ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`indicador_id`) REFERENCES `sprinf_bd`.`indicadores` (`id`);
+ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`indicador_id`) REFERENCES `sprinf_bd`.`indicadores` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`integrante_id`) REFERENCES `sprinf_bd`.`integrante_proyecto` (`id`) ON DELETE CASCADE;
 
@@ -1388,10 +1388,10 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Tipo de 
 insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
 insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(26,'PIAUI078303_2','Mejoras  Aplicadas al Sistema según los requerimientos de trayecto IV ', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(27,'PIAUI078303_2','Mejoras  Aplicadas al Sistema según los requerimientos de trayecto IV ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
 
 
 -- Proyecto

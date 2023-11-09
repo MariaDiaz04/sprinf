@@ -67,6 +67,30 @@ $listaDeRutas['indicadores_manage'] = new Route(
   ]
 );
 
+$listaDeRutas['indicadores_obtener'] = new Route(
+  '/indicador',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'obtener',
+  ]
+);
+
+$listaDeRutas['indicadores_create'] = new Route(
+  '/indicador/crear',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'store',
+  ]
+);
+
+$listaDeRutas['indicadores_borrar'] = new Route(
+  '/indicador/borrar',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'delete',
+  ]
+);
+
 $listaDeRutas['indicadores_ssp'] = new Route(
 
   '/indicadores/ssp/{idDimension}',

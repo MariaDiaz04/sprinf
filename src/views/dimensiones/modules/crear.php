@@ -71,7 +71,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
           <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
-          <div id="guardarLoading">
+          <div id="loading">
             <div class="spinner-border text-primary" role="status">
               <span class="sr-only"></span>
             </div>

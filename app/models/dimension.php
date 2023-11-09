@@ -251,12 +251,7 @@ class dimension extends model
   {
     try {
       parent::beginTransaction();
-      $indicadores = $this->obtenerInidicadores();
 
-      foreach ($indicadores as $indicador) {
-        $resultadoIndicador = $this->removerInidicador($indicador['id']);
-        if (!$resultadoIndicador) throw new Exception('No se pudo borrar los indicadores');
-      }
       $resultado = $this->removerDimension();
 
       if (!$resultado) throw new Exception('No se pudo borrar la dimensión');
