@@ -24,10 +24,16 @@
       </table>
     </div>
   </div>
+
+  <?php
+  include 'modules/crear.php';
+  ?>
   <script>
     let deleteUrl = "<?= APP_URL . $this->Route('indicadores/delete') ?>";
 
     $(document).ready(() => {
+
+      toggleLoading(false);
 
 
       // DATATABLE CRUD
@@ -73,5 +79,18 @@
         }]
       });
 
+
+
     })
+
+    // TOGGLE BUTTON AND SPINNER
+    function toggleLoading(show, form = "") {
+      if (show) {
+        $(`${form} #loading`).show();
+        $(`${form} #submit`).hide();
+      } else {
+        $(`${form} #loading`).hide();
+        $(`${form} #submit`).show();
+      }
+    }
   </script>
