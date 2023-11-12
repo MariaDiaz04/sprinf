@@ -129,8 +129,11 @@ $(document).ready(function (e) {
 
   $("#proyectoGuardarHistorico").submit(function (e) {
     e.preventDefault();
+
     toggleLoading(true, "#proyectoGuardarHistorico");
+
     $(this).find("select").prop("disabled", false);
+
     formData = $(this).serializeArray();
     items = transfer.getSelectedItems();
     data = [...formData];
@@ -210,6 +213,8 @@ $(document).ready(function (e) {
     items = transfer2.getSelectedItems();
     data = [...formData];
     counter = 0;
+
+    // validar integrantes
     if (items.length <= 0) {
       Swal.fire({
         position: "bottom-end",
@@ -220,55 +225,85 @@ $(document).ready(function (e) {
         timer: 2000,
       });
       toggleLoading(false);
-    } else {
-      for (const idIntegrante in items) {
-        integrante = {};
-        if (Object.hasOwnProperty.call(items, idIntegrante)) {
-          const element = items[idIntegrante];
-          integrante.name = `integrantes[${counter}]`;
-          integrante.value = element.value;
-          counter++;
-          data.push(integrante);
-        }
-      }
-
-      url = $(this).attr("action");
-
-      toggleLoading(false);
-
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        error: function (error, status) {
-          toggleLoading(false);
-          error = JSON.parse(error.responseText);
-          Swal.fire({
-            position: "bottom-end",
-            icon: "error",
-            title: status + ": " + error.error.message,
-            showConfirmButton: false,
-            toast: true,
-            timer: 2000,
-          });
-        },
-        success: function (data, status) {
-          table.ajax.reload();
-          // actualizar tabla
-          toggleLoading(false);
-          Swal.fire({
-            position: "bottom-end",
-            icon: "success",
-            title: "Creación Exitosa",
-            showConfirmButton: false,
-            toast: true,
-            timer: 1000,
-          }).then(() => location.reload());
-          document.getElementById("proyectoGuardar").reset();
-          // $("#crear").modal("hide");
-        },
-      });
+      return false;
     }
+
+    // validar parroquia
+    if ($("#selectParroquia").val() == null) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe seleccionar una parroquia",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    if (
+      !$("#comunidadAutonoma").is(":checked") &&
+      $("#selectConsejoComunal").val() == null
+    ) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe seleccionar un Consejo Comunal a la comunidad no autonoma",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+    for (const idIntegrante in items) {
+      integrante = {};
+      if (Object.hasOwnProperty.call(items, idIntegrante)) {
+        const element = items[idIntegrante];
+        integrante.name = `integrantes[${counter}]`;
+        integrante.value = element.value;
+        counter++;
+        data.push(integrante);
+      }
+    }
+
+    url = $(this).attr("action");
+
+    toggleLoading(false);
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      error: function (error, status) {
+        toggleLoading(false);
+        error = JSON.parse(error.responseText);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "error",
+          title: status + ": " + error.error.message,
+          showConfirmButton: false,
+          toast: true,
+          timer: 2000,
+        });
+      },
+      success: function (data, status) {
+        table.ajax.reload();
+        // actualizar tabla
+        toggleLoading(false);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Creación Exitosa",
+          showConfirmButton: false,
+          toast: true,
+          timer: 1000,
+        }).then(() => location.reload());
+        document.getElementById("proyectoGuardar").reset();
+        // $("#crear").modal("hide");
+      },
+    });
   });
 
   $("#proyectoActualizar").submit(function (e) {
