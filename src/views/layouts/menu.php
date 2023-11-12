@@ -167,6 +167,12 @@
             <div data-i18n="Analytics">Proyectos</div>
           </a>
         </li>
+        <!-- <li class="menu-item <?= $this->currentPath() == 'municipios' ? 'active' : '' ?>">
+          <a href="<?= APP_URL .  $this->Route('municipios') ?>" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-code"></i>
+            <div data-i18n="Analytics">Municipios</div>
+          </a>
+        </li> -->
 
 
         <li class="menu-header small text-uppercase">
@@ -210,11 +216,11 @@
                 <div data-i18n="Without menu">Aperturar Lapso</div>
               </a>
             </li>
-            <!-- <li class="menu-item <?= $this->currentPath() == 'trayectos' ? 'active' : '' ?>">
-            <a href="<?= APP_URL .  $this->Route('trayectos') ?>" class="menu-link">
-              <div data-i18n="Analytics">Trayectos</div>
+            <!--  <li class="menu-item <?= $this->currentPath() == 'municipios' ? 'active' : '' ?>">
+            <a href="<?= APP_URL .  $this->Route('municipios') ?>" class="menu-link">
+              <div data-i18n="Analytics">Municipios</div>
             </a>
-          </li> -->
+          </li>  -->
           </ul>
           <!-- <li class="menu-item <?= $this->currentPath() == 'usuarioCrear' ? 'active' : '' ?>">
         <a href="<?= APP_URL .  $this->Route('usuarioCrear') ?>" class="menu-link">
