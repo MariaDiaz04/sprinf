@@ -108,9 +108,11 @@ CREATE TABLE `sprinf_bd`.`consejo_comunal` (
 
 CREATE TABLE `sprinf_bd`.`proyecto` (
   `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
-  `fase_id` varchar(255),
-  `nombre` varchar(255),
-  `comunidad` varchar(255),
+  `fase_id` varchar(255) NOT NULL,
+  `parroquia_id` int NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `comunidad` varchar(255) NOT NULL,
+  `comunidad_autonoma` bool NOT NULL,
   `motor_productivo` varchar(255),
   `resumen` varchar(255),
   `direccion` varchar(255),
@@ -276,6 +278,8 @@ ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`tutor_in`) REFERENCES `spri
 
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`consejo_comunal_id`) REFERENCES `sprinf_bd`.`consejo_comunal` (`id`);
+
+ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`parroquia_id`) REFERENCES `sprinf_bd`.`parroquias` (`id`);
 
 ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
 
@@ -1471,6 +1475,7 @@ insert into consejo_comunal(id, nombre, nombre_vocero, telefono, sector_id) VALU
 insert into proyecto (
   id, 
   fase_id, 
+  parroquia_id, 
   nombre, 
   comunidad, 
   motor_productivo, 
@@ -1487,9 +1492,10 @@ insert into proyecto (
 values (
   1,
   'TR3_1', 
+  1,
   'Gestion de proyectos sociotecnologicos', 
   'UPTAEB', 
-  '', 
+  'Informática', 
   'Gestión de proyectos para el PNF en informática', 
   'Av. Los Horcones, Av. La Salle, Barquisimeto 3001, Lara', 
   1,
@@ -1626,10 +1632,10 @@ INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id
 INNER JOIN periodo ON periodo.id = trayecto.periodo_id
 INNER JOIN profesor as tutor ON tutor.codigo = proyecto.tutor_in
 INNER JOIN persona as tutor_info ON tutor_info.cedula = tutor.persona_id
-inner join consejo_comunal cc on cc.id = proyecto.consejo_comunal_id 
-inner join sector_consejo_comunal scc on scc.id = cc.sector_id 
-INNER JOIN parroquias ON parroquias.id = scc.parroquia_id 
+INNER JOIN parroquias ON parroquias.id = proyecto.parroquia_id 
 INNER JOIN municipios ON municipios.id = parroquias.municipio
+LEFT join consejo_comunal cc on cc.id = proyecto.consejo_comunal_id 
+LEFT join sector_consejo_comunal scc on scc.id = cc.sector_id 
 LEFT OUTER JOIN integrante_proyecto ON integrante_proyecto.proyecto_id = proyecto.id
 GROUP BY proyecto_id;
 
