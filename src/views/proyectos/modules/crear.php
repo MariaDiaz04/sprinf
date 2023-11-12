@@ -28,12 +28,21 @@
                 </div>
               </div>
               <div class="row form-group mb-3">
-                <div class="col-lg-12 mb-3">
-                  <label class="form-label" for="consejo_comunal_id"><b>Consejo Comunal *</b></label>
-                  <select class="form-select" name="consejo_comunal_id" id="selectParroquia" required>
+                <div class="col-lg-6 mb-3">
+                  <label class="form-label" for="selectParroquia"><b>Parroquia *</b></label>
+                  <select class="form-select" name="parroquia_id" id="selectParroquia" required>
 
+                    <?php foreach ($parroquias as $parroquia) : ?>
+                      <option value="<?= $parroquia->parroquia_id ?>" rel="parroquia-<?= $parroquia->parroquia_id ?>"><?= "$parroquia->parroquia_nombre" ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <label class="form-label" for="selectConsejoComunal"><b>Consejo Comunal *</b></label>
+                  <select class="form-select" name="consejo_comunal_id" id="selectConsejoComunal" required>
+                    <option value="" selected="selected" id="ningunConsejoComunal">-- Ninguno --</option>
                     <?php foreach ($consejosComunales as $consejoComunal) : ?>
-                      <option value="<?= $consejoComunal->consejo_comunal_id ?>"><?= "$consejoComunal->municipio_nombre - $consejoComunal->parroquia_nombre - $consejoComunal->consejo_comunal_nombre" ?></option>
+                      <option value="<?= $consejoComunal->consejo_comunal_id ?>" class="parroquia-<?= $consejoComunal->parroquia_id ?>"><?= "$consejoComunal->consejo_comunal_nombre" ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>
@@ -99,3 +108,27 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    var $cat = $('#proyectoGuardar select[name=parroquia_id]'),
+      $items = $('#proyectoGuardar select[name=consejo_comunal_id]');
+
+    $cat.change(function() {
+
+      var $this = $(this).find(':selected'),
+        rel = $this.attr('rel');
+
+      // Hide all
+      $items.find("option").hide();
+      $items.find('#ningunConsejoComunal').show().first().prop('selected', true);
+
+      // Find all matching accessories
+      // Show all the correct accesories
+      // Select the first accesory
+      $set = $items.find('option.' + rel);
+      $set.show().first().prop('selected', true);
+
+    });
+  });
+</script>

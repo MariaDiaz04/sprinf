@@ -92,7 +92,7 @@ class proyectoController extends controller
             }
         }
 
-        // echo json_encode($historicoProyectos);
+        // echo json_encode($parroquias);
         // exit();
 
         return $this->view('proyectos/gestionar', [
