@@ -92,7 +92,7 @@ class proyectoController extends controller
             }
         }
 
-        // echo json_encode($parroquias);
+        // echo json_encode($listaEstudiantes);
         // exit();
 
         return $this->view('proyectos/gestionar', [
@@ -107,7 +107,8 @@ class proyectoController extends controller
             'trayectos' => $trayectos,
             'historicoProyectos' => $historicoProyectos,
             'historicoEstudiantes' => $historicoEstudiantes,
-            'estudiantes' => $dataEstudiantes
+            'listaEstudiantes' => $listaEstudiantes,
+            'estudiantes' => $dataEstudiantes,
         ]);
     }
 

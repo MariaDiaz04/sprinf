@@ -35,6 +35,7 @@
 
 
 
+
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 

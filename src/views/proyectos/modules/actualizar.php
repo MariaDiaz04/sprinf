@@ -106,8 +106,10 @@
 
                   <div class="col-lg-10">
                     <label class="form-label"><b>Estudiantes *</b></label>
-                    <select class="form-select" id="selectEstudiante">
-
+                    <select class="selectpicker" id="selectEstudiante" data-live-search="true">
+                      <?php foreach ($listaEstudiantes as $estudiante) : ?>
+                        <option value="<?= $estudiante->cedula ?>" data-cedula="<?= $estudiante->cedula ?>" data-nombre="<?= $estudiante->nombre ?>" data-apellido="<?= $estudiante->apellido ?>"><?= $estudiante->cedula ?> - <?= $estudiante->nombre ?> <?= $estudiante->apellido ?></option>
+                      <?php endforeach; ?>
                     </select>
                   </div>
 
@@ -148,7 +150,6 @@
     </div>
   </div>
 </div>
-
 <script>
   $(document).ready(function() {
 

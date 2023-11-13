@@ -460,7 +460,7 @@ $(document).ready(function (e) {
             showConfirmButton: false,
             toast: true,
             timer: 1000,
-          });
+          }).then(() => location.reload());
           document.getElementById("proyectoGuardar").reset();
           $("#actualizar").modal("hide");
         },
@@ -512,7 +512,7 @@ async function obtenerProyecto(id) {
 async function editarIntegrantes(id) {
   let proyecto = await obtenerProyecto(id);
   let estudiantesPendientes = await obtenerEstudiantesPendientes();
-  $("#actualizar #selectEstudiante option").remove();
+  // $("#actualizar #selectEstudiante option").remove();
   $("#cuerpoTablaActualizarEstudiante tr").remove();
 
   estudiantesPendientes.forEach((estudiante) => {
@@ -520,11 +520,11 @@ async function editarIntegrantes(id) {
       estudiante.cedula
     }" data-nombre="${estudiante.nombre}" data-apellido="${
       estudiante.apellido
-    }">${
+    }" data-tokens="${estudiante.cedula} ${estudiante.nombre}">${
       estudiante.cedula + " " + estudiante.nombre + " " + estudiante.apellido
     }</option>`;
 
-    $("#actualizar #selectEstudiante").append(option);
+    // $("#actualizar #selectEstudiante").append(option);
   });
 
   const {
@@ -634,7 +634,14 @@ $("#anadirEstudiante").click(function (e) {
       $("#cuerpoTablaActualizarEstudiante").find(`#appenedStudent-${studentId}`)
         .length > 0
     ) {
-      alert("Estudiante ya ha sido añadido");
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Estudiante ya ha sido añadido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
       return false;
     }
 

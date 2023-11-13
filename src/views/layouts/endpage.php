@@ -1,7 +1,7 @@
 </div>
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="<?= APP_URL  ?>assets/vendor/libs/jquery/jquery.js"></script>
+<!-- <script src="<?= APP_URL  ?>assets/vendor/libs/jquery/jquery.js"></script> -->
 <script src="<?= APP_URL  ?>assets/vendor/libs/popper/popper.js"></script>
 <script src="<?= APP_URL  ?>assets/vendor/js/bootstrap.js"></script>
 <script src="<?= APP_URL  ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
