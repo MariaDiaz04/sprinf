@@ -586,7 +586,11 @@ async function editarIntegrantes(id) {
   // validar comunidad autonoma
 
   if (consejo_comunal_id == null) {
+    $("#proyectoActualizar #comunidadAutonoma").prop("checked", true);
+    $("#proyectoActualizar #seccionConsejoComunal").hide();
   } else {
+    $("#proyectoActualizar #comunidadAutonoma").prop("checked", false);
+    $("#proyectoActualizar #seccionConsejoComunal").show();
   }
 
   integrantes.forEach((integrante) => {

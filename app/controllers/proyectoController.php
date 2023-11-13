@@ -319,9 +319,11 @@ class proyectoController extends controller
             $direccion = $proyecto->request->get('direccion');
             $motor_productivo = $proyecto->request->get('motor_productivo');
             $consejo_comunal_id = $proyecto->request->get('consejo_comunal_id');
+            $parroquia_id = $proyecto->request->get('parroquia_id');
             $tutor_in = $proyecto->request->get('tutor_in');
             $tutor_ex = $proyecto->request->get('tutor_ex');
             $tlf_tex = $proyecto->request->get('tlf_tex');
+
             $observaciones = $proyecto->request->get('observaciones');
             $cerrado = $proyecto->request->get('cerrado');
 
@@ -334,6 +336,8 @@ class proyectoController extends controller
                 array_push($idEstudiantes, $dataEstudiante['id']);
             }
 
+            $comunidadAutonoma = $proyecto->request->get('comunidad_autonoma');
+
             $this->proyecto->setProyectData([
                 'id' => $id,
                 'nombre' => $nombre,
@@ -343,7 +347,8 @@ class proyectoController extends controller
                 'direccion' => $direccion,
                 'resumen' => $resumen,
                 'motor_productivo' => $motor_productivo,
-                'consejo_comunal_id' => $consejo_comunal_id,
+                'parroquia_id' => $parroquia_id,
+                'consejo_comunal_id' => ($comunidadAutonoma == 1) ? null : $consejo_comunal_id,
                 'tutor_in' => $tutor_in,
                 'tlf_tex' => $tlf_tex,
                 'tutor_ex' => $tutor_ex,

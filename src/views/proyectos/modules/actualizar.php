@@ -17,7 +17,7 @@
                 <div class="row form-group">
                   <div class="col-lg-12">
                     <label class="form-label" for="nombre"><b>Nombre *</b></label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required name="nombre" id="nombre">
+                    <input type="text" class="form-control mb-1" placeholder="..." required name="nombre" id="nombre" max="255">
                   </div>
                 </div>
               </div>
@@ -25,7 +25,7 @@
               <div class="row form-group mb-3">
                 <div class="col-lg-6">
                   <label class="form-label" for="resumen"><b>Dirección</b></label>
-                  <textarea class="form-control" placeholder="..." required name="direccion" id="direccion" style="height: 70px"></textarea>
+                  <textarea class="form-control" placeholder="..." required name="direccion" id="direccion" style="height: 70px" max="255"></textarea>
                 </div>
                 <div class="col-lg-6 mb-3">
                   <label class="form-label" for="motor_productivo"><b>Motor Productivo</b></label>
@@ -45,13 +45,13 @@
 
                 <div class="col-lg-6">
                   <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
-                  <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex">
+                  <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex" max="255">
                 </div>
               </div>
               <div class="row form-group mb-3">
                 <div class="col-lg-6">
                   <label class="form-label" for="comunidad"><b>Comunidad *</b></label>
-                  <textarea class="form-control" placeholder="..." required name="comunidad" id="comunidad" style="height: 70px "></textarea>
+                  <textarea class="form-control" placeholder="..." required name="comunidad" id="comunidad" style="height: 70px " max="255"></textarea>
                 </div>
 
                 <div class="col-lg-6">
@@ -62,11 +62,11 @@
               <div class="row form-group mb-3">
                 <div class="col-lg-6">
                   <label class="form-label" for="resumen"><b>Resumen *</b></label>
-                  <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" id="resumen" style="height: 70px "></textarea>
+                  <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" id="resumen" style="height: 70px " max="255"></textarea>
                 </div>
                 <div class="col-lg-6">
                   <label class="form-label" for="observaciones"><b>Observaciones *</b></label>
-                  <textarea class="form-control" placeholder="..." id="observaciones" name="observaciones" id="observaciones" style="height: 70px "></textarea>
+                  <textarea class="form-control" placeholder="..." id="observaciones" name="observaciones" id="observaciones" style="height: 70px " max="255"></textarea>
                 </div>
               </div>
               <div class="row form-group mb-3">

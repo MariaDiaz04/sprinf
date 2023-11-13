@@ -120,8 +120,8 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `observaciones` text,
   `tutor_in` varchar(255),
   `tutor_ex` varchar(255),
-  `tlf_tin` int,
-  `tlf_tex` int,
+  `tlf_tin` varchar(12),
+  `tlf_tex` varchar(12),
   `estatus` int,
   `cerrado` bool DEFAULT false
 );
