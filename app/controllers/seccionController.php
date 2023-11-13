@@ -108,11 +108,7 @@ class seccionController extends controller
                 'observacion' => '"' . $observacion . '"',
                 'trayecto_id' => '"' . $trayectoId . '"',
             ]);
-
-
-
             //if (empty($codigo)) throw new Exception('Error inesperado al actualizar la sección.');
-
             http_response_code(200);
             echo json_encode($codigo);
         } catch (Exception $e) {

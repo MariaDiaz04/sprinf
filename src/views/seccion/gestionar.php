@@ -305,7 +305,7 @@
             Swal.fire({
               position: 'bottom-end',
               icon: 'success',
-              title: 'Materia editada con exito',
+              title: 'Seccion editada con exito',
               showConfirmButton: false,
               toast: true,
               timer: 1500
