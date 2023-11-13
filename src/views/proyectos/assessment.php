@@ -82,7 +82,7 @@
             <div class="my-3"></div>
 
             <?php foreach ($materia->individual as $dimension) : ?>
-              <div class="container">
+              <div class="container mb-3">
 
                 <div class="row">
 
@@ -181,7 +181,7 @@
                 title: error.responseText,
                 showConfirmButton: false,
                 toast: true,
-                timer: 2000
+                timer: 5000
               })
 
             },

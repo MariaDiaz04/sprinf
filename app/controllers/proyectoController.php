@@ -481,7 +481,7 @@ class proyectoController extends controller
 
                 $baremos[$materia['codigo']]['nombre'] = $materia['nombre'];
 
-
+                $baremos[$materia['codigo']]['individual'] = [];
                 $totalPonderado = 0;
                 foreach ($dimensiones as $key => $dimension) {
 
@@ -501,7 +501,7 @@ class proyectoController extends controller
                             }
                             $baremos[$materia['codigo']]['grupal'][$dimension['id']]['indicadores'] = $indicadores;
                         } else {
-                            $baremos[$materia['codigo']]['individual'] = [];
+
 
                             // $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['nombre'] = $dimension['nombre'];
                             $dimension['indicadores'] = [];
@@ -606,6 +606,7 @@ class proyectoController extends controller
 
 
             $baremos = $this->baremos->findByFase($proyecto['fase_id']);
+
 
             $integrantes = $this->proyecto->obtenerIntegrantes($proyectoId);
 
