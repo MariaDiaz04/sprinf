@@ -13,8 +13,8 @@ class inscripcion extends model
   public $fillable = [
     'profesor_id',
     'seccion_id',
-    'unidad_curricular_id',
     'estudiante_id',
+    'unidad_curricular_id',
     'calificacion',
     'estatus',
   ];
@@ -34,6 +34,19 @@ class inscripcion extends model
     } catch (Exception $th) {
       return $th;
     }
+  }
+
+  /**
+   * Obtener lista de estudiantes
+   * inscritos a una materia
+   *
+   * @param string $codigo
+   * @return array
+   */
+  function findBySeccion(string $seccion_id): array
+  {
+    $inscripcion = $this->select('inscripcion', [['seccion_id', '=', '"' . $seccion_id . '"']]);
+    return !$inscripcion ? [] : $inscripcion;
   }
 
   /**

@@ -2,16 +2,14 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Seccion </span>/ Gestión</div>
-
+        <div><span class="text-muted font-weight-light">Municipios </span>/ Gestión</div>
         <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
-
       </h4>
     </div>
   </div>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white">Seccion</h6>
+    <h6 class="card-header bg-primary text-white">Municipios</h6>
     <div class="card-body px-3 pt-3">
       <table id="example" class="display" style="width:100%">
         <thead>
@@ -34,7 +32,7 @@
           <h5 class="modal-title" id="crearLabel">Nueva Sección</h5>
 
         </div>
-        <form action="<?= APP_URL . $this->Route('seccion/guardar') ?>" method="post" id="guardar" name="Seccionguardar">
+        <form action="<?= APP_URL . $this->Route('Municipios/guardar') ?>" method="post" id="guardar" name="Municipiosguardar">
           <div class="modal-body">
             <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
             <input type="hidden" name="estatus" value="1">
@@ -45,19 +43,16 @@
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
                       <label class="form-label" for="trayecto_id">Trayecto *</label>
-                      <select class="form-select" name="trayecto_id" id="id">
+                     <!--  <select class="form-select" name="trayecto_id" id="id">
                         <option>Seleccione</option>
                         <?php foreach ($trayectos as $trayecto) : ?>
                           <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre" ?></option>
                         <?php endforeach; ?>
-                      </select>
+                      </select> -->
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Código *</label>
                       <input type="text" class="form-control mb-1" placeholder="IN...." pattern="([A-Z]{2,3})([1-9]){4}$" name="codigo" id="codigo" autocomplete="off">
-                      <h6 id="codigoCheck" style="color: red;">
-                        ** El código es requerido **
-                      </h6>
                     </div>
                   </div>
                   <div class="row form-group">
@@ -97,7 +92,7 @@
           <h5 class="modal-title" id="crearLabel">Actualizar sección</h5>
 
         </div>
-        <form action="<?= APP_URL . $this->Route('seccion/update') ?>" method="post" id="actualizar">
+        <form action="<?= APP_URL . $this->Route('Municipios/update') ?>" method="post" id="actualizar">
           <div class="modal-body">
             <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
             <div class="container-fluid">
@@ -106,11 +101,11 @@
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="trayecto_id">Trayectos *</label>
-                      <select class="form-select" name="trayecto_id" id="trayecto_idEdit">
+                     <!--  <select class="form-select" name="trayecto_id" id="trayecto_idEdit">
                      <?php foreach ($trayectos as $trayecto) : ?>
                           <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre" ?></option>
                         <?php endforeach; ?>
-                      </select>
+                      </select> -->
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Código *</label>
@@ -143,10 +138,10 @@
     </div>
   </div>
   <script>
-    let updateUrl = "<?= APP_URL . $this->Route('seccion/edit') ?>";
-    let deleteUrl = "<?= APP_URL . $this->Route('seccion/delete') ?>";
+    let updateUrl = "<?= APP_URL . $this->Route('municipios/edit') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('municipios/delete') ?>";
 
-    let regexSeccion = /^([A-Z]{2,3})([1-9]){4}/;
+    let regexMunicipios = /^([A-Z]{2,3})([1-9]){4}/;
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -160,7 +155,7 @@
 
 
       let table = new DataTable('#example', {
-        ajax: '<?= $this->Route('seccion/ssp') ?>',
+        ajax: '<?= $this->Route('Municipios/ssp') ?>',
         processing: true,
         serverSide: true,
         pageLength: 30,
@@ -239,7 +234,7 @@
           Swal.fire({
             position: 'bottom-end',
             icon: 'error',
-            title: 'No se puede crear una seccion sin datos',
+            title: 'No se puede crear una Municipios sin datos',
             showConfirmButton: false,
             toast: true,
             timer: 2000
@@ -305,7 +300,7 @@
             Swal.fire({
               position: 'bottom-end',
               icon: 'success',
-              title: 'Seccion editada con exito',
+              title: 'Materia editada con exito',
               showConfirmButton: false,
               toast: true,
               timer: 1500
@@ -336,10 +331,10 @@
     function renderUpdateForm(data) {
       $('#editar').modal('show')
       // seleccionar trayecto
-      $(`#actualizar #trayecto_idEdit option[value='${data.seccion.trayecto_id}']`).attr("selected", true);
-      $(`#actualizar #codigoEdit`).val(data.seccion.codigo);
-      $(`#actualizar #codigoEditTwo`).val(data.seccion.codigo);
-      $(`#actualizar #observacionEdit`).val(data.seccion.observacion);
+      $(`#actualizar #trayecto_idEdit option[value='${data.Municipios.trayecto_id}']`).attr("selected", true);
+      $(`#actualizar #codigoEdit`).val(data.Municipios.codigo);
+      $(`#actualizar #codigoEditTwo`).val(data.Municipios.codigo);
+      $(`#actualizar #observacionEdit`).val(data.Municipios.observacion);
 
     }
 
@@ -371,7 +366,7 @@
         type: "POST",
         url: deleteUrl,
         data: {
-          'seccion_id': id
+          'Municipios_id': id
         },
         error: function(error, status) {
           Swal.fire({
@@ -389,7 +384,7 @@
           Swal.fire({
             position: 'bottom-end',
             icon: 'success',
-            title: 'Seccion borrada con exito',
+            title: 'Municipios borrada con exito',
             showConfirmButton: false,
             toast: true,
             timer: 1500

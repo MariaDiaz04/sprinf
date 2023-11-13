@@ -288,13 +288,9 @@
 
       $('#guardar').submit(function(e) {
         e.preventDefault()
-
         toggleLoading(true, '#guardar');
-
-
         url = $(this).attr('action');
         data = $(this).serializeArray();
-
         $.ajax({
           type: "POST",
           url: url,
@@ -309,14 +305,11 @@
               toast: true,
               timer: 2000
             })
-
             console.log(error)
           },
           success: function(data, status) {
             table.ajax.reload();
-
             // usar sweetalerts
-            // console.log(data)
             Swal.fire({
               position: 'bottom-end',
               icon: 'success',
@@ -324,7 +317,6 @@
               showConfirmButton: false,
               toast: true,
               timer: 1500
-
             }).then(() => location.reload())
             $('#crear').modal('hide');
             $('#crear').modal('closed');

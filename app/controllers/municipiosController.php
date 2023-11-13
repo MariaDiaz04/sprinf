@@ -4,60 +4,53 @@ namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Model\seccion;
+use Model\municipio;
 use Exception;
 use Model\inscripcion;
 use Model\trayectos;
 
-class seccionController extends controller
+class municipioController extends controller
 {
 
-    private $seccion;
+    private $municipio;
     public $TRAYECTO;
     public $INSCRIPCION;
 
     function __construct()
     {
         $this->tokenExist();
-        $this->seccion = new seccion();
-        $this->TRAYECTO = new trayectos();
-        $this->INSCRIPCION = new inscripcion();
+        $this->municipio = new municipio();
     }
 
     public function index()
     {
-
-        $seccion = $this->seccion->all();
-        $trayectos = $this->TRAYECTO->all();
-
-
-        return $this->view('seccion/gestionar', [
-            'seccion' => $seccion,
-            'trayectos' => $trayectos
+        $municipio = $this->municipio->all();
+        return $this->view('municipio/gestionar', [
+            'municipio' => $municipio,
         ]);
     }
 
     public function create($request)
     {
-        $seccion = $this->seccion->Selectcod();
+        $municipio = $this->municipio->Selectcod();
         $trayectos = $this->TRAYECTO->all();
-        return $this->view('seccion/gestionar', ['seccion' => $seccion, 'trayectos' => $trayectos]);
+        return $this->view('municipio/gestionar', ['municipio' => $municipio, 'trayectos' => $trayectos]);
     }
 
-    public function store(Request $seccion)
+    public function store(Request $municipio)
 
     {
         try {
-            $codigo = $seccion->get('codigo');
-            $trayectoId = $seccion->get('trayecto_id');
-            $observacion = $seccion->get('observacion');
+            $codigo = $municipio->get('codigo');
+            $trayectoId = $municipio->get('trayecto_id');
+            $observacion = $municipio->get('observacion');
 
-            $this->seccion->setData($seccion->request->all());
+            $this->municipio->setData($municipio->request->all());
 
             // ejecutar transacción de insert
-            $codigo = $this->seccion->save();
+            $codigo = $this->municipio->save();
 
-            if (empty($codigo)) throw new Exception('Error inesperado al crear seccion.');
+            if (empty($codigo)) throw new Exception('Error inesperado al crear municipio.');
 
             http_response_code(200);
             echo json_encode($codigo);
@@ -81,9 +74,9 @@ class seccionController extends controller
             $codigo = $request->get('codigo');
 
 
-            $seccion = $this->seccion->find($codigo);
+            $municipio = $this->municipio->find($codigo);
 
-            $data['seccion'] = $seccion;
+            $data['municipio'] = $municipio;
 
             http_response_code(200);
             echo json_encode($data);
@@ -100,15 +93,19 @@ class seccionController extends controller
             $codigo = $request->get('codigo');
             $observacion = $request->get('observacion');
             $trayectoId = $request->get('trayecto_id');
-            if (!$seccion = $this->seccion->findOld($codigo)) {
+            if (!$municipio = $this->municipio->findOld($codigo)) {
                 return $this->page('errors/404');
             };
-            // asignar valores de seccion
-            $seccion->actualizar([
+            // asignar valores de municipio
+            $municipio->actualizar([
                 'observacion' => '"' . $observacion . '"',
                 'trayecto_id' => '"' . $trayectoId . '"',
             ]);
+
+
+
             //if (empty($codigo)) throw new Exception('Error inesperado al actualizar la sección.');
+
             http_response_code(200);
             echo json_encode($codigo);
         } catch (Exception $e) {
@@ -121,29 +118,29 @@ class seccionController extends controller
     {
 
         try {
-            $seccion_id = $request->get('seccion_id');
+            $municipio_id = $request->get('municipio_id');
 
             // verificar que no cuente con clases ya creadas
-            $this->checkInscripcion($seccion_id, 'eliminar');
+            $this->checkInscripcion($municipio_id, 'eliminar');
             // realizar eliminacion
-            $result = $this->seccion->deleteTransaction($seccion_id);
+            $result = $this->municipio->deleteTransaction($municipio_id);
             if (!$result) throw new Exception('Error inesperado al borrar la sección.');
             http_response_code(200);
-            echo json_encode($seccion_id);
+            echo json_encode($municipio_id);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());
         }
     }
 
-    function checkInscripcion(string $seccion_id, string $action): bool
+    function checkInscripcion(string $municipio_id, string $action): bool
     {
 
         // verificar que no cuente con insripciones
-        $inscripciones = $this->INSCRIPCION->findBySeccion($seccion_id);
+        $inscripciones = $this->INSCRIPCION->findBymunicipio($municipio_id);
         if (!!$inscripciones) {
             foreach ($inscripciones as $inscripcion) {
-                if (intval($inscripcion) > 0) throw new Exception('No puede '.$action.' datos de la seccion por que cuenta con incripciones ya creadas');
+                if (intval($inscripcion) > 0) throw new Exception('No puede '.$action.' datos de la municipio por que cuenta con incripciones ya creadas');
             }
         }
         return true;
@@ -152,7 +149,7 @@ class seccionController extends controller
     {
         try {
             http_response_code(200);
-            echo json_encode($this->seccion->generarSSP());
+            echo json_encode($this->municipio->generarSSP());
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());

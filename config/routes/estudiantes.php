@@ -14,13 +14,21 @@ $listaDeRutas['estudiante_manage'] =  new Route(
 
 $listaDeRutas['estudiante_edit'] =  new Route(
 
-  '/estudiantes/edit/{id}',
+  '/estudiantes/edit',
   [
     'controller' => estudianteController::class,
     'method' => 'edit',
   ]
 );
 
+$listaDeRutas['estudiante_update'] =  new Route(
+
+  '/estudiantes/update',
+  [
+    'controller' => estudianteController::class,
+    'method' => 'update',
+  ]
+);
 $listaDeRutas['/estudiantes/guardar'] =  new Route(
 
   '/estudiantes/guardar',
