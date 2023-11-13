@@ -29,6 +29,7 @@ class proyectoHistorico extends model
     'sector_consejo_comunal',
     'municipio',
     'parroquia',
+    'parroquia_id',
     'observaciones',
     'tutor_in',
     'tutor_ex',
@@ -57,6 +58,7 @@ class proyectoHistorico extends model
   public string $sector_consejo_comunal;
   public string $municipio;
   public string $parroquia;
+  public int $parroquia_id;
   public ?string $observaciones; //nullable property
   public string $tutor_in;
   public int $tlf_tex;
@@ -109,6 +111,7 @@ class proyectoHistorico extends model
         $this->motor_productivo = $proyecto['motor_productivo'];
         $this->municipio = $proyecto['municipio'];
         $this->parroquia = $proyecto['parroquia'];
+        $this->parroquia_id = $proyecto['parroquia_id'];
         $this->observaciones = $proyecto['observaciones'];
         $this->tutor_in = $proyecto['tutor_in'];
         $this->tutor_ex = $proyecto['tutor_ex'];

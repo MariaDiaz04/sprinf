@@ -5,7 +5,6 @@ namespace Controllers;
 use Model\permisos;
 use Model\materias;
 use Model\trayectos;
-use Model\clases;
 use Model\fase;
 use Model\malla;
 use Controllers\controller;
@@ -16,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 class materiasController extends controller
 {
     public $MATERIAS;
-    public $CLASES;
     public $PERMISOS;
     public $TRAYECTO;
     public $FASE;
@@ -26,7 +24,6 @@ class materiasController extends controller
     {
         $this->tokenExist();
         $this->MATERIAS = new materias();
-        $this->CLASES = new clases();
         $this->PERMISOS = new permisos();
         $this->TRAYECTO = new trayectos();
         $this->FASE = new fase();
@@ -36,11 +33,14 @@ class materiasController extends controller
     public function index(Request $materia, $idTrayecto)
     {
 
-        $permisos = $this->PERMISOS->consult(2,$_SESSION['rol_id']);
-        
+        $permisos = $this->PERMISOS->consult(2, $_SESSION['rol_id']);
 
-        if ($permisos != null) { $newpermisos = $permisos->fillable;}
-        elseif($permisos == null){  $newpermisos = $permisos;}
+
+        if ($permisos != null) {
+            $newpermisos = $permisos->fillable;
+        } elseif ($permisos == null) {
+            $newpermisos = $permisos;
+        }
         $materias = $this->MATERIAS->all();
         $trayectos = $this->TRAYECTO->all();
         $trayecto = $this->TRAYECTO->find($idTrayecto);
@@ -231,7 +231,7 @@ class materiasController extends controller
      */
     function checkMateria(string $codigo, string $action): bool
     {
- /*        $clases = $this->MATERIAS->findByUnidadCurricularId($codigo);
+        /*        $clases = $this->MATERIAS->findByUnidadCurricularId($codigo);
         return  json_encode($clases);
         if (!empty($clases)) throw new Exception("No puede $action datos de materia que cuenta con incripciones ya creadas");
  */

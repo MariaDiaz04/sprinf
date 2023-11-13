@@ -196,6 +196,7 @@ CREATE TABLE `sprinf_bd`.`proyecto_historico` (
   `telefono_consejo_comunal` varchar(255),
   `sector_consejo_comunal` varchar(255),
   `municipio` varchar(255),
+  `parroquia_id` int,
   `parroquia` varchar(255),
   `observaciones` text,
   `tutor_in` varchar(255),

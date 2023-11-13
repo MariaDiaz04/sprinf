@@ -20,6 +20,7 @@ $(document).ready(function (e) {
       direccion,
       resumen,
       consejo_comunal_id,
+      parroquia_id,
       motor_productivo,
       tlf_tex,
       comunidad,
@@ -50,6 +51,12 @@ $(document).ready(function (e) {
       .change();
 
     $(`#proyectoGuardarHistorico #selectTutorIn option[value="${tutor_in}"]`)
+      .prop("selected", "selected")
+      .change();
+
+    $(
+      `#proyectoGuardarHistorico #selectParroquia option[value="${parroquia_id}"]`
+    )
       .prop("selected", "selected")
       .change();
 

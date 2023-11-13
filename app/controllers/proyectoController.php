@@ -117,6 +117,7 @@ class proyectoController extends controller
 
         $historico = $this->proyectoHistorico->all();
 
+
         if (!$historico) return [];
 
         $group = [];
@@ -136,6 +137,7 @@ class proyectoController extends controller
                     $group[$item['id_proyecto']]['motor_productivo'] = $item['motor_productivo'];
                     $group[$item['id_proyecto']]['direccion'] = $item['direccion'];
                     $group[$item['id_proyecto']]['consejo_comunal_id'] = $item['consejo_comunal_id'];
+                    $group[$item['id_proyecto']]['parroquia_id'] = $item['parroquia_id'];
                     $group[$item['id_proyecto']]['codigo_trayecto'] = $item['codigo_trayecto'];
                     $group[$item['id_proyecto']]['codigo_siguiente_trayecto'] = $item['codigo_siguiente_trayecto'];
                 }
