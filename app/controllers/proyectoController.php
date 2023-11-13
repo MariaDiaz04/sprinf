@@ -238,6 +238,11 @@ class proyectoController extends controller
             $observaciones = $nuevoProyecto->request->get('observaciones');
             $id = $nuevoProyecto->request->get('id');
 
+
+            $comunidadAutonoma = $nuevoProyecto->request->get('comunidad_autonoma');
+
+            $parroquia_id = $nuevoProyecto->request->get('parroquia_id');
+
             $proyectData = [
                 'nombre' => $nombre,
                 'comunidad' => $comunidad,
@@ -246,9 +251,10 @@ class proyectoController extends controller
                 'direccion' => $direccion,
                 'resumen' => $resumen,
                 'motor_productivo' => $motor_productivo,
-                'consejo_comunal_id' => (int)$consejo_comunal_id,
+                'consejo_comunal_id' => ($comunidadAutonoma == 1) ? null : $consejo_comunal_id,
                 'tutor_in' => $tutor_in,
                 'tutor_ex' => $tutor_ex,
+                'parroquia_id' => $parroquia_id,
                 'tlf_tex' => $tlf_tex,
                 'observaciones' => $observaciones,
                 'integrantes' => $idEstudiantes
@@ -257,8 +263,6 @@ class proyectoController extends controller
             if (isset($id)) {
                 $proyectData['id'] = $id;
             }
-
-
 
             $this->proyecto->setProyectData($proyectData);
             $result = $this->proyecto->insertTransaction();

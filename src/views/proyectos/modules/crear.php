@@ -20,7 +20,7 @@
               </div>
               <div class="col-lg-9">
                 <label class="form-label" for="nombre"><b>Nombre *</b></label>
-                <input type="text" class="form-control mb-1" placeholder="..." required name="nombre">
+                <input type="text" class="form-control mb-1" placeholder="..." required name="nombre" max="255">
               </div>
             </div>
             <div class="row form-group mb-3">
@@ -36,7 +36,7 @@
 
               <div class="col-lg-6">
                 <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
-                <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex">
+                <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" max="255">
               </div>
             </div>
             <div class="row form-group mb-3">
@@ -46,7 +46,7 @@
               </div>
               <div class="col-lg-6">
                 <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
-                <input type="text" class="form-control mb-1" placeholder="..." required name="tlf_tex">
+                <input type="number" class="form-control mb-1" placeholder="..." required name="tlf_tex">
               </div>
             </div>
 

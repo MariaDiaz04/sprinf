@@ -301,7 +301,7 @@ $(document).ready(function (e) {
           timer: 1000,
         }).then(() => location.reload());
         document.getElementById("proyectoGuardar").reset();
-        // $("#crear").modal("hide");
+        $("#crear").modal("hide");
       },
     });
   });

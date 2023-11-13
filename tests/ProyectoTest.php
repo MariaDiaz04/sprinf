@@ -6,108 +6,120 @@ use Model\proyecto;
 
 final class ProyectoTest extends TestCase
 {
-  protected static Proyecto $proyecto;
-
-  public static  function setUpBeforeClass(): void
-  {
-    parent::setUpBeforeClass();
-
-    self::$proyecto = new Proyecto();
-
-    $data = [
-      'id' => 900,
-      'nombre' => 'Proyecto de Prueba',
-      'comunidad' => 'UPTAEB',
-      'fase_id' => 'TR2_1',
-      'estatus' => 1,
-      'direccion' => 'Av. La Salle',
-      'resumen' => 'Proyecto sociotecnologico',
-      'municipio' => 'Iribarren',
-      'parroquia' => 'Ana Soto',
-      'motor_productivo' => 'Tecnologia',
-      'tutor_in' => 'Sonia',
-      'tutor_ex' => 'Jose',
-      'integrantes' => ['e-63578', 'e-77765', 'e-80516']
-    ];
-    self::$proyecto->setProyectData($data);
-  }
-
+  protected static int $idProyecto;
 
   public function testInsertTransaction(): void
   {
-    $resultado = self::$proyecto->insertTransaction();
+    $proyecto = new Proyecto();
+    $comunidadAutonoma = 1;
+    $data = [
+      'cerrado' => 0,
+      'nombre' => 'Gestion de Proyectos PNFI',
+      'fase_id' => 'TR2_1',
+      'comunidad' => 'UPTAEB',
+      'direccion' => 'Av. La Salle',
+      'resumen' => 'Proyecto sociotecnologico',
+      'consejo_comunal_id' => ($comunidadAutonoma == 1) ? null : 1,
+      'motor_productivo' => 'Productivo',
+      'parroquia_id' => 1,
+      'tutor_in' => 'p-135482354',
+      'tutor_ex' => 'Jose',
+      'observaciones' => 'asdasd',
+      'tlf_tex' => 3232323,
+      'integrantes' => ['e-63578', 'e-77765', 'e-80516'],
+    ];
+    $proyecto->setProyectData($data);
+
+    $resultado = $proyecto->insertTransaction();
     $this->assertEquals(true, $resultado);
+
+    self::$idProyecto = $proyecto->id;
+  }
+
+  function testFind(): void
+  {
+    $proyecto = new Proyecto();
+    $infoProyecto = $proyecto->find(self::$idProyecto);
+    $this->assertNotEmpty($infoProyecto);
+    $this->assertEquals('Gestion de Proyectos PNFI', $infoProyecto['nombre']);
+    $this->assertEquals(null, $infoProyecto['consejo_comunal_id']);
   }
 
   function testActualizar(): void
   {
-
+    $proyecto = new Proyecto();
+    $comunidadAutonoma = 0;
     $data = [
-      'id' => 900,
-      'nombre' => 'Proyecto de Prueba Actualizado', // actualizacion de nombre
-      'comunidad' => 'UPTAEB',
+      'id' => self::$idProyecto,
+      'cerrado' => 0,
+      'nombre' => 'Actualizacion Gestion de Proyectos PNFI',
       'fase_id' => 'TR2_1',
-      'estatus' => 1,
+      'comunidad' => 'UPTAEB',
       'direccion' => 'Av. La Salle',
       'resumen' => 'Proyecto sociotecnologico',
-      'municipio' => 'Iribarren',
-      'parroquia' => 'Ana Soto',
-      'motor_productivo' => 'Tecnologia',
-      'tutor_in' => 'Sonia',
+      'consejo_comunal_id' => ($comunidadAutonoma == 1) ? null : 1,
+      'motor_productivo' => 'Productivo',
+      'parroquia_id' => 1,
+      'tutor_in' => 'p-135482354',
       'tutor_ex' => 'Jose',
-      'cerrado' => 0,
+      'observaciones' => 'asdasd',
+      'tlf_tex' => 3232323,
+      'integrantes' => ['e-63578', 'e-77765', 'e-80516'],
     ];
 
-    self::$proyecto->setProyectData($data);
+    $proyecto->setProyectData($data);
 
-    $resultado = self::$proyecto->actualizar();
+    $resultado = $proyecto->actualizar();
 
     $this->assertEquals(true, $resultado);
 
-    $proyecto = self::$proyecto->find(900);
+    $proyectoActualizado = $proyecto->find(self::$idProyecto);
 
-    $this->assertNotEmpty($proyecto);
-    $this->assertEquals('Proyecto de Prueba Actualizado', $proyecto['nombre']); // verifica nombre actualizado
+    $this->assertNotEmpty($proyectoActualizado);
+    $this->assertEquals('Actualizacion Gestion de Proyectos PNFI', $proyectoActualizado['nombre']); // verifica nombre actualizado
+    $this->assertEquals(1, $proyectoActualizado['consejo_comunal_id']); // verifica consejo comunal actualizado
   }
 
   function testActualizarIntegrantes(): void
   {
-    $proyecto = self::$proyecto->find(900);
-    $this->assertNotEmpty($proyecto);
-    $integrantes = self::$proyecto->obtenerIntegrantes(900);
+    $proyecto = new Proyecto();
+    $proyectoPrueba = $proyecto->find(self::$idProyecto);
+    $this->assertNotEmpty($proyectoPrueba);
+    $integrantes = $proyecto->obtenerIntegrantes(self::$idProyecto);
     $this->assertNotEmpty($integrantes);
-    $idIntegrantes = array_column($integrantes, 'estudiante_id');
-
+    $idIntegrantes = array_column($integrantes, 'id');
 
     $this->assertContains('e-80516', $idIntegrantes);
 
     $idIntegrantes = array_diff($idIntegrantes, ["e-80516"]);
 
     $data = [
-      'id' => 900,
+      'id' => self::$idProyecto,
       'integrantes' => $idIntegrantes,
     ];
-    self::$proyecto->setProyectData($data);
-    $resultado = self::$proyecto->actualizarIntegrantes();
+    $proyecto->setProyectData($data);
+    $resultado = $proyecto->actualizarIntegrantes();
 
     $this->assertEquals(true, $resultado);
 
-    $integrantesActualizados = self::$proyecto->obtenerIntegrantes(900);
+    $integrantesActualizados = $proyecto->obtenerIntegrantes(self::$idProyecto);
     $this->assertNotEmpty($integrantesActualizados);
-    $integrantesActualizados = array_column($integrantesActualizados, 'estudiante_id');
+    $integrantesActualizados = array_column($integrantesActualizados, 'id');
     // verificar que no contenga integrante eliminado de grupo de proyecto
     $this->assertNotContains('e-80516', $integrantesActualizados);
   }
 
   public function testFindByStudent(): void
   {
-    $proyecto = self::$proyecto->findByStudent('e-63578');
-    $this->assertNotEmpty($proyecto);
+    $proyecto = new Proyecto();
+    $proyectoPrueba = $proyecto->findByStudent('e-63578');
+    $this->assertNotEmpty($proyectoPrueba);
   }
 
   function testRemover(): void
   {
-    $resultado = self::$proyecto->remover(900);
+    $proyecto = new Proyecto();
+    $resultado = $proyecto->remover(self::$idProyecto);
     $this->assertEquals(true, $resultado);
   }
 
