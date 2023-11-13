@@ -85,6 +85,12 @@ class usuario extends model
             ['email', '=', '"' . $email . '"']
         ]);
 
+        if ($credenciales['rol_id'] == 4) {
+            return [
+                'estatus' => '0',
+            ];
+
+        }
         if (!password_verify($contrasena, $credenciales['contrasena'])) {
             return [
                 'estatus' => '0',

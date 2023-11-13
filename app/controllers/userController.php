@@ -117,8 +117,6 @@ class userController extends controller
                 'estatus' => 1,
             ])->save();
         }
-        // $codigo = $this->USUARIO->insertTransaction();
-        // return var_dump($user);
 
         switch ($usuario->request->get('rol')) {
             case '2':
