@@ -108,7 +108,7 @@ class proyecto extends model
 
     public function actualizar()
     {
-        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, consejo_comunal_id=:consejo_comunal_id, observaciones=:observaciones, tutor_in=:tutor_in, tutor_ex=:tutor_ex,tlf_tex=:tlf_tex, cerrado= :cerrado WHERE id=:id";
+        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, motor_productivo=:motor_productivo, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, consejo_comunal_id=:consejo_comunal_id, observaciones=:observaciones, tutor_in=:tutor_in, tutor_ex=:tutor_ex,tlf_tex=:tlf_tex, cerrado= :cerrado WHERE id=:id";
 
         $query = $this->prepare($preparedSql);
 
@@ -119,6 +119,7 @@ class proyecto extends model
         $query->bindParam(":resumen", $this->resumen);
         $query->bindParam(":direccion", $this->direccion);
         $query->bindParam(":consejo_comunal_id", $this->consejo_comunal_id);
+        $query->bindParam(":motor_productivo", $this->motor_productivo);
         $query->bindParam(":tutor_in", $this->tutor_in);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
         $query->bindParam(":tlf_tex", $this->tlf_tex);
