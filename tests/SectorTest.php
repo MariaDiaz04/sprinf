@@ -2,9 +2,9 @@
 
 
 use PHPUnit\Framework\TestCase;
-use Model\indicadores;
+use Model\sector;
 
-final class IndicadoresTest extends TestCase
+final class SectorTest extends TestCase
 {
   protected static int $idIndicadorPrueba;
 
@@ -12,47 +12,45 @@ final class IndicadoresTest extends TestCase
   public function testCreacion(): void
   {
 
-    $indicadores = new indicadores();
-    $indicadores->setData([
-      'dimension_id' => '10',
-      'nombre' => 'Indicador de prueba',
-      'ponderacion' => 1
+    $sector = new sector();
+    $sector->setData([
+      'parroquia_id' => '10',
+      'nombre' => 'Eje 5',
     ]);
 
-    $resultado = $indicadores->save();
+    $resultado = $sector->save();
 
-    self::$idIndicadorPrueba = $indicadores->id;
+    self::$idIndicadorPrueba = $sector->id;
     $this->assertEquals(true, $resultado);
   }
 
   function testActualizacion(): void
   {
-    $indicadores = new indicadores();
-    $indicadores->setData([
+    $sector = new sector();
+    $sector->setData([
       'id' => self::$idIndicadorPrueba,
-      'dimension_id' => '10',
-      'nombre' => 'Indicador de prueba Actualizado',
-      'ponderacion' => 1
+      'parroquia_id' => '10',
+      'nombre' => 'Eje 5 Actualizado',
     ]);
 
-    $resultado = $indicadores->actualizar();
+    $resultado = $sector->actualizar();
 
     $this->assertEquals(true, $resultado);
 
-    $indicadores = $indicadores->find($indicadores->id);
+    $sectorInfo = $sector->find($sector->id);
 
-    $this->assertNotEmpty($indicadores);
-    $this->assertEquals('Indicador de prueba Actualizado', $indicadores['nombre']);
+    $this->assertNotEmpty($sectorInfo);
+    $this->assertEquals('Eje 5 Actualizado', $sectorInfo['nombre']);
   }
 
   function testBorrado(): void
   {
-    $indicadores = new indicadores();
-    $indicadores->setData([
+    $sector = new sector();
+    $sector->setData([
       'id' => self::$idIndicadorPrueba
     ]);
 
-    $resultado = $indicadores->remove();
+    $resultado = $sector->remove();
     $this->assertEquals(true, $resultado);
   }
 

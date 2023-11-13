@@ -4,6 +4,8 @@ const Toast = Swal.mixin({
   showConfirmButton: false,
 });
 
+let regexAlfabeto = /^[a-z]+$/i;
+
 $(document).ready(function (e) {
   // cargar informacion en formulario de registro historico
   $("#cargarInformacion").click(function (e) {
@@ -203,6 +205,26 @@ $(document).ready(function (e) {
     }
   });
 
+  $("#proyectoGuardar #tlf_tex").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!phoneNumbers(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoActualizar #tlf_tex").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!phoneNumbers(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
   $("#proyectoGuardar").submit(function (e) {
     e.preventDefault();
 
@@ -257,6 +279,52 @@ $(document).ready(function (e) {
       toggleLoading(false);
       return false;
     }
+
+    // validar nombre
+
+    nombre = $("#proyectoGuardar #nombre").val();
+
+    if (!onlyLetters(nombre)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de proyecto no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tutor_ex = $("#proyectoGuardar #tutor_ex").val();
+    if (!onlyLetters(tutor_ex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tlf_tex = $("#proyectoGuardar #tlf_tex").val();
+    if (!phoneNumbers(tlf_tex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Numero de telefono de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
     for (const idIntegrante in items) {
       integrante = {};
       if (Object.hasOwnProperty.call(items, idIntegrante)) {
@@ -310,6 +378,50 @@ $(document).ready(function (e) {
     e.preventDefault();
 
     formData = $(this).serializeArray();
+
+    nombre = $("#proyectoActualizar #nombre").val();
+
+    if (!onlyLetters(nombre)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de proyecto no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tutor_ex = $("#proyectoActualizar #tutor_ex").val();
+    if (!onlyLetters(tutor_ex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tlf_tex = $("#proyectoActualizar #tlf_tex").val();
+    if (!phoneNumbers(tlf_tex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Numero de telefono de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
     if ($("#cuerpoTablaActualizarEstudiante").children("tr").length <= 0) {
       Swal.fire({
         position: "bottom-end",
@@ -421,6 +533,7 @@ async function editarIntegrantes(id) {
     cerrado,
     nombre,
     consejo_comunal_id,
+    parroquia_id,
     direccion,
     tutor_in,
     tutor_ex,
@@ -455,6 +568,11 @@ async function editarIntegrantes(id) {
   $("#actualizar #motor_productivo").val(motor_productivo);
   $("#actualizar #resumen").val(resumen);
   $("#actualizar #cerrado").val(cerrado);
+
+  $(`#proyectoActualizar #selectParroquia option[value="${parroquia_id}"]`)
+    .prop("selected", "selected")
+    .change();
+
   $(
     `#proyectoActualizar #selectConsejoComunal option[value="${consejo_comunal_id}"]`
   )
@@ -464,6 +582,12 @@ async function editarIntegrantes(id) {
   $(`#proyectoActualizar #selectTutorIn option[value="${tutor_in}"]`)
     .prop("selected", "selected")
     .change();
+
+  // validar comunidad autonoma
+
+  if (consejo_comunal_id == null) {
+  } else {
+  }
 
   integrantes.forEach((integrante) => {
     // imprimir tabla
@@ -576,10 +700,18 @@ function removeProject(id) {
             title: "Proyecto Eliminado Exitosamente",
             showConfirmButton: false,
             toast: true,
-            timer: 2000,
+            timer: 1000,
           }).then(() => location.reload());
         },
       });
     }
   });
+}
+
+function onlyLetters(str) {
+  return /^[A-Za-zñáéíóúü ]*$/.test(str);
+}
+
+function phoneNumbers(number) {
+  return /^[04][0-9]{10}$/.test(number);
 }

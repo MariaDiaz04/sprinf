@@ -11,7 +11,6 @@ use Model\baremos;
 use Model\dimension;
 use Model\materias;
 use Model\malla;
-use Model\tutor;
 use Model\trayectos;
 use Exception;
 
