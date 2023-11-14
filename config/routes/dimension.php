@@ -2,7 +2,8 @@
 
 use Symfony\Component\Routing\Route;
 use Controllers\dimensionController;
-
+use Controllers\indicadoresController;
+use Model\indicadores;
 
 $listaDeRutas['dimension_edit'] = new Route(
 
@@ -39,9 +40,9 @@ $listaDeRutas['/dimensiones/actualizar'] = new Route(
   ]
 );
 
-$listaDeRutas['dimensiones/ssp/{idTrayecto}'] = new Route(
+$listaDeRutas['dimensiones/ssp/{codigoMateria}'] = new Route(
 
-  '/dimensiones/ssp/{idTrayecto}',
+  '/dimensiones/ssp/{codigoMateria}',
   [
     'controller' => dimensionController::class,
     'method' => 'ssp',
@@ -50,9 +51,59 @@ $listaDeRutas['dimensiones/ssp/{idTrayecto}'] = new Route(
 
 $listaDeRutas['dimension_manage'] = new Route(
 
-  '/dimensiones/{idTrayecto}',
+  '/dimensiones/{codigoMateria}',
   [
     'controller' => dimensionController::class,
     'method' => 'index',
+  ]
+);
+
+$listaDeRutas['indicadores_manage'] = new Route(
+
+  '/indicadores/{idDimension}',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'index',
+  ]
+);
+
+$listaDeRutas['indicadores_obtener'] = new Route(
+  '/indicador/obtener/{id}',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'obtener',
+  ]
+);
+
+$listaDeRutas['indicadores_create'] = new Route(
+  '/indicador/guardar',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'store',
+  ]
+);
+
+$listaDeRutas['indicadores_update'] = new Route(
+  '/indicador/actualizar',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'update',
+  ]
+);
+
+$listaDeRutas['indicadores_borrar'] = new Route(
+  '/indicador/borrar',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'delete',
+  ]
+);
+
+$listaDeRutas['indicadores_ssp'] = new Route(
+
+  '/indicadores/ssp/{idDimension}',
+  [
+    'controller' => indicadoresController::class,
+    'method' => 'ssp',
   ]
 );

@@ -16,7 +16,7 @@
                     <select class="form-select" name="id" id="selectProyecto" required>
                       <option disabled selected value> -- Seleccione un Proyecto -- </option>
                       <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
-                        <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-tlf_tex="<?= $proyecto->tlf_tex ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-resumen="<?= $proyecto->resumen ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-direccion="<?= $proyecto->direccion ?>" data-consejo_comunal_id="<?= $proyecto->consejo_comunal_id ?>" data-codigo-siguiente-trayecto="<?= $proyecto->codigo_siguiente_trayecto ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>">
+                        <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-tlf_tex="<?= $proyecto->tlf_tex ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-resumen="<?= $proyecto->resumen ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-direccion="<?= $proyecto->direccion ?>" data-consejo_comunal_id="<?= $proyecto->consejo_comunal_id ?>" data-codigo-siguiente-trayecto="<?= $proyecto->codigo_siguiente_trayecto ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>" data-parroquia_id="<?= $proyecto->parroquia_id ?>">
                           <?= "$proyecto->display" ?></option>
                       <?php endforeach; ?>
                     </select>
@@ -54,7 +54,15 @@
                 </div>
 
                 <div class="row form-group mb-2">
-                  <div class="col-lg-12">
+                  <div class="col-lg-6">
+                    <label class="form-label" for="selectParroquia"><b>Parroquia *</b></label>
+                    <select class="form-select" name="parroquia_id" id="selectParroquia" required disabled>
+                      <?php foreach ($parroquias as $parroquia) : ?>
+                        <option value="<?= $parroquia->parroquia_id ?>"><?= "$parroquia->parroquia_nombre" ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                  <div class="col-lg-6">
                     <label class="form-label" for="consejo_comunal_id"><b>Consejo Comunal *</b></label>
                     <select class="form-select" name="consejo_comunal_id" id="selectConsejoComunal" required disabled>
                       <?php foreach ($consejosComunales as $consejoComunal) : ?>
@@ -62,6 +70,9 @@
                       <?php endforeach; ?>
                     </select>
                   </div>
+                </div>
+                <div class="row form-group mb-2">
+
                   <div class="col-lg-6">
                     <label class="form-label" for="motor_productivo"><b>Motor Productivo *</b></label>
                     <textarea class="form-control" placeholder="..." id="motor_productivo" name="motor_productivo" style="height: 50px" readonly required></textarea>

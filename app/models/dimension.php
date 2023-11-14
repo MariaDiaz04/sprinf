@@ -247,23 +247,19 @@ class dimension extends model
     return true;
   }
 
-  function remover($id): bool
+  function remover(): bool
   {
     try {
       parent::beginTransaction();
-      $indicadores = $this->obtenerInidicadores();
 
-      foreach ($indicadores as $indicador) {
-        $this->removerInidicador($indicador['id']);
-      }
       $resultado = $this->removerDimension();
-      if (!$resultado) return false;
+
+      if (!$resultado) throw new Exception('No se pudo borrar la dimensión');
       parent::commit();
       return true;
     } catch (Exception $e) {
       parent::rollBack();
-      echo $e->getMessage();
-      exit();
+      var_dump($e->getMessage() . "\n" . $e->getTraceAsString());
       $this->error = [
         'code' => $e->getCode(),
         'message' => $e->getMessage(),
@@ -342,7 +338,7 @@ class dimension extends model
    *
    * @return array
    */
-  public function generarComplexSSP(string $idTrayecto): array
+  public function generarComplexSSP(string $codigoMateria): array
   {
     $columns = array(
       array(
@@ -374,6 +370,6 @@ class dimension extends model
         'dt'        => 6
       )
     );
-    return $this->getComplexSSP('detalles_dimension', 'id', $columns, ['condition' => "codigo_trayecto = '$idTrayecto'"]);
+    return $this->getComplexSSP('detalles_dimension', 'id', $columns, ['condition' => "unidad_id = '$codigoMateria'"]);
   }
 }

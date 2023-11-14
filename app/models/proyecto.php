@@ -19,6 +19,8 @@ class proyecto extends model
         'direccion',
         'resumen',
         'consejo_comunal_id',
+        'motor_productivo',
+        'parroquia_id',
         'tutor_in',
         'tutor_ex',
         'observaciones',
@@ -32,7 +34,9 @@ class proyecto extends model
     public string $fase_id;
     public string $nombre;
     public string $direccion;
-    public int $consejo_comunal_id;
+    public string $motor_productivo;
+    public ?int $consejo_comunal_id;
+    public int $parroquia_id;
     public string $resumen;
     public string $comunidad;
     public string $tutor_in;
@@ -68,11 +72,11 @@ class proyecto extends model
     {
         $preparedSql = "";
         if ($id) {
-            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, consejo_comunal_id , observaciones,direccion, tutor_in, tutor_ex, tlf_tex,cerrado) "
-                . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :consejo_comunal_id , :observaciones,:direccion,  :tutor_in, :tutor_ex,:tlf_tex, 0)";
+            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, motor_productivo,consejo_comunal_id, parroquia_id , observaciones,direccion, tutor_in, tutor_ex, tlf_tex,cerrado) "
+                . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :motor_productivo,:consejo_comunal_id, :parroquia_id , :observaciones,:direccion,  :tutor_in, :tutor_ex,:tlf_tex, 0)";
         } else {
-            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen,consejo_comunal_id , observaciones, direccion, tutor_in, tutor_ex,tlf_tex, cerrado) "
-                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :consejo_comunal_id , :observaciones, :direccion, :tutor_in, :tutor_ex,:tlf_tex, 0)";
+            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen,motor_productivo,consejo_comunal_id, parroquia_id , observaciones, direccion, tutor_in, tutor_ex,tlf_tex, cerrado) "
+                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :motor_productivo,:consejo_comunal_id, :parroquia_id , :observaciones, :direccion, :tutor_in, :tutor_ex,:tlf_tex, 0)";
         }
         $query = $this->prepare($preparedSql);
 
@@ -85,15 +89,16 @@ class proyecto extends model
         $query->bindParam(":comunidad", $this->comunidad);
         $query->bindParam(":resumen", $this->resumen);
         $query->bindParam(":direccion", $this->direccion);
+        $query->bindParam(":motor_productivo", $this->motor_productivo);
         $query->bindParam(":consejo_comunal_id", $this->consejo_comunal_id);
         $query->bindParam(":tutor_in", $this->tutor_in);
+        $query->bindParam(":parroquia_id", $this->parroquia_id);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
         $query->bindParam(":observaciones", $this->observaciones);
         $query->bindParam(":tlf_tex", $this->tlf_tex);
 
 
         if ($query->execute()) {
-
             $this->id = $this->lastInsertId();
             return $this->id;
         } else {
@@ -103,7 +108,7 @@ class proyecto extends model
 
     public function actualizar()
     {
-        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, consejo_comunal_id=:consejo_comunal_id, observaciones=:observaciones, tutor_in=:tutor_in, tutor_ex=:tutor_ex,tlf_tex=:tlf_tex, cerrado= :cerrado WHERE id=:id";
+        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre,parroquia_id=:parroquia_id, motor_productivo=:motor_productivo, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, consejo_comunal_id=:consejo_comunal_id, observaciones=:observaciones, tutor_in=:tutor_in, tutor_ex=:tutor_ex,tlf_tex=:tlf_tex, cerrado= :cerrado WHERE id=:id";
 
         $query = $this->prepare($preparedSql);
 
@@ -114,6 +119,8 @@ class proyecto extends model
         $query->bindParam(":resumen", $this->resumen);
         $query->bindParam(":direccion", $this->direccion);
         $query->bindParam(":consejo_comunal_id", $this->consejo_comunal_id);
+        $query->bindParam(":parroquia_id", $this->parroquia_id);
+        $query->bindParam(":motor_productivo", $this->motor_productivo);
         $query->bindParam(":tutor_in", $this->tutor_in);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
         $query->bindParam(":tlf_tex", $this->tlf_tex);

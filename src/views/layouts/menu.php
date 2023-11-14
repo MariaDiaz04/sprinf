@@ -132,29 +132,29 @@
           <div data-i18n="Analytics">Baremos</div>
         </a>
       </li> -->
-        <li class="menu-item <?= in_array($this->currentPath(), ['dimensiones']) ? 'open' : '' ?>">
+        <li class="menu-item <?= in_array($this->currentPath(), ['baremos', 'dimensiones']) ? 'open' : '' ?>">
           <a href="javascript:void(0)" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-poll"></i>
             <div data-i18n="Analytics">Baremos</div>
           </a>
           <ul class="menu-sub">
             <li class="menu-item <?= $this->currentLastPath() == 'TR1' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('dimensiones/TR1') ?>" class="menu-link">
+              <a href="<?= APP_URL . $this->Route('baremos/TR1') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto I</div>
               </a>
             </li>
             <li class="menu-item <?= $this->currentLastPath() == 'TR2' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('dimensiones/TR2') ?>" class="menu-link">
+              <a href="<?= APP_URL . $this->Route('baremos/TR2') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto II</div>
               </a>
             </li>
             <li class="menu-item <?= $this->currentLastPath() == 'TR3' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('dimensiones/TR3') ?>" class="menu-link">
+              <a href="<?= APP_URL . $this->Route('baremos/TR3') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto III</div>
               </a>
             </li>
             <li class="menu-item <?= $this->currentLastPath() == 'TR4' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('dimensiones/TR4') ?>" class="menu-link">
+              <a href="<?= APP_URL . $this->Route('baremos/TR4') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto IV</div>
               </a>
             </li>
@@ -278,29 +278,29 @@
           <div data-i18n="Analytics">Baremos</div>
         </a>
       </li> -->
-        <li class="menu-item <?= in_array($this->currentPath(), ['dimensiones']) ? 'open' : '' ?>">
+        <li class="menu-item <?= in_array($this->currentPath(), ['baremos']) ? 'open' : '' ?>">
           <a href="javascript:void(0)" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-poll"></i>
             <div data-i18n="Analytics">Baremos</div>
           </a>
           <ul class="menu-sub">
             <li class="menu-item <?= $this->currentLastPath() == 'TR1' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('dimensiones/TR1') ?>" class="menu-link">
+              <a href="<?= APP_URL . $this->Route('baremos/TR1') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto I</div>
               </a>
             </li>
             <li class="menu-item <?= $this->currentLastPath() == 'TR2' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('dimensiones/TR2') ?>" class="menu-link">
+              <a href="<?= APP_URL . $this->Route('baremos/TR2') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto II</div>
               </a>
             </li>
             <li class="menu-item <?= $this->currentLastPath() == 'TR3' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('dimensiones/TR3') ?>" class="menu-link">
+              <a href="<?= APP_URL . $this->Route('baremos/TR3') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto III</div>
               </a>
             </li>
             <li class="menu-item <?= $this->currentLastPath() == 'TR4' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('dimensiones/TR4') ?>" class="menu-link">
+              <a href="<?= APP_URL . $this->Route('baremos/TR4') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto IV</div>
               </a>
             </li>

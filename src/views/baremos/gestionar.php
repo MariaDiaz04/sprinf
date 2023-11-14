@@ -3,67 +3,61 @@
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
         <div><span class="text-muted font-weight-light">Baremos </span>/ Gestión</div>
-
-        <a class="btn btn-outline-primary btn-round d-block" href="<?= APP_URL . $this->Route('baremos/crear') ?>">
-          <span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
-
       </h4>
     </div>
   </div>
 
   <div class="card">
     <h6 class="card-header bg-primary text-white">Baremos</h6>
-    <div class="card-body px-0 pt-0">
-      <?php if ($baremos) : ?>
-        <table id="tablaBaremos" class="table table-hover">
-          <thead class=" thead">
-            <tr>
-              <th>id</th>
-              <th>Trayecto</th>
-              <th>estatus</th>
-              <th>Opciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($baremos as $baremo) : ?>
-              <tr class="item-proyecto ip-<?= $baremo->id ?>" id="i<?= $baremo->id ?>">
-                <td scope="row"><strong><?= $baremo->id ?></strong></td>
-                <td><?= $baremo->trayecto ?></td>
-                <td class="text-center">
-                  <?php if ($baremo->estatus) : ?>
-                    <span class="badge bg-label-primary  mt-2 py-2">Activo</span>
-                  <?php else : ?>
-                    <span class="badge bg-label-dark ">Inactivo</span>
-                  <?php endif ?>
-                </td>
-                <td>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                      Opciones <box-icon name='cog'></box-icon>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("baremos/$baremo->id") ?>"><box-icon name='edit'></box-icon> Ver Detalles</a></li>
-                      <li><a class="dropdown-item" href="<?= APP_URL . $this->Route("baremos/edit/$baremo->id") ?>"><box-icon name='edit'></box-icon> Editar</a></li>
-                      <li>
-                        <form action="<?= APP_URL . $this->Route('baremos/delete') ?>" method="post" id="eliminarProyecto">
-                          <input type="hidden" name="id" value="<?= $baremo->id ?>">
-                          <button class="dropdown-item">Eliminar</button>
-                        </form>
-                      </li>
-
-                    </ul>
-                  </div>
-                </td>
-                <!-- TODO: CRUD OPTIONS -->
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        <?php else : ?>
-          <div class="col-12 mt-4 text-muted">
-            <h4 class="text-center">No hay ningun Baremos registrado</h4>
-          </div>
-        <?php endif; ?>
-        </table>
+    <div class="card-body px-3 pt-3">
+      <table id="example" class="stripe" style="width:100%">
+        <thead>
+          <tr>
+            <th>Unidad Curricular</th>
+            <th>Fase</th>
+            <th>Ponderado</th>
+            <th>Código</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+      </table>
     </div>
   </div>
-</div>
+
+
+
+  <script>
+    $(document).ready(() => {
+
+      // DATATABLE CRUD
+
+      // las acciones son definidas en la clase que contiene el botón, es decir,
+      // si necesito editar, le añado la clase "edit"
+      // luego en la función table.on(). verifico si la clase del boton en el que hice click
+      // contiene el nombre de alguna acción que haya definido
+
+      // let editBtn = "<button class=\"btn btn-outline-secondary btn-color btn-bg-color col-xs-6 mx-2 edit\">Editar</button>";
+      // let deleteBtn = "<button class=\"btn btn-outline-danger btn-color btn-bg-color col-xs-6 mx-2 remove\">Eliminar</button>";
+      let UrlGestionar = "<?= APP_URL . $this->Route('dimensiones/'); ?>";
+
+      let table = new DataTable('#example', {
+        ajax: '<?= $this->Route('ssp/' . $idTrayecto) ?>',
+        processing: true,
+        serverSide: true,
+        pageLength: 10,
+        order: [
+          [2, 'desc']
+        ],
+        columnDefs: [{
+          visible: false,
+          targets: [3]
+        }, {
+          data: null,
+          render: function(data, type, row, meta) {
+            return `<a class="btn btn-primary my-1" href="${UrlGestionar + row[3]}"><i class="bx bx-pencil"></i></i></a>`;
+          }, // combino los botons de acción
+          targets: 4 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+        }]
+      });
+    })
+  </script>

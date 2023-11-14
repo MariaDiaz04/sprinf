@@ -15,28 +15,24 @@
             <div class="row pb-2">
               <div class="col-12">
                 <div class="row form-group">
-
                   <div class="col-lg-12">
                     <label class="form-label" for="nombre"><b>Nombre *</b></label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required name="nombre" id="nombre">
+                    <input type="text" class="form-control mb-1" placeholder="..." required name="nombre" id="nombre" max="255">
                   </div>
                 </div>
               </div>
-              <div class="row form-group">
-                <div class="col-lg-12 mb-3">
-                  <label class="form-label" for="consejo_comunal_id"><b>Consejo Comunal *</b></label>
-                  <select class="form-select" name="consejo_comunal_id" id="selectConsejoComunal" required>
 
-                    <?php foreach ($consejosComunales as $consejoComunal) : ?>
-                      <option value="<?= $consejoComunal->consejo_comunal_id ?>"><?= "$consejoComunal->municipio_nombre - $consejoComunal->parroquia_nombre - $consejoComunal->consejo_comunal_nombre" ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="col-lg-12">
+              <div class="row form-group mb-3">
+                <div class="col-lg-6">
                   <label class="form-label" for="resumen"><b>Dirección</b></label>
-                  <textarea class="form-control" placeholder="..." required name="direccion" id="direccion" style="height: 70px"></textarea>
+                  <textarea class="form-control" placeholder="..." required name="direccion" id="direccion" style="height: 70px" max="255"></textarea>
                 </div>
-
+                <div class="col-lg-6 mb-3">
+                  <label class="form-label" for="motor_productivo"><b>Motor Productivo</b></label>
+                  <textarea class="form-control" placeholder="..." required id="motor_productivo" name="motor_productivo" style="height: 50px" max="255"></textarea>
+                </div>
+              </div>
+              <div class="row form-group mb-3">
                 <div class="col-lg-6">
                   <label class="form-label" for="tutor_in"><b>Tutor Interno *</b></label>
                   <select class="form-select" name="tutor_in" id="selectTutorIn">
@@ -49,37 +45,71 @@
 
                 <div class="col-lg-6">
                   <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
-                  <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex">
+                  <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex" max="255">
                 </div>
-
+              </div>
+              <div class="row form-group mb-3">
                 <div class="col-lg-6">
                   <label class="form-label" for="comunidad"><b>Comunidad *</b></label>
-                  <textarea class="form-control" placeholder="..." required name="comunidad" id="comunidad" style="height: 70px "></textarea>
+                  <textarea class="form-control" placeholder="..." required name="comunidad" id="comunidad" style="height: 70px " max="255"></textarea>
                 </div>
 
                 <div class="col-lg-6">
                   <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
-                  <input type="text" class="form-control mb-1" placeholder="..." required name="tlf_tex" id="tlf_tex">
+                  <input type="text" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required name="tlf_tex" id="tlf_tex">
                 </div>
-
+              </div>
+              <div class="row form-group mb-3">
                 <div class="col-lg-6">
                   <label class="form-label" for="resumen"><b>Resumen *</b></label>
-                  <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" id="resumen" style="height: 70px "></textarea>
+                  <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" id="resumen" style="height: 70px " max="255"></textarea>
                 </div>
                 <div class="col-lg-6">
                   <label class="form-label" for="observaciones"><b>Observaciones *</b></label>
-                  <textarea class="form-control" placeholder="..." id="observaciones" name="observaciones" id="observaciones" style="height: 70px "></textarea>
+                  <textarea class="form-control" placeholder="..." id="observaciones" name="observaciones" id="observaciones" style="height: 70px " max="255"></textarea>
                 </div>
               </div>
-
-              <hr class="border-light m-0">
+              <div class="row form-group mb-3">
+                <div class="col-lg-6">
+                  <label class="form-label" for="selectParroquia"><b>Parroquia *</b></label>
+                  <select class="form-select" name="parroquia_id" id="selectParroquia" required>
+                    <option value="" disabled="disabled" selected="selected" id="nigunaParroquia">-- Ninguna --</option>
+                    <?php foreach ($parroquias as $parroquia) : ?>
+                      <option value="<?= $parroquia->parroquia_id ?>" rel="parroquia-<?= $parroquia->parroquia_id ?>"><?= "$parroquia->parroquia_nombre" ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+                <div class="col-lg-6">
+                  <label class="form-label" for="selectParroquia"><b>Tipo de Comunidad *</b></label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" id="comunidadAutonoma" name="comunidad_autonoma">
+                    <label class="form-check-label" for="comunidadAutonoma">
+                      Comunidad Autonoma
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group mb-3" id="seccionConsejoComunal">
+                <div class="col-lg-12 mb-3">
+                  <label class="form-label" for="selectConsejoComunal"><b>Consejo Comunal</b></label>
+                  <select class="form-select" name="consejo_comunal_id" id="selectConsejoComunal">
+                    <option value="" disabled="disabled" selected="selected" id="ningunConsejoComunal">-- Ninguno --</option>
+                    <?php foreach ($consejosComunales as $consejoComunal) : ?>
+                      <option value="<?= $consejoComunal->consejo_comunal_id ?>" class="parroquia-<?= $consejoComunal->parroquia_id ?>"><?= "$consejoComunal->consejo_comunal_nombre" ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+              </div>
+              <hr class="border-light mb-3">
               <div class="col-12">
                 <div class="row form-group align-items-end">
 
                   <div class="col-lg-10">
                     <label class="form-label"><b>Estudiantes *</b></label>
-                    <select class="form-select" id="selectEstudiante">
-
+                    <select class="selectpicker" id="selectEstudiante" data-live-search="true">
+                      <?php foreach ($listaEstudiantes as $estudiante) : ?>
+                        <option value="<?= $estudiante->cedula ?>" data-cedula="<?= $estudiante->cedula ?>" data-nombre="<?= $estudiante->nombre ?>" data-apellido="<?= $estudiante->apellido ?>"><?= $estudiante->cedula ?> - <?= $estudiante->nombre ?> <?= $estudiante->apellido ?></option>
+                      <?php endforeach; ?>
                     </select>
                   </div>
 
@@ -120,3 +150,36 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+
+    $('#proyectoActualizar #comunidadAutonoma').change(function() {
+      if ($(this).is(':checked')) {
+        $('#proyectoActualizar #seccionConsejoComunal').hide()
+      } else {
+        $('#proyectoActualizar #seccionConsejoComunal').show()
+      }
+    })
+
+    // select de cascada
+    var $cat = $('#proyectoActualizar select[name=parroquia_id]'),
+      $items = $('#proyectoActualizar select[name=consejo_comunal_id]');
+
+    $cat.change(function() {
+
+      var $this = $(this).find(':selected'),
+        rel = $this.attr('rel');
+
+      // Hide all
+      $items.find("option").hide();
+      $items.find('#ningunConsejoComunal').show().first().prop('selected', true);
+
+      // Find all matching accessories
+      // Show all the correct accesories
+      // Select the first accesory
+      $set = $items.find('option.' + rel);
+      $set.show().first().prop('selected', true);
+
+    });
+  });
+</script>

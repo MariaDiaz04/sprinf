@@ -108,9 +108,11 @@ CREATE TABLE `sprinf_bd`.`consejo_comunal` (
 
 CREATE TABLE `sprinf_bd`.`proyecto` (
   `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
-  `fase_id` varchar(255),
-  `nombre` varchar(255),
-  `comunidad` varchar(255),
+  `fase_id` varchar(255) NOT NULL,
+  `parroquia_id` int NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `comunidad` varchar(255) NOT NULL,
+  `comunidad_autonoma` bool NOT NULL,
   `motor_productivo` varchar(255),
   `resumen` varchar(255),
   `direccion` varchar(255),
@@ -118,8 +120,8 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `observaciones` text,
   `tutor_in` varchar(255),
   `tutor_ex` varchar(255),
-  `tlf_tin` int,
-  `tlf_tex` int,
+  `tlf_tin` varchar(12),
+  `tlf_tex` varchar(12),
   `estatus` int,
   `cerrado` bool DEFAULT false
 );
@@ -194,6 +196,7 @@ CREATE TABLE `sprinf_bd`.`proyecto_historico` (
   `telefono_consejo_comunal` varchar(255),
   `sector_consejo_comunal` varchar(255),
   `municipio` varchar(255),
+  `parroquia_id` int,
   `parroquia` varchar(255),
   `observaciones` text,
   `tutor_in` varchar(255),
@@ -252,7 +255,7 @@ ALTER TABLE `sprinf_bd`.`profesor` ADD FOREIGN KEY (`persona_id`) REFERENCES `sp
 
 ALTER TABLE `sprinf_bd`.`dimension` ADD FOREIGN KEY (`unidad_id`) REFERENCES `sprinf_bd`.`malla_curricular` (`codigo`);
 
-ALTER TABLE `sprinf_bd`.`indicadores` ADD FOREIGN KEY (`dimension_id`) REFERENCES `sprinf_bd`.`dimension` (`id`);
+ALTER TABLE `sprinf_bd`.`indicadores` ADD FOREIGN KEY (`dimension_id`) REFERENCES `sprinf_bd`.`dimension` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `sprinf_bd`.`estudiante` ADD FOREIGN KEY (`persona_id`) REFERENCES `sprinf_bd`.`persona` (`cedula`);
 
@@ -277,11 +280,13 @@ ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`tutor_in`) REFERENCES `spri
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`consejo_comunal_id`) REFERENCES `sprinf_bd`.`consejo_comunal` (`id`);
 
+ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`parroquia_id`) REFERENCES `sprinf_bd`.`parroquias` (`id`);
+
 ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
 
 ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`proyecto_id`) REFERENCES `sprinf_bd`.`proyecto` (`id`);
 
-ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`indicador_id`) REFERENCES `sprinf_bd`.`indicadores` (`id`);
+ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`indicador_id`) REFERENCES `sprinf_bd`.`indicadores` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`integrante_id`) REFERENCES `sprinf_bd`.`integrante_proyecto` (`id`) ON DELETE CASCADE;
 
@@ -1302,16 +1307,16 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los part
 -- --------------------- trayecto 3 fase 2 ------------------------------
 
 -- TUTORA
-insert into dimension (id, unidad_id, nombre, grupal) values(14,'ASESOR4078303_2','Desempeño Individual',0);
+insert into dimension (id, unidad_id, nombre, grupal) values(14,'ASESOR3078303_2','Desempeño Individual',0);
 insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'CRUD del sistema. (Por Modulo)', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Validación de datos. (Por Modulo)', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(15,'ASESOR4078303_2','Desempeño grupal',1);
+insert into dimension (id, unidad_id, nombre, grupal) values(15,'ASESOR3078303_2','Desempeño grupal',1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Responsabilidad', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Integración al grupo', 0.5);
 insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'proactividad', 0.5);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(16,'ASESOR4078303_2','Avances de programación (Por Modulo)', 0);
+insert into dimension (id, unidad_id, nombre, grupal) values(16,'ASESOR3078303_2','Avances de programación (Por Modulo)', 0);
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Instalación del software necesario para la ejecución de la aplicación o componentes', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Pantallas bien conectadas con la Base de datos', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Los módulos de modificación de base de datos garantizan la integridad referencial', 1);
@@ -1324,7 +1329,7 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Control 
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Gestión de bitácora', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Manejo de sesiones respecto a concurrencia de usuarios', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(17,'ASESOR4078303_2','Interfaz y estilo', 0);
+insert into dimension (id, unidad_id, nombre, grupal) values(17,'ASESOR3078303_2','Interfaz y estilo', 0);
 insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso adecuado de los colores en la aplicación', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Fondos claros y sencillos', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso de iamgenes', 1);
@@ -1362,6 +1367,39 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(21, 'Recomend
 
 insert into dimension (id, unidad_id, nombre, grupal) values(22,'PIPST078303_2','Capitulo V', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Anexos y Referencias', 2);
+
+-- --------------------- trayecto 4 fase 2 ---------------------------
+
+-- Auditoria Informatica
+insert into dimension (id, unidad_id, nombre, grupal) values(23,'ASESOR4078303_2','Desempeño Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Responsabilidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Asistencia', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Integración al grupo', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Sensibilidad Social', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(24,'ASESOR4078303_2','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Manejo de Conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Proactividad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Hábitos de Trabajo', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(25,'PIAUI078303_2','Auditoria Informatica', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Auditoría aplicada al sistema (Explicación del módulo auditado) Tipo de auditoría seleccionada.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Herramienta utilizada. ¿Cuál Utilizo?', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Metodología y técnica empleada. ', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Resultado en el sistema. (Visualizarlo).', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(26,'PIAUI078303_2','Plan de mantenimiento al sistema', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(27,'PIAUI078303_2','Mejoras  Aplicadas al Sistema según los requerimientos de trayecto IV ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
+
+
+-- Proyecto
 
 
 -- 9_clases.sql
@@ -1438,6 +1476,7 @@ insert into consejo_comunal(id, nombre, nombre_vocero, telefono, sector_id) VALU
 insert into proyecto (
   id, 
   fase_id, 
+  parroquia_id, 
   nombre, 
   comunidad, 
   motor_productivo, 
@@ -1454,9 +1493,10 @@ insert into proyecto (
 values (
   1,
   'TR3_1', 
+  1,
   'Gestion de proyectos sociotecnologicos', 
   'UPTAEB', 
-  '', 
+  'Informática', 
   'Gestión de proyectos para el PNF en informática', 
   'Av. Los Horcones, Av. La Salle, Barquisimeto 3001, Lara', 
   1,
@@ -1593,10 +1633,10 @@ INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id
 INNER JOIN periodo ON periodo.id = trayecto.periodo_id
 INNER JOIN profesor as tutor ON tutor.codigo = proyecto.tutor_in
 INNER JOIN persona as tutor_info ON tutor_info.cedula = tutor.persona_id
-inner join consejo_comunal cc on cc.id = proyecto.consejo_comunal_id 
-inner join sector_consejo_comunal scc on scc.id = cc.sector_id 
-INNER JOIN parroquias ON parroquias.id = scc.parroquia_id 
+INNER JOIN parroquias ON parroquias.id = proyecto.parroquia_id 
 INNER JOIN municipios ON municipios.id = parroquias.municipio
+LEFT join consejo_comunal cc on cc.id = proyecto.consejo_comunal_id 
+LEFT join sector_consejo_comunal scc on scc.id = cc.sector_id 
 LEFT OUTER JOIN integrante_proyecto ON integrante_proyecto.proyecto_id = proyecto.id
 GROUP BY proyecto_id;
 
@@ -1649,10 +1689,15 @@ SELECT
   fase.siguiente_fase, 
   trayecto.codigo as codigo_trayecto, 
   trayecto.nombre as nombre_trayecto, 
-  periodo.fecha_inicio, periodo.fecha_cierre 
+  periodo.fecha_inicio, periodo.fecha_cierre,
+  SUM(indicadores.ponderacion) as ponderado_baremos
 FROM `fase` 
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
-INNER JOIN periodo ON periodo.id = trayecto.periodo_id; 
+INNER JOIN periodo ON periodo.id = trayecto.periodo_id
+LEFT JOIN malla_curricular ON malla_curricular.fase_id = fase.codigo
+LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN indicadores ON indicadores.dimension_id = dimension.id
+GROUP BY fase.codigo;
 
 DROP VIEW IF EXISTS detalles_baremos;
 
@@ -1703,16 +1748,19 @@ DROP VIEW IF EXISTS detalles_malla;
 CREATE VIEW detalles_malla AS
 SELECT
 trayecto.codigo as codigo_trayecto,
+trayecto.nombre as nombre_trayecto,
 materias.nombre,
 malla_curricular.codigo,
 fase.codigo as codigo_fase,
 fase.nombre as nombre_fase,
-count(dimension.id) as dimensiones
+count(dimension.id) as dimensiones,
+SUM(indicadores.ponderacion) as ponderado_baremos
 FROM malla_curricular
 INNER JOIN materias ON materias.codigo =  malla_curricular.materia_id
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN indicadores ON indicadores.dimension_id = dimension.id
 GROUP BY malla_curricular.codigo;
 
 

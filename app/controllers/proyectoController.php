@@ -92,7 +92,7 @@ class proyectoController extends controller
             }
         }
 
-        // echo json_encode($historicoProyectos);
+        // echo json_encode($listaEstudiantes);
         // exit();
 
         return $this->view('proyectos/gestionar', [
@@ -107,7 +107,8 @@ class proyectoController extends controller
             'trayectos' => $trayectos,
             'historicoProyectos' => $historicoProyectos,
             'historicoEstudiantes' => $historicoEstudiantes,
-            'estudiantes' => $dataEstudiantes
+            'listaEstudiantes' => $listaEstudiantes,
+            'estudiantes' => $dataEstudiantes,
         ]);
     }
 
@@ -115,6 +116,7 @@ class proyectoController extends controller
     {
 
         $historico = $this->proyectoHistorico->all();
+
 
         if (!$historico) return [];
 
@@ -135,6 +137,7 @@ class proyectoController extends controller
                     $group[$item['id_proyecto']]['motor_productivo'] = $item['motor_productivo'];
                     $group[$item['id_proyecto']]['direccion'] = $item['direccion'];
                     $group[$item['id_proyecto']]['consejo_comunal_id'] = $item['consejo_comunal_id'];
+                    $group[$item['id_proyecto']]['parroquia_id'] = $item['parroquia_id'];
                     $group[$item['id_proyecto']]['codigo_trayecto'] = $item['codigo_trayecto'];
                     $group[$item['id_proyecto']]['codigo_siguiente_trayecto'] = $item['codigo_siguiente_trayecto'];
                 }
@@ -238,6 +241,11 @@ class proyectoController extends controller
             $observaciones = $nuevoProyecto->request->get('observaciones');
             $id = $nuevoProyecto->request->get('id');
 
+
+            $comunidadAutonoma = $nuevoProyecto->request->get('comunidad_autonoma');
+
+            $parroquia_id = $nuevoProyecto->request->get('parroquia_id');
+
             $proyectData = [
                 'nombre' => $nombre,
                 'comunidad' => $comunidad,
@@ -246,9 +254,10 @@ class proyectoController extends controller
                 'direccion' => $direccion,
                 'resumen' => $resumen,
                 'motor_productivo' => $motor_productivo,
-                'consejo_comunal_id' => (int)$consejo_comunal_id,
+                'consejo_comunal_id' => ($comunidadAutonoma == 1) ? null : $consejo_comunal_id,
                 'tutor_in' => $tutor_in,
                 'tutor_ex' => $tutor_ex,
+                'parroquia_id' => $parroquia_id,
                 'tlf_tex' => $tlf_tex,
                 'observaciones' => $observaciones,
                 'integrantes' => $idEstudiantes
@@ -257,8 +266,6 @@ class proyectoController extends controller
             if (isset($id)) {
                 $proyectData['id'] = $id;
             }
-
-
 
             $this->proyecto->setProyectData($proyectData);
             $result = $this->proyecto->insertTransaction();
@@ -315,9 +322,11 @@ class proyectoController extends controller
             $direccion = $proyecto->request->get('direccion');
             $motor_productivo = $proyecto->request->get('motor_productivo');
             $consejo_comunal_id = $proyecto->request->get('consejo_comunal_id');
+            $parroquia_id = $proyecto->request->get('parroquia_id');
             $tutor_in = $proyecto->request->get('tutor_in');
             $tutor_ex = $proyecto->request->get('tutor_ex');
             $tlf_tex = $proyecto->request->get('tlf_tex');
+
             $observaciones = $proyecto->request->get('observaciones');
             $cerrado = $proyecto->request->get('cerrado');
 
@@ -330,6 +339,8 @@ class proyectoController extends controller
                 array_push($idEstudiantes, $dataEstudiante['id']);
             }
 
+            $comunidadAutonoma = $proyecto->request->get('comunidad_autonoma');
+
             $this->proyecto->setProyectData([
                 'id' => $id,
                 'nombre' => $nombre,
@@ -339,7 +350,8 @@ class proyectoController extends controller
                 'direccion' => $direccion,
                 'resumen' => $resumen,
                 'motor_productivo' => $motor_productivo,
-                'consejo_comunal_id' => $consejo_comunal_id,
+                'parroquia_id' => $parroquia_id,
+                'consejo_comunal_id' => ($comunidadAutonoma == 1) ? null : $consejo_comunal_id,
                 'tutor_in' => $tutor_in,
                 'tlf_tex' => $tlf_tex,
                 'tutor_ex' => $tutor_ex,
@@ -471,7 +483,7 @@ class proyectoController extends controller
 
                 $baremos[$materia['codigo']]['nombre'] = $materia['nombre'];
 
-
+                $baremos[$materia['codigo']]['individual'] = [];
                 $totalPonderado = 0;
                 foreach ($dimensiones as $key => $dimension) {
 
@@ -491,7 +503,7 @@ class proyectoController extends controller
                             }
                             $baremos[$materia['codigo']]['grupal'][$dimension['id']]['indicadores'] = $indicadores;
                         } else {
-                            $baremos[$materia['codigo']]['individual'] = [];
+
 
                             // $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['nombre'] = $dimension['nombre'];
                             $dimension['indicadores'] = [];
@@ -596,6 +608,7 @@ class proyectoController extends controller
 
 
             $baremos = $this->baremos->findByFase($proyecto['fase_id']);
+
 
             $integrantes = $this->proyecto->obtenerIntegrantes($proyectoId);
 

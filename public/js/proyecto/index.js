@@ -4,6 +4,8 @@ const Toast = Swal.mixin({
   showConfirmButton: false,
 });
 
+let regexAlfabeto = /^[a-z]+$/i;
+
 $(document).ready(function (e) {
   // cargar informacion en formulario de registro historico
   $("#cargarInformacion").click(function (e) {
@@ -18,6 +20,7 @@ $(document).ready(function (e) {
       direccion,
       resumen,
       consejo_comunal_id,
+      parroquia_id,
       motor_productivo,
       tlf_tex,
       comunidad,
@@ -48,6 +51,12 @@ $(document).ready(function (e) {
       .change();
 
     $(`#proyectoGuardarHistorico #selectTutorIn option[value="${tutor_in}"]`)
+      .prop("selected", "selected")
+      .change();
+
+    $(
+      `#proyectoGuardarHistorico #selectParroquia option[value="${parroquia_id}"]`
+    )
       .prop("selected", "selected")
       .change();
 
@@ -129,8 +138,11 @@ $(document).ready(function (e) {
 
   $("#proyectoGuardarHistorico").submit(function (e) {
     e.preventDefault();
+
     toggleLoading(true, "#proyectoGuardarHistorico");
+
     $(this).find("select").prop("disabled", false);
+
     formData = $(this).serializeArray();
     items = transfer.getSelectedItems();
     data = [...formData];
@@ -200,6 +212,26 @@ $(document).ready(function (e) {
     }
   });
 
+  $("#proyectoGuardar #tlf_tex").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!phoneNumbers(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoActualizar #tlf_tex").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!phoneNumbers(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
   $("#proyectoGuardar").submit(function (e) {
     e.preventDefault();
 
@@ -210,6 +242,8 @@ $(document).ready(function (e) {
     items = transfer2.getSelectedItems();
     data = [...formData];
     counter = 0;
+
+    // validar integrantes
     if (items.length <= 0) {
       Swal.fire({
         position: "bottom-end",
@@ -220,61 +254,181 @@ $(document).ready(function (e) {
         timer: 2000,
       });
       toggleLoading(false);
-    } else {
-      for (const idIntegrante in items) {
-        integrante = {};
-        if (Object.hasOwnProperty.call(items, idIntegrante)) {
-          const element = items[idIntegrante];
-          integrante.name = `integrantes[${counter}]`;
-          integrante.value = element.value;
-          counter++;
-          data.push(integrante);
-        }
-      }
-
-      url = $(this).attr("action");
-
-      toggleLoading(false);
-
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        error: function (error, status) {
-          toggleLoading(false);
-          error = JSON.parse(error.responseText);
-          Swal.fire({
-            position: "bottom-end",
-            icon: "error",
-            title: status + ": " + error.error.message,
-            showConfirmButton: false,
-            toast: true,
-            timer: 2000,
-          });
-        },
-        success: function (data, status) {
-          table.ajax.reload();
-          // actualizar tabla
-          toggleLoading(false);
-          Swal.fire({
-            position: "bottom-end",
-            icon: "success",
-            title: "Creación Exitosa",
-            showConfirmButton: false,
-            toast: true,
-            timer: 1000,
-          }).then(() => location.reload());
-          document.getElementById("proyectoGuardar").reset();
-          // $("#crear").modal("hide");
-        },
-      });
+      return false;
     }
+
+    // validar parroquia
+    if ($("#selectParroquia").val() == null) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe seleccionar una parroquia",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    if (
+      !$("#comunidadAutonoma").is(":checked") &&
+      $("#selectConsejoComunal").val() == null
+    ) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe seleccionar un Consejo Comunal a la comunidad no autonoma",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    // validar nombre
+
+    nombre = $("#proyectoGuardar #nombre").val();
+
+    if (!onlyLetters(nombre)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de proyecto no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tutor_ex = $("#proyectoGuardar #tutor_ex").val();
+    if (!onlyLetters(tutor_ex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tlf_tex = $("#proyectoGuardar #tlf_tex").val();
+    if (!phoneNumbers(tlf_tex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Numero de telefono de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    for (const idIntegrante in items) {
+      integrante = {};
+      if (Object.hasOwnProperty.call(items, idIntegrante)) {
+        const element = items[idIntegrante];
+        integrante.name = `integrantes[${counter}]`;
+        integrante.value = element.value;
+        counter++;
+        data.push(integrante);
+      }
+    }
+
+    url = $(this).attr("action");
+
+    toggleLoading(false);
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      error: function (error, status) {
+        toggleLoading(false);
+        error = JSON.parse(error.responseText);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "error",
+          title: status + ": " + error.error.message,
+          showConfirmButton: false,
+          toast: true,
+          timer: 2000,
+        });
+      },
+      success: function (data, status) {
+        table.ajax.reload();
+        // actualizar tabla
+        toggleLoading(false);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Creación Exitosa",
+          showConfirmButton: false,
+          toast: true,
+          timer: 1000,
+        }).then(() => location.reload());
+        document.getElementById("proyectoGuardar").reset();
+        $("#crear").modal("hide");
+      },
+    });
   });
 
   $("#proyectoActualizar").submit(function (e) {
     e.preventDefault();
 
     formData = $(this).serializeArray();
+
+    nombre = $("#proyectoActualizar #nombre").val();
+
+    if (!onlyLetters(nombre)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de proyecto no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tutor_ex = $("#proyectoActualizar #tutor_ex").val();
+    if (!onlyLetters(tutor_ex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tlf_tex = $("#proyectoActualizar #tlf_tex").val();
+    if (!phoneNumbers(tlf_tex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Numero de telefono de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
     if ($("#cuerpoTablaActualizarEstudiante").children("tr").length <= 0) {
       Swal.fire({
         position: "bottom-end",
@@ -313,7 +467,7 @@ $(document).ready(function (e) {
             showConfirmButton: false,
             toast: true,
             timer: 1000,
-          });
+          }).then(() => location.reload());
           document.getElementById("proyectoGuardar").reset();
           $("#actualizar").modal("hide");
         },
@@ -365,7 +519,7 @@ async function obtenerProyecto(id) {
 async function editarIntegrantes(id) {
   let proyecto = await obtenerProyecto(id);
   let estudiantesPendientes = await obtenerEstudiantesPendientes();
-  $("#actualizar #selectEstudiante option").remove();
+  // $("#actualizar #selectEstudiante option").remove();
   $("#cuerpoTablaActualizarEstudiante tr").remove();
 
   estudiantesPendientes.forEach((estudiante) => {
@@ -373,11 +527,11 @@ async function editarIntegrantes(id) {
       estudiante.cedula
     }" data-nombre="${estudiante.nombre}" data-apellido="${
       estudiante.apellido
-    }">${
+    }" data-tokens="${estudiante.cedula} ${estudiante.nombre}">${
       estudiante.cedula + " " + estudiante.nombre + " " + estudiante.apellido
     }</option>`;
 
-    $("#actualizar #selectEstudiante").append(option);
+    // $("#actualizar #selectEstudiante").append(option);
   });
 
   const {
@@ -386,6 +540,7 @@ async function editarIntegrantes(id) {
     cerrado,
     nombre,
     consejo_comunal_id,
+    parroquia_id,
     direccion,
     tutor_in,
     tutor_ex,
@@ -420,6 +575,11 @@ async function editarIntegrantes(id) {
   $("#actualizar #motor_productivo").val(motor_productivo);
   $("#actualizar #resumen").val(resumen);
   $("#actualizar #cerrado").val(cerrado);
+
+  $(`#proyectoActualizar #selectParroquia option[value="${parroquia_id}"]`)
+    .prop("selected", "selected")
+    .change();
+
   $(
     `#proyectoActualizar #selectConsejoComunal option[value="${consejo_comunal_id}"]`
   )
@@ -429,6 +589,16 @@ async function editarIntegrantes(id) {
   $(`#proyectoActualizar #selectTutorIn option[value="${tutor_in}"]`)
     .prop("selected", "selected")
     .change();
+
+  // validar comunidad autonoma
+
+  if (consejo_comunal_id == null) {
+    $("#proyectoActualizar #comunidadAutonoma").prop("checked", true);
+    $("#proyectoActualizar #seccionConsejoComunal").hide();
+  } else {
+    $("#proyectoActualizar #comunidadAutonoma").prop("checked", false);
+    $("#proyectoActualizar #seccionConsejoComunal").show();
+  }
 
   integrantes.forEach((integrante) => {
     // imprimir tabla
@@ -471,7 +641,14 @@ $("#anadirEstudiante").click(function (e) {
       $("#cuerpoTablaActualizarEstudiante").find(`#appenedStudent-${studentId}`)
         .length > 0
     ) {
-      alert("Estudiante ya ha sido añadido");
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Estudiante ya ha sido añadido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
       return false;
     }
 
@@ -541,10 +718,18 @@ function removeProject(id) {
             title: "Proyecto Eliminado Exitosamente",
             showConfirmButton: false,
             toast: true,
-            timer: 2000,
+            timer: 1000,
           }).then(() => location.reload());
         },
       });
     }
   });
+}
+
+function onlyLetters(str) {
+  return /^[A-Za-zñáéíóúü ]*$/.test(str);
+}
+
+function phoneNumbers(number) {
+  return /^[04][0-9]{10}$/.test(number);
 }

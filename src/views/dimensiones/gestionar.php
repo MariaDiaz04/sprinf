@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Dimensiones </span>/ Gestión</div>
+        <div><span class="text-muted font-weight-light">Baremos / <?= $unidadCurricular->nombre_trayecto ?> </span>/ <?= $unidadCurricular->nombre ?></div>
 
         <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
@@ -29,97 +29,16 @@
     </div>
   </div>
 
-  <!-- MODAL CREAR -->
-  <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nueva Dimension</h5>
-
-        </div>
-        <form action="<?= APP_URL . $this->Route('dimensiones/guardar') ?>" method="post" id="guardar">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <div class="container-fluid">
-              <div class="row pb-2">
-                <div class="col-12">
-                  <div class="row form-group mb-3">
-                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
-                    <div class="col-lg-6">
-                      <label class="form-label" for="unidad_id">Unidad Curricular *</label>
-                      <select class="form-select" name="unidad_id">
-                        <?php foreach ($materias as $unidad) : ?>
-                          <option value="<?= $unidad->codigo ?>"><?= "$unidad->nombre - $unidad->nombre_fase" ?></option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
-                    </div>
-                  </div>
-                  <div class="row form-group mb-3">
-
-                    <div class="col-lg-12 d-flex justify-content-start align-items-end">
-                      <div class="form-check ">
-                        <input class="form-check-input" type="checkbox" value="1" id="grupal" name="grupal">
-                        <label class="form-check-label" for="grupal">
-                          Evaluación Grupal
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row form-group align-items-end">
-                    <div class="col-lg-5">
-                      <label class="form-label" for="nombreItem">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." id="nombreItem">
-                    </div>
-                    <div class="col-lg-4">
-                      <label class="form-label" for="ponderacionItem">Ponderación *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." id="ponderacionItem">
-                    </div>
-                    <div class="col-lg-3 align-middle">
-                      <button class="btn btn-primary" id="anadirItem">Añadir</button>
-                    </div>
-                  </div>
-
-                  <div class="row form-group justify-content-center">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">Nombre</th>
-                          <th scope="col">Ponderación</th>
-                          <th scope="col">Remover</th>
-                        </tr>
-                      </thead>
-                      <tbody id="cuerpoTablaItems">
-
-                      </tbody>
-                    </table>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
-            <div id="guardarLoading">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  <?php
+  include 'modules/crear.php';
+  include 'modules/actualizar.php';
+  ?>
 
 
   <script>
+    let UrlGestionarIndicadores = "<?= APP_URL . $this->Route('indicadores/'); ?>";
+    let obtenerDimensionUrl = "<?= APP_URL . $this->Route('dimensiones/obtener/'); ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('dimensiones/borrar') ?>";
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -135,15 +54,16 @@
       let deleteBtn = "<button class=\"btn btn-outline-danger btn-color btn-bg-color col-xs-6 mx-2 remove\">Eliminar</button>";
 
 
+
       let table = new DataTable('#example', {
-        ajax: '<?= $this->Route('ssp/' . $idTrayecto) ?>',
+        ajax: '<?= $this->Route('ssp/' . $codigoMateria) ?>',
         processing: true,
         serverSide: true,
         pageLength: 30,
 
         columnDefs: [{
           visible: false,
-          targets: [0]
+          targets: [0, 2, 4]
         }, {
           data: null,
           render: function(data, type, row, meta) {
@@ -158,8 +78,9 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
+                        <a class="dropdown-item" href="${UrlGestionarIndicadores + row[0]}">Gestionar Indicadores</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
+                        <a class="dropdown-item text-danger" onClick="removeDimension('${row[0]}')" href="#">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -178,8 +99,21 @@
         url = $(this).attr('action');
         data = $(this).serializeArray();
 
+        let indicadores = $('.nuevoIndicador');
 
 
+        if (indicadores.length == 0) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: 'Debe asignar indicadores al crear la dimensión',
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+          toggleLoading(false)
+          return false;
+        }
 
         $.ajax({
           type: "POST",
@@ -202,30 +136,74 @@
             // usar sweetalerts
             // document.getElementById("guardar").reset();
             // actualizar tabla
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Creación Exitosa",
+              showConfirmButton: false,
+              toast: true,
+              timer: 1000,
+            }).then(() => location.reload());
+            $('#crear').modal('hide')
             toggleLoading(false)
           },
         });
-
       })
 
-      function edit(id) {
-        alert(`Editing ${id}`)
-      }
+      $('#dimensionActualizar').submit(function(e) {
+        e.preventDefault()
 
-      function remove(id) {
-        alert(`Removing ${id}`)
-      }
+        toggleLoading(true, '#actualizar');
+
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            // document.getElementById("guardar").reset();
+            // actualizar tabla
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Actualización Exitosa",
+              showConfirmButton: false,
+              toast: true,
+              timer: 1000,
+            })
+            $('#actualizar').modal('hide')
+            // .then(() => location.reload());
+            toggleLoading(false)
+          },
+        });
+      });
+
 
       // TOGGLE BUTTON AND SPINNER
-      function toggleLoading(show) {
+      function toggleLoading(show, form = "") {
         if (show) {
-          $('#guardarLoading').show();
-          $('#guardarSubmit').hide();
+          $(`${form} #loading`).show();
+          $(`${form} #submit`).hide();
         } else {
-          $('#guardarLoading').hide();
-          $('#guardarSubmit').show();
+          $(`${form} #loading`).hide();
+          $(`${form} #submit`).show();
         }
-
       }
 
       $('#anadirItem').click(function(e) {
@@ -233,28 +211,130 @@
 
         let length = document.getElementById("cuerpoTablaItems").children.length;
 
-
-
-
         let nombreItem = $('#nombreItem').val();
-        let ponderacionItem = $('#ponderacionItem').val()
+        let ponderacionItem = parseFloat($('#ponderacionItem').val())
+        if (nombreItem.length == 0) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: 'Ingrese un nombre de indicador',
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          return false;
+        }
+        if (typeof ponderacionItem === 'number' && ponderacionItem < 100) {
 
-        let fila = `<tr id="appenedItem-${length}">
-                    <th scope="row">
-                    <input type="text" name="indicadores[${length}][nombre]" class="form-control-plaintext" value="${nombreItem}" hidden>
-                    <input type="text" name="indicadores[${length}][ponderacion]" class="form-control-plaintext" value="${ponderacionItem}" hidden>
-                    ${nombreItem}
-                    </th>
-                    <td>${ponderacionItem}</td>
-                    <td><a href="#" class="btn btn-secondary" onClick="removeItem(${length})">Eliminar</a href="javascript:void(0)"></td>
-                  </tr>`;
-        $('#cuerpoTablaItems').append(fila);
+          let fila = `<tr id="appenedItem-${length}" class="nuevoIndicador">
+                      <th scope="row">
+                      <input type="text" name="indicadores[${length}][nombre]" class="form-control-plaintext" value="${nombreItem}" hidden>
+                      <input type="text" name="indicadores[${length}][ponderacion]" class="form-control-plaintext" value="${ponderacionItem}" hidden>
+                      ${nombreItem}
+                      </th>
+                      <td>${ponderacionItem}</td>
+                      <td><a href="#" class="btn btn-secondary" onClick="removeItem(${length})">Eliminar</a href="javascript:void(0)"></td>
+                    </tr>`;
+          $('#cuerpoTablaItems').append(fila);
+        } else {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: 'Ponderación no valida',
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+        }
 
       })
 
     })
 
+    async function obtenerDimension(id) {
+      let result;
+      try {
+        result = await $.ajax({
+          url: obtenerDimensionUrl + id,
+          type: "POST",
+          data: {
+            id: id
+          },
+        });
+        return JSON.parse(result);
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    }
+
+    async function edit(id) {
+      let dimension = await obtenerDimension(id);
+
+      const {
+        nombre,
+        grupal
+      } = dimension.dimension;
+
+      $("#actualizar").modal("show");
+
+      $("#actualizar #id").val(id);
+      $("#actualizar #nombre").val(nombre);
+
+      if (grupal == 1) {
+        $('#actualizar #grupal').prop('checked', true);
+      } else {
+        $('#actualizar #grupal').prop('checked', false);
+      }
+
+      $("#actualizar").modal("show");
+    }
+
     function removeItem(id) {
       $(`#appenedItem-${id}`).remove()
+    }
+
+    function removeDimension(id) {
+      Swal.fire({
+        title: "Se eliminará la dimensión indicada junto con sus indicadores, ¿está seguro de realizar la acción?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Continuar",
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            type: "POST",
+            url: deleteUrl,
+            data: {
+              id: id,
+            },
+            error: function(error, status) {
+              error = JSON.parse(error.responseText);
+              Swal.fire({
+                position: "bottom-end",
+                icon: "error",
+                title: status + ": " + error.error.message,
+                showConfirmButton: false,
+                toast: true,
+                timer: 2000,
+              });
+            },
+            success: function(data, status) {
+              // actualizar tabla
+              Swal.fire({
+                position: "bottom-end",
+                icon: "success",
+                title: "Proyecto Eliminado Exitosamente",
+                showConfirmButton: false,
+                toast: true,
+                timer: 2000,
+              }).then(() => location.reload());
+            },
+          });
+        }
+      });
     }
   </script>

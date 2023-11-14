@@ -61,4 +61,35 @@ class baremos extends model
       $this->update('notas_integrante_proyecto', ['calificacion' => $calificacion], [['id', '=', $itemEstudiante['id']]]);
     }
   }
+
+  /**
+   * generarComplexSSP
+   * 
+   * Generar SSP proveniente de la función de data table
+   *
+   * @return array
+   */
+  public function generarComplexSSP(string $idTrayecto): array
+  {
+    $columns = array(
+      array(
+        'db'        => 'nombre',
+        'dt'        => 0
+      ),
+      array(
+        'db'        => 'nombre_fase',
+        'dt'        => 1
+      ),
+      array(
+        'db'        => 'ponderado_baremos',
+        'dt'        => 2
+      ),
+      array(
+        'db'        => 'codigo',
+        'dt'        => 3
+      ),
+
+    );
+    return $this->getComplexSSP('detalles_malla', 'codigo', $columns, ['condition' => "codigo_trayecto = '$idTrayecto'"]);
+  }
 }

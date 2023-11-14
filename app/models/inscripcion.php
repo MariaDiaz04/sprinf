@@ -16,13 +16,15 @@ class inscripcion extends model
     'estudiante_id',
     'unidad_curricular_id',
     'calificacion',
+    'estatus',
   ];
-  private $id;
+  public $id;
   private $profesor_id;
   private $seccion_id;
-  private $estudiante_id;
   private $unidad_curricular_id;
-  private $calificacion;
+  private $estudiante_id;
+  public $calificacion;
+  public $estatus;
 
   public function all()
   {
@@ -51,12 +53,12 @@ class inscripcion extends model
    * Obtener los detalles de una inscripcion
    * por su código de estudiante
    *
-   * @param string $codigo
+   * @param int $codigo
    * @return array - es un array vacio en caso de que no consiga alguna coincidencia
    */
-  public function find(string $codigo)
+  public function find(int $codigo)
   {
-    $inscripcion = $this->selectOne('detalles_inscripciones', [['id', '=', '"' . $codigo . '"']]);
+    $inscripcion = $this->selectOne('detalles_inscripciones', [['id_inscripcion', '=',  $codigo]]);
     return !$inscripcion ? [] : $inscripcion;
   }
 
@@ -100,30 +102,38 @@ class inscripcion extends model
    * Se encarga de tomar los valores que fueron asignados al modelo
    * previamente y realizar la consulta SQL
    *
-   * @param [type] $id
-   * @return integer ID de elemento creado o actualizado
+   * @return bool - ejecucion exitosa
    */
-  public function save($id = null): int
+  public function save(): int
   {
-    $data = [];
+    $query = $this->prepare("INSERT INTO inscripcion(profesor_id, seccion_id, unidad_curricular_id, estudiante_id, estatus) VALUES (:profesor_id, :seccion_id, :unidad_curricular_id, :estudiante_id, 1)");
+    $query->bindParam(":profesor_id", $this->profesor_id);
+    $query->bindParam(":seccion_id", $this->seccion_id);
+    $query->bindParam(":unidad_curricular_id", $this->unidad_curricular_id);
+    $query->bindParam(":estudiante_id", $this->estudiante_id);
+    $query->execute();
+    $this->id = $this->lastInsertId();
+    return true;
+  }
 
-    foreach ($this->fillable as $key => $value) {
-      if (isset($this->{$value})) {
-        if (is_string($this->{$value})) {
-          $data[$value] = '"' . Sanitizer::sanitize($this->{$value}) . '"';
-        } else {
-          $data[$value] =  $this->{$value};
-        }
-      }
-    }
-    if ($id) {
-      $this->update('inscripcion', $data, [['id', '=', $id]]);
-      return $id;
-    } else {
-      $this->set('inscripcion', $data);
-      $this->id = $this->lastInsertId();
-      return $this->id;
-    }
+  function remove(int $id): bool
+  {
+    $query = $this->prepare("DELETE FROM inscripcion WHERE id=:id");
+    $query->bindParam(":id", $id);
+    $query->execute();
+    return $query->rowCount() > 0 ? true : false;
+  }
+
+  function evaluar(int $idInscripcion, float $calificacion): bool
+  {
+    $preparedSql = "UPDATE inscripcion SET calificacion=:calificacion WHERE id=:id";
+
+    $query = $this->prepare($preparedSql);
+
+    $query->bindParam(":id", $idInscripcion);
+    $query->bindParam(":calificacion", $calificacion);
+
+    return $query->execute();
   }
 
   /**
@@ -135,7 +145,7 @@ class inscripcion extends model
    */
   function usuarioCursaMateria(string $idEstudiante, string $idUnidadCurricular): array
   {
-    $inscripcion = $this->selectOne('inscripcion', [['id', '=', "'" . $idEstudiante . "'"], ['unidad_curricular_id', '=', "'" . $idUnidadCurricular . "'"]]);
+    $inscripcion = $this->selectOne('inscripcion', [['estudiante_id', '=', "'" . $idEstudiante . "'"], ['unidad_curricular_id', '=', "'" . $idUnidadCurricular . "'"]]);
     return !$inscripcion ? [] : $inscripcion;
   }
 
