@@ -115,13 +115,13 @@ class proyectoController extends controller
     function historicoProyecto(): array
     {
 
-        $historico = $this->proyectoHistorico->all();
-
+        $historico = $this->proyectoHistorico->obtenerPendienteReingreso();
 
         if (!$historico) return [];
 
         $group = [];
         foreach ($historico as $item) {
+
             if (!isset($group[$item['id_proyecto']])) {
                 if (!isset($group[$item['id_proyecto']])) {
                     $group[$item['id_proyecto']] = [];
@@ -143,6 +143,7 @@ class proyectoController extends controller
                 }
             }
         }
+
         return $group;
     }
 
@@ -605,16 +606,12 @@ class proyectoController extends controller
             // como gestionar las fases
             $proyectoId = $request->get('proyecto_id');
             $proyecto = $this->proyecto->find($proyectoId);
-
-
             $baremos = $this->baremos->findByFase($proyecto['fase_id']);
-
 
             $integrantes = $this->proyecto->obtenerIntegrantes($proyectoId);
 
             // verifica que todos los estudiantes hayan sido evaluados
             foreach ($integrantes as $integrante) {
-
                 foreach ($baremos as $indicador) {
                     $calificacion = $this->baremos->findStudentItem($indicador['id'], $integrante['integrante_id']);
                     if (empty($calificacion)) throw new Exception("El integrante " . $integrante['nombre'] . " C.I. " . $integrante['cedula'] . " No ha sido evaluado en el item " . $indicador['nombre_indicador'] . " que pertenece a la dimension " . $indicador['nombre_dimension'] . " de la materia " . $indicador['nombre_materia']);

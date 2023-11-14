@@ -179,6 +179,7 @@ CREATE TABLE `sprinf_bd`.`permisos` (
 );
 
 CREATE TABLE `sprinf_bd`.`proyecto_historico` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
   `id_proyecto` int,
   `consejo_comunal_id` int,
   `codigo_trayecto` varchar(255),

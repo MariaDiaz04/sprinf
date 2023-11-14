@@ -102,7 +102,8 @@
               showConfirmButton: false,
               toast: true,
               timer: 2000,
-            }).then(() => window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>"));
+            })
+            // .then(() => window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>"));
           },
         });
       })

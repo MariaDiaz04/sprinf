@@ -43,7 +43,7 @@ class proyectoHistorico extends model
   private int $id_proyecto;
   public int $consejo_comunal_id;
   public string $codigo_trayecto;
-  public string $codigo_siguiente_trayecto;
+  public ?string $codigo_siguiente_trayecto;
   public string $nombre_estudiante;
   public int $cedula_estudiante;
   public string $nombre_trayecto;
@@ -65,7 +65,7 @@ class proyectoHistorico extends model
   public string $tutor_ex;
   public float $nota_fase_1;
   public float $nota_fase_2;
-  public int $estatus;
+  public ?int $estatus;
   public string $periodo_inicio;
   public string $periodo_final;
 
@@ -79,6 +79,14 @@ class proyectoHistorico extends model
     } catch (Exception $th) {
       return $th;
     }
+  }
+
+  function obtenerPendienteReingreso(): array
+  {
+    $query = $this->prepare("SELECT * FROM `detalles_historico_proyecto` WHERE `id_proyecto` NOT IN (SELECT DISTINCT `id_proyecto` FROM `proyecto_historico` WHERE `codigo_siguiente_trayecto` IS NULL ) ORDER BY `periodo_final` DESC");
+    $query->execute();
+    $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
   }
 
   function allActive(): array

@@ -186,7 +186,6 @@
 
             },
             success: function(data, status) {
-              console.log(data)
               Swal.fire({
                 position: 'bottom-end',
                 icon: 'success',
