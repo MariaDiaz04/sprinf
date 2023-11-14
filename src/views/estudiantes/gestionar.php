@@ -115,23 +115,23 @@
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" required class="form-control mb-1" name="nombre" id="nombreEdit">
+                      <input type="text" required class="form-control mb-1" name="nombre" id="nombreEdit" max="55">
                     </div>
                   </div>
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="apellido">Apellido *</label>
-                      <input type="text" required class="form-control mb-1" name="apellido" id="apellidoEdit">
+                      <input type="text" required class="form-control mb-1" name="apellido" id="apellidoEdit" max="55">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="direccion">Dirección</label>
-                      <input type="text" required class="form-control mb-1" placeholder="..." name="direccion" id="direccionEdit">
+                      <input type="text" required class="form-control mb-1" placeholder="..." name="direccion" id="direccionEdit" max="255">
                     </div>
                   </div>
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="number" required class="form-control mb-1" placeholder="..." name="telefono" id="telefonoEdit">
+                      <input type="text" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required name="telefono" id="telefonoEdit">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="email">Correo Electronico</label>
@@ -208,6 +208,62 @@
 
         url = $(this).attr('action');
         data = $(this).serializeArray();
+
+        nombre = $("#guardar #nombre").val();
+
+        if (!onlyLetters(nombre)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Nombre de estudiante no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        apellido = $("#guardar #apellido").val();
+        if (!onlyLetters(apellido)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Apellido no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        telefono = $("#guardar #telefono").val();
+        if (!phoneNumbers(telefono)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Numero de telefono no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        cedula = $("#guardar #cedula").val();
+        if (!onlyNumbers(cedula)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Cedula no valida",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
         $.ajax({
           type: "POST",
           url: url,
@@ -412,5 +468,17 @@
         }
       });
 
+    }
+
+    function onlyLetters(str) {
+      return /^[A-Za-zñáéíóúü ]*$/.test(str);
+    }
+
+    function phoneNumbers(number) {
+      return /^[04][0-9]{10}$/.test(number);
+    }
+
+    function onlyNumbers(number) {
+      return /^[0-9]{8}$/.test(number);
     }
   </script>
