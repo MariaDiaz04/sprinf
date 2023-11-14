@@ -37,6 +37,14 @@ $listaDeRutas['/estudiantes/guardar'] =  new Route(
     'method' => 'store',
   ]
 );
+$listaDeRutas['/estudiantes_delete'] =  new Route(
+
+  '/estudiantes/delete',
+  [
+    'controller' => estudianteController::class,
+    'method' => 'delete',
+  ]
+);
 
 $listaDeRutas['estudiante_ssp'] =  new Route(
 

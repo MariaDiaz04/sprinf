@@ -91,9 +91,9 @@
     </div>
   </div>
 
-<!-- MODAL ACTUALIZAR -->
+  <!-- MODAL ACTUALIZAR -->
 
- <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editarLabel" aria-hidden="true">
+  <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editarLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -161,6 +161,7 @@
     let editUrl = "<?= APP_URL . $this->Route('estudiantes/edit') ?>";
     let showDetailsUrl = "<?= APP_URL . $this->Route('estudiantes/showDetails') ?>";
     let noteUrl = "<?= APP_URL . $this->Route('notes/pdf') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('estudiantes/delete') ?>";
 
     $(document).ready(() => {
 
@@ -190,7 +191,7 @@
                         <a class="dropdown-item" onClick="showDetails('${row[4]}')" href="javascript:void(0)">Mostrar Datos de Contacto</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="javascript:void(0)">Editar</a>
                         <a class="dropdown-item" " href="${noteUrl+'/'+row[0]}" target="_blank">Notas</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="javascript:void(0)">Eliminar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="javascript:void(0)">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -228,13 +229,13 @@
             table.ajax.reload();
             // usar sweetalerts
             Swal.fire({
-                position: 'bottom-end',
-                icon: 'success',
-                title: 'Estudiante gurdado con exito',
-                showConfirmButton: false,
-                toast: true,
-                timer: 2000
-              })
+              position: 'bottom-end',
+              icon: 'success',
+              title: 'Estudiante gurdado con exito',
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
             document.getElementById("guardar").reset();
             // actualizar tabla
             toggleLoading(false, '#guardar')
@@ -289,10 +290,6 @@
         console.log('aasddff');
       }
 
-      function remove(id) {
-        alert(`Removing ${id}`)
-      }
-
       // TOGGLE BUTTON AND SPINNER
       function toggleLoading(show, form = '') {
         if (show) {
@@ -333,7 +330,7 @@
       });
     }
 
-    
+
     function renderUpdateForm(data) {
       $('#editar').modal('show')
       // seleccionar trayecto
@@ -368,5 +365,52 @@
           renderUpdateForm(JSON.parse(data))
         },
       });
+    }
+
+    function remove(id) {
+
+      Swal.fire({
+        title: "¿Seguro que desea eliminar el estudiante?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Continuar",
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            type: "POST",
+            url: deleteUrl,
+            data: {
+              'cedula': id
+            },
+            error: function(error, status) {
+              Swal.fire({
+                position: 'bottom-end',
+                icon: 'error',
+                title: error.responseText,
+                showConfirmButton: false,
+                toast: true,
+                timer: 3000
+              })
+
+            },
+            success: function(data, status) {
+              console.log(data);
+              Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: 'Estudiante borrada con exito',
+                showConfirmButton: false,
+                toast: true,
+                timer: 1500
+              })
+              $('#example').DataTable().ajax.reload();
+            },
+          });
+        }
+      });
+
     }
   </script>
