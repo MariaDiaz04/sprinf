@@ -264,6 +264,19 @@
           toggleLoading(false);
           return false;
         }
+        email = $("#guardar #email").val();
+        if (!onlyEmail(email)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "email no valida",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
         $.ajax({
           type: "POST",
           url: url,
@@ -307,6 +320,75 @@
         toggleLoading(true, '#actualizar');
         url = $(this).attr('action');
         data = $(this).serializeArray();
+
+        nombre = $("#actualizar #nombreEdit").val();
+        if (!onlyLetters(nombre)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Nombre de estudiante no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        apellido = $("#actualizar #apellidoEdit").val();
+        if (!onlyLetters(apellido)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Apellido no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        telefono = $("#actualizar #telefonoEdit").val();
+        if (!phoneNumbers(telefono)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Numero de telefono no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        cedula = $("#actualizar #cedulaEdit").val();
+        if (!onlyNumbers(cedula)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Cedula no valida",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        email = $("#actualizar #emailEdit").val();
+        if (!onlyEmail(email)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "email no valida",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
         $.ajax({
           type: "POST",
           url: url,
@@ -480,5 +562,10 @@
 
     function onlyNumbers(number) {
       return /^[0-9]{8}$/.test(number);
+    }
+
+    function onlyEmail(email) {
+      return /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(email)
+
     }
   </script>
