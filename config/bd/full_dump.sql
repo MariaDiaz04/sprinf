@@ -1109,6 +1109,14 @@ insert into seccion (trayecto_id, codigo, observacion) values ('TR4','IN4303', '
 delete from malla_curricular where true;
 delete from materias where true;
 
+-- ------------------ TRAYECTO I -------------------------------
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ASESOR3078554', 'Tutor Asesor Proyecto II', 72, 6, 3, 4, '',0);
+insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078554_1', 'TR1_1','ASESOR3078554');
+insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078554_2', 'TR1_2','ASESOR3078554');
+-- ------------------ TRAYECTO II -------------------------------
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ASESOR3078845', 'Tutor Asesor Proyecto II', 72, 6, 3, 4, '',0);
+insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078845_1', 'TR2_1','ASESOR3078845');
+insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078845_2', 'TR2_2','ASESOR3078845');
 -- ------------------ TRAYECTO III -------------------------------
 -- Matemática Aplicada anual trayecto 3
 insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIMAT156306', 'Matemática Aplicada', 120, 36, 6, 3, '');
@@ -1399,7 +1407,29 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Tipo de 
 insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
 insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
 
+-- --------------------- trayecto 2 fase 1 ---------------------------
+insert into dimension (id, unidad_id, nombre, grupal) values(28,'ASESOR3078845_1','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Manejo de Conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Proactividad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Hábitos de Trabajo', 1);
 
+-- --------------------- trayecto 2 fase 2 ---------------------------
+insert into dimension (id, unidad_id, nombre, grupal) values(29,'ASESOR3078845_2','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Manejo de Conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Proactividad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Hábitos de Trabajo', 1);
+
+-- --------------------- trayecto 1 fase 1 ---------------------------
+insert into dimension (id, unidad_id, nombre, grupal) values(30,'ASESOR3078554_1','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Manejo de Conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Proactividad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Hábitos de Trabajo', 1);
+
+-- --------------------- trayecto 1 fase 2 ---------------------------
+insert into dimension (id, unidad_id, nombre, grupal) values(31,'ASESOR3078554_2','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Manejo de Conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Proactividad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Hábitos de Trabajo', 1);
 -- Proyecto
 
 
@@ -1493,7 +1523,7 @@ insert into proyecto (
 )
 values (
   1,
-  'TR3_1', 
+  'TR1_1', 
   1,
   'Gestion de proyectos sociotecnologicos', 
   'UPTAEB', 
