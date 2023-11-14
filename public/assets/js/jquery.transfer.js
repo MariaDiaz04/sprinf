@@ -129,6 +129,11 @@
       getSelectedItems: function () {
         return get_selected_items(transfer);
       },
+      manualSearch: function () {
+        console.log($(transfer.groupItemSearcherId));
+        console.log($(transfer.groupItemSearcherId).trigger("keyup"));
+        return "adasd";
+      },
     };
   };
 
@@ -952,8 +957,6 @@
           .toLowerCase();
 
         let display = groupValue.indexOf(busqueda) > -1;
-
-        console.log(display);
 
         if (!groupValues.eq(j).hasClass("selected-hidden") && display) {
           visiblegroups = true;

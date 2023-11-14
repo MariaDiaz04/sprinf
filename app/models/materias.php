@@ -81,7 +81,7 @@ class materias extends model
      */
     public function find(string $codigo)
     {
-        $materias = $this->selectOne('detalles_materias', [['codigo_materia', '=', '"' . $codigo . '"']]);
+        $materias = $this->selectOne('materias', [['codigo', '=', '"' . $codigo . '"']]);
         return !$materias ? [] : $materias;
     }
 
@@ -94,7 +94,7 @@ class materias extends model
      */
     function findByUnidadCurricularId(string $codigo): array
     {
-        $materias = $this->selectOne('detalles_materias', [['codigo', '=', '"' . $codigo . '"']]);
+        $materias = $this->selectOne('detalles_materias', [['codigo_materia', '=', '"' . $codigo . '"']]);
         return !$materias ? [] : $materias;
     }
 
@@ -107,7 +107,7 @@ class materias extends model
      */
     function findMalla(string $codigo): array
     {
-        $materias = $this->select('detalles_materias', [['materia_id', '=', '"' . $codigo . '"']]);
+        $materias = $this->select('detalles_materias', [['codigo_materia', '=', '"' . $codigo . '"']]);
         return !$materias ? [] : $materias;
     }
 

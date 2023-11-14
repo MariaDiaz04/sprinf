@@ -112,9 +112,33 @@ class seccion extends model
         return $this->codigo;
     }
 
+    /**
+     * Transaccion para la actualizacion de seccion
+     *
+     * @return String
+     */
+    function updateSeccion(): String
+    {
+        try {
+            parent::beginTransaction();
+            // actualizar tabla materia
+            $codigo = $this->save($this->codigo);
+            parent::commit();
+            return $codigo;
+        } catch (Exception $e) {
+            print($e);
+            parent::rollBack();
+            return '';
+        }
+    }
 
 
-
+    // ======================== UPDATE=========================
+    public function actualizar($seccion)
+    {
+        $this->update('seccion', $seccion, [['codigo', '=', '"' . $this->fillable['codigo'] . '"']]);
+        return $this;
+    }
 
     public function Selectcod()
     {
@@ -129,25 +153,6 @@ class seccion extends model
         );
         return $codigo;
     }
-    // funcion para traer estatus 1 
-    // public function allstatus() {
-
-    //     $allstatus = $this->query(
-    //         'SELECT
-
-    //             seccion.*
-    //         FROM
-
-    //             `seccion`
-    //         WHERE
-    //              nombre NOT in
-    //             (
-    //              select nombre from seccion
-    //                 where estatus = 0
-    //                                         )'
-    //     );
-    //     return $allstatus;
-    // }
 
     /**
      * Obtener los detalles de una seccion
@@ -158,67 +163,47 @@ class seccion extends model
      */
     public function find(string $codigo)
     {
-        $materias = $this->selectOne('detalles_seccion', [['codigo', '=', '"' . $codigo . '"']]);
-        return !$materias ? [] : $materias;
+        $seccion = $this->selectOne('detalles_seccion', [['codigo', '=', '"' . $codigo . '"']]);
+        return !$seccion ? [] : $seccion;
+    }
+
+    public function findOld(string $codigo)
+    {
+        try {
+            $seccion = $this->select('seccion', [['codigo', '=', '"' . $codigo . '"']]);
+            if ($seccion) {
+                foreach ($seccion[0] as $key => $value) {
+                    $this->fillable[$key] = $value;
+                }
+                return $this;
+            } else {
+                return [];
+            }
+        } catch (\PDOException $th) {
+            return $th;
+        }
     }
     //=========================/FIND==========================
 
 
-    // ======================== / UPDATE=========================
-
-    /* 
-public function actualizar($seccion) {
-
-$this->update('seccion', $seccion, [['id', '=', $this->fillable['id'] ]]);
-return $this;
-
-}
-
-public function eliminar()
-{
-
-    try {
-
-        $this->delete('seccion', [['id', '=',  $this->fillable['id']]]);
-        
-        return $this;
-        
-    } catch (PDOException $th) {
-        return $th;
+    /**
+     * Transaccion para el borrado de secciones
+     *
+     * @return String
+     */
+    function deleteTransaction(string $codigo): bool
+    {
+        try {
+            parent::beginTransaction();
+            // actualizar tabla materia
+            $delete = $this->delete('seccion', [['codigo', '=', '"' . $codigo . '"']]);
+            parent::commit();
+            return true;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return false;
+        }
     }
-}
-
-
-    public function seccionactivas() {
-    
-    $seccion_activas = $this->query(
-        'SELECT
-            
-            seccion.estatus
-        FROM
-            
-            `seccion`
-            WHERE seccion.estatus=1
-       '
-    );
-    return $seccion_activas;
-}
-
-
-public function seccionInactivas() {
-    
-    $seccion_inactivas = $this->query(
-        'SELECT
-            
-            seccion.estatus
-        FROM
-            
-            `seccion`
-            WHERE seccion.estatus=0
-       '
-    );
-    return $seccion_inactivas;
-} */
 
     /**
      * generarSSP

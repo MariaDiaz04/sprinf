@@ -12,46 +12,64 @@ class proyectoHistorico extends model
 
   public $fillable = [
     'id_proyecto',
+    'consejo_comunal_id',
+    'codigo_trayecto',
+    'codigo_siguiente_trayecto',
     'nombre_estudiante',
-    'nombre_trayecto',
     'cedula_estudiante',
     'nombre_proyecto',
+    'nombre_trayecto',
+    'resumen',
+    'direccion',
     'comunidad',
     'motor_productivo',
-    'direccion',
-    'area',
+    'nombre_consejo_comunal',
+    'nombre_vocero_consejo_comunal',
+    'telefono_consejo_comunal',
+    'sector_consejo_comunal',
     'municipio',
     'parroquia',
+    'parroquia_id',
+    'observaciones',
     'tutor_in',
     'tutor_ex',
+    'tlf_tex',
     'nota_fase_1',
     'nota_fase_2',
+    'estatus',
     'periodo_inicio',
     'periodo_final',
-    'integrantes',
   ];
   private int $id_proyecto;
+  public int $consejo_comunal_id;
+  public string $codigo_trayecto;
+  public string $codigo_siguiente_trayecto;
   public string $nombre_estudiante;
-  public string $nombre_trayecto;
   public int $cedula_estudiante;
+  public string $nombre_trayecto;
   public string $nombre_proyecto;
-  public string $cedula;
-  public string $nombre;
   public string $resumen;
+  public string $direccion;
   public string $comunidad;
   public string $motor_productivo;
-  public string $direccion;
-  public string $area;
+  public string $nombre_consejo_comunal;
+  public string $nombre_vocero_consejo_comunal;
+  public string $telefono_consejo_comunal;
+  public string $sector_consejo_comunal;
   public string $municipio;
   public string $parroquia;
+  public int $parroquia_id;
+  public ?string $observaciones; //nullable property
   public string $tutor_in;
+  public int $tlf_tex;
   public string $tutor_ex;
   public float $nota_fase_1;
   public float $nota_fase_2;
+  public int $estatus;
   public string $periodo_inicio;
   public string $periodo_final;
 
-  public array $integrantes; // has many
+  public array $error;
 
   public function all()
   {
@@ -69,7 +87,7 @@ class proyectoHistorico extends model
     return $proyectos ? $proyectos : null;
   }
 
-  function historicalTransaction(): string
+  function historicalTransaction(): bool
   {
     try {
       parent::beginTransaction();
@@ -77,17 +95,28 @@ class proyectoHistorico extends model
 
 
       foreach ($proyectos as $proyecto) {
+        $this->codigo_trayecto = $proyecto['codigo_trayecto'];
         $this->id_proyecto = $proyecto['id'];
         $this->nombre_proyecto = $proyecto['nombre'];
         $this->comunidad = $proyecto['comunidad'];
         $this->nombre_trayecto = $proyecto['nombre_trayecto'];
-        $this->motor_productivo = $proyecto['motor_productivo'];
         $this->resumen = $proyecto['resumen'];
         $this->direccion = $proyecto['direccion'];
+        $this->consejo_comunal_id = $proyecto['consejo_comunal_id'];
+        $this->nombre_consejo_comunal = $proyecto['nombre_consejo_comunal'];
+        $this->nombre_vocero_consejo_comunal = $proyecto['nombre_vocero_consejo_comunal'];
+        $this->telefono_consejo_comunal = $proyecto['telefono_consejo_comunal'];
+        $this->sector_consejo_comunal = $proyecto['sector_consejo_comunal'];
+        $this->codigo_siguiente_trayecto = $proyecto['codigo_siguiente_trayecto'];
+        $this->motor_productivo = $proyecto['motor_productivo'];
         $this->municipio = $proyecto['municipio'];
         $this->parroquia = $proyecto['parroquia'];
+        $this->parroquia_id = $proyecto['parroquia_id'];
+        $this->observaciones = $proyecto['observaciones'];
         $this->tutor_in = $proyecto['tutor_in'];
         $this->tutor_ex = $proyecto['tutor_ex'];
+        $this->tlf_tex = $proyecto['tlf_tex'];
+        $this->estatus = $proyecto['estatus'];
         $this->periodo_inicio = $proyecto['fecha_inicio'];
         $this->periodo_final = $proyecto['fecha_cierre'];
 
@@ -122,10 +151,15 @@ class proyectoHistorico extends model
       $this->delete('proyecto');
 
       parent::commit();
-      return '';
+      return true;
     } catch (Exception $e) {
       parent::rollBack();
-      return '';
+      $this->error = [
+        'code' => $e->getCode(),
+        'message' => $e->getMessage(),
+        'stackTrace' => $e->getTraceAsString()
+      ];
+      return false;
     }
   }
 

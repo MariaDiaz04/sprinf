@@ -60,7 +60,7 @@ class modulo extends model
     public function find($modulo_id)
     {
         try {
-            $modulo = $this->select('modulo', [['modulo_id', '=', $modulo_id]]);
+            $modulo = $this->select('modulo', [['id', '=', $modulo_id]]);
             if ($modulo) {
                 foreach ($modulo[0] as $key => $value) {
                     $this->fillable[$key] = $value;
@@ -78,7 +78,7 @@ class modulo extends model
     public function actualizar($modulo)
     {
 
-        $this->update('modulo', $modulo, [['modulo_id', '=', $this->fillable['modulo_id']]]);
+        $this->update('modulo', $modulo, [['id', '=', $this->fillable['modulo_id']]]);
         return $this;
     }
 
@@ -86,7 +86,7 @@ class modulo extends model
     public function eliminar()
     {
         try {
-            $this->delete('modulo', [['idmodulo', '=',  $this->fillable['idmodulo']]]);
+            $this->delete('modulo', [['id', '=',  $this->fillable['idmodulo']]]);
             return $this;
         } catch (\PDOException $th) {
             return $th;

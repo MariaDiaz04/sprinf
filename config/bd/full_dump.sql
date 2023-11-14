@@ -10,7 +10,8 @@ CREATE TABLE `sprinf_bd`.`periodo` (
 CREATE TABLE `sprinf_bd`.`trayecto` (
   `codigo` varchar(255) UNIQUE PRIMARY KEY,
   `periodo_id` int,
-  `nombre` varchar(255)
+  `nombre` varchar(255),
+  `siguiente_trayecto` varchar(255)
 );
 
 CREATE TABLE `sprinf_bd`.`fase` (
@@ -78,21 +79,50 @@ CREATE TABLE `sprinf_bd`.`inscripcion` (
   `estatus` int DEFAULT 1
 );
 
+CREATE TABLE `sprinf_bd`.`municipios` (
+    id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE `sprinf_bd`.`parroquias` (
+    id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+    municipio INT NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE `sprinf_bd`.`sector_consejo_comunal` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `parroquia_id` int,
+  `nombre` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`consejo_comunal` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `nombre` varchar(255),
+  `nombre_vocero` varchar(255),
+  `telefono` varchar(255),
+  `sector_id` int
+);
+
 CREATE TABLE `sprinf_bd`.`proyecto` (
   `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
-  `fase_id` varchar(255),
-  `nombre` varchar(255),
-  `comunidad` varchar(255),
+  `fase_id` varchar(255) NOT NULL,
+  `parroquia_id` int NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `comunidad` varchar(255) NOT NULL,
+  `comunidad_autonoma` bool NOT NULL,
   `motor_productivo` varchar(255),
   `resumen` varchar(255),
   `direccion` varchar(255),
-  `municipio` varchar(255),
-  `parroquia` varchar(255),
+  `consejo_comunal_id` int,
+  `observaciones` text,
   `tutor_in` varchar(255),
   `tutor_ex` varchar(255),
-  `tlf_tin` int,
-  `tlf_tex` int,
-
+  `tlf_tin` varchar(12),
+  `tlf_tex` varchar(12),
+  `estatus` int,
   `cerrado` bool DEFAULT false
 );
 
@@ -150,20 +180,31 @@ CREATE TABLE `sprinf_bd`.`permisos` (
 
 CREATE TABLE `sprinf_bd`.`proyecto_historico` (
   `id_proyecto` int,
+  `consejo_comunal_id` int,
+  `codigo_trayecto` varchar(255),
+  `codigo_siguiente_trayecto` varchar(255),
   `nombre_estudiante` varchar(255),
   `cedula_estudiante` int,
   `nombre_proyecto` varchar(255),
   `nombre_trayecto` varchar(255),
-  `comunidad` varchar(255),
-  `tutor_in` varchar(255),
-  `tutor_ex` varchar(255),
-  `motor_productivo` varchar(255),
   `resumen` varchar(255),
   `direccion` varchar(255),
+  `comunidad` varchar(255),
+  `motor_productivo` varchar(255),
+  `nombre_consejo_comunal` varchar(255),
+  `nombre_vocero_consejo_comunal` varchar(255),
+  `telefono_consejo_comunal` varchar(255),
+  `sector_consejo_comunal` varchar(255),
   `municipio` varchar(255),
+  `parroquia_id` int,
   `parroquia` varchar(255),
+  `observaciones` text,
+  `tutor_in` varchar(255),
+  `tutor_ex` varchar(255),
+  `tlf_tex` varchar(255),
   `nota_fase_1` float,
   `nota_fase_2` float,
+  `estatus` int,
   `periodo_inicio` date,
   `periodo_final` date
 );
@@ -183,7 +224,22 @@ CREATE TABLE `sprinf_bd`.`bitacora` (
   CONSTRAINT `fk_bitacora_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `sprinf_bd`.`pregunta` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `pregunta` varchar(255)
+);
+
+CREATE TABLE `sprinf_bd`.`respuestas` (
+  `id` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  `respuesta` varchar(255) NOT NULL,
+  `pregunta_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL
+);
+
+
 ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`periodo_id`) REFERENCES `sprinf_bd`.`periodo` (`id`);
+
+ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`siguiente_trayecto`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
 
 ALTER TABLE `sprinf_bd`.`fase` ADD FOREIGN KEY (`trayecto_id`) REFERENCES `sprinf_bd`.`trayecto` (`codigo`);
 
@@ -199,7 +255,7 @@ ALTER TABLE `sprinf_bd`.`profesor` ADD FOREIGN KEY (`persona_id`) REFERENCES `sp
 
 ALTER TABLE `sprinf_bd`.`dimension` ADD FOREIGN KEY (`unidad_id`) REFERENCES `sprinf_bd`.`malla_curricular` (`codigo`);
 
-ALTER TABLE `sprinf_bd`.`indicadores` ADD FOREIGN KEY (`dimension_id`) REFERENCES `sprinf_bd`.`dimension` (`id`);
+ALTER TABLE `sprinf_bd`.`indicadores` ADD FOREIGN KEY (`dimension_id`) REFERENCES `sprinf_bd`.`dimension` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `sprinf_bd`.`estudiante` ADD FOREIGN KEY (`persona_id`) REFERENCES `sprinf_bd`.`persona` (`cedula`);
 
@@ -211,17 +267,28 @@ ALTER TABLE `sprinf_bd`.`inscripcion` ADD FOREIGN KEY (`unidad_curricular_id`) R
 
 ALTER TABLE `sprinf_bd`.`inscripcion` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
 
+ALTER TABLE `sprinf_bd`.`parroquias` ADD FOREIGN KEY (`municipio`) REFERENCES `sprinf_bd`.`municipios` (`id`);
+
+ALTER TABLE `sprinf_bd`.`sector_consejo_comunal` ADD FOREIGN KEY (`parroquia_id`) REFERENCES `sprinf_bd`.`parroquias` (`id`);
+
+ALTER TABLE `sprinf_bd`.`consejo_comunal` ADD FOREIGN KEY (`sector_id`) REFERENCES `sprinf_bd`.`sector_consejo_comunal` (`id`);
+
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`fase_id`) REFERENCES `sprinf_bd`.`fase` (`codigo`);
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`tutor_in`) REFERENCES `sprinf_bd`.`profesor` (`codigo`);
+
+
+ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`consejo_comunal_id`) REFERENCES `sprinf_bd`.`consejo_comunal` (`id`);
+
+ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`parroquia_id`) REFERENCES `sprinf_bd`.`parroquias` (`id`);
 
 ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
 
 ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`proyecto_id`) REFERENCES `sprinf_bd`.`proyecto` (`id`);
 
-ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`indicador_id`) REFERENCES `sprinf_bd`.`indicadores` (`id`);
+ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`indicador_id`) REFERENCES `sprinf_bd`.`indicadores` (`id`) ON DELETE CASCADE;
 
-ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`integrante_id`) REFERENCES `sprinf_bd`.`integrante_proyecto` (`id`);
+ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`integrante_id`) REFERENCES `sprinf_bd`.`integrante_proyecto` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `sprinf_bd`.`persona` ADD FOREIGN KEY (`usuario_id`) REFERENCES `sprinf_bd`.`usuario` (`id`);
 
@@ -230,6 +297,11 @@ ALTER TABLE `sprinf_bd`.`usuario` ADD FOREIGN KEY (`rol_id`) REFERENCES `sprinf_
 ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`rol_id`) REFERENCES `sprinf_bd`.`roles` (`id`);
 
 ALTER TABLE `sprinf_bd`.`permisos` ADD FOREIGN KEY (`modulo_id`) REFERENCES `sprinf_bd`.`modulo` (`id`);
+
+ALTER TABLE `sprinf_bd`.`respuestas` ADD FOREIGN KEY (`usuario_id`) REFERENCES `sprinf_bd`.`usuario` (`id`);
+
+ALTER TABLE `sprinf_bd`.`respuestas` ADD FOREIGN KEY (`pregunta_id`) REFERENCES `sprinf_bd`.`pregunta` (`id`);
+
 
 use sprinf_bd;
 -- 1_usuarios
@@ -244,9 +316,11 @@ insert into roles (id, nombre) values (1, 'administrador'), (2, 'profesor'), (3,
 
 -- modulos
 insert into modulo (id, nombre) values (1, 'Proyecto');
+insert into modulo (id, nombre) values (2, 'Materias');
 
 -- permisos
 insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo_id) values (1, 1, 1, 1, 1, 1, 1);
+insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo_id) values (2, 1, 1, 1, 1, 1, 2);
 
 
 
@@ -270,14 +344,14 @@ delete from usuario where id != 1;
 insert into usuario (id,rol_id,email, contrasena, token)
 values (2,2,'sonia@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
-values (2, '135482354', 'Sonia', '', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
+values (2, '135482354', 'Sonia', '', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', '2548475154', 1);
 insert into profesor (codigo, persona_id) values ('p-135482354',135482354);
 
 -- Profesor Ricardo Tillero
 insert into usuario (id,rol_id,email, contrasena, token)
 values (3,2,'ricardo@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
-values (3, '654854354', 'Ricardo', 'Tillero', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
+values (3, '654854354', 'Ricardo', 'Tillero', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', '2548475154', 1);
 insert into profesor (codigo, persona_id) values ('p-654854354',654854354);
 
 
@@ -285,15 +359,15 @@ insert into profesor (codigo, persona_id) values ('p-654854354',654854354);
 insert into usuario (id,rol_id,email, contrasena, token)
 values (4,2,'orlando@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
-values (4, '234565423', 'Orlando', '', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
+values (4, '234565423', 'Orlando', '', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', '2548475154', 1);
 insert into profesor (codigo, persona_id) values ('p-234565423',234565423);
 
 -- Profesora Lisset
 insert into usuario (id,rol_id,email, contrasena, token)
 values (5,2,'lisset@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
-values (5, '5482315748', 'Lisset', '', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
-insert into profesor (codigo, persona_id) values ('p-5482315748',5482315748);
+values (5, '125487', 'Lisset', '', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', '2548475154', 1);
+insert into profesor (codigo, persona_id) values ('p-125487',125487);
 
 -- Profesor orlando 
 insert into usuario (id,rol_id,email, contrasena, token)
@@ -984,21 +1058,21 @@ delete from periodo where true;
 insert into periodo (id, fecha_inicio, fecha_cierre) values (1, '2023-03-01', '2024-02-01');
 
 -- 5_trayecto-fase.sql
-insert into trayecto (codigo, periodo_id, nombre) values ('TR1',1,'Trayecto I');
-insert into fase (codigo, trayecto_id, nombre) values ('TR1_2','TR1','Fase 2');
-insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR1_1','TR1','Fase 1', 'TR1_2'); 
+insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR4',1,'Trayecto IV', NULL);
+insert into fase (codigo, trayecto_id, nombre) values ('TR4_2','TR4','Fase 2'); 
+insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR4_1','TR4','Fase 1', 'TR4_2');
 
-insert into trayecto (codigo, periodo_id, nombre) values ('TR2',1,'Trayecto II');
+insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR3',1,'Trayecto III', 'TR4');
+insert into fase (codigo, trayecto_id, nombre) values ('TR3_2','TR3','Fase 2'); 
+insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR3_1','TR3','Fase 1', 'TR3_2'); 
+
+insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR2',1,'Trayecto II', 'TR3');
 insert into fase (codigo, trayecto_id, nombre) values ('TR2_2','TR2','Fase 2');
 insert into fase (codigo, trayecto_id, nombre,siguiente_fase) values ('TR2_1','TR2','Fase 1', 'TR2_2');
 
-insert into trayecto (codigo, periodo_id, nombre) values ('TR3',1,'Trayecto III');
-insert into fase (codigo, trayecto_id, nombre) values ('TR3_2','TR3','Fase 2'); 
-insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR3_1','TR3','Fase 1', 'TR3_2'); 
-	
-insert into trayecto (codigo, periodo_id, nombre) values ('TR4',1,'Trayecto IV');
-insert into fase (codigo, trayecto_id, nombre) values ('TR4_2','TR4','Fase 2'); 
-insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR4_1','TR4','Fase 1', 'TR4_2'); 
+insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR1',1,'Trayecto I', 'TR2');
+insert into fase (codigo, trayecto_id, nombre) values ('TR1_2','TR1','Fase 2');
+insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR1_1','TR1','Fase 1', 'TR1_2');
 
 -- 6_seccion.sql
 -- // Trayecto 1
@@ -1172,6 +1246,7 @@ insert into dimension (id, unidad_id, nombre, grupal) values(7,'ASESOR3078303_1'
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de menú amigable al usuario', 2);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de inserción o captura de datos', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de confirmación de eliminación de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de consultar con filtros de búsqueda', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Demuestra conocimiento en la programación modular del Sistema', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Modulo de reportes básicos', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Utiliza modelo vista-controlador', 2);
@@ -1187,99 +1262,144 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'Manejo de
 insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'Responsabilidad', 2);
 insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'Hábitos de trabajo', 2);
 
+-- INGENIERIA DEL SOFTWARE
+insert into dimension (id, unidad_id, nombre, grupal) values(10,'PINGSO078303_1','Modelado del Negocio', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'Documento de Requisitos S.R.S', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'Diagramas y Plantilla IBM', 5);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(11,'PINGSO078303_1','Modelado del Sistema', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Diagrama de Casos de Uso', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Diagrama de Actividad', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Descripción de casos de uso en Plantillas IBM', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Diagrama de clase', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Mapa Navegacional', 1);
+
 
 -- Modelado de base de datos 
-insert into dimension (id, unidad_id, nombre, grupal) values(10,'PIMOB078303_1','Diseño de la Base de datos', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'Modelo Entidad Relacion', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'Modelo Logico Relacional', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'Modelo Fisico', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'Utiliza postgres para el diseño fisico de la base de datos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'Diccionario de datos', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(12,'PIMOB078303_1','Diseño de la Base de datos', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Modelo Entidad Relacion', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Modelo Logico Relacional', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Modelo Fisico', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Utiliza postgres para el diseño fisico de la base de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Diccionario de datos', 1);
 
 -- Docente de proyecto
-insert into dimension (id, unidad_id, nombre, grupal) values(11,'PIPST078303_1','Aspectos a evaluar', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Titulo del proyecto', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'La descripcion del diagnostico situacional', 0.75);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Aplica e interpreta instrumentos para el levantamiento de la niformación y captura de requisitos', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Presenta una propuesta de solución coherente', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Objetivo general se relaciona con la propuesta de solución', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Objetivos especificos: reflejan el alcance del proyecto y se relacionan con la propuesta de solución del objetivo general', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Justifica las razones para el uso de la propuesta de solución', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'El proyecto describe los procesos llevados a cabo dentro de la comunidad', 0.75);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Aborda teorías y conocimientos cónsonos al trayecto respectivo y su acreditación', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Se aborda el marco legal', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Realiza planificación de actividades del proyecto', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Entrega a tiempo de artefactos correspondientes al diseño del sistema', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Sistematiza Capitulo 1 y 2 del proyecto', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Aplica normas para representar cuadros y figuras', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Redacción, analisis y ortografia', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Los participantes se integraron como equipo de trabajo para la resolución de conflictos', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Los participantes aplicaron instrumentos de recolección de información', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Los participantes cumplieron con las tareas y actividades programadas', 0.5);
+insert into dimension (id, unidad_id, nombre, grupal) values(13,'PIPST078303_1','Aspectos a evaluar', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Titulo del proyecto', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'La descripcion del diagnostico situacional', 0.75);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Aplica e interpreta instrumentos para el levantamiento de la niformación y captura de requisitos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Presenta una propuesta de solución coherente', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Objetivo general se relaciona con la propuesta de solución', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Objetivos especificos: reflejan el alcance del proyecto y se relacionan con la propuesta de solución del objetivo general', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Justifica las razones para el uso de la propuesta de solución', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'El proyecto describe los procesos llevados a cabo dentro de la comunidad', 0.75);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Aborda teorías y conocimientos cónsonos al trayecto respectivo y su acreditación', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Se aborda el marco legal', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Realiza planificación de actividades del proyecto', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Entrega a tiempo de artefactos correspondientes al diseño del sistema', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Sistematiza Capitulo 1 y 2 del proyecto', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Aplica normas para representar cuadros y figuras', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Redacción, analisis y ortografia', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los participantes se integraron como equipo de trabajo para la resolución de conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los participantes aplicaron instrumentos de recolección de información', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los participantes cumplieron con las tareas y actividades programadas', 0.5);
 
 -- --------------------- trayecto 3 fase 2 ------------------------------
 
 -- TUTORA
-insert into dimension (id, unidad_id, nombre, grupal) values(12,'ASESOR4078303_2','Desempeño Individual',0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'CRUD del sistema. (Por Modulo)', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Validación de datos. (Por Modulo)', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(14,'ASESOR3078303_2','Desempeño Individual',0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'CRUD del sistema. (Por Modulo)', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Validación de datos. (Por Modulo)', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(13,'ASESOR4078303_2','Desempeño grupal',1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Responsabilidad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Integración al grupo', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'proactividad', 0.5);
+insert into dimension (id, unidad_id, nombre, grupal) values(15,'ASESOR3078303_2','Desempeño grupal',1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Responsabilidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Integración al grupo', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'proactividad', 0.5);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(14,'ASESOR4078303_2','Avances de programación (Por Modulo)', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Instalación del software necesario para la ejecución de la aplicación o componentes', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Pantallas bien conectadas con la Base de datos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Los módulos de modificación de base de datos garantizan la integridad referencial', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Desarrollo de todos los modulos diseñados en los diagramas de casos de uso', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Módulos acordes al Diagrama de clases', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Funcionamiento completo de los módulos de automatización', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Correctitud en los reportes estadisticos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Cumplimiento del estandar de programación entregado', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Control de errores', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Gestión de bitácora', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Manejo de sesiones respecto a concurrencia de usuarios', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(16,'ASESOR3078303_2','Avances de programación (Por Modulo)', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Instalación del software necesario para la ejecución de la aplicación o componentes', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Pantallas bien conectadas con la Base de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Los módulos de modificación de base de datos garantizan la integridad referencial', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Desarrollo de todos los modulos diseñados en los diagramas de casos de uso', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Módulos acordes al Diagrama de clases', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Funcionamiento completo de los módulos de automatización', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Correctitud en los reportes estadisticos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Cumplimiento del estandar de programación entregado', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Control de errores', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Gestión de bitácora', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Manejo de sesiones respecto a concurrencia de usuarios', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(15,'ASESOR4078303_2','Interfaz y estilo', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Uso adecuado de los colores en la aplicación', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Fondos claros y sencillos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Uso de iamgenes', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Distribución de la interfaz', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(17,'ASESOR3078303_2','Interfaz y estilo', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso adecuado de los colores en la aplicación', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Fondos claros y sencillos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso de iamgenes', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Distribución de la interfaz', 1);
 
 -- Ingeniera de Software
-insert into dimension (id, unidad_id, nombre, grupal) values(16,'PINGSO078303_2','Desempeño Tecnico', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Cumple con actividades Asignadas', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Conoce con exactitud el Sistema', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Conoce el uso de Bitacora', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Codifica los requerimientos dados por el docente', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Desarrollo y programo el módulo asignado', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Integro el módulo desarrollado', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Planifica el proceso de Desarrollo del software', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Identifica los escenarios y casos de prueba en el sistema', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Detecta errores, fallas, defectos en el sistema', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Planifica las activdades de capacitación', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(18,'PINGSO078303_2','Desempeño Tecnico', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Cumple con actividades Asignadas', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Conoce con exactitud el Sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Conoce el uso de Bitacora', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Codifica los requerimientos dados por el docente', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Desarrollo y programo el módulo asignado', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Integro el módulo desarrollado', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Planifica el proceso de Desarrollo del software', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Identifica los escenarios y casos de prueba en el sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Detecta errores, fallas, defectos en el sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Planifica las activdades de capacitación', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(17,'PINGSO078303_2','Usabilidad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Facilidad de uso', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Tiempos de respuesta del sistema', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Interactividad con el usuario', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Ayuda al Usuario', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(19,'PINGSO078303_2','Usabilidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Facilidad de uso', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Tiempos de respuesta del sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Interactividad con el usuario', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Ayuda al Usuario', 1);
 
 -- Docente de Proyecto
-insert into dimension (id, unidad_id, nombre, grupal) values(18,'PIPST078303_2','Capitulo III', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Manual de usuario', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Manual de Sistema', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Plan de Pruebas', 3);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Plan de Instalación', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Plan de Capacitación', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(20,'PIPST078303_2','Capitulo III', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Manual de usuario', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Manual de Sistema', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Plan de Pruebas', 3);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Plan de Instalación', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Plan de Capacitación', 2);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(19,'PIPST078303_2','Capitulo IV', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Recomendaciones y Evolución Previsible del sistema.', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(21,'PIPST078303_2','Capitulo IV', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(21, 'Recomendaciones y Evolución Previsible del sistema.', 2);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(20,'PIPST078303_2','Capitulo V', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Anexos y Referencias', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(22,'PIPST078303_2','Capitulo V', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Anexos y Referencias', 2);
+
+-- --------------------- trayecto 4 fase 2 ---------------------------
+
+-- Auditoria Informatica
+insert into dimension (id, unidad_id, nombre, grupal) values(23,'ASESOR4078303_2','Desempeño Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Responsabilidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Asistencia', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Integración al grupo', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Sensibilidad Social', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(24,'ASESOR4078303_2','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Manejo de Conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Proactividad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Hábitos de Trabajo', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(25,'PIAUI078303_2','Auditoria Informatica', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Auditoría aplicada al sistema (Explicación del módulo auditado) Tipo de auditoría seleccionada.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Herramienta utilizada. ¿Cuál Utilizo?', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Metodología y técnica empleada. ', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Resultado en el sistema. (Visualizarlo).', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(26,'PIAUI078303_2','Plan de mantenimiento al sistema', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(27,'PIAUI078303_2','Mejoras  Aplicadas al Sistema según los requerimientos de trayecto IV ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
+
+
+-- Proyecto
 
 
 -- 9_clases.sql
@@ -1319,38 +1439,73 @@ insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudian
 -- 10_proyectos.sql
 delete from integrante_proyecto where true;
 delete from proyecto where true;
+delete from parroquias where true;
+delete from municipios where true;
+
+insert into municipios(id,nombre) values (1, 'Iribarren');
+insert into parroquias(id,municipio,nombre) values (1,1, 'Ana Soto');
+insert into parroquias(id,municipio,nombre) values (2,1, 'Santa Rosa');
+insert into parroquias(id,municipio,nombre) values (3,1, 'Tamaca');
+insert into parroquias(id,municipio,nombre) values (4,1, 'Catedral');
+insert into parroquias(id,municipio,nombre) values (5,1, 'Concepción');
+insert into parroquias(id,municipio,nombre) values (6,1, 'El Cují');
+insert into parroquias(id,municipio,nombre) values (7,1, 'Buena Vista');
+insert into parroquias(id,municipio,nombre) values (8,1, 'Aguedo Felipe Alvarado');
+insert into parroquias(id,municipio,nombre) values (9,1, 'Unión');
+
+insert into municipios(id,nombre) values (2, 'Jiménez');
+insert into parroquias(id,municipio,nombre) values (10,2, 'Coronel Mariano Peraza');
+insert into parroquias(id,municipio,nombre) values (11,2, 'Juan Bautista Rodríguez');
+insert into parroquias(id,municipio,nombre) values (12,2, 'Cuara');
+insert into parroquias(id,municipio,nombre) values (13,2, 'Diego de Lozada');
+insert into parroquias(id,municipio,nombre) values (14,2, 'Paraíso de San José');
+insert into parroquias(id,municipio,nombre) values (15,2, 'San Miguel');
+insert into parroquias(id,municipio,nombre) values (16,2, 'Tintorero');
+insert into parroquias(id,municipio,nombre) values (17,2, 'José Bernardo Dorante');
+
+insert into sector_consejo_comunal(id, parroquia_id, nombre) VALUES (1, 1, 'Eje 1');
+
+insert into consejo_comunal(id, nombre, nombre_vocero, telefono, sector_id) VALUES (1, 'Consejo Comunal Pueblo Nuevo', 'Carlos Ramirez', 0426545456, 1);
+
+insert into sector_consejo_comunal(id, parroquia_id, nombre) VALUES (2, 4, 'Eje 3');
+
+insert into consejo_comunal(id, nombre, nombre_vocero, telefono, sector_id) VALUES (2, 'Consejo Comunal Concordia', 'Angela', 0426545456, 2);
+
+
 -- TRAYECTO 4 PROYECTO GESTION DE PROYECTOS
 insert into proyecto (
   id, 
   fase_id, 
+  parroquia_id, 
   nombre, 
   comunidad, 
   motor_productivo, 
   resumen, 
   direccion, 
-  municipio, 
-  parroquia, 
+  consejo_comunal_id,
   tutor_in,
   tutor_ex,
   tlf_tin,
   tlf_tex,
-  cerrado
+  cerrado,
+  estatus
 )
 values (
   1,
   'TR3_1', 
+  1,
   'Gestion de proyectos sociotecnologicos', 
   'UPTAEB', 
-  '', 
+  'Informática', 
   'Gestión de proyectos para el PNF en informática', 
   'Av. Los Horcones, Av. La Salle, Barquisimeto 3001, Lara', 
-  'iribarren', 
-  'Ana Soto', 
+  1,
   'p-135482354',
   'Jose Sequera',  
   '041254875',  
   '041255478',   
-  0);
+  0,
+  1);
 insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-15408');
 insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-63578');
 insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-39263');
@@ -1361,6 +1516,8 @@ insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-39263'
 -- insert into integrante_proyecto (proyecto_id, estudiante_id) values (2,'e-60621');
 -- insert into integrante_proyecto (proyecto_id, estudiante_id) values (2,'e-61587');
 
+INSERT INTO `pregunta` (`id`, `pregunta` ) VALUES (NULL, 'Nombre de tu mascota?'), (NULL, 'Donde estudiaste?'), (NULL, 'Color favorito?');
+INSERT INTO `respuestas` (`id`, `respuesta`, `pregunta_id`, `usuario_id`) VALUES (NULL, 'onix', '1', '1'), (NULL, 'juan jose landaeta', '2', '1'), (NULL, 'azul', '3', '1');
 -- vistas
 DROP VIEW IF EXISTS detalles_inscripciones;
 CREATE VIEW detalles_inscripciones AS
@@ -1389,6 +1546,7 @@ SELECT
   usuario.email, 
   count(detalles_inscripciones.id_inscripcion) as clases, 
   detalles_inscripciones.seccion_id, 
+  integrante_proyecto.id as integrante_id,
   integrante_proyecto.proyecto_id,
   trayecto.codigo as trayecto_id
 FROM persona
@@ -1435,6 +1593,7 @@ INNER JOIN materias ON  materias.codigo = malla_curricular.materia_id;
 
 DROP VIEW IF EXISTS detalles_proyecto;
 CREATE VIEW detalles_proyecto AS
+
 SELECT 
   proyecto.id, 
   proyecto.fase_id, 
@@ -1443,15 +1602,26 @@ SELECT
   proyecto.motor_productivo, 
   proyecto.resumen, 
   proyecto.direccion, 
-  proyecto.municipio, 
-  proyecto.parroquia, 
+  cc.id as consejo_comunal_id,
+  cc.nombre as nombre_consejo_comunal,
+  cc.nombre_vocero as nombre_vocero_consejo_comunal,
+  cc.telefono as telefono_consejo_comunal,
+  scc.nombre as sector_consejo_comunal,
+  municipios.nombre as municipio, 
+  parroquias.nombre as parroquia, 
+  parroquias.id as parroquia_id, 
   proyecto.tutor_ex,
+  proyecto.tlf_tex,
   proyecto.tutor_in,
   proyecto.cerrado,
+  proyecto.estatus,
+  proyecto.observaciones,
   concat(tutor_info.nombre, ' ', tutor_info.apellido) as tutor_in_nombre,
   tutor_info.cedula as tutor_in_cedula,
+  tutor_info.telefono as tutor_in_telefono,
   trayecto.nombre as nombre_trayecto,
   trayecto.codigo as codigo_trayecto, 
+  trayecto.siguiente_trayecto as codigo_siguiente_trayecto, 
   fase.nombre as nombre_fase, 
   fase.codigo as codigo_fase, 
   count(integrante_proyecto.id) as integrantes,
@@ -1463,6 +1633,10 @@ INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id
 INNER JOIN periodo ON periodo.id = trayecto.periodo_id
 INNER JOIN profesor as tutor ON tutor.codigo = proyecto.tutor_in
 INNER JOIN persona as tutor_info ON tutor_info.cedula = tutor.persona_id
+INNER JOIN parroquias ON parroquias.id = proyecto.parroquia_id 
+INNER JOIN municipios ON municipios.id = parroquias.municipio
+LEFT join consejo_comunal cc on cc.id = proyecto.consejo_comunal_id 
+LEFT join sector_consejo_comunal scc on scc.id = cc.sector_id 
 LEFT OUTER JOIN integrante_proyecto ON integrante_proyecto.proyecto_id = proyecto.id
 GROUP BY proyecto_id;
 
@@ -1482,23 +1656,28 @@ SELECT
   materias.hrs_acad,
   materias.cursable,
   count(malla_curricular.codigo) as count_malla,
-  count(dimension.id) as dimensiones
+  count(dimension.id) as dimensiones,
+  count(inscripcion.id) as inscripciones
 FROM materias
 LEFT JOIN malla_curricular on malla_curricular.materia_id = materias.codigo
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN inscripcion ON inscripcion.unidad_curricular_id = malla_curricular.codigo
+
 GROUP BY materias.codigo
 ORDER BY codigo_trayecto;
 
 DROP VIEW IF EXISTS detalles_integrantes;
 
 CREATE VIEW detalles_integrantes AS
-SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.cedula
+SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.apellido, persona.cedula, SUM(notas_integrante_proyecto.calificacion) as calificaciones
 FROM integrante_proyecto
 INNER JOIN estudiante ON estudiante.id = integrante_proyecto.estudiante_id
 INNER JOIN persona on persona.cedula = estudiante.persona_id
-INNER JOIN proyecto on proyecto.id = integrante_proyecto.proyecto_id;
+INNER JOIN proyecto on proyecto.id = integrante_proyecto.proyecto_id
+LEFT JOIN notas_integrante_proyecto ON notas_integrante_proyecto.integrante_id = integrante_proyecto.id
+GROUP BY integrante_proyecto.id, notas_integrante_proyecto.integrante_id;
 
 DROP VIEW IF EXISTS detalles_fase;
 
@@ -1510,10 +1689,15 @@ SELECT
   fase.siguiente_fase, 
   trayecto.codigo as codigo_trayecto, 
   trayecto.nombre as nombre_trayecto, 
-  periodo.fecha_inicio, periodo.fecha_cierre 
+  periodo.fecha_inicio, periodo.fecha_cierre,
+  SUM(indicadores.ponderacion) as ponderado_baremos
 FROM `fase` 
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
-INNER JOIN periodo ON periodo.id = trayecto.periodo_id; 
+INNER JOIN periodo ON periodo.id = trayecto.periodo_id
+LEFT JOIN malla_curricular ON malla_curricular.fase_id = fase.codigo
+LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN indicadores ON indicadores.dimension_id = dimension.id
+GROUP BY fase.codigo;
 
 DROP VIEW IF EXISTS detalles_baremos;
 
@@ -1564,16 +1748,19 @@ DROP VIEW IF EXISTS detalles_malla;
 CREATE VIEW detalles_malla AS
 SELECT
 trayecto.codigo as codigo_trayecto,
+trayecto.nombre as nombre_trayecto,
 materias.nombre,
 malla_curricular.codigo,
 fase.codigo as codigo_fase,
 fase.nombre as nombre_fase,
-count(dimension.id) as dimensiones
+count(dimension.id) as dimensiones,
+SUM(indicadores.ponderacion) as ponderado_baremos
 FROM malla_curricular
 INNER JOIN materias ON materias.codigo =  malla_curricular.materia_id
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN indicadores ON indicadores.dimension_id = dimension.id
 GROUP BY malla_curricular.codigo;
 
 
@@ -1587,3 +1774,22 @@ ORDER BY periodo_final DESC;
 DROP VIEW IF EXISTS detalles_usuarios;
 CREATE VIEW detalles_usuarios AS
 SELECT u.id,u.rol_id, u.email, u.contrasena, p.nombre, p.apellido, p.cedula FROM `usuario`  as u INNER JOIN persona as p ON p.usuario_id = u.id;
+
+DROP VIEW IF EXISTS detalles_parroquia;
+CREATE VIEW detalles_parroquia AS
+SELECT parroquias.id as parroquia_id, parroquias.nombre as parroquia_nombre, municipios.id as municipio_id, municipios.nombre as municipio_nombre FROM `parroquias` INNER JOIN municipios ON municipios.id = parroquias.municipio;
+
+DROP VIEW IF EXISTS detalles_consejo_comunal;
+CREATE VIEW detalles_consejo_comunal AS
+select 
+cc.id as consejo_comunal_id,
+cc.nombre as consejo_comunal_nombre,
+cc.telefono as consejo_comunal_telefono,
+scc.id as sector_id,
+scc.nombre  as sector_nombre,
+p.id as parroquia_id,
+p.nombre as parroquia_nombre,
+m.nombre as municipio_nombre
+from consejo_comunal cc inner join sector_consejo_comunal scc ON scc.id = cc.sector_id 
+inner join parroquias p on p.id = scc.parroquia_id 
+inner join municipios m on m.id = p.municipio;

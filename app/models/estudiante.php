@@ -16,6 +16,12 @@ class estudiante extends model
 
     public $fillable = [
         'id',
+        'nombre',
+        'apellido',
+        'direccion',
+        'telefono',
+        'email',
+        'cedula',
         'persona_id',
     ];
 
@@ -93,6 +99,53 @@ class estudiante extends model
         return !$estudiante ? [] : $estudiante;
     }
 
+  
+    function findByCedulaQuery(string $cedula)
+    {
+        $estudiante = $this->querys("SELECT persona.nombre, persona.apellido,persona.direccion, persona.cedula, persona.telefono, usuario.email FROM persona LEFT JOIN usuario ON persona.usuario_id = usuario.id WHERE usuario.rol_id= 4 AND persona.cedula = $cedula " );
+        if (!!$estudiante) {
+            foreach ($estudiante[0] as $key => $value) {
+                $this->fillable[$key] = $value;
+            }
+            return $this;
+        } else {
+            return [];
+        }
+    }
+
+    public function findOld(string $cedula)
+    {
+        try {
+            $persona = $this->select('persona', [['cedula', '=', '"' . $cedula . '"']]);
+            if ($persona) {
+                foreach ($persona[0] as $key => $value) {
+                    $this->fillable[$key] = $value;
+                }
+                return $this;
+            } else {
+                return [];
+            }
+        } catch (\PDOException $th) {
+            return $th;
+        }
+    }
+
+    /**
+     * Actualizar información del estudiante
+     *
+     * @param string $nombre
+     * @param string $apellido
+     * @param string $email
+     * @param string $direccion
+     * @param string $telefono
+     * @param integer $cedula
+     * @return array
+     */
+    function updateStudent($nombre,$apellido,$email, $direccion, $telefono,$cedula){
+
+        $estudiante = $this->querys('UPDATE usuario, persona SET persona.nombre =  "' .$nombre.'", persona.apellido = "'.$apellido.'" , persona.direccion = "'.$direccion.'", persona.telefono = "'.$telefono.'", usuario.email = "'.$email.'" WHERE persona.usuario_id = usuario.id AND persona.cedula = "'.$cedula.'"');
+        return !$estudiante ? [] :$estudiante;
+    }
 
     public function pendientesAProyecto()
     {
@@ -149,7 +202,7 @@ class estudiante extends model
         return $this->getSSP('detalles_estudiantes', 'cedula', $columns);
     }
 
-       /**
+    /**
      * Obtener información del las notas del estudiante
      *
      * @param string $id
@@ -165,7 +218,5 @@ class estudiante extends model
         } catch (Exception $th) {
             return $th;
         }
-
     }
-
 }

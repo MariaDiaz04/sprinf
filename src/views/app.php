@@ -11,11 +11,11 @@
   <meta name="description" content="">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
-  <!-- <link rel="icon" type="image/x-icon" href="favicon"> -->
+ <!-- <link rel="icon" type="image/x-icon" href="favicon"> -->
   <!-- <script src="<?= APP_URL ?>js/jquery-3.7.1.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- <script src="<?= APP_URL ?>js/jquery-4.4.0.min.js"></script> -->
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,14 +35,13 @@
 
 
 
+
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/libs/apex-charts/apex-charts.css" />
 
   <!-- Page CSS -->
-
-
 
   <link href="https://cdn.datatables.net/v/bs4/dt-1.13.5/datatables.min.css" rel="stylesheet" />
   <!-- Helpers -->
@@ -56,11 +55,6 @@
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
-
-  <!--   <script src="<?= APP_URL ?>assets/vendor/js/autoComplete.js"></script> -->
 
   <!-- JS HOME-->
 

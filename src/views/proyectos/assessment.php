@@ -36,32 +36,38 @@
 
   <?php foreach ($baremos as $materia) : ?>
     <div class="card mb-3">
-      <h6 class="card-header bg-primary text-white"><?= $materia->nombre ?></h6>
+      <h5 class="card-header bg-primary text-white " style="font-weight: bold;"><?= $materia->nombre ?> - <?= $materia->ponderado ?>%</h5>
       <form action="<?= APP_URL . $this->Route('proyectos/editarNotaBaremos') ?>" method="post" class="editarNotaBaremos">
         <input type="hidden" name="proyecto_id" value="<?= $proyecto_id ?>">
         <div class="card-body px-3 pt-3">
-          <?php if (property_exists($materia->dimension, 'grupal') && !empty($materia->dimension->grupal)) : ?>
-            <?php foreach ($materia->dimension->grupal as $dimension) : ?>
-              <div class="container">
-                <div class="row">
-                  <strong>GRUPAL - <?= $dimension->nombre ?></strong>
-                </div>
-                <!-- <div class="row mb-3">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                  <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3">
-                  </div>
-                </div> -->
+          <?php if (property_exists($materia, 'grupal') && !empty($materia->grupal)) : ?>
+            <?php foreach ($materia->grupal as $dimension) : ?>
+              <div class="container mb-5  ">
+
 
                 <div class="row">
-                  <hr>
-                  <?php foreach ($dimension->indicadores as $indicador) : ?>
 
-                    <label class="form-label col-sm-10 col-form-label" for="indicador_grupal[<?= $indicador->id ?>]"><?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> pts</b></label>
-                    <div class="col-sm-2">
-                      <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : $indicador->ponderacion ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
-                    </div>
-                  <?php endforeach; ?>
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col"><?= $dimension->nombre ?></th>
+                        <th scope="col">Ponderación</th>
+                        <th scope="col" style="width:  8.33%">Calificación</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($dimension->indicadores as $indicador) : ?>
+
+                        <tr>
+                          <th scope="row"><?= $indicador->nombre ?></th>
+                          <td><b><?= $indicador->ponderacion ?> %</b></td>
+                          <td><input required type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]"></td>
+                        </tr>
+
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+
 
                 </div>
               </div>
@@ -70,34 +76,43 @@
 
 
 
-          <?php if (property_exists($materia->dimension, 'individual') && !empty($materia->dimension->individual)) : ?>
+          <?php if (property_exists($materia, 'individual') && !empty($materia->individual)) : ?>
             <div class="my-3"></div>
             <hr>
             <div class="my-3"></div>
 
-            <?php foreach ($materia->dimension->individual as $dimensionIndividual) : ?>
-              <div class="container">
+            <?php foreach ($materia->individual as $dimension) : ?>
+              <div class="container mb-3">
+
                 <div class="row">
-                  <div class="col-12">
-                    <strong>INDIVIDUAL - <?= $dimensionIndividual->nombre ?></strong>
-                  </div>
-                </div>
-                <div class="row">
-                  <hr>
-                  <?php foreach ($dimensionIndividual->integrantes as $idIntegrante => $individual) : ?>
 
-                    <?php foreach ($individual->indicadores as $indicador) : ?>
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col"><?= $dimension->nombre ?></th>
+                        <th scope="col">Ponderación</th>
 
-                      <label class="form-label col-sm-10" for="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]"><b>C.I. <?= $indicador->cedula_integrante ?> <?= $indicador->nombre_integrante ?></b> | <?= $indicador->nombre ?> - <b><?= $indicador->ponderacion ?> pts</b></label>
-                      <div class="col-sm-2">
-                        <input type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : $indicador->ponderacion ?>" name="indicador_individual[<?= $idIntegrante ?>][<?= $indicador->id ?>]">
+                        <?php foreach ($integrantes as $idIntegrante => $integrante) : ?>
+                          <th scope="col"><?= $integrante->nombre ?></th>
+                        <?php endforeach; ?>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($dimension->indicadores as $indicador) : ?>
 
-                      </div>
-                    <?php endforeach; ?>
-                    <div class="my-2"></div>
-                    <hr>
-                    <div class="my-2"></div>
-                  <?php endforeach; ?>
+                        <tr>
+                          <th scope="row"><?= $indicador->nombre ?></th>
+                          <td><b><?= $indicador->ponderacion ?> %</b></td>
+
+
+                          <?php foreach ($integrantes as $idIntegrante => $integrante) : ?>
+                            <td><input required type="number" class="form-control " min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->integrante_id}) ? $indicador->calificacion->{$integrante->integrante_id} : 0 ?>" name="indicador_individual[<?= $integrante->integrante_id ?>][<?= $indicador->id ?>]"></td>
+                          <?php endforeach; ?>
+                        </tr>
+
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
 
                 </div>
               </div>
@@ -166,7 +181,7 @@
                 title: error.responseText,
                 showConfirmButton: false,
                 toast: true,
-                timer: 2000
+                timer: 5000
               })
 
             },

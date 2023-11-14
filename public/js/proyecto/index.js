@@ -1,3 +1,11 @@
+const Toast = Swal.mixin({
+  toast: true,
+  position: "bottom-start",
+  showConfirmButton: false,
+});
+
+let regexAlfabeto = /^[a-z]+$/i;
+
 $(document).ready(function (e) {
   // cargar informacion en formulario de registro historico
   $("#cargarInformacion").click(function (e) {
@@ -5,17 +13,59 @@ $(document).ready(function (e) {
 
     let proyectoSeleccionado = $("#selectProyecto option:selected").data();
 
-    $("#historico #nombre").val(proyectoSeleccionado.nombre);
-    $("#historico #motor_productivo").val(
-      proyectoSeleccionado.motor_productivo
+    const {
+      nombre,
+      tutor_in,
+      tutor_ex,
+      direccion,
+      resumen,
+      consejo_comunal_id,
+      parroquia_id,
+      motor_productivo,
+      tlf_tex,
+      comunidad,
+      codigoSiguienteTrayecto,
+    } = proyectoSeleccionado;
+
+    id = $("#proyectoGuardarHistorico .transfer-double-list-search input").attr(
+      "id"
     );
-    $("#historico #parroquia").val(proyectoSeleccionado.parroquia);
-    $("#historico #municipio").val(proyectoSeleccionado.municipio);
-    $("#historico #direccion").val(proyectoSeleccionado.direccion);
-    $("#historico #resumen").val(proyectoSeleccionado.resumen);
-    $("#historico #comunidad").val(proyectoSeleccionado.comunidad);
-    $("#historico #tutor_in").val(proyectoSeleccionado.tutor_in);
-    $("#historico #tutor_ex").val(proyectoSeleccionado.tutor_ex);
+
+    $(`#${id}`).val(nombre);
+    transfer.manualSearch();
+
+    $(`#${id}`).trigger("keyup");
+
+    $("#historico #nombre").val(nombre);
+
+    $(
+      `#proyectoGuardarHistorico #selectConsejoComunal option[value="${consejo_comunal_id}"]`
+    )
+      .prop("selected", "selected")
+      .change();
+
+    $(
+      `#proyectoGuardarHistorico #selectTrayecto option[value="${codigoSiguienteTrayecto}_1"]`
+    )
+      .prop("selected", "selected")
+      .change();
+
+    $(`#proyectoGuardarHistorico #selectTutorIn option[value="${tutor_in}"]`)
+      .prop("selected", "selected")
+      .change();
+
+    $(
+      `#proyectoGuardarHistorico #selectParroquia option[value="${parroquia_id}"]`
+    )
+      .prop("selected", "selected")
+      .change();
+
+    $("#proyectoGuardarHistorico #motor_productivo").val(motor_productivo);
+    $("#proyectoGuardarHistorico #direccion").val(direccion);
+    $("#proyectoGuardarHistorico #resumen").val(resumen);
+    $("#proyectoGuardarHistorico #comunidad").val(comunidad);
+    $("#proyectoGuardarHistorico #tlf_tex").val(tlf_tex);
+    $("#proyectoGuardarHistorico #tutor_ex").val(tutor_ex);
   });
 
   toggleLoading(false);
@@ -35,7 +85,7 @@ $(document).ready(function (e) {
     columnDefs: [
       {
         visible: false,
-        targets: [0, 5],
+        targets: [0, 5, 7],
       },
       {
         data: null,
@@ -58,85 +108,128 @@ $(document).ready(function (e) {
                     <div class="dropdown-menu" aria-labelledby="dropdown-${
                       row[0]
                     }">
+                    <a class="dropdown-item" href="${
+                      noteUrl + "/" + row[0]
+                    }" target="_blank">Notas</a>
                     ${
                       row[6] == 0
                         ? ` <a class="dropdown-item" href="${
                             urlEvaluar + row[0]
-                          }">Evaluar</a>
-                        <a class="dropdown-item" onClick="editarInformacionProyecto('${
-                          row[0]
-                        }')" href="#">Editar Proyecto</a>
-                        <a class="dropdown-item" onClick="editarIntegrantes('${
-                          row[0]
-                        }')" href="#">Editar Integrantes</a>
-                        <a class="dropdown-item" " href="${noteUrl+'/'+row[0]}" target="_blank">Notas</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${
-                          row[0]
-                        }') href="#">Eliminar</a>`
+                          }">Evaluar</a><a class="dropdown-item" onClick="editarIntegrantes('${
+                            row[0]
+                          }')" href="#">Editar</a>
+                          
+                        ${
+                          row[7].includes("_1")
+                            ? `
+                        
+                        <a class="dropdown-item text-danger" onClick="removeProject('${row[0]}')" href="#">Eliminar</a>`
+                            : ``
+                        } `
                         : ``
                     }
-                      
                     </div>
                   </div>`;
         }, // combino los botons de acción
-        targets: 7, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+        targets: 8, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 8va
       },
     ],
   });
 
   $("#proyectoGuardarHistorico").submit(function (e) {
     e.preventDefault();
+
     toggleLoading(true, "#proyectoGuardarHistorico");
+
+    $(this).find("select").prop("disabled", false);
+
     formData = $(this).serializeArray();
     items = transfer.getSelectedItems();
     data = [...formData];
     counter = 0;
-    for (const idIntegrante in items) {
-      integrante = {};
-      if (Object.hasOwnProperty.call(items, idIntegrante)) {
-        const element = items[idIntegrante];
-        integrante.name = `integrantes[${counter}]`;
-        integrante.value = element.value;
-        counter++;
-        data.push(integrante);
+    $(this).find("select").prop("disabled", true);
+
+    if (items.length <= 0) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe añadir integrantes",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+    } else {
+      for (const idIntegrante in items) {
+        integrante = {};
+        if (Object.hasOwnProperty.call(items, idIntegrante)) {
+          const element = items[idIntegrante];
+          integrante.name = `integrantes[${counter}]`;
+          integrante.value = element.value;
+          counter++;
+          data.push(integrante);
+        }
       }
+
+      url = $(this).attr("action");
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        error: function (error, status) {
+          toggleLoading(false);
+          error = JSON.parse(error.responseText);
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: status + ": " + error.error.message,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+        },
+        success: function (data, status) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Creación Exitosa",
+            showConfirmButton: false,
+            toast: true,
+            timer: 1000,
+          }).then(function () {
+            location.reload();
+          });
+
+          // $("#historico").modal("hide");
+          table.ajax.reload();
+          // usar sweetalerts
+          document.getElementById("guardar").reset();
+          // actualizar tabla
+          toggleLoading(false);
+        },
+      });
     }
+  });
 
-    url = $(this).attr("action");
+  $("#proyectoGuardar #tlf_tex").keyup(function () {
+    let telefono = $(this).val();
 
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: data,
-      error: function (error, status) {
-        toggleLoading(false, "#proyectoGuardarHistorico");
-        Swal.fire({
-          position: "bottom-end",
-          icon: "error",
-          title: error.responseText,
-          showConfirmButton: false,
-          toast: true,
-          timer: 2000,
-        });
-      },
-      success: function (data, status) {
-        Swal.fire({
-          position: "bottom-end",
-          icon: "success",
-          title: "Creación Exitosa",
-          showConfirmButton: false,
-          toast: true,
-          timer: 2000,
-        });
+    if (!phoneNumbers(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
 
-        $("#historico").modal("hide");
-        table.ajax.reload();
-        // usar sweetalerts
-        document.getElementById("guardar").reset();
-        // actualizar tabla
-        toggleLoading(false, "#proyectoGuardarHistorico");
-      },
-    });
+  $("#proyectoActualizar #tlf_tex").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!phoneNumbers(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
   });
 
   $("#proyectoGuardar").submit(function (e) {
@@ -145,9 +238,100 @@ $(document).ready(function (e) {
     toggleLoading(true, "#proyectoGuardar");
 
     formData = $(this).serializeArray();
+
     items = transfer2.getSelectedItems();
     data = [...formData];
     counter = 0;
+
+    // validar integrantes
+    if (items.length <= 0) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe ingresar integrantes",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    // validar parroquia
+    if ($("#selectParroquia").val() == null) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe seleccionar una parroquia",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    if (
+      !$("#comunidadAutonoma").is(":checked") &&
+      $("#selectConsejoComunal").val() == null
+    ) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe seleccionar un Consejo Comunal a la comunidad no autonoma",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    // validar nombre
+
+    nombre = $("#proyectoGuardar #nombre").val();
+
+    if (!onlyLetters(nombre)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de proyecto no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tutor_ex = $("#proyectoGuardar #tutor_ex").val();
+    if (!onlyLetters(tutor_ex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tlf_tex = $("#proyectoGuardar #tlf_tex").val();
+    if (!phoneNumbers(tlf_tex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Numero de telefono de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
     for (const idIntegrante in items) {
       integrante = {};
       if (Object.hasOwnProperty.call(items, idIntegrante)) {
@@ -169,10 +353,11 @@ $(document).ready(function (e) {
       data: data,
       error: function (error, status) {
         toggleLoading(false);
+        error = JSON.parse(error.responseText);
         Swal.fire({
           position: "bottom-end",
           icon: "error",
-          title: error.responseText,
+          title: status + ": " + error.error.message,
           showConfirmButton: false,
           toast: true,
           timer: 2000,
@@ -188,12 +373,106 @@ $(document).ready(function (e) {
           title: "Creación Exitosa",
           showConfirmButton: false,
           toast: true,
-          timer: 2000,
-        });
+          timer: 1000,
+        }).then(() => location.reload());
         document.getElementById("proyectoGuardar").reset();
         $("#crear").modal("hide");
       },
     });
+  });
+
+  $("#proyectoActualizar").submit(function (e) {
+    e.preventDefault();
+
+    formData = $(this).serializeArray();
+
+    nombre = $("#proyectoActualizar #nombre").val();
+
+    if (!onlyLetters(nombre)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de proyecto no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tutor_ex = $("#proyectoActualizar #tutor_ex").val();
+    if (!onlyLetters(tutor_ex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    tlf_tex = $("#proyectoActualizar #tlf_tex").val();
+    if (!phoneNumbers(tlf_tex)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Numero de telefono de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    if ($("#cuerpoTablaActualizarEstudiante").children("tr").length <= 0) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Debe ingresar integrantes",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+    } else {
+      url = $(this).attr("action");
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: formData,
+        error: function (error, status) {
+          toggleLoading(false);
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+        },
+        success: function (data, status) {
+          table.ajax.reload();
+          // actualizar tabla
+          toggleLoading(false);
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Actualización Exitosa",
+            showConfirmButton: false,
+            toast: true,
+            timer: 1000,
+          }).then(() => location.reload());
+          document.getElementById("proyectoGuardar").reset();
+          $("#actualizar").modal("hide");
+        },
+      });
+    }
   });
 
   // TOGGLE BUTTON AND SPINNER
@@ -207,6 +486,20 @@ $(document).ready(function (e) {
     }
   }
 });
+
+async function obtenerEstudiantesPendientes() {
+  let result;
+  try {
+    result = await $.ajax({
+      url: fetchStudentsUrl,
+      type: "POST",
+    });
+    return JSON.parse(result);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
 
 async function obtenerProyecto(id) {
   let result;
@@ -225,31 +518,218 @@ async function obtenerProyecto(id) {
 
 async function editarIntegrantes(id) {
   let proyecto = await obtenerProyecto(id);
-  console.log("Editando integrantes, ");
-  console.log(proyecto);
+  let estudiantesPendientes = await obtenerEstudiantesPendientes();
+  // $("#actualizar #selectEstudiante option").remove();
+  $("#cuerpoTablaActualizarEstudiante tr").remove();
+
+  estudiantesPendientes.forEach((estudiante) => {
+    let option = `<option value="${estudiante.cedula}" data-cedula="${
+      estudiante.cedula
+    }" data-nombre="${estudiante.nombre}" data-apellido="${
+      estudiante.apellido
+    }" data-tokens="${estudiante.cedula} ${estudiante.nombre}">${
+      estudiante.cedula + " " + estudiante.nombre + " " + estudiante.apellido
+    }</option>`;
+
+    // $("#actualizar #selectEstudiante").append(option);
+  });
+
   const {
     estatus,
     fase_id,
+    cerrado,
     nombre,
-    municipio,
-    parroquia,
+    consejo_comunal_id,
+    parroquia_id,
     direccion,
     tutor_in,
     tutor_ex,
+    tlf_tex,
     comunidad,
+    observaciones,
     motor_productivo,
     resumen,
   } = proyecto.proyecto;
 
-  console.log(nombre);
+  if (!fase_id.includes("_1")) {
+    $("#actualizar #selectEstudiante").prop("disabled", "disabled");
+    $("#actualizar #anadirEstudiante").prop("disabled", "disabled");
+  } else {
+    $("#actualizar #selectEstudiante").removeAttr("disabled");
+    $("#actualizar #anadirEstudiante").removeAttr("disabled");
+  }
+
+  const integrantes = proyecto.integrantes;
+
+  $("#actualizar").modal("show");
+
+  $("#actualizar #id").val(id);
+  $("#actualizar #fase_id").val(fase_id);
+  $("#actualizar #nombre").val(nombre);
+  $("#actualizar #direccion").val(direccion);
+  $("#actualizar #comunidad").val(comunidad);
+  $("#actualizar #observaciones").val(observaciones);
+  $("#actualizar #tutor_in").val(tutor_in);
+  $("#actualizar #tutor_ex").val(tutor_ex);
+  $("#actualizar #tlf_tex").val(tlf_tex);
+  $("#actualizar #motor_productivo").val(motor_productivo);
+  $("#actualizar #resumen").val(resumen);
+  $("#actualizar #cerrado").val(cerrado);
+
+  $(`#proyectoActualizar #selectParroquia option[value="${parroquia_id}"]`)
+    .prop("selected", "selected")
+    .change();
+
+  $(
+    `#proyectoActualizar #selectConsejoComunal option[value="${consejo_comunal_id}"]`
+  )
+    .prop("selected", "selected")
+    .change();
+
+  $(`#proyectoActualizar #selectTutorIn option[value="${tutor_in}"]`)
+    .prop("selected", "selected")
+    .change();
+
+  // validar comunidad autonoma
+
+  if (consejo_comunal_id == null) {
+    $("#proyectoActualizar #comunidadAutonoma").prop("checked", true);
+    $("#proyectoActualizar #seccionConsejoComunal").hide();
+  } else {
+    $("#proyectoActualizar #comunidadAutonoma").prop("checked", false);
+    $("#proyectoActualizar #seccionConsejoComunal").show();
+  }
+
+  integrantes.forEach((integrante) => {
+    // imprimir tabla
+    let row = `<tr id="appenedStudent-${integrante.cedula}">
+    <th scope="row">
+      <input type="text" name="integrantes[]" class="form-control-plaintext" value="${
+        integrante.cedula
+      }" hidden>
+      ${integrante.cedula}
+    </th>
+    <td>${integrante.nombre}</td>
+    <td>${integrante.apellido}</td>
+    ${
+      integrante.calificaciones == null
+        ? `<td><button class="btn btn-secondary eliminarEstudiante" onClick="removeStudent(${integrante.cedula}); return false" data-id="${integrante.cedula}">Eliminar</button></td>`
+        : '<td><button class="btn btn-secondary" disabled >Eliminar</button></td>'
+    }
+    
+  </tr>`;
+
+    $("#cuerpoTablaActualizarEstudiante").append(row);
+  });
 }
 
-async function editarInformacionProyecto(id) {
-  let proyecto = await obtenerProyecto(id);
-  console.log("Editando integrantes, ");
-  console.log(proyecto);
+$("#anadirEstudiante").click(function (e) {
+  e.preventDefault();
+
+  let studentsAlreadyAppened = document.getElementById(
+    "cuerpoTablaActualizarEstudiante"
+  ).children.length;
+
+  if (studentsAlreadyAppened >= 5) {
+    alert("limite de estudiantes alcanzado");
+  } else {
+    let selectedStudent = $("#selectEstudiante option:selected");
+
+    let studentId = $(selectedStudent).val();
+
+    if (
+      $("#cuerpoTablaActualizarEstudiante").find(`#appenedStudent-${studentId}`)
+        .length > 0
+    ) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Estudiante ya ha sido añadido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      return false;
+    }
+
+    let fila = `<tr id="appenedStudent-${studentId}">
+                <th scope="row">
+                <input type="text" name="integrantes[]" class="form-control-plaintext" value="${studentId}" hidden>
+                ${$(selectedStudent).data("cedula")}
+                </th>
+                <td>${$(selectedStudent).data("nombre")}</td>
+                <td>${$(selectedStudent).data("apellido")}</td>
+                <td><button class="btn btn-secondary eliminarEstudiante" onClick="removeStudent(${studentId}); return false" data-id="${studentId}">Eliminar</button></td>
+              </tr>`;
+    $("#cuerpoTablaActualizarEstudiante").append(fila);
+  }
+});
+
+function removeStudent(id) {
+  Swal.fire({
+    title: "¿Seguro que desea eliminar integrante de equipo de proyecto?",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    cancelButtonText: "Cancelar",
+    confirmButtonText: "Continuar",
+  }).then((result) => {
+    if (result.value) {
+      $(`#appenedStudent-${id}`).remove();
+    }
+  });
 }
 
-function remove(id) {
-  alert(`Removing ${id}`);
+function removeProject(id) {
+  Swal.fire({
+    title:
+      "Se eliminará el proyecto indicado, ¿está seguro de realizar la acción?",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    cancelButtonText: "Cancelar",
+    confirmButtonText: "Continuar",
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        type: "POST",
+        url: deleteUrl,
+        data: {
+          id: id,
+        },
+        error: function (error, status) {
+          error = JSON.parse(error.responseText);
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: status + ": " + error.error.message,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+        },
+        success: function (data, status) {
+          // actualizar tabla
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Proyecto Eliminado Exitosamente",
+            showConfirmButton: false,
+            toast: true,
+            timer: 1000,
+          }).then(() => location.reload());
+        },
+      });
+    }
+  });
+}
+
+function onlyLetters(str) {
+  return /^[A-Za-zñáéíóúü ]*$/.test(str);
+}
+
+function phoneNumbers(number) {
+  return /^[04][0-9]{10}$/.test(number);
 }

@@ -51,8 +51,8 @@ class estudianteController extends controller
 
       // creación de usuario
       $email = $newestudiante->request->get('email');
-      $contrasena = $newestudiante->request->get('contrasena');
-      var_dump($contrasena);
+      $contrasena = $newestudiante->request->get('cedula');
+     // var_dump($contrasena);
 
       // encriptar contraseña de usuario
       $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
@@ -143,8 +143,8 @@ class estudianteController extends controller
       $proyecto_nombre = $estudiante[0]["proyecto_nombre"];
       $ponderado = $estudiante[0]["ponderado"];
       $calificacion = $estudiante[0]["calificacion"];
-      $url =  "data:image/png;base64,".APP_URL.'assets/img/illustrations/logoUptaeb.png';
-      $imagen = '<img src="'.$url.'" height="60">';
+      $url =  "data:image/png;base64," . APP_URL . 'assets/img/illustrations/logoUptaeb.png';
+      $imagen = '<img src="' . $url . '" height="60">';
       $name_comprobante = 'Calificacion';
       $dompdf = new Dompdf();
       $html = '<!DOCTYPE html>
@@ -162,9 +162,9 @@ class estudianteController extends controller
               <table style="padding-bottom: 12px; padding-top: 10px;">
                   <thead>
                       <tr>
-                      '.$imagen.'
-                          <th align="left">SPRINF</th>
-                          <th align="center" style="font-size: 18px;">Notas del estudiante : '. $nombre . ' ' . $apellido .'</th>
+                      ' . $imagen . '
+                          <th align="left">PNFI</th>
+                          <th align="center" style="font-size: 18px;">Notas del estudiante : ' . $nombre . ' ' . $apellido . '</th>
                           <th align="right">' . $date . '</th>
                       </tr>
                   </thead>
@@ -293,6 +293,52 @@ class estudianteController extends controller
     }
   }
 
+  
+    /**
+     * Obtiene la informacion necesaria para crear
+     * formulario de update retornado en formato JSON
+     *
+     * @param [type] $request
+     * @return void
+     */
+    function edit($request): void
+    {
+        try {
+            $data = [];
+            $cedula = $request->get('cedula');
+            $estudiante = $this->estudiante->findByCedulaQuery($cedula);
+            $data['estudiante'] = $estudiante->fillable;
+            http_response_code(200);
+            echo json_encode($data);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    public function update($request)
+    {
+        try {
+
+            $cedula = $request->get('cedula');
+            $nombre = $request->get('nombre');
+            $apellido = $request->get('apellido');
+            $email = $request->get('email');
+            $direccion = $request->get('direccion');
+            $telefono = $request->get('telefono');
+            if (!$estudiante = $this->estudiante->findByCedulaQuery($cedula)) {
+                return $this->page('errors/404');
+            };
+            // asignar valores de seccion
+            $estudiante->updateStudent($nombre,$apellido,$email,$direccion,$telefono,$cedula);
+            if (empty($cedula)) throw new Exception('Error inesperado al actualizar el estudiante.');
+            http_response_code(200);
+            echo json_encode($cedula);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
   function ssp(Request $query): void
   {
     try {

@@ -11,7 +11,6 @@ use Model\baremos;
 use Model\dimension;
 use Model\materias;
 use Model\malla;
-use Model\tutor;
 use Model\trayectos;
 use Exception;
 
@@ -34,17 +33,15 @@ class dimensionController extends controller
     $this->malla = new malla();
   }
 
-  public function index(Request $dimension, $idTrayecto)
+  public function index(Request $dimension, $codigoMateria)
   {
     $dimensiones = $this->dimension->all();
-    $materias = $this->malla->findByTrayecto($idTrayecto);
-    $trayecto = $this->trayectos->find($idTrayecto);
+    $unidad_curricular = $this->malla->findMateria($codigoMateria);
+    $trayecto = $this->trayectos->find($unidad_curricular['codigo_trayecto']);
 
     return $this->view('dimensiones/gestionar', [
-      'trayecto' => $trayecto,
-      'idTrayecto' => $idTrayecto,
-      'dimensiones' => $dimensiones,
-      'materias' => $materias,
+      'codigoMateria' => $codigoMateria,
+      'unidadCurricular' => $unidad_curricular,
     ]);
   }
 
@@ -92,7 +89,6 @@ class dimensionController extends controller
       $unidad_id = $dimension->request->get('unidad_id');
       $nombre = $dimension->request->get('nombre');
       $grupal = $dimension->request->get('grupal');
-      $indicadores = isset($dimension->request->all()['indicadores']) ? $dimension->request->all()['indicadores'] : [];
 
 
       $this->dimension->setData([
@@ -100,22 +96,18 @@ class dimensionController extends controller
         'unidad_id' => $unidad_id,
         'nombre' => $nombre,
         'grupal' => $grupal,
-        'indicadores' => $indicadores
       ]);
+
       $resultado = $this->dimension->actualizar();
 
       if (!$resultado) throw new Exception($this->dimension->error['message'], $this->dimension->error['code']);
 
-      $resultado = $this->dimension->actualizarIndicadores();
-
-      $dimensionCreada = $this->dimension->find($this->dimension->id);
-      $indicadoresActualizados = $this->dimension->obtenerIndicadores($this->dimension->id);
+      $dimensionActualizada = $this->dimension->find($this->dimension->id);
 
       http_response_code(200);
       echo json_encode([
         'data' => [
-          'dimension' => $dimensionCreada,
-          'indicadores' => $indicadoresActualizados
+          'dimension' => $dimensionActualizada,
         ]
       ]);
     } catch (Exception $e) {
@@ -151,15 +143,12 @@ class dimensionController extends controller
   function borrar(Request $dimension): void
   {
     try {
-
       $idDimension = $dimension->request->get('id');
 
-      $this->dimension->setData(['id' => $idDimension]);
-
       $verificarDimension = $this->dimension->find($idDimension);
-
       if (!$verificarDimension) throw new Exception('Dimension no encontrada', 404);
 
+      $this->dimension->setData(['id' => $idDimension]);
       $resultado = $this->dimension->remover($idDimension);
 
       if (!$resultado) {
@@ -178,11 +167,11 @@ class dimensionController extends controller
     }
   }
 
-  function ssp(Request $query, $idTrayecto): void
+  function ssp(Request $query, $codigoMateria): void
   {
     try {
       http_response_code(200);
-      echo json_encode($this->dimension->generarComplexSSP($idTrayecto));
+      echo json_encode($this->dimension->generarComplexSSP($codigoMateria));
     } catch (Exception $e) {
       http_response_code(500);
       echo json_encode($e->getMessage());
@@ -191,7 +180,6 @@ class dimensionController extends controller
 
   public function E501()
   {
-
     return $this->page('errors/501');
   }
 }

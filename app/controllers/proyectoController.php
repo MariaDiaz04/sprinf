@@ -3,26 +3,30 @@
 namespace Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use Model\proyectoHistorico;
 use Model\proyecto;
 use Model\profesor;
 use Model\periodo;
+use Model\consejoComunal;
 use Model\estudiante;
 use Model\inscripcion;
 use Model\baremos;
 use Model\fase;
 use Model\dimension;
 use Model\tutor;
+use Model\parroquia;
 use Model\trayectos;
 use Dompdf\Dompdf;
+
+use Traits\Excel;
 
 use Exception;
 use PDOException;
 
 class proyectoController extends controller
 {
+    use Excel;
+
     public $proyectoHistorico;
     public $proyecto;
     private $estudiantes;
@@ -34,6 +38,8 @@ class proyectoController extends controller
     private $periodo;
     private $trayectos;
     private $inscripcion;
+    private $parroquia;
+    private $consejoComunal;
 
     function __construct()
     {
@@ -42,6 +48,8 @@ class proyectoController extends controller
         $this->tokenExist();
         $this->proyecto = new proyecto();
         $this->estudiantes = new estudiante();
+        $this->parroquia = new parroquia();
+        $this->consejoComunal = new consejoComunal();
         $this->dimension = new dimension();
         $this->tutores = new tutor();
         $this->profesores = new profesor();
@@ -60,6 +68,8 @@ class proyectoController extends controller
         $tutores = $this->tutores->all();
         $profesores = $this->profesores->all();
         $trayectos = $this->trayectos->all();
+        $parroquias = $this->parroquia->all();
+        $consejosComunales = $this->consejoComunal->all();
 
         $fases = $this->fase->getPrimerFaseDeTrayectos();
 
@@ -82,8 +92,13 @@ class proyectoController extends controller
             }
         }
 
+        // echo json_encode($listaEstudiantes);
+        // exit();
+
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
+            'parroquias' => $parroquias,
+            'consejosComunales' => $consejosComunales,
             'periodo' => $periodo,
             'profesores' => $profesores,
             'fases' => $fases,
@@ -92,7 +107,8 @@ class proyectoController extends controller
             'trayectos' => $trayectos,
             'historicoProyectos' => $historicoProyectos,
             'historicoEstudiantes' => $historicoEstudiantes,
-            'estudiantes' => $dataEstudiantes
+            'listaEstudiantes' => $listaEstudiantes,
+            'estudiantes' => $dataEstudiantes,
         ]);
     }
 
@@ -100,6 +116,7 @@ class proyectoController extends controller
     {
 
         $historico = $this->proyectoHistorico->all();
+
 
         if (!$historico) return [];
 
@@ -115,11 +132,14 @@ class proyectoController extends controller
                     $group[$item['id_proyecto']]['nombre_trayecto'] = $item['nombre_trayecto'];
                     $group[$item['id_proyecto']]['tutor_in'] = $item['tutor_in'];
                     $group[$item['id_proyecto']]['tutor_ex'] = $item['tutor_ex'];
-                    $group[$item['id_proyecto']]['motor_productivo'] = $item['motor_productivo'];
+                    $group[$item['id_proyecto']]['tlf_tex'] = $item['tlf_tex'];
                     $group[$item['id_proyecto']]['resumen'] = $item['resumen'];
+                    $group[$item['id_proyecto']]['motor_productivo'] = $item['motor_productivo'];
                     $group[$item['id_proyecto']]['direccion'] = $item['direccion'];
-                    $group[$item['id_proyecto']]['municipio'] = $item['municipio'];
-                    $group[$item['id_proyecto']]['parroquia'] = $item['parroquia'];
+                    $group[$item['id_proyecto']]['consejo_comunal_id'] = $item['consejo_comunal_id'];
+                    $group[$item['id_proyecto']]['parroquia_id'] = $item['parroquia_id'];
+                    $group[$item['id_proyecto']]['codigo_trayecto'] = $item['codigo_trayecto'];
+                    $group[$item['id_proyecto']]['codigo_siguiente_trayecto'] = $item['codigo_siguiente_trayecto'];
                 }
             }
         }
@@ -212,13 +232,19 @@ class proyectoController extends controller
             $fase_id = $nuevoProyecto->request->get('fase_id');
             $estatus = $nuevoProyecto->request->get('estatus');
             $resumen = $nuevoProyecto->request->get('resumen');
-            $municipio = $nuevoProyecto->request->get('municipio');
             $direccion = $nuevoProyecto->request->get('direccion');
             $motor_productivo = $nuevoProyecto->request->get('motor_productivo');
-            $parroquia = $nuevoProyecto->request->get('parroquia');
+            $consejo_comunal_id = $nuevoProyecto->request->get('consejo_comunal_id');
             $tutor_in = $nuevoProyecto->request->get('tutor_in');
             $tutor_ex = $nuevoProyecto->request->get('tutor_ex');
+            $tlf_tex = $nuevoProyecto->request->get('tlf_tex');
+            $observaciones = $nuevoProyecto->request->get('observaciones');
             $id = $nuevoProyecto->request->get('id');
+
+
+            $comunidadAutonoma = $nuevoProyecto->request->get('comunidad_autonoma');
+
+            $parroquia_id = $nuevoProyecto->request->get('parroquia_id');
 
             $proyectData = [
                 'nombre' => $nombre,
@@ -227,11 +253,13 @@ class proyectoController extends controller
                 'estatus' => $estatus,
                 'direccion' => $direccion,
                 'resumen' => $resumen,
-                'municipio' => $municipio,
                 'motor_productivo' => $motor_productivo,
-                'parroquia' => $parroquia,
+                'consejo_comunal_id' => ($comunidadAutonoma == 1) ? null : $consejo_comunal_id,
                 'tutor_in' => $tutor_in,
                 'tutor_ex' => $tutor_ex,
+                'parroquia_id' => $parroquia_id,
+                'tlf_tex' => $tlf_tex,
+                'observaciones' => $observaciones,
                 'integrantes' => $idEstudiantes
             ];
 
@@ -239,9 +267,9 @@ class proyectoController extends controller
                 $proyectData['id'] = $id;
             }
 
-
             $this->proyecto->setProyectData($proyectData);
             $result = $this->proyecto->insertTransaction();
+
 
             if (!$result) throw new Exception('Ha ocurrido un error al crear proyecto');
 
@@ -249,7 +277,14 @@ class proyectoController extends controller
             echo json_encode('Proyecto creado exitosamente');
         } catch (Exception $e) {
             http_response_code(500);
-            echo json_encode($e->getMessage());
+
+
+            echo json_encode(['error' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString(),
+                (isset($this->proyecto->error)) ? ['errorDetails' =>  $this->proyecto->error] : null
+            ]]);
         }
     }
 
@@ -284,12 +319,15 @@ class proyectoController extends controller
             $fase_id = $proyecto->request->get('fase_id');
             $estatus = $proyecto->request->get('estatus');
             $resumen = $proyecto->request->get('resumen');
-            $municipio = $proyecto->request->get('municipio');
             $direccion = $proyecto->request->get('direccion');
             $motor_productivo = $proyecto->request->get('motor_productivo');
-            $parroquia = $proyecto->request->get('parroquia');
+            $consejo_comunal_id = $proyecto->request->get('consejo_comunal_id');
+            $parroquia_id = $proyecto->request->get('parroquia_id');
             $tutor_in = $proyecto->request->get('tutor_in');
             $tutor_ex = $proyecto->request->get('tutor_ex');
+            $tlf_tex = $proyecto->request->get('tlf_tex');
+
+            $observaciones = $proyecto->request->get('observaciones');
             $cerrado = $proyecto->request->get('cerrado');
 
 
@@ -301,6 +339,8 @@ class proyectoController extends controller
                 array_push($idEstudiantes, $dataEstudiante['id']);
             }
 
+            $comunidadAutonoma = $proyecto->request->get('comunidad_autonoma');
+
             $this->proyecto->setProyectData([
                 'id' => $id,
                 'nombre' => $nombre,
@@ -309,11 +349,13 @@ class proyectoController extends controller
                 'estatus' => $estatus,
                 'direccion' => $direccion,
                 'resumen' => $resumen,
-                'municipio' => $municipio,
                 'motor_productivo' => $motor_productivo,
-                'parroquia' => $parroquia,
+                'parroquia_id' => $parroquia_id,
+                'consejo_comunal_id' => ($comunidadAutonoma == 1) ? null : $consejo_comunal_id,
                 'tutor_in' => $tutor_in,
+                'tlf_tex' => $tlf_tex,
                 'tutor_ex' => $tutor_ex,
+                'observaciones' => $observaciones,
                 'cerrado' => $cerrado,
                 'integrantes' => $idEstudiantes
             ]);
@@ -369,6 +411,27 @@ class proyectoController extends controller
         }
     }
 
+    function pendingStudents(): void
+    {
+        try {
+            $resultado = $this->estudiantes->pendientesAProyecto();
+
+            if (!$resultado) {
+                throw new PDOException($this->proyecto->error['message'], $this->proyecto->error['code']);
+            }
+
+            http_response_code(200);
+            echo json_encode($resultado);
+        } catch (Exception $e) {
+            http_response_code($e->getCode() ?? 500);
+            echo json_encode(['error' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ]]);
+        }
+    }
+
     function assessment(Request $request, $id)
     {
 
@@ -388,6 +451,7 @@ class proyectoController extends controller
             $fase = $this->fase->find($proyecto['codigo_fase']);
             $materiasDeDimension = $this->dimension->materiasDeBaremos($proyecto['codigo_fase']);
             $baremos = [];
+            $nuevoBaremos = [];
 
             if (empty($materiasDeDimension)) {
                 throw new Exception('Baremos no cuenta con dimensiones');
@@ -395,7 +459,7 @@ class proyectoController extends controller
 
             foreach ($integrantes as $key => $integrante) {
                 foreach ($materiasDeDimension as $key => $materia) {
-                    $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['estudiante_id'], $materia['codigo']);
+                    $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['integrante_id'], $materia['codigo']);
 
                     if (empty($inscripcion)) {
                         if (!str_contains($materia['codigo'], 'ASESOR')) {
@@ -419,45 +483,54 @@ class proyectoController extends controller
 
                 $baremos[$materia['codigo']]['nombre'] = $materia['nombre'];
 
-
+                $baremos[$materia['codigo']]['individual'] = [];
+                $totalPonderado = 0;
                 foreach ($dimensiones as $key => $dimension) {
 
                     $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
-
 
                     if (empty($indicadores)) {
                         $errors['danger'][] = 'Dimension ' . $dimension['nombre_materia'] . ' - ' . $dimension['nombre'] . ' no cuenta con indicadores!';
                     } else {
                         // configurar informacion de indicador
                         if ($dimension['grupal'] == 1) {
-                            $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['nombre'] = $dimension['nombre'];
+                            $baremos[$materia['codigo']]['grupal'][$dimension['id']]['nombre'] = $dimension['nombre'];
                             foreach ($indicadores as $key => $indicador) {
-                                $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrantes[0]['id']);
+                                $totalPonderado += $indicador['ponderacion'];
+
+                                $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrantes[0]['integrante_id']);
                                 if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
                             }
-                            $baremos[$materia['codigo']]['dimension']['grupal'][$dimension['id']]['indicadores'] = $indicadores;
+                            $baremos[$materia['codigo']]['grupal'][$dimension['id']]['indicadores'] = $indicadores;
                         } else {
 
-                            $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['nombre'] = $dimension['nombre'];
-                            foreach ($integrantes as $key => $integrante) {
 
-                                foreach ($indicadores as $key => $indicador) {
-                                    $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
-                                    if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
-                                    $indicadores[$key]['nombre_integrante'] = $integrante['nombre'];
-                                    $indicadores[$key]['cedula_integrante'] = $integrante['cedula'];
+                            // $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['nombre'] = $dimension['nombre'];
+                            $dimension['indicadores'] = [];
+                            foreach ($indicadores as $key => $indicador) {
+                                $indicador['calificacion'] = [];
+                                $totalPonderado += $indicador['ponderacion'];
+                                foreach ($integrantes as $key => $integrante) {
+
+                                    $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['integrante_id']);
+                                    if (!empty($itemEstudiante)) $indicador['calificacion'][$integrante['integrante_id']] = $itemEstudiante['calificacion'];
                                 }
-                                $baremos[$materia['codigo']]['dimension']['individual'][$dimension['id']]['integrantes'][$integrante['id']]['indicadores'] = $indicadores;
+                                array_push($dimension['indicadores'], $indicador);
                             }
+
+                            array_push($baremos[$materia['codigo']]['individual'], $dimension);
                         }
                     }
+
+                    // TODO CALCULAR TOTAL PONDERADO POR DIMENSION
                 }
+                $baremos[$materia['codigo']]['ponderado'] = $totalPonderado;
             }
+
 
 
             // echo json_encode($baremos);
             // exit();
-
 
             return $this->view('proyectos/assessment', [
                 'proyecto_id' => $id,
@@ -536,13 +609,14 @@ class proyectoController extends controller
 
             $baremos = $this->baremos->findByFase($proyecto['fase_id']);
 
+
             $integrantes = $this->proyecto->obtenerIntegrantes($proyectoId);
 
             // verifica que todos los estudiantes hayan sido evaluados
             foreach ($integrantes as $integrante) {
 
                 foreach ($baremos as $indicador) {
-                    $calificacion = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
+                    $calificacion = $this->baremos->findStudentItem($indicador['id'], $integrante['integrante_id']);
                     if (empty($calificacion)) throw new Exception("El integrante " . $integrante['nombre'] . " C.I. " . $integrante['cedula'] . " No ha sido evaluado en el item " . $indicador['nombre_indicador'] . " que pertenece a la dimension " . $indicador['nombre_dimension'] . " de la materia " . $indicador['nombre_materia']);
                 }
             }
@@ -579,19 +653,22 @@ class proyectoController extends controller
             $indicadoresGrupales = $request->get('indicador_grupal');
             $indicadoresIndividuales = $request->get('indicador_individual');
 
+
+
             foreach ($integrantes as $integrante) {
+
                 // indicadores grupales
                 if (!empty($indicadoresGrupales)) {
                     foreach ($indicadoresGrupales as $id => $value) {
                         $value = floatval($value);
-                        $this->baremos->evaluarIndicador($id, $integrante['id'], $value);
+                        $this->baremos->evaluarIndicador($id, $integrante['integrante_id'], $value);
                     }
                 }
                 if (!empty($indicadoresIndividuales)) {
-
-                    foreach ($indicadoresIndividuales[$integrante['id']] as $id => $value) {
+                    foreach ($indicadoresIndividuales[$integrante['integrante_id']] as $id => $value) {
                         $value = floatval($value);
-                        $this->baremos->evaluarIndicador($id, $integrante['id'], $value);
+                        print("Evaluar " . $integrante['integrante_id'] . ' VALUE: ' . $value);
+                        $this->baremos->evaluarIndicador($id, $integrante['integrante_id'], $value);
                     }
                 }
             }
@@ -619,83 +696,21 @@ class proyectoController extends controller
     {
         try {
             $trayectoId = $request->get('trayecto_id');
-            $integrantes = $this->proyecto->IntegrastesPorTrayecto($trayectoId);
 
-            $spreadsheet = new Spreadsheet();
-            $styleArray = [
-                'font' => [
-                    'bold' => true,
-                ],
-                'alignment' => [
-                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                ],
-                'borders' => [
-                    'top' => [
-                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM
-                    ],
-                    'bottom' => [
-                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM
-                    ],
-                    'left' => [
-                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM
-                    ],
-                    'right' => [
-                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM
-                    ],
-                ],
+            $proyectos = $this->proyecto->all();
 
-            ];
 
-            $spreadsheet->getActiveSheet()->setCellValue('H1', 'MATRIZ DE PROYECTOS');
-            $spreadsheet->getActiveSheet()->getStyle('H1')->getFont()->setBold(true)->setSize(20);
-            $spreadsheet->getActiveSheet()->getStyle('H1')->getAlignment()->setHorizontal('center');
-            $spreadsheet->getActiveSheet()->getStyle('A2:N2')->applyFromArray($styleArray);
-            $spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
-            $spreadsheet->getActiveSheet()->setCellValue('A2', 'Sección');
-            $spreadsheet->getActiveSheet()->setCellValue('B2', 'Cedula de identidad');
-            $spreadsheet->getActiveSheet()->setCellValue('C2', 'Apellidos');
-            $spreadsheet->getActiveSheet()->setCellValue('D2', 'Nombres');
-            $spreadsheet->getActiveSheet()->setCellValue('E2', 'Telefonos');
-            $spreadsheet->getActiveSheet()->setCellValue('F2', 'Correo Electrónico');
-            $spreadsheet->getActiveSheet()->setCellValue('G2', 'Lugar');
-            $spreadsheet->getActiveSheet()->setCellValue('H2', 'Nombre del Proyecto');
-            $spreadsheet->getActiveSheet()->setCellValue('I2', 'Municipio donde se ejecuta el proyecto');
-            $spreadsheet->getActiveSheet()->setCellValue('J2', 'Motor Productivo');
-            $spreadsheet->getActiveSheet()->setCellValue('K2', 'Breve Descripción (Resumen)');
-            $spreadsheet->getActiveSheet()->setCellValue('L2', 'Dirección');
-            $spreadsheet->getActiveSheet()->setCellValue('M2', 'Parroquia');
-            if (!is_null($integrantes)) {
-                $spreadsheet->getActiveSheet()
-                    ->fromArray(
-                        $integrantes,  // The data to set
-                        NULL,        // Array values with this value will not be set
-                        'A3'         // Top left coordinate of the worksheet range where
-                        //    we want to set these values (default is A1)
-                    );
-            } else {
-                $spreadsheet->getActiveSheet()->setCellValue('H3', 'SIN DATOS');
-                $spreadsheet->getActiveSheet()->getStyle('H3')->getFont()->setBold(true)->setSize(16);
-                $spreadsheet->getActiveSheet()->getStyle('H3')->getAlignment()->setHorizontal('center');
+            foreach ($proyectos as $key => $proyecto) {
+                $integrantes = $this->proyecto->obtenerIntegrantes($proyecto['id']);
+
+                $proyectos[$key]['integrantes'] = $integrantes;
+                # code...
             }
-            header('Content-Type: application/vnd.ms-excel');
-            header('Content-Disposition: attachment;filename="matriz de proyectos.xlsx"');
-            $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-            $writer->save('php://output');
 
+            if (!$integrantes) throw new Exception('No hay integrantes en el trayecto seleccionado', 400);
+
+            $this->reporteProyectos($proyectos);
             http_response_code(200);
-            echo json_encode(true);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());
@@ -734,7 +749,7 @@ class proyectoController extends controller
                 <table style="padding-bottom: 12px; padding-top: 10px;">
                     <thead>
                         <tr>
-                            <th align="left">SPRINF</th>
+                            <th align="left">PNFI</th>
                             <th align="center" style="font-size: 18px;">Notas por equipo </th>
                             <th align="right">' . $date . '</th>
                         </tr>

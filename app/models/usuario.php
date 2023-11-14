@@ -85,6 +85,12 @@ class usuario extends model
             ['email', '=', '"' . $email . '"']
         ]);
 
+        if ($credenciales['rol_id'] == 4) {
+            return [
+                'estatus' => '0',
+            ];
+
+        }
         if (!password_verify($contrasena, $credenciales['contrasena'])) {
             return [
                 'estatus' => '0',
@@ -108,10 +114,14 @@ class usuario extends model
 
                 $this->update('usuario', ['token' => "'" . $token . "'"], [['id', '=', $usuariopersona['usuario_id']]]);
                 $_SESSION['token'] = $token;
+                $_SESSION['rol_id'] = $credenciales['rol_id'];
 
                 $navegador = $_SERVER['HTTP_USER_AGENT'] . "\n\n";
                 $hora = new \DateTimeZone("America/Caracas");
                 $guardar_hora = new \DateTime("now", $hora);
+
+                $bitacora = $this->select('bitacora', [['usuario_id', '=', $_SESSION['usuario_id']]]);
+
                 $this->set('bitacora', [
                     'fecha' => '"' . Date('Y-m-d') . '"',
                     'navegador' => '"' . $navegador . '"',
@@ -122,9 +132,15 @@ class usuario extends model
                     'usuario_id' => '"' . $_SESSION['usuario_id'] . '"',
                 ]);
 
-                return [
-                    'estatus' => '1',
-                ];
+                if (count($bitacora) > 0) {
+                    return [
+                        'estatus' => '1',
+                    ];
+                } else {
+                    return [
+                        'estatus' => '3',
+                    ];
+                }
             }
         } else {
             return [
@@ -326,6 +342,23 @@ class usuario extends model
         return $this;
     }
 
+    //========================= FIND==========================
+    public function findById($id)
+    {
+        try {
+            $usuario = $this->select('usuario', [['id', '=', $id]]);
+            if ($usuario) {
+                foreach ($usuario[0] as $key => $value) {
+                    $this->fillable[$key] = $value;
+                }
+                return $this;
+            } else {
+                return null;
+            }
+        } catch (\PDOException $th) {
+            return $th;
+        }
+    }
 
     public function usersname()
     {
@@ -334,6 +367,44 @@ class usuario extends model
             return $usuarios ? $usuarios : null;
         } catch (\PDOException $th) {
             return $th;
+        }
+    }
+
+
+    // ======================== UPDATE=========================
+    public function actualizarPassword($usuario)
+    {
+        $this->update('usuario', $usuario, [['id', '=', $this->fillable['id']]]);
+        return $this;
+    }
+
+
+
+
+    public function veificationDates(Request $request)
+    {
+        $email =    $request->request->get('email');
+        $mascota =  strtolower($request->request->get('mascota'));
+        $estudio =  strtolower($request->request->get('estudio'));
+        $color =    strtolower($request->request->get('color'));
+        if (isset($email)) {
+            $usuario = $this->select('usuario', [['email', '=', "'$email'"]])[0];
+            if (!is_null($usuario)) {
+                try {
+                    $usuarios = $this->querys('SELECT * FROM respuestas  WHERE respuestas.respuesta IN ( "' . $mascota . '" ,  "' . $estudio . '" , "' . $color . '") AND usuario_id = ' . $usuario['id'] . '');
+                    return $usuarios ? $usuarios : null;
+                } catch (\PDOException $th) {
+                    return $th;
+                }
+            } else {
+                return [
+                    'estatus' => '0',
+                ];
+            }
+        } else {
+            return [
+                'estatus' => '2',
+            ];
         }
     }
 }

@@ -15,7 +15,7 @@
             <div class="row form-group">
               <div class="col-lg-6">
                 <label class="form-label" for="nombre">Nombre *</label>
-                <input type="text" class="form-control mb-1" placeholder="..." name="nombre">
+                <input type="text" class="form-control mb-1" id="nombre" placeholder="..." name="nombre">
               </div>
 
               <div class="col-lg-3">
@@ -128,8 +128,6 @@
 
       let studentsAlreadyAppened = document.getElementById("cuerpoTablaEstudiantes").children.length;
 
-
-
       if (studentsAlreadyAppened >= 4) {
         alert('limite de estudiantes alcanzado');
       } else {
@@ -168,36 +166,36 @@
 
 <script>
   $(document).ready(function() {
-    $('#proyectoGuardar').submit(function(e) {
-      e.preventDefault()
+    // $('#proyectoGuardar').submit(function(e) {
+    //   e.preventDefault()
 
 
-      url = $(this).attr('action');
-      data = $(this).serializeArray();
+    //   url = $(this).attr('action');
+    //   data = $(this).serializeArray();
 
-      console.log(url)
+    //   console.log(url)
 
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        error: function(error, status) {
-          Swal.fire({
-            position: 'bottom-end',
-            icon: 'error',
-            title: error.responseText,
-            showConfirmButton: false,
-            toast: true,
-            timer: 2000
-          })
+    //   $.ajax({
+    //     type: "POST",
+    //     url: url,
+    //     data: data,
+    //     error: function(error, status) {
+    //       Swal.fire({
+    //         position: 'bottom-end',
+    //         icon: 'error',
+    //         title: error.responseText,
+    //         showConfirmButton: false,
+    //         toast: true,
+    //         timer: 2000
+    //       })
 
-        },
-        success: function(data, status) {
-          alert('creado exitosamente')
-          window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
-        },
-      });
+    //     },
+    //     success: function(data, status) {
+    //       alert('creado exitosamente')
+    //       window.location.replace("<?= APP_URL . $this->Route('proyectos') ?>");
+    //     },
+    //   });
 
-    })
+    // })
   })
 </script>

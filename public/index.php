@@ -89,7 +89,7 @@ foreach ($listaDeRutas as $nombre => $ruta) {
 }
 
 try {
-    // Get the route matcher from the container ...
+    // OBTENERMOS LA RUTA Y SU CONTENIDO ...
     $matcher = new UrlMatcher($routes, $context);
     $route = $matcher->match($context->getPathInfo());
 
@@ -97,17 +97,17 @@ try {
     $parameters = $route;
     unset($parameters['controller'], $parameters['_route'], $parameters['method']);
 
-    // Dispatch the request to the route handler.
+    // ENVIA LA SOLICITU AL CONTROLADOR DE LA RUTA.
     $controller = new $route['controller'];
 
     $method = $route['method'];
     $response = $controller->$method($request, ...$parameters);
 } catch (ResourceNotFoundException $exception) {
-    var_dump($exception->getMessage());
+    echo $exception->getMessage();
     $response = new Response('Not Found', 404);
-
-    $viewController = new controllers\controller;
-    $viewController->page('errors/404');
+    //SI FALLA INSTACIAMOS EL CONTROLADOR Y ACCEDEMOS AL METODO PAGE PARA RETORNAR UN ERROR
+    $viewController = new Controllers\controller;
+    // $viewController->page('errors/404');
 } catch (Throwable $throwable) {
     echo $throwable->getMessage() . ' ' . $throwable->getTraceAsString();
     $response = new Response('An error occurred', 500);

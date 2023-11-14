@@ -14,6 +14,7 @@ try {
     define("DB_PASS", $_ENV['DB_PASSWORD']);
     define("DB_NAME", $_ENV['DB_NAME']);
     define("APP_URL", $_ENV['APP_URL']);
+    define("NAME_APP", $_ENV['NAME_APP']);
 } catch (\Throwable $th) {
     if ($_ENV['ENVIRONMENT'] != "production") {
         die($th->getMessage());

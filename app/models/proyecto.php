@@ -7,7 +7,6 @@ use Utils\Sanitizer;
 
 use Exception;
 use PDOException;
-use PHPUnit\Framework\Constraint\ObjectHasProperty;
 
 class proyecto extends model
 {
@@ -18,12 +17,14 @@ class proyecto extends model
         'fase_id',
         'comunidad',
         'direccion',
-        'motor_productivo',
         'resumen',
-        'municipio',
-        'parroquia',
+        'consejo_comunal_id',
+        'motor_productivo',
+        'parroquia_id',
         'tutor_in',
         'tutor_ex',
+        'observaciones',
+        'tlf_tex',
         'id',
         'area',
         'integrantes',
@@ -33,13 +34,15 @@ class proyecto extends model
     public string $fase_id;
     public string $nombre;
     public string $direccion;
-    public string $parroquia;
-    public string $resumen;
-    public string $municipio;
-    public string $comunidad;
     public string $motor_productivo;
+    public ?int $consejo_comunal_id;
+    public int $parroquia_id;
+    public string $resumen;
+    public string $comunidad;
     public string $tutor_in;
     public string $tutor_ex;
+    public ?string $observaciones;
+    public string $tlf_tex;
     public int $cerrado;
 
     public array $integrantes; // has many
@@ -69,13 +72,14 @@ class proyecto extends model
     {
         $preparedSql = "";
         if ($id) {
-            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, motor_productivo, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
-                . "VALUES (:id, :fase_id, :nombre, :comunidad, :motor_productivo, :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
+            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, motor_productivo,consejo_comunal_id, parroquia_id , observaciones,direccion, tutor_in, tutor_ex, tlf_tex,cerrado) "
+                . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :motor_productivo,:consejo_comunal_id, :parroquia_id , :observaciones,:direccion,  :tutor_in, :tutor_ex,:tlf_tex, 0)";
         } else {
-            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, motor_productivo, resumen, direccion, municipio, parroquia, tutor_in, tutor_ex, cerrado) "
-                . "VALUES (:fase_id, :nombre, :comunidad, :motor_productivo, :resumen, :direccion, :municipio, :parroquia, :tutor_in, :tutor_ex, 0)";
+            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen,motor_productivo,consejo_comunal_id, parroquia_id , observaciones, direccion, tutor_in, tutor_ex,tlf_tex, cerrado) "
+                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :motor_productivo,:consejo_comunal_id, :parroquia_id , :observaciones, :direccion, :tutor_in, :tutor_ex,:tlf_tex, 0)";
         }
         $query = $this->prepare($preparedSql);
+
 
         if ($id) {
             $query->bindParam(":id", $this->id);
@@ -83,17 +87,18 @@ class proyecto extends model
         $query->bindParam(":fase_id", $this->fase_id);
         $query->bindParam(":nombre", $this->nombre);
         $query->bindParam(":comunidad", $this->comunidad);
-        $query->bindParam(":motor_productivo", $this->motor_productivo);
         $query->bindParam(":resumen", $this->resumen);
         $query->bindParam(":direccion", $this->direccion);
-        $query->bindParam(":municipio", $this->municipio);
-        $query->bindParam(":parroquia", $this->parroquia);
+        $query->bindParam(":motor_productivo", $this->motor_productivo);
+        $query->bindParam(":consejo_comunal_id", $this->consejo_comunal_id);
         $query->bindParam(":tutor_in", $this->tutor_in);
+        $query->bindParam(":parroquia_id", $this->parroquia_id);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
+        $query->bindParam(":observaciones", $this->observaciones);
+        $query->bindParam(":tlf_tex", $this->tlf_tex);
 
 
         if ($query->execute()) {
-
             $this->id = $this->lastInsertId();
             return $this->id;
         } else {
@@ -103,7 +108,7 @@ class proyecto extends model
 
     public function actualizar()
     {
-        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre, comunidad=:comunidad, motor_productivo=:motor_productivo, resumen=:resumen, direccion=:direccion, municipio=:municipio, parroquia=:parroquia, tutor_in=:tutor_in, tutor_ex=:tutor_ex, cerrado= :cerrado WHERE id=:id";
+        $preparedSql = "UPDATE proyecto SET fase_id=:fase_id, nombre=:nombre,parroquia_id=:parroquia_id, motor_productivo=:motor_productivo, comunidad=:comunidad,  resumen=:resumen, direccion=:direccion, consejo_comunal_id=:consejo_comunal_id, observaciones=:observaciones, tutor_in=:tutor_in, tutor_ex=:tutor_ex,tlf_tex=:tlf_tex, cerrado= :cerrado WHERE id=:id";
 
         $query = $this->prepare($preparedSql);
 
@@ -111,13 +116,15 @@ class proyecto extends model
         $query->bindParam(":fase_id", $this->fase_id);
         $query->bindParam(":nombre", $this->nombre);
         $query->bindParam(":comunidad", $this->comunidad);
-        $query->bindParam(":motor_productivo", $this->motor_productivo);
         $query->bindParam(":resumen", $this->resumen);
         $query->bindParam(":direccion", $this->direccion);
-        $query->bindParam(":municipio", $this->municipio);
-        $query->bindParam(":parroquia", $this->parroquia);
+        $query->bindParam(":consejo_comunal_id", $this->consejo_comunal_id);
+        $query->bindParam(":parroquia_id", $this->parroquia_id);
+        $query->bindParam(":motor_productivo", $this->motor_productivo);
         $query->bindParam(":tutor_in", $this->tutor_in);
         $query->bindParam(":tutor_ex", $this->tutor_ex);
+        $query->bindParam(":tlf_tex", $this->tlf_tex);
+        $query->bindParam(":observaciones", $this->observaciones);
         $query->bindParam(":cerrado", $this->cerrado);
 
         return $query->execute();
@@ -223,12 +230,13 @@ class proyecto extends model
     *consulta para el reporte notas PDF
     * @return array para los integrantes de los poryetcos segun su trayecto
     */
-    function NotasIntegrastesProyecto($id): array{
+    function NotasIntegrastesProyecto($id): array
+    {
         try {
             $notas = $this->querys("SELECT detalles_notas_baremos.fase_id,detalles_notas_baremos.nombre_fase, detalles_notas_baremos.cedula,
             detalles_notas_baremos.ponderado,detalles_notas_baremos.calificacion, persona.nombre, persona.apellido, proyecto.nombre as proyecto_nombre 
             FROM detalles_notas_baremos LEFT JOIN persona ON persona.cedula = detalles_notas_baremos.cedula LEFT JOIN proyecto ON proyecto.id = detalles_notas_baremos.proyecto_id WHERE detalles_notas_baremos.proyecto_id = $id");
-            
+
             return $notas ? $notas : [];
         } catch (Exception $th) {
             return $th;
@@ -243,7 +251,7 @@ class proyecto extends model
      */
     function obtenerIntegrantes(int $id): array
     {
-        $query = $this->prepare("SELECT * FROM detalles_integrantes WHERE proyecto_id = :id");
+        $query = $this->prepare("SELECT * FROM detalles_estudiantes WHERE proyecto_id = :id");
         $query->bindParam(":id", $id);
         $query->execute();
         $result = $query->fetchAll(\PDO::FETCH_ASSOC);
@@ -325,14 +333,13 @@ class proyecto extends model
             $proyectos = $this->all();
 
             foreach ($proyectos as $proyecto) {
+                $data['codigo_trayecto'] = $proyecto['codigo_trayecto'];
                 $data['nombre_proyecto'] = $proyecto['nombre'];
+                $data['parroquia_id'] = $proyecto['parroquia_id'];
                 $data['comunidad'] = $proyecto['comunidad'];
                 $data['area'] = $proyecto['area'];
-                $data['motor_productivo'] = $proyecto['motor_productivo'];
                 $data['resumen'] = $proyecto['resumen'];
                 $data['direccion'] = $proyecto['direccion'];
-                $data['municipio'] = $proyecto['municipio'];
-                $data['parroquia'] = $proyecto['parroquia'];
                 $data['periodo_inicio'] = $proyecto['fecha_inicio'];
                 $data['periodo_final'] = $proyecto['fecha_cierre'];
 
@@ -380,7 +387,7 @@ class proyecto extends model
             parent::beginTransaction();
             $participantesActuales = $this->obtenerIntegrantes($this->id);
 
-            $idParticipantesActuales = array_column($participantesActuales, 'estudiante_id');
+            $idParticipantesActuales = array_column($participantesActuales, 'id');
 
             $delete_list = array_diff($idParticipantesActuales, $this->integrantes);
             $insert_list = array_diff($this->integrantes, $idParticipantesActuales);
@@ -440,7 +447,7 @@ class proyecto extends model
         try {
             $dataExcel = $this->querys('SELECT DISTINCT detalles_inscripciones.seccion_id, detalles_estudiantes.cedula,detalles_estudiantes.apellido, detalles_estudiantes.nombre,
             detalles_estudiantes.telefono, detalles_estudiantes.email,detalles_proyecto.comunidad, detalles_integrantes.proyecto_nombre, 
-            detalles_proyecto.municipio, detalles_proyecto.motor_productivo, detalles_proyecto.resumen, detalles_proyecto.direccion, 
+            detalles_proyecto.municipio,  detalles_proyecto.resumen, detalles_proyecto.direccion, 
             detalles_proyecto.parroquia FROM detalles_proyecto 
             INNER JOIN detalles_integrantes ON detalles_proyecto.id = detalles_integrantes.proyecto_id 
             INNER JOIN detalles_estudiantes ON detalles_integrantes.estudiante_id = detalles_estudiantes.id 
@@ -452,7 +459,7 @@ class proyecto extends model
         }
     }
 
- 
+
 
     /**
      * generarSSP
@@ -491,6 +498,10 @@ class proyecto extends model
             array(
                 'db'        => 'cerrado',
                 'dt'        => 6
+            ),
+            array(
+                'db'        => 'fase_id',
+                'dt'        => 7
             )
         );
         return $this->getSSP('detalles_proyecto', 'id', $columns);

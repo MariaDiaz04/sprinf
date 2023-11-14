@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Bcrypt\Bcrypt;
 
 use Model\baremos;
-use Model\materias;
 use Model\estudiante;
 use Model\tutor;
 use Model\trayectos;
@@ -25,38 +24,30 @@ class baremosController extends controller
   {
     $this->tokenExist();
     $this->baremos = new baremos();
-    $this->materias = new materias();
-    $this->trayectos = new trayectos();
   }
 
-  public function index()
+  public function index(Request $dimension, $idTrayecto)
   {
 
-    $baremos = $this->baremos->all();
 
     return $this->view('baremos/gestionar', [
-      'baremos' => $baremos,
+      'idTrayecto' => $idTrayecto,
     ]);
   }
 
-  public function edit(Request $request, $id)
+  function ssp(Request $query, $idTrayecto): void
   {
-    $baremos = $this->baremos->find($id);
-    $trayectos = $this->trayectos->all();
-    $materias = $this->materias->all();
-
-
-    return $this->view('baremos/edit', [
-      'baremos' => $baremos,
-      'trayectos' => $trayectos,
-      'materias' => $materias,
-    ]);
+    try {
+      http_response_code(200);
+      echo json_encode($this->baremos->generarComplexSSP($idTrayecto));
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
+    }
   }
-
 
   public function E501()
   {
-
     return $this->page('errors/501');
   }
 }

@@ -28,7 +28,7 @@
                                 <label class="form-label">Módulo</label>
                                 <select class="form-select" name="modulo_id" id="modulo_id">
                                     <?php foreach ($modulos as $objmodulo) : ?>
-                                        <option value="<?= $objmodulo->modulo_id ?>"><?= $objmodulo->nombre ?></option>
+                                        <option value="<?= $objmodulo->id ?>"><?= $objmodulo->nombre ?></option>
                                     <?php endforeach; ?>
                                 </select>
 

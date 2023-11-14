@@ -5,7 +5,6 @@ namespace Controllers;
 use Model\permisos;
 use Model\materias;
 use Model\trayectos;
-use Model\clases;
 use Model\fase;
 use Model\malla;
 use Controllers\controller;
@@ -16,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 class materiasController extends controller
 {
     public $MATERIAS;
-    public $CLASES;
     public $PERMISOS;
     public $TRAYECTO;
     public $FASE;
@@ -24,8 +22,8 @@ class materiasController extends controller
 
     function __construct()
     {
+        $this->tokenExist();
         $this->MATERIAS = new materias();
-        $this->CLASES = new clases();
         $this->PERMISOS = new permisos();
         $this->TRAYECTO = new trayectos();
         $this->FASE = new fase();
@@ -35,17 +33,23 @@ class materiasController extends controller
     public function index(Request $materia, $idTrayecto)
     {
 
-        $this->tokenExist();
+        $permisos = $this->PERMISOS->consult(2, $_SESSION['rol_id']);
+
+        if ($permisos != null) {
+            $newpermisos = $permisos->fillable;
+        } elseif ($permisos == null) {
+            $newpermisos = $permisos;
+        }
         $materias = $this->MATERIAS->all();
         $trayectos = $this->TRAYECTO->all();
         $trayecto = $this->TRAYECTO->find($idTrayecto);
-
 
         return $this->view('materias/gestionar', [
             'trayecto' => $trayecto,
             'idTrayecto' => $idTrayecto,
             'materias' => $materias,
-            'trayectos' => $trayectos
+            'trayectos' => $trayectos,
+            'permisos' => $newpermisos,
         ]);
     }
 
@@ -132,8 +136,8 @@ class materiasController extends controller
             $periodo = $request->get('periodo');
             $trayectoId = $request->get('trayecto_id');
 
-            $malla = $this->obtenerMallasDePeriodo($codigo_materia, $periodo, $trayectoId);
             // en caso de que no se hayan cumplido condiciones que generen mallas a la materia
+            $malla = $this->obtenerMallasDePeriodo($codigo_materia, $periodo, $trayectoId);
 
             // asignar valores de materia
             $this->MATERIAS->setData($request->request->all());
@@ -225,15 +229,16 @@ class materiasController extends controller
      */
     function checkMateria(string $codigo, string $action): bool
     {
-        $clases = $this->CLASES->getAllBySubject($codigo);
-
-        if (!empty($clases)) throw new Exception("No puede $action datos de materia que cuenta con clases ya creadas");
-
+        /*        $clases = $this->MATERIAS->findByUnidadCurricularId($codigo);
+        return  json_encode($clases);
+        if (!empty($clases)) throw new Exception("No puede $action datos de materia que cuenta con incripciones ya creadas");
+ */
         // verificar que no cuente con dimensiones
         $detallesMallas = $this->MATERIAS->findMalla($codigo);
 
         foreach ($detallesMallas as $malla) {
-            if (intval($malla['dimensiones_proyecto']) > 0) throw new Exception("No puede $action datos de materia que cuenta dimensiones de proyecto");
+            if (intval($malla['dimensiones']) > 0) throw new Exception("No puede $action datos de materia que cuenta dimensiones de proyecto");
+            if (intval($malla['inscripciones']) > 0) throw new Exception("No puede $action datos de materia que cuenta incripciones ya creadas");
         }
 
 
