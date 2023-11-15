@@ -63,7 +63,7 @@
       dataArray: estudiantesPendientes,
     };
 
-    var transfer2 = $(".transferEstudiantes").transfer(estudiantesSettings);
+    var transfer = $(".transferEstudiantes").transfer(estudiantesSettings);
 
     let deleteUrl = "<?= APP_URL . $this->Route('inscripcion/delete') ?>";
 
@@ -121,27 +121,55 @@
 
       $('#guardar').submit(function(e) {
         e.preventDefault()
+        formData = $(this).serializeArray();
+        data = [...formData];
+        items = transfer.getSelectedItems();
+        counter = 0;
+        if (items.length <= 0) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Debe añadir Estudiantes",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        } else {
+          for (const idIntegrante in items) {
+            integrante = {};
+            if (Object.hasOwnProperty.call(items, idIntegrante)) {
+              const element = items[idIntegrante];
+              integrante.name = `estudiante_id[${counter}]`;
+              integrante.value = element.value;
+              counter++;
+              data.push(integrante);
+            }
+          }
+        }
+
 
         toggleLoading(true, '#guardar');
 
 
         url = $(this).attr('action');
-        data = $(this).serializeArray();
 
         $.ajax({
           type: "POST",
           url: url,
           data: data,
           error: function(error, status) {
-            toggleLoading(false, '#guardar')
+            toggleLoading(false);
+            error = JSON.parse(error.responseText);
             Swal.fire({
-              position: 'bottom-end',
-              icon: 'error',
-              title: error.responseText,
+              position: "bottom-end",
+              icon: "error",
+              title: status + ": " + error.error.message,
               showConfirmButton: false,
               toast: true,
-              timer: 2000
-            })
+              timer: 2000,
+            });
 
           },
           success: function(data, status) {

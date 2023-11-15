@@ -53,7 +53,7 @@ class inscripcionController extends controller
       foreach ($pendientes as $estudiante) {
         $info = [
           'nombre' => $estudiante['cedula'] . ' - ' . $estudiante['nombre'] . ' ' . $estudiante['apellido'],
-          'value' => $estudiante['cedula']
+          'value' => $estudiante['id']
         ];
         array_push($dataEstudiantes, $info);
       }

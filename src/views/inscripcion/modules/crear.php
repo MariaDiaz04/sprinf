@@ -5,7 +5,7 @@
         <h5 class="modal-title" id="crearLabel">Nueva Sección</h5>
 
       </div>
-      <form action="<?= APP_URL . $this->Route('inscripcion/crear') ?>" method="post" id="inscripcionCrear" ">
+      <form action="<?= APP_URL . $this->Route('inscripcion/crear') ?>" method="post" id="guardar" ">
         <div class=" modal-body">
         <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
         <input type="hidden" name="unidad_curricular_id" value="<?= $idMateria ?>">
