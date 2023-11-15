@@ -8,6 +8,9 @@ use Model\inscripcion;
 use Model\materias;
 use Model\malla;
 use Model\periodo;
+use Model\profesor;
+use Model\estudiante;
+use Model\seccion;
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;
@@ -17,6 +20,9 @@ class inscripcionController extends controller
 
   private $inscripciones;
   private $periodo;
+  private $seccion;
+  private $profesor;
+  private $estudiante;
   private $materias;
   private $malla;
 
@@ -24,6 +30,9 @@ class inscripcionController extends controller
   {
     $this->tokenExist();
     $this->periodo = new periodo();
+    $this->profesor = new profesor();
+    $this->estudiante = new estudiante();
+    $this->seccion = new seccion();
     $this->malla = new malla();
     $this->inscripciones = new inscripcion();
     $this->materias = new materias();
@@ -34,11 +43,17 @@ class inscripcionController extends controller
 
     $materia = $this->materias->findDetalles($idMateria);
     $inscripciones = $this->inscripciones->all();
+    $pendientes = $this->inscripciones->findPendingEnrollment($idMateria);
+    $secciones  = $this->seccion->all();
+    $profesores  = $this->profesor->all();
     $periodo = $this->periodo->get();
 
     return $this->view('inscripcion/gestionar', [
       'periodo' => $periodo,
       'materia' => $materia,
+      'pendientes' => $pendientes,
+      'secciones' => $secciones,
+      'profesores' => $profesores,
       'inscripciones' => $inscripciones,
       'idMateria' => $idMateria,
     ]);

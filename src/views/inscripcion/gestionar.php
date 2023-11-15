@@ -28,7 +28,10 @@
       </table>
     </div>
   </div>
-
+  <?php
+  include 'modules/crear.php';
+  include 'modules/actualizar.php';
+  ?>
   <script>
     let deleteUrl = "<?= APP_URL . $this->Route('inscripcion/delete') ?>";
 

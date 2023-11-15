@@ -83,6 +83,15 @@ class inscripcion extends model
     return !$inscripcion ? [] : $inscripcion;
   }
 
+  function findPendingEnrollment($codigo_materia): array
+  {
+    $query = $this->prepare("SELECT `id`,CONCAT(`nombre`,' ',`apellido`) as nombre_completo,`cedula` FROM `detalles_estudiantes` WHERE `id` NOT IN (SELECT `estudiante_id` FROM `detalles_inscripciones` WHERE codigo_materia = :codigo_materia)");
+    $query->bindParam(":codigo_materia", $codigo_materia);
+    $query->execute();
+    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
+  }
+
 
   /**
    * setData
