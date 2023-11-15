@@ -87,6 +87,21 @@ class materias extends model
 
     /**
      * Obtener los detalles de una materia
+     * por su código de materia
+     *
+     * @param string $codigo
+     * @return array - es un array vacio en caso de que no consiga alguna coincidencia
+     */
+    public function findDetalles(string $codigo)
+    {
+        $materias = $this->selectOne('detalles_materias', [['codigo_materia', '=', '"' . $codigo . '"']]);
+        return !$materias ? [] : $materias;
+    }
+
+
+
+    /**
+     * Obtener los detalles de una materia
      * por su código de unidad curricular (Malla [fase1/fase2])
      *
      * @param string $codigo

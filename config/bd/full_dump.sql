@@ -1780,6 +1780,7 @@ CREATE VIEW detalles_malla AS
 SELECT
 trayecto.codigo as codigo_trayecto,
 trayecto.nombre as nombre_trayecto,
+materias.codigo as codigo_materia,
 materias.nombre,
 malla_curricular.codigo,
 fase.codigo as codigo_fase,

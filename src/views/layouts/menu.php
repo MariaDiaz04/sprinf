@@ -93,28 +93,28 @@
             <div data-i18n="Analytics">Secciones</div>
           </a>
         </li>
-        <li class="menu-item <?= in_array($this->currentPath(), ['materias']) ? 'open' : '' ?>">
+        <li class="menu-item <?= in_array('materias', $this->fullPath()) ? 'open' : '' ?>">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-book"></i>
             <div data-i18n="Authentications">Materias</div>
           </a>
           <ul class="menu-sub">
-            <li class="menu-item <?= $this->currentLastPath() == 'TR1' ? 'active' : '' ?>">
+            <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR1', $this->fullPath()) ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('materias/TR1') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto I</div>
               </a>
             </li>
-            <li class="menu-item <?= $this->currentLastPath() == 'TR2' ? 'active' : '' ?>">
+            <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR2', $this->fullPath()) ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('materias/TR2') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto II</div>
               </a>
             </li>
-            <li class="menu-item <?= $this->currentLastPath() == 'TR3' ? 'active' : '' ?>">
+            <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR3', $this->fullPath()) ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('materias/TR3') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto III</div>
               </a>
             </li>
-            <li class="menu-item <?= $this->currentLastPath() == 'TR4' ? 'active' : '' ?>">
+            <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR4', $this->fullPath()) ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('materias/TR4') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto IV</div>
               </a>
@@ -239,28 +239,29 @@
             <div data-i18n="Analytics">Secciones</div>
           </a>
         </li>
-        <li class="menu-item <?= in_array($this->currentPath(), ['materias']) ? 'open' : '' ?>">
+
+        <li class="menu-item <?= in_array('materias', $this->fullPath()) ? 'open' : '' ?>">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-book"></i>
             <div data-i18n="Authentications">Materias</div>
           </a>
           <ul class="menu-sub">
-            <li class="menu-item <?= $this->currentLastPath() == 'TR1' ? 'active' : '' ?>">
+            <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR1', $this->fullPath()) ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('materias/TR1') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto I</div>
               </a>
             </li>
-            <li class="menu-item <?= $this->currentLastPath() == 'TR2' ? 'active' : '' ?>">
+            <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR2', $this->fullPath()) ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('materias/TR2') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto II</div>
               </a>
             </li>
-            <li class="menu-item <?= $this->currentLastPath() == 'TR3' ? 'active' : '' ?>">
+            <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR3', $this->fullPath()) ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('materias/TR3') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto III</div>
               </a>
             </li>
-            <li class="menu-item <?= $this->currentLastPath() == 'TR4' ? 'active' : '' ?>">
+            <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR4', $this->fullPath()) ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('materias/TR4') ?>" class="menu-link">
                 <div data-i18n="Basic">Trayecto IV</div>
               </a>

@@ -32,6 +32,12 @@ class malla extends model
     return !$materias ? [] : $materias;
   }
 
+  function findByMateria(string $codigoMateria): array
+  {
+    $materias = $this->select('detalles_malla', [['codigo_materia', '=', '"' . $codigoMateria . '"']]);
+    return !$materias ? [] : $materias;
+  }
+
 
   /**
    * setData

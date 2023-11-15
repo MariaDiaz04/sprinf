@@ -29,11 +29,8 @@
     </div>
   </div>
 
-
-
-
   <script>
-    let deleteUrl = "<?= APP_URL . $this->Route('materias/delete') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('inscripcion/delete') ?>";
 
     $(document).ready(() => {
 
@@ -47,7 +44,7 @@
       // contiene el nombre de alguna acción que haya definido
 
       let table = new DataTable('#example', {
-        ajax: '<?= $this->Route('ssp/' . $idMateria) ?>',
+        ajax: '<?= APP_URL . $this->Route('inscripcion/ssp/' . $idMateria) ?>',
         processing: true,
         serverSide: true,
         pageLength: 30,

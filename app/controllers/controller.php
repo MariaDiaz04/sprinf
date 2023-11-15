@@ -85,9 +85,24 @@ class controller
         }
 
         $explodedPath = explode('/', parse_url($pageURL)['path']);
-
         $path = end($explodedPath);
         return $path;
+    }
+    function fullPath(): array
+    {
+        $pageURL = 'http';
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+            $pageURL .= "s";
+        }
+        $pageURL .= "://";
+        if ($_SERVER["SERVER_PORT"] != "80") {
+            $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+        } else {
+            $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+        }
+
+        $explodedPath = explode('/', parse_url($pageURL)['path']);
+        return $explodedPath;
     }
 
     public function redirect($route, $paremeters = null)
@@ -118,12 +133,13 @@ class controller
         return date_format(date_create($date), $format);
     }
 
-    public function tokenExist(){
+    public function tokenExist()
+    {
         if (!isset($_SESSION['token'])) {
             ob_start(); //this should be first line of your page
             header('location:/');
             ob_end_flush(); //this should be last line of your page
             exit();
-          }
+        }
     }
 }

@@ -26,6 +26,8 @@ class inscripcion extends model
   public $calificacion;
   public $estatus;
 
+  public array $error;
+
   public function all()
   {
     try {
@@ -59,6 +61,19 @@ class inscripcion extends model
   public function find(int $codigo)
   {
     $inscripcion = $this->selectOne('detalles_inscripciones', [['id_inscripcion', '=',  $codigo]]);
+    return !$inscripcion ? [] : $inscripcion;
+  }
+
+  /**
+   * Obtener los detalles de una inscripcion
+   * por su código de estudiante
+   *
+   * @param int $codigo
+   * @return array - es un array vacio en caso de que no consiga alguna coincidencia
+   */
+  public function findByMateria(int $estudiante_id, string $codigo)
+  {
+    $inscripcion = $this->select('inscripcion', [['codigo_materia', '=',  '"' . $codigo . '"'], ['estudiante_id', '=',  $estudiante_id]]);
     return !$inscripcion ? [] : $inscripcion;
   }
 
@@ -141,7 +156,6 @@ class inscripcion extends model
     $inscripcion = $this->selectOne('inscripcion', [['estudiante_id', '=', "'" . $idEstudiante . "'"], ['unidad_curricular_id', '=', "'" . $idUnidadCurricular . "'"]]);
     return !$inscripcion ? [] : $inscripcion;
   }
-
 
 
   /**
