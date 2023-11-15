@@ -71,9 +71,9 @@ class inscripcion extends model
    * @param int $codigo
    * @return array - es un array vacio en caso de que no consiga alguna coincidencia
    */
-  public function findByMateria(int $estudiante_id, string $codigo)
+  public function findByMateria(string $estudiante_id, string $codigo)
   {
-    $inscripcion = $this->select('inscripcion', [['codigo_materia', '=',  '"' . $codigo . '"'], ['estudiante_id', '=',  $estudiante_id]]);
+    $inscripcion = $this->select('inscripcion', [['unidad_curricular_id', '=',  '"' . $codigo . '"'], ['estudiante_id', '=',  '"' . $estudiante_id . '"']]);
     return !$inscripcion ? [] : $inscripcion;
   }
 

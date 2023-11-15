@@ -143,20 +143,30 @@ class inscripcionController extends controller
   function obtener(Request $request): void
   {
     try {
-      $cedula = $request->request->get('cedula');
+      $estudiante_id = $request->request->get('estudiante_id');
       $unidadId = $request->request->get('unidad_id');
 
 
+      $inscripciones = [];
 
-      $inscripcion = $this->inscripciones->findByMateria($cedula, $unidadId);
+      $mallas = $this->malla->findByMateria($unidadId);
 
-      if (empty($inscripcion)) throw new Exception('Inscripción no encontrada', 404);
+      if (empty($mallas)) throw new Exception('Materia no encontrada');
+
+      foreach ($mallas as $malla) {
+
+        $inscripcionInfo = $this->inscripciones->findByMateria($estudiante_id, $malla['codigo']);
+        array_push($inscripciones, $inscripcionInfo);
+      }
+
+
+      if (empty($inscripciones)) throw new Exception('Inscripción no encontrada');
       http_response_code(200);
       echo json_encode([
-        'indicador' => $inscripcion
+        'inscripciones' => $inscripciones
       ]);
     } catch (Exception $e) {
-      http_response_code($e->getCode() ?? 500);
+      http_response_code($e->getCode() && intval($e->getCode()) ?? 500);
       echo json_encode(['error' => [
         'code' => $e->getCode(),
         'message' => $e->getMessage(),
