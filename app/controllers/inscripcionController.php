@@ -183,7 +183,6 @@ class inscripcionController extends controller
       if (empty($mallas)) throw new Exception('Materia no encontrada');
 
       foreach ($mallas as $malla) {
-
         $inscripcionInfo = $this->inscripciones->findByMateria($estudiante_id, $malla['codigo']);
         array_push($inscripciones, $inscripcionInfo);
       }

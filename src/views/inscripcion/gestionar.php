@@ -43,11 +43,13 @@
             <th>Código de Materia</th>
             <th>Nombre de Materia</th>
             <th>calificacion</th>
+            <th>Acción</th>
           </tr>
         </thead>
       </table>
     </div>
   </div>
+
   <?php
   include 'modules/crear.php';
   include 'modules/actualizar.php';
@@ -55,6 +57,7 @@
   <script src="<?= APP_URL ?>assets/js/jquery.transfer.js"></script>
   <script>
     var estudiantesPendientes = <?= json_encode($pendientes); ?>;
+    var idMateria = "<?= $idMateria ?>";
     var estudiantesSettings = {
       itemName: "nombre",
       valueName: "value",
@@ -66,10 +69,10 @@
     var transfer = $(".transferEstudiantes").transfer(estudiantesSettings);
 
     let deleteUrl = "<?= APP_URL . $this->Route('inscripcion/delete') ?>";
+    let obtenerUrl = "<?= APP_URL . $this->Route('inscripcion/obtener') ?>";
 
     $(document).ready(() => {
 
-      $('#crear').modal('show')
 
       toggleLoading(false)
 
@@ -96,23 +99,27 @@
               return (row[7]) ? row[7] : 'No evaluado';
             }, // combino los botons de acción
             targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          },
+          {
+            data: null,
+            render: function(data, type, row, meta) {
+              return `<div class="dropdown show">
+                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
+                        <a class="dropdown-item" onClick="evaluar('${row[2]}')" href="#">Evaluar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="#">Eliminar</a>
+                      </div>
+                    </div>`;
+            }, // combino los botons de acción
+            targets: 8
           }
         ]
 
         // columnDefs: [{
         //   data: null,
-        //   render: function(data, type, row, meta) {
-        //     return `<div class="dropdown show">
-        //               <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        //               <i class="bx bx-dots-vertical-rounded"></i>
-        //               </button>
-        //               <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
-        //                 ${(row[5] ? `<a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Gestionar Inscripciones</a>`:'' )}
-        //                 <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
-        //                 <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="#">Eliminar</a>
-        //               </div>
-        //             </div>`;
-        //   }, // combino los botons de acción
+
         //   targets: 5 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         // }]
       });
@@ -183,10 +190,10 @@
 
       })
 
-      $('#actualizar').submit(function(e) {
+      $('#evaluarInscripcion').submit(function(e) {
         e.preventDefault()
 
-        toggleLoading(true, '#actualizar');
+        toggleLoading(true, '#evaluarInscripcion');
 
 
         url = $(this).attr('action');
@@ -197,7 +204,7 @@
           url: url,
           data: data,
           error: function(error, status) {
-            toggleLoading(false, '#actualizar')
+            toggleLoading(false, '#evaluarInscripcion')
             Swal.fire({
               position: 'bottom-end',
               icon: 'error',
@@ -206,14 +213,13 @@
               toast: true,
               timer: 2000
             })
-
           },
           success: function(data, status) {
             table.ajax.reload();
             // actualizar tabla
-            toggleLoading(false, '#actualizar')
+            toggleLoading(false, '#evaluarInscripcion')
 
-            $('#editar').modal('hide')
+            $('#evaluar').modal('hide')
           },
         });
 
@@ -232,48 +238,58 @@
       }
     })
 
-    function edit(id) {
-      $.ajax({
-        type: "POST",
-        url: updateUrl,
-        data: {
-          'codigo': id
-        },
-        error: function(error, status) {
-          Swal.fire({
-            position: 'bottom-end',
-            icon: 'error',
-            title: error.responseText,
-            showConfirmButton: false,
-            toast: true,
-            timer: 2000
-          })
-
-        },
-        success: function(data, status) {
-
-          renderUpdateForm(JSON.parse(data))
-        },
-      });
+    async function evaluar(id) {
+      let inscripcion = await obtenerInscripcion(id)
+      console.log(inscripcion)
+      renderEvaluarForm(inscripcion)
+      return false;
     }
 
-    function renderUpdateForm(data) {
+    async function obtenerInscripcion(id) {
+      let result;
+      try {
+        result = await $.ajax({
+          url: obtenerUrl,
+          type: "POST",
+          data: {
+            estudiante_id: id,
+            unidad_id: idMateria
+          },
+        });
+        return JSON.parse(result);
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    }
 
-      $('#editar').modal('show')
+    function renderEvaluarForm(data) {
+
+      $('#evaluar').modal('show')
+      $('#actualizarEvaluacion').empty()
+      counter = 0;
+      data.inscripciones.forEach(inscripcion => {
+        console.log(inscripcion)
+        let evaluacion =
+          `<div class="form-group row mb-2">
+          <input type="hidden" name="inscripcion[${counter}][id]" value="${inscripcion.id}">
+            <label for="calificacion" class="col-sm-2 col-form-label">${inscripcion.unidad_curricular_id}</label>
+            <div class="col-sm-10">
+              <input type="number" name="inscripcion[${counter}][calificacion]" class="form-control" id="calificacion" placeholder="0" ${(inscripcion.calificacion != null ? 'value="'+ inscripcion.calificacion + '"' : '')}>
+            </div>
+          </div>`;
+
+        $('#actualizarEvaluacion').append(evaluacion)
+        counter++
+      });
+
+      $('#evaluar').modal('show')
 
       // seleccionar trayecto
-      $(`#actualizar #trayecto_id option[value='${data.materia.trayecto_id}']`).attr("selected", true);
-      // seleccionar periodo
-      $(`#actualizar #periodo option[value='${data.materia.periodo}']`).attr("selected", true);
+      // $(`#evaluarInscripcion #profesor_id option[value='${data.materia.trayecto_id}']`).attr("selected", true);
+      // // seleccionar periodo
+      // $(`#evaluarInscripcion #seccion_id option[value='${data.materia.periodo}']`).attr("selected", true);
 
-      $(`#actualizar #codigo`).val(data.materia.materia_id);
-      $(`#actualizar #nombre`).val(data.materia.nombre);
-      $(`#actualizar #eje`).val(data.materia.eje);
-
-      $(`#actualizar #htasist`).val(data.materia.htasist);
-      $(`#actualizar #htind`).val(data.materia.htind);
-      $(`#actualizar #ucredito`).val(data.materia.ucredito);
-      $(`#actualizar #hrs_acad`).val(data.materia.hrs_acad);
 
     }
 
