@@ -11,7 +11,7 @@
   <meta name="description" content="">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
- <!-- <link rel="icon" type="image/x-icon" href="favicon"> -->
+  <!-- <link rel="icon" type="image/x-icon" href="favicon"> -->
   <!-- <script src="<?= APP_URL ?>js/jquery-3.7.1.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- <script src="<?= APP_URL ?>js/jquery-4.4.0.min.js"></script> -->
@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="<?= APP_URL ?>assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
   <link rel="stylesheet" href="<?= APP_URL ?>assets/css/demo.css" />
   <link rel="stylesheet" href="<?= APP_URL ?>assets/css/jquery.transfer.css" />
-  <link rel="stylesheet" type="text/css" href="assets/icon_font/css/icon_font.css" />
+  <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/icon_font/css/icon_font.css" />
 
 
 

@@ -48,10 +48,20 @@ class inscripcionController extends controller
     $profesores  = $this->profesor->all();
     $periodo = $this->periodo->get();
 
+    $dataEstudiantes = [];
+    if (isset($pendientes)) {
+      foreach ($pendientes as $estudiante) {
+        $info = [
+          'nombre' => $estudiante['cedula'] . ' - ' . $estudiante['nombre'] . ' ' . $estudiante['apellido'],
+          'value' => $estudiante['cedula']
+        ];
+        array_push($dataEstudiantes, $info);
+      }
+    }
     return $this->view('inscripcion/gestionar', [
       'periodo' => $periodo,
       'materia' => $materia,
-      'pendientes' => $pendientes,
+      'pendientes' => $dataEstudiantes,
       'secciones' => $secciones,
       'profesores' => $profesores,
       'inscripciones' => $inscripciones,

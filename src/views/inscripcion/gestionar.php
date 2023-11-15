@@ -1,3 +1,23 @@
+<style>
+  .transfer-double {
+    background-color: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 100%;
+  }
+
+  .transfer-double-content {
+    display: flex;
+  }
+
+  .transfer-double-content-right {
+    flex-grow: 1;
+  }
+
+  .transfer-double-content-left {
+    flex-grow: 1;
+  }
+</style>
 <div>
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
@@ -32,10 +52,24 @@
   include 'modules/crear.php';
   include 'modules/actualizar.php';
   ?>
+  <script src="<?= APP_URL ?>assets/js/jquery.transfer.js"></script>
   <script>
+    var estudiantesPendientes = <?= json_encode($pendientes); ?>;
+    var estudiantesSettings = {
+      itemName: "nombre",
+      valueName: "value",
+      rightTabNameText: "Inscritos",
+      tabNameText: "Estudiantes",
+      dataArray: estudiantesPendientes,
+    };
+
+    var transfer2 = $(".transferEstudiantes").transfer(estudiantesSettings);
+
     let deleteUrl = "<?= APP_URL . $this->Route('inscripcion/delete') ?>";
 
     $(document).ready(() => {
+
+      $('#crear').modal('show')
 
       toggleLoading(false)
 
