@@ -117,15 +117,17 @@ class inscripcionController extends controller
   function delete(Request $indicador): void
   {
     try {
-      $idIndicador = $indicador->request->get('id');
+      $inscripcionesId = $indicador->request->all()['id'];
 
-      $verificar = $this->inscripciones->find($idIndicador);
-      if (!$verificar) throw new Exception('Inscripción no encontrada', 404);
+      foreach ($inscripcionesId as $inscripcionId) {
+        $verificar = $this->inscripciones->find($inscripcionId);
+        if (!$verificar) throw new Exception('Inscripción ' . $inscripcionId . ' no encontrada', 404);
 
-      $resultado = $this->inscripciones->remove($idIndicador);
+        $resultado = $this->inscripciones->remove($inscripcionId);
 
-      if (!$resultado) {
-        throw new Exception($this->inscripciones->error['message'], (int)$this->inscripciones->error['code']);
+        if (!$resultado) {
+          throw new Exception($this->inscripciones->error['message'], (int)$this->inscripciones->error['code']);
+        }
       }
 
       http_response_code(200);
