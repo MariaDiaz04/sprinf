@@ -269,7 +269,7 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[1]}">
-                        ${(row[5] ? `<a class="dropdown-item" href="<?= APP_URL . $this->Route("materias/" . $trayecto->codigo) ?>/${row[1]}">Inscripciones</a>`:'' )}
+                        ${(row[5] ? `<a class="dropdown-item" target="_blank" href="<?= APP_URL . $this->Route("materias/" . $trayecto->codigo) ?>/${row[1]}">Inscripciones</a>`:'' )}
                         <?php if ($permisos->actualizar == 1) : ?>
                         <a class="dropdown-item" onClick="edit('${row[1]}')" href="#">Editar</a>
                         <?php endif; ?>

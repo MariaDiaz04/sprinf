@@ -144,13 +144,28 @@ class inscripcionController extends controller
   function delete(Request $indicador): void
   {
     try {
-      $inscripcionesId = $indicador->request->all()['id'];
+      $estudiante_id = $indicador->request->get('estudiante_id');
+      $unidadId = $indicador->request->get('unidad_id');
 
-      foreach ($inscripcionesId as $inscripcionId) {
-        $verificar = $this->inscripciones->find($inscripcionId);
-        if (!$verificar) throw new Exception('Inscripción ' . $inscripcionId . ' no encontrada', 404);
+      $inscripciones = [];
 
-        $resultado = $this->inscripciones->remove($inscripcionId);
+      $mallas = $this->malla->findByMateria($unidadId);
+
+
+      if (empty($mallas)) throw new Exception('Materia no encontrada');
+
+      foreach ($mallas as $malla) {
+        $inscripcionInfo = $this->inscripciones->findByMateria($estudiante_id, $malla['codigo']);
+        array_push($inscripciones, $inscripcionInfo);
+      }
+      // echo json_encode($estudiante_id);
+      // exit();
+
+
+
+      foreach ($inscripciones as $inscripcion) {
+
+        $resultado = $this->inscripciones->remove($inscripcion['id']);
 
         if (!$resultado) {
           throw new Exception($this->inscripciones->error['message'], (int)$this->inscripciones->error['code']);

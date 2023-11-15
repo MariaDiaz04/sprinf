@@ -78,9 +78,6 @@
           targets: 3 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
-
-
-
     })
 
     // TOGGLE BUTTON AND SPINNER

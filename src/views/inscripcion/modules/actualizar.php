@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="evaluarLabel">Nueva Sección</h5>
+        <h5 class="modal-title" id="evaluarLabel">Calificaciones</h5>
 
       </div>
       <form action="<?= APP_URL . $this->Route('inscripcion/evaluar') ?>" method="post" id="evaluarInscripcion" ">
@@ -12,26 +12,6 @@
         <div class="container-fluid">
           <div class="row pb-2">
             <div class="col-12">
-              <div class="row form-group mb-3">
-                <div class="col-lg-6">
-                  <label class="form-label" for="profesor_id">Profesor *</label>
-                  <select class="form-select" name="profesor_id" id="profesor_id">
-                    <option value="" disabled="disabled" selected="selected" id="ningunProfesor">-- Ninguno --</option>
-                    <?php foreach ($profesores as $profesor) : ?>
-                      <option value="<?= $profesor->codigo ?>"><?= "$profesor->nombre $profesor->apellido" ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="col-lg-6">
-                  <label class="form-label" for="seccion_id">Seccion *</label>
-                  <select class="form-select" name="seccion_id" id="seccion_id">
-                    <option value="" disabled="disabled" selected="selected" id="ningunaSeccion">-- Ninguno --</option>
-                    <?php foreach ($secciones as $seccion) : ?>
-                      <option value="<?= $seccion->codigo ?>"><?= "$seccion->codigo" ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-              </div>
               <div class="row form-group">
                 <div class="col-lg-12">
                   <div id="actualizarEvaluacion"></div>

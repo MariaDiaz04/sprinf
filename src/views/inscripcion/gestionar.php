@@ -68,7 +68,7 @@
 
     var transfer = $(".transferEstudiantes").transfer(estudiantesSettings);
 
-    let deleteUrl = "<?= APP_URL . $this->Route('inscripcion/delete') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('inscripcion/borrar') ?>";
     let obtenerUrl = "<?= APP_URL . $this->Route('inscripcion/obtener') ?>";
 
     $(document).ready(() => {
@@ -109,7 +109,7 @@
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
                         <a class="dropdown-item" onClick="evaluar('${row[2]}')" href="#">Evaluar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="#">Eliminar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[2]}')" href="#">Eliminar</a>
                       </div>
                     </div>`;
             }, // combino los botons de acción
@@ -185,6 +185,14 @@
             document.getElementById("guardar").reset();
             // actualizar tabla
             toggleLoading(false, '#guardar')
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Creación Exitosa",
+              showConfirmButton: false,
+              toast: true,
+              timer: 1000,
+            })
           },
         });
 
@@ -220,6 +228,14 @@
             toggleLoading(false, '#evaluarInscripcion')
 
             $('#evaluar').modal('hide')
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Evaluación Exitosa",
+              showConfirmButton: false,
+              toast: true,
+              timer: 1000,
+            });
           },
         });
 
@@ -298,7 +314,8 @@
         type: "POST",
         url: deleteUrl,
         data: {
-          'codigo': id
+          estudiante_id: id,
+          unidad_id: idMateria
         },
         error: function(error, status) {
           Swal.fire({
@@ -312,8 +329,16 @@
 
         },
         success: function(data, status) {
-          alert('Materia borrada exitosamente')
+
           $('#example').DataTable().ajax.reload();
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Borrado Exitoso",
+            showConfirmButton: false,
+            toast: true,
+            timer: 1000,
+          })
         },
       });
     }
