@@ -78,6 +78,8 @@ class inscripcionController extends controller
       $unidad_curricular_id = $inscripcion->request->get('unidad_curricular_id');
       $estudiantes_id = $inscripcion->request->all()['estudiante_id'];
 
+      if (empty($estudiantes_id)) throw new Exception('Debe de añadir estudiantes a la creacion de la inscripcion');
+
       $mallas = $this->malla->findByMateria($unidad_curricular_id);
       if (empty($mallas)) throw new Exception('Materia no encontrada');
 
