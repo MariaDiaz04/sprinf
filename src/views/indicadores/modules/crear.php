@@ -7,17 +7,18 @@
 
       </div>
       <form action="<?= APP_URL . $this->Route('indicador/guardar') ?>" method="post" id="guardar">
+        <input type="hidden" name="dimension_id" value="<?= $idDimension ?>">
         <div class="modal-body">
           <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
           <div class="container-fluid">
             <div class="row form-group align-items-end">
               <div class="col-lg-9">
                 <label class="form-label" for="nombreItem">Nombre Indicador *</label>
-                <input type="text" class="form-control mb-1" placeholder="..." id="nombreItem" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255">
+                <input type="text" class="form-control mb-1" name="nombre" placeholder="..." id="nombreItem" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255">
               </div>
               <div class="col-lg-3">
                 <label class="form-label" for="ponderacionItem">Ponderación (%) *</label>
-                <input type="number" class="form-control mb-1" placeholder="..." id="ponderacionItem" value="0" max="100">
+                <input type="number" class="form-control mb-1" name="ponderacion" placeholder="..." id="ponderacionItem" value="0" max="100">
               </div>
             </div>
           </div>

@@ -27,9 +27,12 @@
 
   <?php
   include 'modules/crear.php';
+  include 'modules/actualizar.php';
   ?>
   <script>
     let deleteUrl = "<?= APP_URL . $this->Route('indicadores/delete') ?>";
+    let obtenerUrl = "<?= APP_URL . $this->Route('indicador/obtener/') ?>";
+
 
     $(document).ready(() => {
 
@@ -70,7 +73,7 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
-                        <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
+                        <a class="dropdown-item" onClick="actualizar('${row[0]}')" href="#">Editar</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="#">Eliminar</a>
                       </div>
                     </div>`;
@@ -78,7 +81,175 @@
           targets: 3 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
+
+      $('#guardar').submit(function(e) {
+        e.preventDefault()
+
+        toggleLoading(true);
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            Swal.fire({
+              position: "bottom-end",
+              icon: "error",
+              title: status + ": " + error.error.message,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000,
+            });
+
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            // document.getElementById("guardar").reset();
+            // actualizar tabla
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Creación Exitosa",
+              showConfirmButton: false,
+              toast: true,
+              timer: 1000,
+            })
+            // .then(() => location.reload());
+            document.getElementById("guardar").reset()
+            $('#crear').modal('hide')
+            toggleLoading(false)
+          },
+        });
+      })
+
+      $('#guardar').submit(function(e) {
+        e.preventDefault()
+
+        toggleLoading(true);
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            Swal.fire({
+              position: "bottom-end",
+              icon: "error",
+              title: status + ": " + error.error.message,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000,
+            });
+
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            // document.getElementById("guardar").reset();
+            // actualizar tabla
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Creación Exitosa",
+              showConfirmButton: false,
+              toast: true,
+              timer: 1000,
+            })
+            // .then(() => location.reload());
+            document.getElementById("guardar").reset()
+            $('#crear').modal('hide')
+            toggleLoading(false)
+          },
+        });
+      })
+
+      $('#actualizarIndicador').submit(function(e) {
+        e.preventDefault()
+
+        toggleLoading(true);
+
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false)
+            Swal.fire({
+              position: "bottom-end",
+              icon: "error",
+              title: status + ": " + error.error.message,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000,
+            });
+
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            // usar sweetalerts
+            // document.getElementById("guardar").reset();
+            // actualizar tabla
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Actualización Exitosa",
+              showConfirmButton: false,
+              toast: true,
+              timer: 1000,
+            })
+            // .then(() => location.reload());
+            document.getElementById("guardar").reset()
+            $('#actualizar').modal('hide')
+            toggleLoading(false)
+          },
+        });
+      })
+
     })
+
+    async function actualizar(id) {
+      let indicador = await obtenerIndicador(id)
+      console.log(indicador)
+      renderEvaluarForm(indicador.indicador)
+      return false;
+    }
+
+    function renderEvaluarForm(data) {
+
+      $('#actualizar #idIndicador').val(data.id)
+      $('#actualizar #dimension_id').val(data.dimension_id)
+      $('#actualizar #nombre').val(data.nombre)
+      $('#actualizar #ponderacion').val(data.ponderacion)
+      $('#actualizar').modal('show')
+
+
+    }
+
+    async function obtenerIndicador(id) {
+      let result;
+      try {
+        result = await $.ajax({
+          url: obtenerUrl + id,
+          type: "GET",
+        });
+        return JSON.parse(result);
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    }
 
     // TOGGLE BUTTON AND SPINNER
     function toggleLoading(show, form = "") {
