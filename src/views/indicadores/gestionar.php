@@ -30,7 +30,7 @@
   include 'modules/actualizar.php';
   ?>
   <script>
-    let deleteUrl = "<?= APP_URL . $this->Route('indicadores/delete') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('indicador/borrar') ?>";
     let obtenerUrl = "<?= APP_URL . $this->Route('indicador/obtener/') ?>";
 
 
@@ -249,6 +249,50 @@
         console.error(error);
         return false;
       }
+    }
+
+    function remove(id) {
+      Swal.fire({
+        title: "Se eliminará el indicador, ¿está seguro de realizar la acción?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Continuar",
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            type: "POST",
+            url: deleteUrl,
+            data: {
+              id: id,
+            },
+            error: function(error, status) {
+              error = JSON.parse(error.responseText);
+              Swal.fire({
+                position: "bottom-end",
+                icon: "error",
+                title: status + ": " + error.error.message,
+                showConfirmButton: false,
+                toast: true,
+                timer: 2000,
+              });
+            },
+            success: function(data, status) {
+              // actualizar tabla
+              Swal.fire({
+                position: "bottom-end",
+                icon: "success",
+                title: "Indicador Eliminado Exitosamente",
+                showConfirmButton: false,
+                toast: true,
+                timer: 1000,
+              }).then(() => location.reload());
+            },
+          });
+        }
+      });
     }
 
     // TOGGLE BUTTON AND SPINNER
