@@ -1100,9 +1100,9 @@ insert into seccion (trayecto_id, codigo, observacion) values ('TR3','IN3103', '
 insert into seccion (trayecto_id, codigo, observacion) values ('TR3','IN3104', '');
 
 -- // trayecto 4
-insert into seccion (trayecto_id, codigo, observacion) values ('TR4','IN4301', '');
-insert into seccion (trayecto_id, codigo, observacion) values ('TR4','IN4302', '');
-insert into seccion (trayecto_id, codigo, observacion) values ('TR4','IN4303', 'IUJO');
+insert into seccion (trayecto_id, codigo, observacion) values ('TR4','IN4401', '');
+insert into seccion (trayecto_id, codigo, observacion) values ('TR4','IN4402', '');
+insert into seccion (trayecto_id, codigo, observacion) values ('TR4','IN4403', 'IUJO');
 
 -- materias-malla.sql
 
@@ -1439,33 +1439,33 @@ delete from inscripcion where true;
 -- delete from clase where true;
 -- actividades acrediables fase 1
 -- prof: hermes 
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_1', 'e-15408');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_1', 'e-63578');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_1', 'e-39263');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_1', 'e-15408');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_1', 'e-63578');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_1', 'e-39263');
 -- fase 2
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_2', 'e-15408');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_2', 'e-63578');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4301', 'PIACA078303_2', 'e-39263');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_2', 'e-15408');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_2', 'e-63578');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_2', 'e-39263');
 
 -- administración de base de datos
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-654854354', 'IN4301', 'PIABD078303_1', 'e-15408');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-654854354', 'IN4301', 'PIABD078303_1', 'e-63578');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-654854354', 'IN4301', 'PIABD078303_1', 'e-39263');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-654854354', 'IN4401', 'PIABD078303_1', 'e-15408');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-654854354', 'IN4401', 'PIABD078303_1', 'e-63578');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-654854354', 'IN4401', 'PIABD078303_1', 'e-39263');
 
 -- gestión de proyecto informatico
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-234565423','IN4301', 'PIGPI078303_1', 'e-15408');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-234565423','IN4301', 'PIGPI078303_1', 'e-63578');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-234565423','IN4301', 'PIGPI078303_1', 'e-39263');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-234565423','IN4401', 'PIGPI078303_1', 'e-15408');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-234565423','IN4401', 'PIGPI078303_1', 'e-63578');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-234565423','IN4401', 'PIGPI078303_1', 'e-39263');
 
 -- idiomas II
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4301', 'PIIDI078303_1', 'e-15408');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4301', 'PIIDI078303_1', 'e-63578');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4301', 'PIIDI078303_1', 'e-39263');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4401', 'PIIDI078303_1', 'e-15408');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4401', 'PIIDI078303_1', 'e-63578');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4401', 'PIIDI078303_1', 'e-39263');
 
 -- Seguridad Informatica
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-5428468','IN4301', 'PISEI078303_1', 'e-15408');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-5428468','IN4301', 'PISEI078303_1', 'e-63578');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-5428468','IN4301', 'PISEI078303_1', 'e-39263');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-5428468','IN4401', 'PISEI078303_1', 'e-15408');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-5428468','IN4401', 'PISEI078303_1', 'e-63578');
+insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-5428468','IN4401', 'PISEI078303_1', 'e-39263');
 
 -- 10_proyectos.sql
 delete from integrante_proyecto where true;

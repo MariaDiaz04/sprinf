@@ -8,7 +8,7 @@
       <form action="<?= APP_URL . $this->Route('inscripcion/crear') ?>" method="post" id="inscripcionCrear" ">
         <div class=" modal-body">
         <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-        <input type="hidden" name="estatus" value="1">
+        <input type="hidden" name="unidad_curricular_id" value="<?= $idMateria ?>">
         <div class="container-fluid">
           <div class="row pb-2">
             <div class="col-12">
@@ -26,9 +26,9 @@
                   <label class="form-label" for="seccion_id">Seccion *</label>
                   <select class="form-select" name="seccion_id" id="seccion_id">
                     <option value="" disabled="disabled" selected="selected" id="ningunaSeccion">-- Ninguno --</option>
-                    <!-- <?php foreach ($secciones as $seccion) : ?>
-                      <option value="<?= $seccion->codigo ?>"><?= "$seccion->nombre" ?></option>
-                    <?php endforeach; ?> -->
+                    <?php foreach ($secciones as $seccion) : ?>
+                      <option value="<?= $seccion->codigo ?>"><?= "$seccion->codigo" ?></option>
+                    <?php endforeach; ?>
                   </select>
                 </div>
               </div>

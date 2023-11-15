@@ -44,7 +44,7 @@ class inscripcionController extends controller
     $materia = $this->materias->findDetalles($idMateria);
     $inscripciones = $this->inscripciones->all();
     $pendientes = $this->inscripciones->findPendingEnrollment($idMateria);
-    $secciones  = $this->seccion->all();
+    $secciones  = $this->seccion->findByTrayecto($codigoTrayecto);
     $profesores  = $this->profesor->all();
     $periodo = $this->periodo->get();
 
@@ -76,36 +76,36 @@ class inscripcionController extends controller
       $profesor_id = $inscripcion->request->get('profesor_id');
       $seccion_id = $inscripcion->request->get('seccion_id');
       $unidad_curricular_id = $inscripcion->request->get('unidad_curricular_id');
-      $estudiante_id = $inscripcion->request->get('estudiante_id');
+      $estudiantes_id = $inscripcion->request->all()['estudiante_id'];
 
       $mallas = $this->malla->findByMateria($unidad_curricular_id);
-
       if (empty($mallas)) throw new Exception('Materia no encontrada');
 
-      $checkInscripcion = $this->inscripciones->usuarioCursaMateria($estudiante_id, $mallas[0]['codigo']);
-
-
-      if (!empty($checkInscripcion)) throw new Exception('Usuario ya cursa materia');
-
-      foreach ($mallas as $malla) {
-        # code...
-        $this->inscripciones->setData([
-          'profesor_id' => $profesor_id,
-          'seccion_id' => $seccion_id,
-          'unidad_curricular_id' => $malla['codigo'],
-          'estudiante_id' => $estudiante_id,
-        ]);
-
-        $resultado = $this->inscripciones->save();
-
-        if (!$resultado) throw new Exception('Error inesperado al crear inscripcion');
+      foreach ($estudiantes_id as $estudiante_id) {
+        $checkInscripcion = $this->inscripciones->usuarioCursaMateria($estudiante_id, $mallas[0]['codigo']);
+        if (!empty($checkInscripcion)) {
+          $infoEstudiante = $this->estudiante->find($estudiante_id);
+          throw new Exception('Estudiante ' . $infoEstudiante['nombre'] . ' ' .  $infoEstudiante['apellido'] . ' ya cursa materia');
+        }
       }
 
+      foreach ($estudiantes_id as $estudiante_id) {
+        foreach ($mallas as $malla) {
 
-      $inscripcionInfo = $this->inscripciones->find($this->inscripciones->id);
+          $this->inscripciones->setData([
+            'profesor_id' => $profesor_id,
+            'seccion_id' => $seccion_id,
+            'unidad_curricular_id' => $malla['codigo'],
+            'estudiante_id' => $estudiante_id,
+          ]);
+          $resultado = $this->inscripciones->save();
+
+          if (!$resultado) throw new Exception('Error inesperado al crear inscripcion');
+        }
+      }
 
       http_response_code(200);
-      echo json_encode(['data' => $inscripcionInfo]);
+      echo json_encode('success');
     } catch (Exception $e) {
       http_response_code(500);
       echo json_encode(['error' => [

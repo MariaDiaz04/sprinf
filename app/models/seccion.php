@@ -35,6 +35,15 @@ class seccion extends model
         }
     }
 
+    function findByTrayecto(string $trayecto_id): array
+    {
+        $query = $this->prepare("SELECT * FROM detalles_seccion WHERE trayecto_id=:trayecto_id");
+        $query->bindParam(":trayecto_id", $trayecto_id);
+        $query->execute();
+        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
+
     public function create($seccion)
     {
         foreach ($seccion as $key => $value) {
