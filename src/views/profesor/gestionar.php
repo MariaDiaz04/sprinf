@@ -92,10 +92,78 @@
           </div>
           <!-- footer de acciones -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crear">Cancelar</button>
 
-            <input type="submit" class="btn btn-primary" value="Guardar" id="guardarSubmit">
-            <div id="guardarLoading">
+            <input type="submit" class="btn btn-primary" value="Guardar" id="guardar">
+            <div id="loading">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ACTUALIZAR -->
+  <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editar" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editar">Nuevo Docente</h5>
+
+        </div>
+        <form action="<?= APP_URL . $this->Route('profesores/actualizar') ?>" method="post" id="actualizar">
+          <div class="modal-body">
+            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
+            <input type="hidden" name="estatus" value="1">
+            <div class="container-fluid">
+              <div class="row pb-2">
+                <div class="col-12">
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Cedula *</label>
+                      <input type="text" disabled class="form-control mb-1" id="cedulaEdit">
+                      <input type="hidden" class="form-control mb-1" placeholder="..." name="cedula" id="cedula">
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="nombre">Nombre *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="apellido">Apellido *</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
+                    </div>
+
+                    <!-- <div class="row form-group"> -->
+                    <div class="col-lg-6">
+                      <label class="form-label" for="direccion">Dirección</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="direccion" id="direccion">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-lg-6">
+                      <label class="form-label" for="telefono">Teléfono</label>
+                      <input type="number" class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="form-label" for="email">Correo Electronico</label>
+                      <input type="text" class="form-control mb-1" placeholder="..." name="email" id="email">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- footer de acciones -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="editarSubmit">Cancelar</button>
+            <input type="submit" class="btn btn-primary" value="Editar" id="editar">
+            <div id="loading">
               <div class="spinner-border text-primary" role="status">
                 <span class="sr-only"></span>
               </div>
@@ -143,6 +211,8 @@
 
   <script>
     let showDetailsUrl = "<?= APP_URL . $this->Route('profesores/showDetails') ?>";
+    let editUrl = "<?= APP_URL . $this->Route('profesores/edit') ?>";
+
     $(document).ready(() => {
 
       toggleLoading(false)
@@ -168,9 +238,9 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
-                        <a class="dropdown-item" onClick="showDetails('${row[4]}')" href="#">Mostrar Datos de Contacto</a>
-                        <a class="dropdown-item" onClick="edit('${row[0]}')" href="#">Editar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="#">Eliminar</a>
+                        <a class="dropdown-item" onClick="showDetails('${row[4]}')" href="javascript:void(0)">Mostrar Datos de Contacto</a>
+                        <a class="dropdown-item" onClick="edit('${row[4]}')" href="javascript:void(0)">Editar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="javascript:void(0)">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -182,11 +252,90 @@
 
       $('#guardar').submit(function(e) {
         e.preventDefault()
-
         toggleLoading(true);
-
         url = $(this).attr('action');
         data = $(this).serializeArray();
+
+        nombre = $("#guardar #nombre").val();
+        if (!onlyLetters(nombre)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Nombre de estudiante no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        apellido = $("#guardar #apellido").val();
+        if (!onlyLetters(apellido)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Apellido no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        telefono = $("#guardar #telefono").val();
+        if (!phoneNumbers(telefono)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Numero de telefono no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        cedula = $("#guardar #cedula").val();
+        if (!onlyNumbers(cedula)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Cedula no valida",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        email = $("#guardar #email").val();
+        if (!onlyEmail(email)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "email no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        contrasena = $("#guardar #contrasena").val();
+        if (contrasena.length < 8 || contrasena.length > 25) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "La contrasena debe tener entre 8 y 20 caracteres",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
         $.ajax({
           type: "POST",
           url: url,
@@ -199,40 +348,151 @@
               title: error.responseText,
               showConfirmButton: false,
               toast: true,
-              timer: 2000
+              timer: 6000
             })
 
           },
           success: function(data, status) {
             table.ajax.reload();
             // usar sweetalerts
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'success',
+              title: 'Profesor guardado con exito',
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
             document.getElementById("guardar").reset();
             // actualizar tabla
-            toggleLoading(false)
+            toggleLoading(false, '#guardar')
+            $('#crear').modal('hide');
           },
         });
 
       })
 
+      $('#actualizar').submit(function(e) {
+        e.preventDefault()
+        toggleLoading(true, '#actualizar');
+        url = $(this).attr('action');
+        data = $(this).serializeArray();
 
-      function edit(id) {
-        alert(`Editing ${id}`)
-      }
+        nombre = $("#actualizar #nombre").val();
+        if (!onlyLetters(nombre)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Nombre de estudiante no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        apellido = $("#actualizar #apellido").val();
+        if (!onlyLetters(apellido)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Apellido no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        telefono = $("#actualizar #telefono").val();
+        if (!phoneNumbers(telefono)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Numero de telefono no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        cedula = $("#actualizar #cedula").val();
+        if (!onlyNumbers(cedula)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Cedula no valida",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        email = $("#actualizar #email").val();
+        if (!onlyEmail(email)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "email no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          error: function(error, status) {
+            toggleLoading(false, '#actualizar')
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'error',
+              title: error.responseText,
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
+
+          },
+          success: function(data, status) {
+            table.ajax.reload();
+            Swal.fire({
+              position: 'bottom-end',
+              icon: 'success',
+              title: 'Profesor editado con exito',
+              showConfirmButton: false,
+              toast: true,
+              timer: 3500
+            })
+            // actualizar tabla
+            toggleLoading(false, '#actualizar')
+            $('#editar').modal('hide')
+          },
+        });
+
+      })
 
       function remove(id) {
         alert(`Removing ${id}`)
       }
 
       // TOGGLE BUTTON AND SPINNER
-      function toggleLoading(show) {
+      function toggleLoading(show, form = '') {
         if (show) {
-          $('#guardarLoading').show();
-          $('#guardarSubmit').hide();
+          $(`${form} #loading`).show();
+          $(`${form} #submit`).hide();
         } else {
-          $('#guardarLoading').hide();
-          $('#guardarSubmit').show();
+          $(`${form} #loading`).hide();
+          $(`${form} #submit`).show();
         }
-
       }
     })
 
@@ -260,6 +520,60 @@
           $('#datos').modal('show')
           $('#datosContacto').find('#telefono').val(datos.telefono)
           $('#datosContacto').find('#direccion').val(datos.direccion)
+        },
+      });
+    }
+
+    function onlyLetters(str) {
+      return /^[A-Za-zñáéíóúü ]*$/.test(str);
+    }
+
+    function phoneNumbers(number) {
+      return /^[04][0-9]{10}$/.test(number);
+    }
+
+    function onlyNumbers(number) {
+      return /^[0-9]{8}$/.test(number);
+    }
+
+    function onlyEmail(email) {
+      return /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(email)
+
+    }
+
+
+    function renderUpdateForm(data) {
+      $('#editar').modal('show')
+      // seleccionar trayecto
+      $(`#actualizar #cedula`).val(data.profesor.cedula);
+      $(`#actualizar #cedulaEdit`).val(data.profesor.cedula);
+      $(`#actualizar #nombre`).val(data.profesor.nombre);
+      $(`#actualizar #apellido`).val(data.profesor.apellido);
+      $(`#actualizar #direccion`).val(data.profesor.direccion);
+      $(`#actualizar #telefono`).val(data.profesor.telefono);
+      $(`#actualizar #email`).val(data.profesor.email);
+
+    }
+
+    function edit(id) {
+      $.ajax({
+        type: "POST",
+        url: editUrl,
+        data: {
+          'codigo': id
+        },
+        error: function(error, status) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+        },
+        success: function(data, status) {
+          renderUpdateForm(JSON.parse(data))
         },
       });
     }

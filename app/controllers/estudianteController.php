@@ -136,7 +136,100 @@ class estudianteController extends controller
       $date = date('d-m-Y');
       $estudiante =  $this->estudiante->findNotesByStudents($id);
       if (isEmpty($estudiante)) {
-        echo json_encode('No hay notas de estudiantes');
+      $dompdf = new Dompdf();
+      $name_comprobante = 'Calificacion';
+
+        $html = '<!DOCTYPE html>
+        <html lang="es">
+        
+        <head>
+            <meta charset="UTF-8">
+        
+            <title>Reporte de Ventas</title>
+            <link rel="stylesheet" href="{{link_css}}">
+        </head>
+        
+        <body>
+            <div class="container">
+              <h1 class="center">No hay notas del estudiante</h1>
+          </div>
+      
+          </body>
+          <style>
+              html {
+                  margin-left: 22px;
+                  margin-right: 22px;
+                  margin-top: 28px;
+                  margin-bottom: 28px;
+              }
+          
+              *,
+              ::before,
+              ::after {
+                  margin: 0px;
+                  padding: 0px;
+                  box-sizing: border-box;
+              }
+          
+              body {
+                  font-size: 12px;
+                  font-weight: 400;
+                  color: #212529;
+              }
+          
+              body,
+              html {
+                  font-family: sans-serif;
+              }
+          
+              table {
+                  width: 100%;
+              }
+          
+              .th {
+                  font-size: 14px;
+                  color: #fff;
+                  line-height: 1.4;
+                  background-color: #005abd;
+                  /*#6c7ae0 */
+                  padding-top: 10px;
+                  padding-bottom: 10px;
+              }
+          
+              .head {
+                  /* padding-top: 12px;
+              padding-bottom: 12px; */
+              }
+          
+              .center {
+                  text-align: center;
+              }
+          
+              p {
+                  margin-top: 0;
+                  margin-bottom: 0;
+              }
+          
+              ul {
+                  list-style-type: none;
+              }
+          
+              .tablepe>tr:nth-child(even) {
+                  background-color: #f8f6ff;
+              }
+          
+              .tablepe {
+                  border-collapse: collapse;
+              }
+          
+          </style>
+          
+          </html>';
+          $dompdf->loadHtml(utf8_decode($html));
+          $dompdf->render();
+          $dompdf->stream($name_comprobante, array("Attachment" => false));
+          http_response_code(200);
+          echo json_encode($id);
         exit();
       }
       $fase = $estudiante[0]["fase_id"];

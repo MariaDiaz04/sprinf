@@ -300,7 +300,7 @@
             Swal.fire({
               position: 'bottom-end',
               icon: 'success',
-              title: 'Estudiante gurdado con exito',
+              title: 'Estudiante guardado con exito',
               showConfirmButton: false,
               toast: true,
               timer: 2000
@@ -380,7 +380,7 @@
           Swal.fire({
             position: "bottom-end",
             icon: "error",
-            title: "email no valida",
+            title: "email no valido",
             showConfirmButton: false,
             toast: true,
             timer: 2000,
