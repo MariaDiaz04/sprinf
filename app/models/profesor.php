@@ -57,7 +57,6 @@ class profesor extends model
   public function findData(string $tabla,string $campo, string $dato)
   {
     $profesor = $this->select($tabla, [[$campo, '=',  "'$dato'"]]);
-   // return var_dump($profesor);
     return !$profesor ? [] : $profesor;
   }
 
@@ -135,6 +134,28 @@ class profesor extends model
       return $this->codigo;
     }
   }
+
+  
+    /**
+     * Transaccion para el borrado de secciones
+     *
+     * @return String
+     */
+    function deleteTransaction($codigo,$usuario_id): bool
+    {
+        try {
+            parent::beginTransaction();
+            // actualizar tabla materia
+            $this->delete('profesor', [['codigo', '=', '"' . $codigo . '"']]);
+            $this->delete('persona', [['usuario_id', '=',  $usuario_id ]]);
+            $this->delete('usuario', [['id', '=',  $usuario_id ]]);
+            parent::commit();
+            return true;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return false;
+        }
+    }
 
   /**
    * generarSSP

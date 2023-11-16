@@ -192,20 +192,20 @@ class profesorController extends controller
   }
 
 
-  /*  public function delete($request)
+  public function delete($request)
   {
 
     try {
       $cedula = $request->get('cedula');
 
-      $estudiante = $this->estudiante->findByCedula($cedula);
-      $estudent_id =  $estudiante['id'];
-      $usuario_id =  $estudiante['usuario_id'];
+      $profesor = $this->profesor->findByCodigo($cedula);
+      $codigo = $profesor->fillable['codigo'];
+      $usuario_id = $profesor->fillable['usuario_id'];
+    
       // verificar que no cuente con incripciones ya creadas
-      $this->checkIntegrante($estudent_id, 'eliminar');
-      $this->checkInscripcion($estudent_id, 'eliminar');
+      $this->checkDataDelete($codigo,'eliminar');
       // realizar eliminacion
-      $result = $this->estudiante->deleteTransaction($estudent_id, $usuario_id);
+      $result = $this->profesor->deleteTransaction($codigo, $usuario_id);
       return var_dump($result);
       if (!$result) throw new Exception('Error inesperado al borrar el estudiante.');
       http_response_code(200);
@@ -214,7 +214,7 @@ class profesorController extends controller
       http_response_code(500);
       echo json_encode($e->getMessage());
     }
-  } */
+  }
 
   function ssp(Request $query): void
   {
@@ -226,7 +226,8 @@ class profesorController extends controller
       echo json_encode($e->getMessage());
     }
   }
-  function checkData(string $cedula, string $email, string $action): bool
+
+  function checkData(string $cedula , string $email ,string $action): bool
   {
     // verificar que no cuente con insripciones
     if (isset($cedula)) {
@@ -247,9 +248,47 @@ class profesorController extends controller
         return true;
       }
     }
-    return true;
+    if (isset($codigo)) {
+      $profesores = $this->profesor->findData('detalles_proyecto', 'codigo', $codigo);
+      if (count($profesores) > 0) {
+        foreach ($profesores as $profesor) {
+          if (intval($profesor) > 0) throw new Exception('No se puede ' . $action . ' el profesor por que ya esta asignado a un proyecto');
+        }
+        return true;
+      } else {
+        $profesores = $this->profesor->findData('inscripcion', 'codigo', $codigo);
+        if (count($profesores) > 0) {
+          foreach ($profesores as $profesor) {
+            if (intval($profesor) > 0) throw new Exception('No se puede ' . $action . '  el profesor por que ya esta asignado a una materia');
+          }
+          return true;
+        }
+      }
+      return true;
+    }
   }
 
+  function checkDataDelete( string $codigo , string $action): bool
+  {
+    if (isset($codigo)) {
+      $profesores = $this->profesor->findData('detalles_proyecto', 'tutor_in', $codigo);
+      if (count($profesores) > 0) {
+        foreach ($profesores as $profesor) {
+          if (intval($profesor) > 0) throw new Exception('No se puede ' . $action . ' el profesor por que ya esta asignado a un proyecto');
+        }
+        return true;
+      } else {
+        $profesores = $this->profesor->findData('inscripcion', 'profesor_id', $codigo);
+        if (count($profesores) > 0) {
+          foreach ($profesores as $profesor) {
+            if (intval($profesor) > 0) throw new Exception('No se puede ' . $action . '  el profesor por que ya esta asignado a una materia');
+          }
+          return true;
+        }
+      }
+      return true;
+    }
+  }
   public function E501()
   {
 

@@ -212,6 +212,7 @@
   <script>
     let showDetailsUrl = "<?= APP_URL . $this->Route('profesores/showDetails') ?>";
     let editUrl = "<?= APP_URL . $this->Route('profesores/edit') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('profesores/delete') ?>";
 
     $(document).ready(() => {
 
@@ -240,7 +241,7 @@
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
                         <a class="dropdown-item" onClick="showDetails('${row[4]}')" href="javascript:void(0)">Mostrar Datos de Contacto</a>
                         <a class="dropdown-item" onClick="edit('${row[4]}')" href="javascript:void(0)">Editar</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="javascript:void(0)">Eliminar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="javascript:void(0)">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -480,9 +481,6 @@
 
       })
 
-      function remove(id) {
-        alert(`Removing ${id}`)
-      }
 
       // TOGGLE BUTTON AND SPINNER
       function toggleLoading(show, form = '') {
@@ -576,5 +574,52 @@
           renderUpdateForm(JSON.parse(data))
         },
       });
+    }
+
+    function remove(id) {
+
+      Swal.fire({
+        title: "¿Seguro que desea eliminar el profesor?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Continuar",
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            type: "POST",
+            url: deleteUrl,
+            data: {
+              'cedula': id
+            },
+            error: function(error, status) {
+              Swal.fire({
+                position: 'bottom-end',
+                icon: 'error',
+                title: error.responseText,
+                showConfirmButton: false,
+                toast: true,
+                timer: 3000
+              })
+
+            },
+            success: function(data, status) {
+              console.log(data);
+              Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: 'profesor borrado con exito',
+                showConfirmButton: false,
+                toast: true,
+                timer: 1500
+              })
+              $('#example').DataTable().ajax.reload();
+            },
+          });
+        }
+      });
+
     }
   </script>

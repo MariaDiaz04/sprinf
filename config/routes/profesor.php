@@ -61,6 +61,14 @@ $listaDeRutas['/profesorer_actualizar'] = new Route(
   ]
 );
 
+$listaDeRutas['/profesorer_delete'] = new Route(
+
+  '/profesores/delete',
+  [
+    'controller' => profesorController::class,
+    'method' => 'delete',
+  ]
+);
 
 $listaDeRutas['profesor_ssp'] = new Route(
 
