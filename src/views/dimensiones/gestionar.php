@@ -4,7 +4,7 @@
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
         <div><span class="text-muted font-weight-light">Baremos / <?= $unidadCurricular->nombre_trayecto ?> </span>/ <?= $unidadCurricular->nombre ?> - <b><?= $unidadCurricular->ponderado_baremos ?>%</b></div>
 
-        <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+        <a class="btn btn-primary btn-round d-block flex-shrink-0" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
       </h4>
     </div>

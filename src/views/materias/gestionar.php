@@ -15,7 +15,7 @@
           <div><span class="text-muted font-weight-light">Unidades Curriculares / <?= $trayecto->nombre ?> </span>/ Gestión</div>
           <?php if ($permisos->crear == 1) : ?>
 
-            <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+            <a class="btn btn-primary btn-round d-block flex-shrink-0" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
           <?php endif; ?>
 
         </h4>

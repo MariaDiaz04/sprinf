@@ -13,7 +13,8 @@
 
     </h6>
     <div class="card-body px-3 pt-3">
-      <table class="table table-striped">
+      <h3 class="mb-4">Información</h3>
+      <table class="table table-striped mb-4">
         <tr>
           <th>Fase</th>
           <th>Ponderado</th>
@@ -28,6 +29,7 @@
           <?php endforeach; ?>
         </tbody>
       </table>
+      <h3 class="mb-4">Gestión</h3>
       <table id="example" class="table table-striped" style="width:100%">
         <thead class="thead-dark">
           <tr>
