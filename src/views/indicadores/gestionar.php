@@ -118,8 +118,7 @@
               showConfirmButton: false,
               toast: true,
               timer: 1000,
-            })
-            // .then(() => location.reload());
+            }).then(() => location.reload());
             document.getElementById("guardar").reset()
             $('#crear').modal('hide')
             toggleLoading(false)
@@ -127,50 +126,7 @@
         });
       })
 
-      $('#guardar').submit(function(e) {
-        e.preventDefault()
 
-        toggleLoading(true);
-
-        url = $(this).attr('action');
-        data = $(this).serializeArray();
-
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: data,
-          error: function(error, status) {
-            toggleLoading(false)
-            Swal.fire({
-              position: "bottom-end",
-              icon: "error",
-              title: status + ": " + error.error.message,
-              showConfirmButton: false,
-              toast: true,
-              timer: 2000,
-            });
-
-          },
-          success: function(data, status) {
-            table.ajax.reload();
-            // usar sweetalerts
-            // document.getElementById("guardar").reset();
-            // actualizar tabla
-            Swal.fire({
-              position: "bottom-end",
-              icon: "success",
-              title: "Creación Exitosa",
-              showConfirmButton: false,
-              toast: true,
-              timer: 1000,
-            })
-            // .then(() => location.reload());
-            document.getElementById("guardar").reset()
-            $('#crear').modal('hide')
-            toggleLoading(false)
-          },
-        });
-      })
 
       $('#actualizarIndicador').submit(function(e) {
         e.preventDefault()
@@ -208,8 +164,7 @@
               showConfirmButton: false,
               toast: true,
               timer: 1000,
-            })
-            // .then(() => location.reload());
+            }).then(() => location.reload());
             document.getElementById("guardar").reset()
             $('#actualizar').modal('hide')
             toggleLoading(false)

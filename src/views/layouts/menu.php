@@ -132,7 +132,7 @@
           <div data-i18n="Analytics">Baremos</div>
         </a>
       </li> -->
-        <li class="menu-item <?= in_array($this->currentPath(), ['baremos', 'dimensiones']) ? 'open' : '' ?>">
+        <li class="menu-item <?= in_array($this->currentPath(), ['baremos', 'dimensiones', 'indicadores']) ? 'open' : '' ?>">
           <a href="javascript:void(0)" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-poll"></i>
             <div data-i18n="Analytics">Baremos</div>
@@ -279,7 +279,7 @@
           <div data-i18n="Analytics">Baremos</div>
         </a>
       </li> -->
-        <li class="menu-item <?= in_array($this->currentPath(), ['baremos']) ? 'open' : '' ?>">
+        <li class="menu-item <?= in_array($this->currentPath(), ['baremos', 'dimensiones', 'indicadores']) ? 'open' : '' ?>">
           <a href="javascript:void(0)" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-poll"></i>
             <div data-i18n="Analytics">Baremos</div>

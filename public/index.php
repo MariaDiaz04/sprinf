@@ -67,9 +67,9 @@ require __DIR__ . '/../config/routes/materia.php';          ## materia
 require __DIR__ . '/../config/routes/inscripcion.php';      ## inscripcion
 
 // baremos
+require __DIR__ . '/../config/routes/dimension.php';         ## proyecto
 require __DIR__ . '/../config/routes/baremos.php';          ## baremos
 require __DIR__ . '/../config/routes/proyecto.php';         ## proyecto
-require __DIR__ . '/../config/routes/dimension.php';         ## proyecto
 
 // seguridad
 require __DIR__ . '/../config/routes/bitacora.php';         ## bitacora

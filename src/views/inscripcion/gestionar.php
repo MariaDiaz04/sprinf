@@ -194,7 +194,8 @@
               showConfirmButton: false,
               toast: true,
               timer: 1000,
-            })
+            }).then(() => location.reload())
+            $('#crear').modal('hide')
           },
         });
 
@@ -300,10 +301,10 @@
         console.log(inscripcion)
         let evaluacion =
           `<div class="form-group row mb-2">
-          <input type="hidden" name="inscripcion[${counter}][id]" value="${inscripcion.id}">
-            <label for="calificacion" class="col-sm-2 col-form-label">${inscripcion.unidad_curricular_id}</label>
+          <input type="hidden" name="inscripcion[${counter}][id]" value="${inscripcion.id_inscripcion}">
+            <label for="calificacion" class="col-sm-2 col-form-label">${inscripcion.nombre_fase}</label>
             <div class="col-sm-10">
-              <input type="number" name="inscripcion[${counter}][calificacion]" class="form-control" id="calificacion" placeholder="0" ${(inscripcion.calificacion != null ? 'value="'+ inscripcion.calificacion + '"' : '')}>
+              <input type="number" min="0" step="0.01" name="inscripcion[${counter}][calificacion]" class="form-control" id="calificacion" placeholder="0" ${(inscripcion.calificacion != null ? 'value="'+ inscripcion.calificacion + '"' : '')}>
             </div>
           </div>`;
 

@@ -73,7 +73,7 @@ class inscripcion extends model
    */
   public function findByMateria(string $estudiante_id, string $codigo)
   {
-    $inscripcion = $this->selectOne('inscripcion', [['unidad_curricular_id', '=',  '"' . $codigo . '"'], ['estudiante_id', '=',  '"' . $estudiante_id . '"']]);
+    $inscripcion = $this->selectOne('detalles_inscripciones_malla', [['unidad_curricular_id', '=',  '"' . $codigo . '"'], ['estudiante_id', '=',  '"' . $estudiante_id . '"']]);
     return !$inscripcion ? [] : $inscripcion;
   }
 
