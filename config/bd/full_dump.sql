@@ -1682,7 +1682,11 @@ SELECT
   fase.nombre as nombre_fase, 
   fase.codigo as codigo_fase, 
   count(integrante_proyecto.id) as integrantes,
-  periodo.fecha_inicio, 
+  sum(CASE
+    WHEN integrante_proyecto.estatus = 0 THEN 1
+    ELSE 0
+  END) AS reprobados,
+  periodo.fecha_inicio,
   periodo.fecha_cierre
 FROM proyecto
 INNER JOIN fase ON fase.codigo = proyecto.fase_id 
