@@ -719,6 +719,38 @@ class proyectoController extends controller
         }
     }
 
+    function reprobados(Request $query, $idProyecto): void
+    {
+        try {
+            http_response_code(200);
+            echo json_encode($this->proyecto->findIntegrantesReprobados($idProyecto));
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    function aprobar(Request $integrantes): void
+    {
+        try {
+            $integrantes = $integrantes->request->all()['integrantes'];
+            foreach ($integrantes as $integrante) {
+                if (isset($integrante['aprueba'])) {
+                    $this->proyecto->actualizarEstatusIntegrante($integrante['id'], $integrante['aprueba']);
+                }
+            }
+            http_response_code(200);
+            echo json_encode(true);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ]]);
+        }
+    }
+
     function ssp(Request $query): void
     {
         try {

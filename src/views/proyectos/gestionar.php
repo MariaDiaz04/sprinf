@@ -84,6 +84,7 @@
   include 'modules/crear.php';
   include 'modules/historico.php';
   include 'modules/actualizar.php';
+  include 'modules/reprobados.php';
   ?>
   <script src="<?= APP_URL ?>assets/js/jquery.transfer.js"></script>
   <script>
@@ -96,6 +97,7 @@
     let fetchStudentsUrl = "<?= APP_URL . $this->Route('proyectos/pending-students') ?>";
     let noteUrl = "<?= APP_URL . $this->Route('proyectnotes/pdf') ?>";
     let deleteUrl = "<?= APP_URL . $this->Route('proyectos/borrar') ?>";
+    let reprobadosUrl = "<?= APP_URL . $this->Route('proyectos/reprobados/') ?>";
 
 
 

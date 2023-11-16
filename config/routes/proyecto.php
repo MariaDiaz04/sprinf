@@ -75,6 +75,20 @@ $listaDeRutas['proyectos_ssp'] = new Route(
   ]
 );
 
+$listaDeRutas['proyectos_reprobados'] = new Route(
+  '/proyectos/reprobados/{idProyecto}',
+  [
+    'controller' => proyectoController::class,
+    'method' => 'reprobados',
+  ]
+);
+$listaDeRutas['proyectos_aprobar'] = new Route(
+  '/proyectos/aprobar',
+  [
+    'controller' => proyectoController::class,
+    'method' => 'aprobar',
+  ]
+);
 
 // EVALUACION DE PROYECTO
 

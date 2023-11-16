@@ -450,7 +450,7 @@ class proyecto extends model
         $query = $this->prepare("SELECT * FROM detalles_integrantes WHERE proyecto_id = :id AND estatus = 0");
         $query->bindParam(":id", $proyecto_id);
         $query->execute();
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
         return ($result) ? $result : [];
     }
 

@@ -113,7 +113,7 @@ $(document).ready(function (e) {
                     }" target="_blank">Notas</a>
                     ${
                       row[8] > 0
-                        ? `<a class="dropdown-item" onClick="editarIntegrantes('${row[0]}')" href="#">Gestionar Reprobados</a>`
+                        ? `<a class="dropdown-item" onClick="reprobados('${row[0]}')" href="#">Gestionar Reprobados</a>`
                         : ""
                     }
                     ${
@@ -480,6 +480,50 @@ $(document).ready(function (e) {
     }
   });
 
+  $("#reprobadosActualizar").submit(function (e) {
+    e.preventDefault();
+
+    toggleLoading(true);
+
+    url = $(this).attr("action");
+    data = $(this).serializeArray();
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      error: function (error, status) {
+        toggleLoading(false);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "error",
+          title: status + ": " + error.error.message,
+          showConfirmButton: false,
+          toast: true,
+          timer: 2000,
+        });
+      },
+      success: function (data, status) {
+        table.ajax.reload();
+        // usar sweetalerts
+        // document.getElementById("guardar").reset();
+        // actualizar tabla
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Actualización Exitosa",
+          showConfirmButton: false,
+          toast: true,
+          timer: 1000,
+        });
+        // .then(() => location.reload());
+        document.getElementById("reprobadosActualizar").reset();
+        $("#reprobadosModal").modal("hide");
+        toggleLoading(false);
+      },
+    });
+  });
+
   // TOGGLE BUTTON AND SPINNER
   function toggleLoading(show, form = "") {
     if (show) {
@@ -519,6 +563,45 @@ async function obtenerProyecto(id) {
     console.error(error);
     return false;
   }
+}
+
+async function obtenerReprobados(id) {
+  let result;
+  try {
+    result = await $.ajax({
+      url: reprobadosUrl + id,
+      type: "GET",
+    });
+    return JSON.parse(result);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+async function reprobados(id) {
+  let reprobados = await obtenerReprobados(id);
+
+  $("#reprobadosContainer").empty();
+
+  reprobados.forEach((reprobado) => {
+    let check = `
+    <div class="col-12">
+    <input type="hidden" name="integrantes[${reprobado.id}][id]" value="${
+      reprobado.id
+    }">
+    <div class="form-check form-switch">
+      <label class="form-check-label" for="switch-${reprobado.id}">${
+      reprobado.cedula + " - " + reprobado.nombre + " " + reprobado.apellido
+    }</label>
+      <input class="form-check-input" name="integrantes[${
+        reprobado.id
+      }][aprueba]" value="1" type="checkbox" id="switch-${reprobado.id}">
+    </div>
+  </div>`;
+    $("#reprobadosContainer").append(check);
+  });
+
+  $("#reprobadosModal").modal("show");
 }
 
 async function editarIntegrantes(id) {
