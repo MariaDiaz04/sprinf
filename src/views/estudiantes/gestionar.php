@@ -13,7 +13,7 @@
   <div class="card">
     <h6 class="card-header bg-primary text-white">Periodos</h6>
     <div class="card-body px-3 pt-3">
-      <table id="example" class="display" style="width:100%">
+      <table id="example" class="table" style="width:100%">
         <thead>
           <tr>
             <th>Cedula</th>
@@ -91,9 +91,9 @@
     </div>
   </div>
 
-<!-- MODAL ACTUALIZAR -->
+  <!-- MODAL ACTUALIZAR -->
 
- <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editarLabel" aria-hidden="true">
+  <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editarLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -228,13 +228,13 @@
             table.ajax.reload();
             // usar sweetalerts
             Swal.fire({
-                position: 'bottom-end',
-                icon: 'success',
-                title: 'Estudiante gurdado con exito',
-                showConfirmButton: false,
-                toast: true,
-                timer: 2000
-              })
+              position: 'bottom-end',
+              icon: 'success',
+              title: 'Estudiante gurdado con exito',
+              showConfirmButton: false,
+              toast: true,
+              timer: 2000
+            })
             document.getElementById("guardar").reset();
             // actualizar tabla
             toggleLoading(false, '#guardar')
@@ -333,7 +333,7 @@
       });
     }
 
-    
+
     function renderUpdateForm(data) {
       $('#editar').modal('show')
       // seleccionar trayecto

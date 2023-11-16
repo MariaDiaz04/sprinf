@@ -12,7 +12,7 @@
     <div>
       <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
         <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-          <div><span class="text-muted font-weight-light">Materias / <?= $trayecto->nombre ?> </span>/ Gestión</div>
+          <div><span class="text-muted font-weight-light">Unidades Curriculares / <?= $trayecto->nombre ?> </span>/ Gestión</div>
           <?php if ($permisos->crear == 1) : ?>
 
             <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
@@ -23,9 +23,9 @@
     </div>
 
     <div class="card">
-      <h6 class="card-header bg-primary text-white">Materias</h6>
+      <h6 class="card-header bg-primary text-white">Unidades Curriculares</h6>
       <div class="card-body px-3 pt-3">
-        <table id="example" class="display" style="width:100%">
+        <table id="example" class="table" style="width:100%">
           <thead>
             <tr>
               <th>Trayecto</th>
@@ -47,7 +47,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nueva Materia</h5>
+          <h5 class="modal-title" id="crearLabel">Nueva Unidad Curricular</h5>
 
         </div>
         <form action="<?= APP_URL . $this->Route('materias/guardar') ?>" method="post" id="guardar">
@@ -138,7 +138,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Actualizar Materia</h5>
+          <h5 class="modal-title" id="crearLabel">Actualizar Unidad Curricular</h5>
 
         </div>
         <form action="<?= APP_URL . $this->Route('materias/update') ?>" method="post" id="actualizar">
@@ -313,7 +313,7 @@
             Swal.fire({
               position: 'bottom-end',
               icon: 'success',
-              title: 'Materia creada con exito',
+              title: 'Unidad Curricular creada con exito',
               showConfirmButton: false,
               toast: true,
               timer: 1500
@@ -358,7 +358,7 @@
             Swal.fire({
               position: 'bottom-end',
               icon: 'success',
-              title: 'Materia editada con exito',
+              title: 'Unidad Curricular editada con exito',
               showConfirmButton: false,
               toast: true,
               timer: 1500
@@ -453,7 +453,7 @@
           Swal.fire({
             position: 'bottom-end',
             icon: 'success',
-            title: 'Materia borrada con exito',
+            title: 'Unidad Curricular borrada con exito',
             showConfirmButton: false,
             toast: true,
             timer: 1500

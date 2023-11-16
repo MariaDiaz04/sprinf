@@ -96,7 +96,7 @@
         <li class="menu-item <?= in_array('materias', $this->fullPath()) ? 'open' : '' ?>">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-book"></i>
-            <div data-i18n="Authentications">Materias</div>
+            <div data-i18n="Authentications">Unidades Curriculares</div>
           </a>
           <ul class="menu-sub">
             <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR1', $this->fullPath()) ? 'active' : '' ?>">
@@ -243,7 +243,7 @@
         <li class="menu-item <?= in_array('materias', $this->fullPath()) ? 'open' : '' ?>">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-book"></i>
-            <div data-i18n="Authentications">Materias</div>
+            <div data-i18n="Authentications">Unidades Curriculares</div>
           </a>
           <ul class="menu-sub">
             <li class="menu-item <?= in_array('materias', $this->fullPath()) && in_array('TR1', $this->fullPath()) ? 'active' : '' ?>">

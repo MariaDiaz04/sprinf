@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Baremos / <?= $unidadCurricular->nombre_trayecto ?> </span>/ <?= $unidadCurricular->nombre ?></div>
+        <div><span class="text-muted font-weight-light">Baremos / <?= $unidadCurricular->nombre_trayecto ?> </span>/ <?= $unidadCurricular->nombre ?> - <b><?= $unidadCurricular->ponderado_baremos ?>%</b></div>
 
         <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
@@ -13,7 +13,7 @@
   <div class="card">
     <h6 class="card-header bg-primary text-white">Dimensiones</h6>
     <div class="card-body px-3 pt-3">
-      <table id="example" class="display" style="width:100%">
+      <table id="example" class="table" style="width:100%">
         <thead>
           <tr>
             <th>ID</th>

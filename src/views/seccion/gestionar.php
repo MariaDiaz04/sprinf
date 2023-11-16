@@ -13,7 +13,7 @@
   <div class="card">
     <h6 class="card-header bg-primary text-white">Seccion</h6>
     <div class="card-body px-3 pt-3">
-      <table id="example" class="display" style="width:100%">
+      <table id="example" class="table" style="width:100%">
         <thead>
           <tr>
             <th>codigo</th>
@@ -107,15 +107,15 @@
                     <div class="col-lg-6">
                       <label class="form-label" for="trayecto_id">Trayectos *</label>
                       <select class="form-select" name="trayecto_id" id="trayecto_idEdit">
-                     <?php foreach ($trayectos as $trayecto) : ?>
+                        <?php foreach ($trayectos as $trayecto) : ?>
                           <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre" ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Código *</label>
-                      <input type="text" class="form-control mb-1" placeholder="IN...." pattern="([A-Z]{2,3})([1-9]){4}$"  id="codigoEdit" autocomplete="off" disabled>
-                      <input type="hidden"  name="codigo" id="codigoEditTwo" >
+                      <input type="text" class="form-control mb-1" placeholder="IN...." pattern="([A-Z]{2,3})([1-9]){4}$" id="codigoEdit" autocomplete="off" disabled>
+                      <input type="hidden" name="codigo" id="codigoEditTwo">
                     </div>
                   </div>
                   <div class="row form-group">
@@ -318,10 +318,10 @@
 
       })
 
-   
 
-        // TOGGLE BUTTON AND SPINNER
-        function toggleLoading(show, form = '') {
+
+      // TOGGLE BUTTON AND SPINNER
+      function toggleLoading(show, form = '') {
         if (show) {
           $(`${form} #loading`).show();
           $(`${form} #submit`).hide();
@@ -329,7 +329,7 @@
           $(`${form} #loading`).hide();
           $(`${form} #submit`).show();
         }
-      } 
+      }
 
     })
 
@@ -367,7 +367,7 @@
     }
 
     function remove(id) {
-        $.ajax({
+      $.ajax({
         type: "POST",
         url: deleteUrl,
         data: {
@@ -397,6 +397,5 @@
           $('#example').DataTable().ajax.reload();
         },
       });
-      }
-   
+    }
   </script>

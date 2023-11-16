@@ -1690,12 +1690,14 @@ SELECT
   materias.cursable,
   count(malla_curricular.codigo) as count_malla,
   count(dimension.id) as dimensiones,
+  round(sum(indicadores.ponderacion)) as ponderado,
   count(inscripcion.id) as inscripciones
 FROM materias
 LEFT JOIN malla_curricular on malla_curricular.materia_id = materias.codigo
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN indicadores on indicadores.dimension_id = dimension.id
 LEFT OUTER JOIN inscripcion ON inscripcion.unidad_curricular_id = malla_curricular.codigo
 
 GROUP BY materias.codigo

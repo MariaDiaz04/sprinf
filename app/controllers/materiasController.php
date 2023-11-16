@@ -84,7 +84,7 @@ class materiasController extends controller
             // ejecutar transacción de insert
             $codigo = $this->MATERIAS->insertTransaction();
 
-            if (empty($codigo)) throw new Exception('Error inesperado al crear materia.');
+            if (empty($codigo)) throw new Exception('Error inesperado al crear unidad curricular.');
 
             http_response_code(200);
             echo json_encode($codigo);
@@ -146,7 +146,7 @@ class materiasController extends controller
 
             $codigo = $this->MATERIAS->updateTransaction();
 
-            if (empty($codigo)) throw new Exception('Error inesperado al actualizar materia.');
+            if (empty($codigo)) throw new Exception('Error inesperado al actualizar unidad curricular.');
 
             http_response_code(200);
             echo json_encode($codigo);
@@ -168,7 +168,7 @@ class materiasController extends controller
 
             $result = $this->MATERIAS->deleteTransaction($codigo);
 
-            if (!$result) throw new Exception('Error inesperado al borrar materia.');
+            if (!$result) throw new Exception('Error inesperado al borrar unidad curricular.');
 
             http_response_code(200);
             echo json_encode($codigo);
@@ -237,8 +237,8 @@ class materiasController extends controller
         $detallesMallas = $this->MATERIAS->findMalla($codigo);
 
         foreach ($detallesMallas as $malla) {
-            if (intval($malla['dimensiones']) > 0) throw new Exception("No puede $action datos de materia que cuenta dimensiones de proyecto");
-            if (intval($malla['inscripciones']) > 0) throw new Exception("No puede $action datos de materia que cuenta incripciones ya creadas");
+            if (intval($malla['dimensiones']) > 0) throw new Exception("No puede $action datos de unidad curricular que cuenta dimensiones de proyecto");
+            if (intval($malla['inscripciones']) > 0) throw new Exception("No puede $action datos de unidad curricular que cuenta incripciones ya creadas");
         }
 
 

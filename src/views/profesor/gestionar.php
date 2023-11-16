@@ -13,7 +13,7 @@
   <div class="card">
     <h6 class="card-header bg-primary text-white">Profesores</h6>
     <div class="card-body px-3 pt-3">
-      <table id="example" class="display" style="width:100%">
+      <table id="example" class="table" style="width:100%">
         <thead>
           <tr>
             <th>Cedula</th>

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Bcrypt\Bcrypt;
 
 use Model\baremos;
-use Model\estudiante;
+use Model\fase;
 use Model\tutor;
 use Model\trayectos;
 use Exception;
@@ -17,21 +17,24 @@ class baremosController extends controller
 {
 
   public $baremos;
-  public $trayectos;
+  public $fase;
   public $materias;
 
   function __construct()
   {
     $this->tokenExist();
     $this->baremos = new baremos();
+    $this->fase = new fase();
   }
 
   public function index(Request $dimension, $idTrayecto)
   {
-
-
+    $detallesFase = $this->fase->getByTrayecto($idTrayecto);
+    // echo json_encode($detallesFase);
+    // exit();
     return $this->view('baremos/gestionar', [
       'idTrayecto' => $idTrayecto,
+      'fases' => $detallesFase,
     ]);
   }
 

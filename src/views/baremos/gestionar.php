@@ -2,15 +2,33 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Baremos </span>/ Gestión</div>
+        <div><span class="text-muted font-weight-light">Baremos </span>/ Gestión </div>
       </h4>
     </div>
   </div>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white">Baremos</h6>
+    <h6 class="card-header bg-primary text-white">
+      Baremos
+
+    </h6>
     <div class="card-body px-3 pt-3">
-      <table id="example" class="stripe" style="width:100%">
+      <table class="table">
+        <tr>
+          <th>Fase</th>
+          <th>Ponderado</th>
+        </tr>
+        <tbody>
+
+          <?php foreach ($fases as $fase) : ?>
+            <tr>
+              <td> <?= $fase->nombre_fase ?></td>
+              <td><b><?= $fase->ponderado_baremos ?>%</b></td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+      <table id="example" class="table" style="width:100%">
         <thead>
           <tr>
             <th>Unidad Curricular</th>
