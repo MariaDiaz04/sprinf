@@ -15,7 +15,7 @@
           <tr>
             <th>Unidad Curricular</th>
             <th>Fase</th>
-            <th>Ponderado</th>
+            <th>Ponderado <b>(%)</b></th>
             <th>Código</th>
             <th>Acción</th>
           </tr>

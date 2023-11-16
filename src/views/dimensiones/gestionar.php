@@ -22,6 +22,7 @@
             <th>Fase</th>
             <th>Trayecto</th>
             <th>Tipo</th>
+            <th>Ponderado <b>(%)</b></th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -84,7 +85,7 @@
                       </div>
                     </div>`;
           }, // combino los botons de acción
-          targets: 6 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
 

@@ -1560,7 +1560,7 @@ SELECT
   CONCAT(persona.nombre,' ',persona.apellido)  as nombre_estudiante, 
   materias.codigo as codigo_materia, 
   materias.nombre as nombre_materia, 
-  sum(inscripcion.calificacion) as calificacion
+  round(sum(inscripcion.calificacion),2) as calificacion
 FROM `estudiante`
 INNER JOIN persona ON persona.cedula = estudiante.persona_id 
 INNER JOIN inscripcion ON inscripcion.estudiante_id = estudiante.id 
@@ -1615,12 +1615,14 @@ INNER JOIN trayecto ON trayecto.codigo = seccion.trayecto_id;
 
 DROP VIEW IF EXISTS detalles_dimension;
 CREATE VIEW detalles_dimension AS
-SELECT dimension.*, materias.codigo as codigo_materia,materias.nombre as nombre_materia, fase.nombre as nombre_fase, fase.codigo as codigo_fase, trayecto.nombre as nombre_trayecto, trayecto.codigo as codigo_trayecto
+SELECT dimension.*, materias.codigo as codigo_materia,materias.nombre as nombre_materia, fase.nombre as nombre_fase, fase.codigo as codigo_fase, trayecto.nombre as nombre_trayecto, trayecto.codigo as codigo_trayecto, round(SUM(indicadores.ponderacion),2) as ponderacion_items
 FROM dimension
 INNER JOIN malla_curricular ON malla_curricular.codigo = dimension.unidad_id
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id 
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
-INNER JOIN materias ON  materias.codigo = malla_curricular.materia_id;
+INNER JOIN materias ON  materias.codigo = malla_curricular.materia_id
+LEFT JOIN indicadores ON indicadores.dimension_id = dimension.id
+GROUP BY indicadores.dimension_id;
 
 DROP VIEW IF EXISTS detalles_proyecto;
 CREATE VIEW detalles_proyecto AS
@@ -1702,7 +1704,7 @@ ORDER BY codigo_trayecto;
 DROP VIEW IF EXISTS detalles_integrantes;
 
 CREATE VIEW detalles_integrantes AS
-SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.apellido, persona.cedula, SUM(notas_integrante_proyecto.calificacion) as calificaciones
+SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.apellido, persona.cedula, round(SUM(notas_integrante_proyecto.calificacion),2) as calificaciones
 FROM integrante_proyecto
 INNER JOIN estudiante ON estudiante.id = integrante_proyecto.estudiante_id
 INNER JOIN persona on persona.cedula = estudiante.persona_id
@@ -1721,7 +1723,7 @@ SELECT
   trayecto.codigo as codigo_trayecto, 
   trayecto.nombre as nombre_trayecto, 
   periodo.fecha_inicio, periodo.fecha_cierre,
-  SUM(indicadores.ponderacion) as ponderado_baremos
+  ROUND(SUM(indicadores.ponderacion),2) as ponderado_baremos
 FROM `fase` 
 INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id 
 INNER JOIN periodo ON periodo.id = trayecto.periodo_id
@@ -1763,8 +1765,8 @@ SELECT
   persona.cedula,
   persona.nombre,
   integrante_proyecto.proyecto_id,
-  sum(indicadores.ponderacion) as ponderado,
-  sum(nip.calificacion) as calificacion
+  ROUND(sum(indicadores.ponderacion),2) as ponderado,
+  ROUND(sum(nip.calificacion), 2) as calificacion
 FROM notas_integrante_proyecto as nip
 INNER JOIN indicadores ON indicadores.id = nip.indicador_id
 INNER JOIN integrante_proyecto ON integrante_proyecto.id = nip.integrante_id
@@ -1786,7 +1788,7 @@ malla_curricular.codigo,
 fase.codigo as codigo_fase,
 fase.nombre as nombre_fase,
 count(dimension.id) as dimensiones,
-SUM(indicadores.ponderacion) as ponderado_baremos
+ROUND(SUM(indicadores.ponderacion),2) as ponderado_baremos
 FROM malla_curricular
 INNER JOIN materias ON materias.codigo =  malla_curricular.materia_id
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id

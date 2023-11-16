@@ -365,8 +365,9 @@ class dimension extends model
         'db'        => 'grupal',
         'dt'        => 5
       ),
+
       array(
-        'db'        => 'codigo_trayecto',
+        'db'        => 'ponderacion_items',
         'dt'        => 6
       )
     );

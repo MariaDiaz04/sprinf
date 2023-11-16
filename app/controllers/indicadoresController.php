@@ -5,6 +5,7 @@ namespace Controllers;
 use Symfony\Component\HttpFoundation\Request;
 
 use Model\indicadores;
+use Model\dimension;
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;
@@ -13,19 +14,23 @@ class indicadoresController extends controller
 {
 
   private $indicadores;
+  private $dimensiones;
 
   function __construct()
   {
     $this->tokenExist();
     $this->indicadores = new indicadores();
+    $this->dimensiones = new dimension();
   }
 
   public function index(Request $indicador, $idDimension)
   {
-
+    $dimension = $this->dimensiones->find($idDimension);
     $indicadores = $this->indicadores->findByDimension($idDimension);
 
+
     return $this->view('indicadores/gestionar', [
+      'dimension' => $dimension,
       'indicadores' => $indicadores,
       'idDimension' => $idDimension,
     ]);
