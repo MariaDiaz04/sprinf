@@ -85,7 +85,7 @@ $(document).ready(function (e) {
     columnDefs: [
       {
         visible: false,
-        targets: [0, 5, 7],
+        targets: [0, 5, 7, 8],
       },
       {
         data: null,
@@ -99,7 +99,7 @@ $(document).ready(function (e) {
       {
         data: null,
         render: function (data, type, row, meta) {
-          return `<div class="dropdown show">
+          return `<div class="dropleft show">
                     <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${
                       row[0]
                     }" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -111,6 +111,11 @@ $(document).ready(function (e) {
                     <a class="dropdown-item" href="${
                       noteUrl + "/" + row[0]
                     }" target="_blank">Notas</a>
+                    ${
+                      row[8] > 0
+                        ? `<a class="dropdown-item" onClick="editarIntegrantes('${row[0]}')" href="#">Gestionar Reprobados</a>`
+                        : ""
+                    }
                     ${
                       row[6] == 0
                         ? ` <a class="dropdown-item" href="${
@@ -131,7 +136,7 @@ $(document).ready(function (e) {
                     </div>
                   </div>`;
         }, // combino los botons de acción
-        targets: 8, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 8va
+        targets: 9, // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 8va
       },
     ],
   });

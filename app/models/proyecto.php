@@ -530,7 +530,12 @@ class proyecto extends model
             array(
                 'db'        => 'fase_id',
                 'dt'        => 7
-            )
+            ),
+            array(
+                'db'        => 'reprobados',
+                'dt'        => 8
+            ),
+
         );
         return $this->getSSP('detalles_proyecto', 'id', $columns);
     }

@@ -72,6 +72,7 @@
             <th>Integrantes</th>
             <th>Estatus</th>
             <th>Calificados</th>
+            <th>Reprobados</th>
             <th>Acción</th>
           </tr>
         </thead>
