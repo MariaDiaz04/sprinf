@@ -10,6 +10,7 @@ CREATE TABLE `sprinf_bd`.`periodo` (
 CREATE TABLE `sprinf_bd`.`trayecto` (
   `codigo` varchar(255) UNIQUE PRIMARY KEY,
   `periodo_id` int,
+  `calificacion_minima` float,
   `nombre` varchar(255),
   `siguiente_trayecto` varchar(255)
 );
@@ -1059,19 +1060,19 @@ delete from periodo where true;
 insert into periodo (id, fecha_inicio, fecha_cierre) values (1, '2023-03-01', '2024-02-01');
 
 -- 5_trayecto-fase.sql
-insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR4',1,'Trayecto IV', NULL);
+insert into trayecto (codigo, periodo_id, nombre, calificacion_minima, siguiente_trayecto) values ('TR4',1,'Trayecto IV',80, NULL);
 insert into fase (codigo, trayecto_id, nombre) values ('TR4_2','TR4','Fase 2'); 
 insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR4_1','TR4','Fase 1', 'TR4_2');
 
-insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR3',1,'Trayecto III', 'TR4');
+insert into trayecto (codigo, periodo_id, nombre, calificacion_minima, siguiente_trayecto) values ('TR3',1,'Trayecto III',80, 'TR4');
 insert into fase (codigo, trayecto_id, nombre) values ('TR3_2','TR3','Fase 2'); 
 insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR3_1','TR3','Fase 1', 'TR3_2'); 
 
-insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR2',1,'Trayecto II', 'TR3');
+insert into trayecto (codigo, periodo_id, nombre, calificacion_minima, siguiente_trayecto) values ('TR2',1,'Trayecto II',80, 'TR3');
 insert into fase (codigo, trayecto_id, nombre) values ('TR2_2','TR2','Fase 2');
 insert into fase (codigo, trayecto_id, nombre,siguiente_fase) values ('TR2_1','TR2','Fase 1', 'TR2_2');
 
-insert into trayecto (codigo, periodo_id, nombre, siguiente_trayecto) values ('TR1',1,'Trayecto I', 'TR2');
+insert into trayecto (codigo, periodo_id, nombre, calificacion_minima, siguiente_trayecto) values ('TR1',1,'Trayecto I',80, 'TR2');
 insert into fase (codigo, trayecto_id, nombre) values ('TR1_2','TR1','Fase 2');
 insert into fase (codigo, trayecto_id, nombre, siguiente_fase) values ('TR1_1','TR1','Fase 1', 'TR1_2');
 
@@ -1729,11 +1730,14 @@ ORDER BY codigo_trayecto;
 DROP VIEW IF EXISTS detalles_integrantes;
 
 CREATE VIEW detalles_integrantes AS
-SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.apellido, persona.cedula, round(SUM(notas_integrante_proyecto.calificacion),2) as calificaciones
+SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.apellido, persona.cedula, round(SUM(notas_integrante_proyecto.calificacion),2) as calificaciones, round(trayecto.calificacion_minima,2) as calificacion_minima_trayecto,
+integrante_proyecto.estatus
 FROM integrante_proyecto
 INNER JOIN estudiante ON estudiante.id = integrante_proyecto.estudiante_id
 INNER JOIN persona on persona.cedula = estudiante.persona_id
 INNER JOIN proyecto on proyecto.id = integrante_proyecto.proyecto_id
+INNER JOIN fase ON fase.codigo = proyecto.fase_id
+INNER JOIN trayecto on trayecto.codigo = fase.trayecto_id
 LEFT JOIN notas_integrante_proyecto ON notas_integrante_proyecto.integrante_id = integrante_proyecto.id
 GROUP BY integrante_proyecto.id, notas_integrante_proyecto.integrante_id;
 
@@ -1790,8 +1794,10 @@ SELECT
   persona.cedula,
   persona.nombre,
   integrante_proyecto.proyecto_id,
+  integrante_proyecto.id as integrante_id,
   ROUND(sum(indicadores.ponderacion),2) as ponderado,
-  ROUND(sum(nip.calificacion), 2) as calificacion
+  ROUND(sum(nip.calificacion), 2) as calificacion,
+  trayecto.calificacion_minima as calificacion_minima_trayecto
 FROM notas_integrante_proyecto as nip
 INNER JOIN indicadores ON indicadores.id = nip.indicador_id
 INNER JOIN integrante_proyecto ON integrante_proyecto.id = nip.integrante_id
@@ -1800,6 +1806,7 @@ INNER JOIN persona ON persona.cedula = estudiante.persona_id
 INNER JOIN dimension ON dimension.id = indicadores.dimension_id
 INNER JOIN malla_curricular ON dimension.unidad_id = malla_curricular.codigo
 INNER JOIN fase ON fase.codigo = malla_curricular.fase_id
+INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id
 GROUP BY persona.cedula, malla_curricular.fase_id;
 
 DROP VIEW IF EXISTS detalles_malla;

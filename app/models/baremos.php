@@ -25,6 +25,12 @@ class baremos extends model
     return !$notas ? [] : $notas;
   }
 
+  function findStudentBaremosGrades(int $idParticipante): array
+  {
+    $notas = $this->selectOne('detalles_notas_baremos', [['integrante_id', '=', $idParticipante]]);
+    return !$notas ? [] : $notas;
+  }
+
   function findStudentItem(int $idInidicador, int $idParticipante): array
   {
     $materias = $this->selectOne('notas_integrante_proyecto', [['indicador_id', '=', $idInidicador], ['integrante_id', '=', $idParticipante]]);

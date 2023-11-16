@@ -624,10 +624,51 @@ class proyectoController extends controller
 
             $msg = '';
             if ($fase['siguiente_fase']) {
+                $infoSiguienteFase = $this->fase->find($fase['siguiente_fase']);
+                $calificacionPorEvaluar = $infoSiguienteFase['ponderado_baremos'];
+
+                foreach ($integrantes as $integrante) {
+
+                    // verificar que el valor restante por evaluar sea el suficiente como para continuar
+
+                    // obtener calificacion actual
+                    $infoNotas = $this->baremos->findStudentBaremosGrades($integrante['integrante_id']);
+                    $calificacionActual = $infoNotas['calificacion'];
+                    // obtener calificacion por evaluar
+
+                    // obtener calificacion minima de trayecto
+                    $minimaTrayecto = $infoNotas['calificacion_minima_trayecto'];
+
+                    // calcular si la sumatoria de los dos es igual o mayor a la minima por trayecto
+                    $calculo = $calificacionActual + $calificacionPorEvaluar;
+                    if ($calculo >= $minimaTrayecto) {
+                        // estudiante ha aprobado
+                        $this->proyecto->actualizarEstatusIntegrante($integrante['integrante_id'], 1);
+                    } else {
+                        // estudiante ha reprobado
+                        $this->proyecto->actualizarEstatusIntegrante($integrante['integrante_id'], 0);
+                    }
+                }
+
                 // actualizar proyecto
                 $this->proyecto->actualizarFase($proyecto['id'], $fase['siguiente_fase']);
                 $msg = 'Fase actualizada';
             } else {
+                foreach ($integrantes as $integrante) {
+
+                    $infoIntegrante = $this->proyecto->findIntegrante($integrante['integrante_id']);
+
+                    $calificacionActual = $infoIntegrante['calificacion'];
+                    $calificacionMinima = $infoIntegrante['calificacion_minima_trayecto'];
+
+                    if ($calificacionActual >= $calificacionMinima) {
+                        // estudiante aprobado|
+                        $this->proyecto->actualizarEstatusIntegrante($integrante['integrante_id'], 1);
+                    } else {
+                        // estudiante reprobado
+                        $this->proyecto->actualizarEstatusIntegrante($integrante['integrante_id'], 0);
+                    }
+                }
                 $this->proyecto->cerrar($proyecto['id']);
                 $msg = 'Proyecto cerrado';
             }

@@ -436,7 +436,35 @@ class proyecto extends model
         }
     }
 
+    function findIntegrante(int $id): array
+    {
+        $query = $this->prepare("SELECT * FROM detalles_integrantes WHERE id = :id");
+        $query->bindParam(":id", $id);
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
 
+    function findIntegrantesReprobados(int $proyecto_id): array
+    {
+        $query = $this->prepare("SELECT * FROM detalles_integrantes WHERE proyecto_id = :id AND estatus = 0");
+        $query->bindParam(":id", $proyecto_id);
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
+
+    function actualizarEstatusIntegrante(int $id, int $estatus): bool
+    {
+        $preparedSql = "UPDATE integrante_proyecto SET estatus = :estatus WHERE id=:id";
+
+        $query = $this->prepare($preparedSql);
+
+        $query->bindParam(":id", $id);
+        $query->bindParam(":estatus", $estatus);
+
+        return $query->execute();
+    }
 
     /** 
      *consulta para el reporte excel
