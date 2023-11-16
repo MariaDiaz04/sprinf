@@ -52,7 +52,7 @@ class estudianteController extends controller
       // creación de usuario
       $email = $newestudiante->request->get('email');
       $contrasena = $newestudiante->request->get('cedula');
-     // var_dump($contrasena);
+      // var_dump($contrasena);
 
       // encriptar contraseña de usuario
       $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
@@ -160,7 +160,7 @@ class estudianteController extends controller
       <body>
           <div class="container">
               <table style="padding-bottom: 12px; padding-top: 10px;">
-                  <thead>
+                  <thead class="thead-dark">
                       <tr>
                       ' . $imagen . '
                           <th align="left">PNFI</th>
@@ -171,7 +171,7 @@ class estudianteController extends controller
               </table>
       
               <table class="tablepe">
-                  <thead>
+                  <thead class="thead-dark">
                       <tr class="body">
                           <th class="center th" width="5%">Fase</th>
                           <th class="center th" width="6%">Nombre fase</th>
@@ -293,52 +293,52 @@ class estudianteController extends controller
     }
   }
 
-  
-    /**
-     * Obtiene la informacion necesaria para crear
-     * formulario de update retornado en formato JSON
-     *
-     * @param [type] $request
-     * @return void
-     */
-    function edit($request): void
-    {
-        try {
-            $data = [];
-            $cedula = $request->get('cedula');
-            $estudiante = $this->estudiante->findByCedulaQuery($cedula);
-            $data['estudiante'] = $estudiante->fillable;
-            http_response_code(200);
-            echo json_encode($data);
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode($e->getMessage());
-        }
-    }
 
-    public function update($request)
-    {
-        try {
-
-            $cedula = $request->get('cedula');
-            $nombre = $request->get('nombre');
-            $apellido = $request->get('apellido');
-            $email = $request->get('email');
-            $direccion = $request->get('direccion');
-            $telefono = $request->get('telefono');
-            if (!$estudiante = $this->estudiante->findByCedulaQuery($cedula)) {
-                return $this->page('errors/404');
-            };
-            // asignar valores de seccion
-            $estudiante->updateStudent($nombre,$apellido,$email,$direccion,$telefono,$cedula);
-            if (empty($cedula)) throw new Exception('Error inesperado al actualizar el estudiante.');
-            http_response_code(200);
-            echo json_encode($cedula);
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode($e->getMessage());
-        }
+  /**
+   * Obtiene la informacion necesaria para crear
+   * formulario de update retornado en formato JSON
+   *
+   * @param [type] $request
+   * @return void
+   */
+  function edit($request): void
+  {
+    try {
+      $data = [];
+      $cedula = $request->get('cedula');
+      $estudiante = $this->estudiante->findByCedulaQuery($cedula);
+      $data['estudiante'] = $estudiante->fillable;
+      http_response_code(200);
+      echo json_encode($data);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
     }
+  }
+
+  public function update($request)
+  {
+    try {
+
+      $cedula = $request->get('cedula');
+      $nombre = $request->get('nombre');
+      $apellido = $request->get('apellido');
+      $email = $request->get('email');
+      $direccion = $request->get('direccion');
+      $telefono = $request->get('telefono');
+      if (!$estudiante = $this->estudiante->findByCedulaQuery($cedula)) {
+        return $this->page('errors/404');
+      };
+      // asignar valores de seccion
+      $estudiante->updateStudent($nombre, $apellido, $email, $direccion, $telefono, $cedula);
+      if (empty($cedula)) throw new Exception('Error inesperado al actualizar el estudiante.');
+      http_response_code(200);
+      echo json_encode($cedula);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
+    }
+  }
   function ssp(Request $query): void
   {
     try {

@@ -48,7 +48,7 @@
                 <div class="row">
 
                   <table class="table table-hover">
-                    <thead>
+                    <thead class="thead-dark">
                       <tr>
                         <th scope="col"><?= $dimension->nombre ?></th>
                         <th scope="col">Ponderación</th>
@@ -87,7 +87,7 @@
                 <div class="row">
 
                   <table class="table table-hover">
-                    <thead>
+                    <thead class="thead-dark">
                       <tr>
                         <th scope="col"><?= $dimension->nombre ?></th>
                         <th scope="col">Ponderación</th>

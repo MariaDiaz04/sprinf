@@ -61,8 +61,8 @@
     </div>
 
     <div class="card-body px-3 pt-3">
-      <table id="example" class="table" style="width:100%">
-        <thead>
+      <table id="example" class="table table-striped" style="width:100%">
+        <thead class="thead-dark">
           <tr>
             <th>ID</th>
             <th>Nombre</th>

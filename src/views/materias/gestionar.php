@@ -25,8 +25,8 @@
     <div class="card">
       <h6 class="card-header bg-primary text-white">Unidades Curriculares</h6>
       <div class="card-body px-3 pt-3">
-        <table id="example" class="table" style="width:100%">
-          <thead>
+        <table id="example" class="table table-striped" style="width:100%">
+          <thead class="thead-dark">
             <tr>
               <th>Trayecto</th>
               <th>Código</th>

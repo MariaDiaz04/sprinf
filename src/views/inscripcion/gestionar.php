@@ -33,8 +33,8 @@
     <h6 class="card-header bg-primary text-white"><b>Inscripciones</b> - <?= $periodo->fecha_inicio ?> / <?= $periodo->fecha_cierre ?></h6>
 
     <div class="card-body px-3 pt-3">
-      <table id="example" class="table" style="width:100%">
-        <thead>
+      <table id="example" class="table table-striped" style="width:100%">
+        <thead class="thead-dark">
           <tr>
             <th>id</th>
             <th>Sección</th>

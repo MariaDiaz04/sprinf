@@ -120,8 +120,8 @@
                 </div>
               </div>
               <div class="row form-group justify-content-center">
-                <table class="table">
-                  <thead>
+                <table class="table table-striped">
+                  <thead class="thead-dark">
                     <tr>
                       <th scope="col">C.I.</th>
                       <th scope="col">Nombre</th>

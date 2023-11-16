@@ -50,8 +50,8 @@
                 </div>
 
                 <div class="row form-group justify-content-center">
-                  <table class="table">
-                    <thead>
+                  <table class="table table-striped">
+                    <thead class="thead-dark">
                       <tr>
                         <th scope="col">Nombre Indicador</th>
                         <th scope="col">Ponderación (%)</th>

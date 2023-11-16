@@ -744,7 +744,7 @@ class proyectoController extends controller
         <body>
             <div class="container">
                 <table style="padding-bottom: 12px; padding-top: 10px;">
-                    <thead>
+                    <thead class="thead-dark">
                         <tr>
                             <th align="left">PNFI</th>
                             <th align="center" style="font-size: 18px;">Notas por equipo </th>
@@ -754,7 +754,7 @@ class proyectoController extends controller
                 </table>
         
                 <table class="tablepe">
-                    <thead>
+                    <thead class="thead-dark">
                         <tr class="body">
                             <th class="center th" width="5%">Fase</th>
                             <th class="center th" width="6%">Nombre fase</th>
