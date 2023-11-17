@@ -133,7 +133,7 @@ class proyectoHistorico extends model
         foreach ($integrantes as $integrante) {
 
           $this->cedula_estudiante = $integrante['cedula'];
-          $this->nombre_estudiante = $integrante['nombre'];
+          $this->nombre_estudiante = $integrante['nombre'] + ' ' + $integrante['apellido'];
 
           $calificacionFases = $this->findStudentGrades($integrante['cedula']);
 

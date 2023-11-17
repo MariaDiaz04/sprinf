@@ -1839,7 +1839,8 @@ CREATE VIEW detalles_historico_proyecto AS
 SELECT
 proyecto_historico.*,
 concat(persona.nombre, ' ', persona.apellido) as nombre_tutor_in,
-persona.telefono as telefono_tutor_in
+persona.telefono as telefono_tutor_in,
+round(proyecto_historico.nota_fase_1 + proyecto_historico.nota_fase_2, 2) as calificacion
 FROM proyecto_historico
 LEFT JOIN profesor ON profesor.codigo = proyecto_historico.tutor_in
 LEFT JOIN persona on persona.cedula = profesor.persona_id

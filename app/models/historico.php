@@ -139,8 +139,12 @@ class historico extends model
         'dt'        => 12
       ),
       array(
-        'db'        => 'estatus',
+        'db'        => 'calificacion',
         'dt'        => 13
+      ),
+      array(
+        'db'        => 'estatus',
+        'dt'        => 14
       ),
 
     );

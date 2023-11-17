@@ -167,6 +167,12 @@
             <div data-i18n="Analytics">Proyectos</div>
           </a>
         </li>
+        <li class="menu-item <?= $this->currentPath() == 'historico' ? 'active' : '' ?>">
+          <a href="<?= APP_URL .  $this->Route('historico') ?>" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-receipt"></i>
+            <div data-i18n="Analytics">Historico</div>
+          </a>
+        </li>
         <!-- <li class="menu-item <?= $this->currentPath() == 'municipios' ? 'active' : '' ?>">
           <a href="<?= APP_URL .  $this->Route('municipios') ?>" class="menu-link">
             <i class="menu-icon tf-icons bx bx-code"></i>

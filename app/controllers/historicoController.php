@@ -21,12 +21,16 @@ class historicoController extends controller
 
   public function index(Request $historico)
   {
-    $estudiante_id = $historico->query->get('id');
+    $cedula = $historico->query->get('cedula');
     $proyecto_id = $historico->query->get('proyecto-id');
-    echo json_encode($estudiante_id);
-    exit();
-    return $this->view('indicadores/gestionar', [
-      'idDimension' => true
+
+    $filtro = (int)$historico->query->get('cedula') != 0 ? '?cedula=' . (int)$historico->query->get('cedula') : null;
+
+    if (is_null($filtro)) {
+      $filtro = (int)$historico->query->get('id_proyecto') != 0 ? '?id_proyecto=' . (int)$historico->query->get('id_proyecto') : null;
+    }
+    return $this->view('historico/gestionar', [
+      'filtro' => $filtro
     ]);
   }
 
