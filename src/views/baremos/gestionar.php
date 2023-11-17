@@ -66,7 +66,7 @@
         serverSide: true,
         pageLength: 10,
         order: [
-          [2, 'desc']
+          [1, 'asc']
         ],
         columnDefs: [{
           visible: false,

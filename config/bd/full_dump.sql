@@ -346,7 +346,7 @@ insert into usuario (id,rol_id,email, contrasena, token)
 values (2,2,'sonia@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
 values (2, '9619518', 'Sonia', 'Cordoba', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', '2548475154', 1);
-insert into profesor (codigo, persona_id) values ('p-135482354',135482354);
+insert into profesor (codigo, persona_id) values ('p-135482354',9619518);
 
 -- Profesor Ricardo Tillero
 insert into usuario (id,rol_id,email, contrasena, token)
@@ -375,21 +375,21 @@ insert into usuario (id,rol_id,email, contrasena, token)
 values (6,2,'oswaldo@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
 values (6, '7404027', 'Oswaldo', 'Aparicio', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
-insert into profesor (codigo, persona_id) values ('p-132654318',132654318);
+insert into profesor (codigo, persona_id) values ('p-132654318',7404027);
 
 -- Profesora pura
 insert into usuario (id,rol_id,email, contrasena, token)
 values (7,2,'pura@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
 values (7, '7392496', 'Pura', 'Castillo', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
-insert into profesor (codigo, persona_id) values ('p-52844735',52844735);
+insert into profesor (codigo, persona_id) values ('p-52844735',7392496);
 
 -- profesora Ligia
 insert into usuario (id,rol_id,email, contrasena, token)
 values (9,2,'ligia@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
 values (9, '13991250', 'Ligia', 'Durán', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
-insert into profesor (codigo, persona_id) values ('p-354487534',354487534);
+insert into profesor (codigo, persona_id) values ('p-354487534',13991250);
 
 
 -- profesora Ingrid
@@ -397,35 +397,35 @@ insert into usuario (id,rol_id,email, contrasena, token)
 values (10,2,'ingrid@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
 values (10, '7423485', 'Ingrid', 'Figueroa', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
-insert into profesor (codigo, persona_id) values ('p-3542874',3542874);
+insert into profesor (codigo, persona_id) values ('p-3542874',7423485);
 
 -- profesora Lerida
 insert into usuario (id,rol_id,email, contrasena, token)
 values (11,2,'lerida@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
 values (11, '11264888', 'Lerida', 'Figueroa', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
-insert into profesor (codigo, persona_id) values ('p-54875538',54875538);
+insert into profesor (codigo, persona_id) values ('p-54875538',11264888);
 
 -- profesora Ruben
 insert into usuario (id,rol_id,email, contrasena, token)
 values (12,2,'ruben@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
 values (12, '9629702', 'Ruben', 'Godoy', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
-insert into profesor (codigo, persona_id) values ('p-5487531',5487531);
+insert into profesor (codigo, persona_id) values ('p-5487531',9629702);
 
 -- profesora Indira
 insert into usuario (id,rol_id,email, contrasena, token)
 values (13,2,'indira@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
 values (13, '15693145', 'Indira', 'Gonzáles', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
-insert into profesor (codigo, persona_id) values ('p-523156847',523156847);
+insert into profesor (codigo, persona_id) values ('p-523156847',15693145);
 
 -- profesora Indira
 insert into usuario (id,rol_id,email, contrasena, token)
 values (14,2,'marling@gmail.com','$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72', '');
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
 values (14, '13527711', 'Marling', 'Brito', 'ZoV52kTa1gsiY4C37GxsEUz1PPSEB7l3EWTrsLmPMkdElicxxx/X1iTzEY9v3T3S/b0YgDano3dNQwpdtLgHd4mL8dqEbaogXO5rZ7SdQIdP2mbamjq2lchTzzJiWEaTAs/S60fjoqBTM6dH9R6W5QgjHBXdrybwjnXvZl3doRzlTqJAr7rt/jnRDtiAZbAwxWJ6Q1/8u6p8dEK0ZPmeGYiXRPPMT6D3zG6RzoARHYzPeWAsTIiLCZi/Cn5j1E7cOoY1or9xsNxDL8IlUMCF6ljL0KNrn1wYLJ35kAycUEPm4JZqTcP4Y5F1K5ftCHwbQxwhvQHMoIdaYY05gaZOnyU2uwHKuf1JuGa8805sB3hOIl9IWjuhBh5CtbHFPwVn9oB7neR6qxmtARPozSXaou3GM5bc98OAlKiP48BaQ01ktxu9Wzr20nFDiMn+H3wVqYoTkQZ3eikrN2rrVyV9ixKrp0AkppoJUAXb9qMCqdP+UHAOIIwLAMiVuOx0ki+hZvPJTRx//NnpcHC+PrGEQSDMVBFj7ai+nFIjBnjRKvwRgu0Cw26e7l6Xa2dXrx92W4vZPgGO2bMWQ7KXgSeseOIbprS/iw+XsAEEH5WZMRx0Nai/YG4wCD3x9a7OkJQiIy92AJgarO0FOtvvUXjlIMf/1E8iJn3pecY5E+Y1msM=', 'WXsjxxCSSjrih+s2QwNSEUPPoE/D+jUqfv0W33mehLZjThcOO34Gpz/FxGACG+ivQOKrbgLnYoIpQm0npRBMtL9ZMpqzAkcXLMErvMXJED8IXXfJG0aBDH6JFKkqZSFCbNofpPI8ieEn+iiJ2QZryH/h4X3SgVlBGROWMlNboh8wX5HzihPoat8u976BT85RfUfzC1KJ+/hEJV7U2AA4z8+qXJwj+fmE2GuiIGsmZ8R1xkcDlZyqzVUPxoagxJSwJtoD9H3/cSYJJSwrd5pe/JQmxxRMdRydD78aEMxh9Y+aZX5XIZb0x9s+VLiR/3kUA3GSJ5gw/c0n5QpMQVkNjZtEfRIJAaRumOBGpL8qJcHQHd0w+MAuig1HzkTJcWVdPY8SPC8OkRoAbV3SKxWg0UQHPHnor7frlshd+3AiPy7IGibue2g2C6zQgecCDEhr0QPnhPV/Ti8/Q9RW6UHJ4JUOoBTHaoDf8OvvA7x74u5CHOGtOUsu2kL1WjgZ36jn7iOwZcxSGTKHGJDtXuckSYWB0ua5uc/HYzabn4dxS4Sxro4dpEg/kicFeeIiUoHBoosgKrIGkUhKY3/x6CnJklJ0+2oc6W/K1H5SKODRceoVLOtNjZXj6IK6hVTyumOW8T7/lanvHM8AnpK7EjRTW9xt/njNs1nVdaThX+KyLkU=', 1);
-insert into profesor (codigo, persona_id) values ('p-2658475',2658475);
+insert into profesor (codigo, persona_id) values ('p-2658475',13527711);
 
 
 insert into usuario (id,rol_id,email, contrasena, token)
@@ -1695,12 +1695,12 @@ delete from malla_curricular where true;
 delete from materias where true;
 
 -- ------------------ TRAYECTO I -------------------------------
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ASESOR3078554', 'Tutor Asesor Proyecto II', 72, 6, 3, 4, '',0);
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ASESOR3078554', 'Tutor Asesor Proyecto I', 72, 6, 3, 4, '',0);
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078554_1', 'TR1_1','ASESOR3078554');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078554_2', 'TR1_2','ASESOR3078554');
 
 -- arquitectura del computador
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ARQUIT1254578', 'Tutor Asesor Proyecto II', 72, 6, 3, 4, '',0);
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('ARQUIT1254578', 'Arquitectura del Computador', 72, 6, 3, 4, '');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ARQUIT1254578_1', 'TR1_1','ARQUIT1254578');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ARQUIT1254578_2', 'TR1_2','ARQUIT1254578');
 -- proyecto
@@ -1710,6 +1710,7 @@ insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST548751_
 -- electiva
 insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIELE548756', 'Electiva I', 72, 6, 3, 4, '');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('PIELE548756_1', 'TR1_1','PIELE548756');
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIELE548756_2', 'TR1_2','PIELE548756');
 
 -- ------------------ TRAYECTO II -------------------------------
 insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ASESOR3078845', 'Tutor Asesor Proyecto II', 72, 6, 3, 4, '',0);
@@ -1717,19 +1718,19 @@ insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR307884
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078845_2', 'TR2_2','ASESOR3078845');
 
 -- base de datos
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('PIBAD090203', 'Base de Datos', 72, 6, 3, 4, '',0);
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIBAD090203', 'Base de Datos', 72, 6, 3, 4, '');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('PIBAD090203_1', 'TR2_1','PIBAD090203');
 
 -- ing de software
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('PIINS090203', 'Ingenieria del Software I', 72, 6, 3, 4, '',0);
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIINS090203', 'Ingenieria del Software I', 72, 6, 3, 4, '');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('PIINS090203_1', 'TR2_1','PIINS090203');
 -- proyecto
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('PIPST234209', 'Proyecto Socio Tecnológico II', 72, 6, 3, 4, '',0);
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIPST234209', 'Proyecto Socio Tecnológico II', 72, 6, 3, 4, '');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST234209_1', 'TR2_1','PIPST234209');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST234209_2', 'TR2_2','PIPST234209');
 
 -- programacion II
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('PIPRO306212', 'Programación II', 72, 6, 3, 4, '',0);
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIPRO306212', 'Programación II', 72, 6, 3, 4, '');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPRO306212_1', 'TR2_1','PIPRO306212');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPRO306212_2', 'TR2_2','PIPRO306212');
 -- ------------------ TRAYECTO III -------------------------------
@@ -2069,33 +2070,196 @@ insert into dimension (id, unidad_id, nombre, grupal) values(31,'PIPST078303_2',
 insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Anexos y Referencias', 2);
 
 -- --------------------- trayecto 2 fase 1 ---------------------------
--- insert into dimension (id, unidad_id, nombre, grupal) values(28,'ASESOR3078845_1','Desempeño Grupal', 1);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Manejo de Conflictos', 0.5);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Proactividad', 1);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Hábitos de Trabajo', 1);
+
+-- base de datos 10%
+insert into dimension (id, unidad_id, nombre, grupal) values(32,'PIBAD090203_1','Diseño de la Base de Datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'BD contempla lo expuesto en el alcance del Sistema', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'Modelo Lógico Relacional', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'Diccionario de Datos', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'Modelo Físico', .5);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(33,'PIBAD090203_1','Diseño de la Base de Datos', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(33, 'Exporta e Importa BD', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(33, 'Explica la Estructura de Tabla (tipos de datos, clave primaria, clave foránea, integridad referencial)', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(33, 'Explica Sentencias SQL (Inserción de datos, consulta de datos de una tabla)', 2);
+
+-- ingernia del software 10%
+insert into dimension (id, unidad_id, nombre, grupal) values(34,'PIINS090203_1','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(34, 'Cuadro de Procesos (análisis de los instrumentos de recolección de datos)', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(34, 'Modelado del Negocio', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(34, 'Documento SRS', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(34, 'Casos de Usos del Sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(34, 'Mapa de Navegación del Sistema', .5);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(35,'PIINS090203_1','Desempeño individual', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(35, 'Explica con detalle el diagrama de actividades del Negocio', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(35, 'Explica RF y RNF del sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(35, 'Explica con detalle el Casos de Uso de su modulo', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(35, 'Diagrama de Actividad relacionado directamente con su modulo', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(35, 'Descripción Plantilla de procesos IBM', 1);
+
+-- proyecto - 10%
+insert into dimension (id, unidad_id, nombre, grupal) values(36,'PIPST234209_1','Desempeño Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(36, 'Dominio de la información referente a la comunidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(36, 'Asistencia al EVA de PSTII', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(36, 'Demuestra facilidad de transmitir y dominio del tema en la presentación de su proyecto', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(36, 'Realiza Correcciones', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(37,'PIPST234209_1','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(37, 'Capítulo I', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(37, 'Capítulo II', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(37, 'Análisis, Redacción y Ortografía del Informe', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(37, 'Aplican las Reglas APA', 1);
+
+-- Programación II 10%
+insert into dimension (id, unidad_id, nombre, grupal) values(38,'PIPRO306212_1','Prototipo', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(38, 'Integración Sistema –Casos de Usos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(38, 'Integración Sistema –Mapa Navegación', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(38, 'Conexión con BD ( registra-consulta)', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(38, 'Alojamiento en el Servidor Web', .5);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(39,'PIPRO306212_1','Desempeño Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(39, 'Analiza los RF para codificar el sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(39, 'Demuestra conocimiento en la sintaxis de PHP', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(39, 'Explica el uso de clases y Objetos', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(39, 'Explica detalladamente el Patrón MVC', 1);
+
+-- tutor asesor - 10%
+
+insert into dimension (id, unidad_id, nombre, grupal) values(40,'ASESOR3078845_1','Desempeño Individual', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(40, 'Cumple con el Rol Analista, Diseñador y Programador de Software', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(40, 'Demuestra Conocimiento sobre la Comunidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(40, 'Demuestra conocimiento en cuanto al análisis de los requerimientos del sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(40, 'Integración al grupo, responsabilidad y desempeño', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(40, 'Realiza Correcciones tanto del sistema como al informe.', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(41,'ASESOR3078845_1','Desempeño Individual', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(41, 'Informe de Proyecto Capítulos I,II ', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(41, 'Distribución de la interfaz, uso adecuado de los colores institucionales en la aplicación (Fondos claros y sencillos)', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(41, 'Usabilidad y Navegabilidad del Sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(41, 'La aplicación cumple con la necesidad de la Comunidad.', 1);
+
+
 
 -- --------------------- trayecto 2 fase 2 ---------------------------
+-- Tutor Asesor 
 -- insert into dimension (id, unidad_id, nombre, grupal) values(29,'ASESOR3078845_2','Desempeño Grupal', 1);
 -- insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Manejo de Conflictos', 0.5);
 -- insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Proactividad', 1);
 -- insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Hábitos de Trabajo', 1);
 
 -- --------------------- trayecto 1 fase 1 ---------------------------
--- insert into dimension (id, unidad_id, nombre, grupal) values(30,'ASESOR3078554_1','Desempeño Grupal', 1);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Manejo de Conflictos', 0.5);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Proactividad', 1);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Hábitos de Trabajo', 1);
+-- tutor 15%
+insert into dimension (id, unidad_id, nombre, grupal) values(42,'ASESOR3078554_1','Desempeño Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(42, 'Proactividad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(42, 'Responsabilidad / Asesorías', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(42, 'Hábitos de trabajo', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(42, 'Integración al grupo', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(42, 'Puntualidad en la entrega de las correcciones.', 1);
 
--- insert into dimension (id, unidad_id, nombre, grupal) values(31,'PIELE548756_1','Desempeño Grupal', 1);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Manejo de Conflictos', 0.5);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Proactividad', 1);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Hábitos de Trabajo', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(43,'ASESOR3078554_1','Evaluación Técnica Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(43, 'Presentación de los Capítulos según las normas establecidas en el manual.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(43, 'Redacción, ortografía y lenguaje técnico.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(43, 'El Título del Proyecto define el alcance del mismo.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(43, 'Expone la problemática y su alternativa de solución.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(43, 'Definen Objetivo General', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(43, 'Los Objetivos Específicos son consonó con el objetivo General.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(43, 'Aplicación del Instrumento de Recolección de Datos en la comunidad.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(43, 'El Cronograma de actividades refleja las tareas para el alcance de los objetivos específicos.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(43, 'Inventario Tecnológico.', 1);
+
+-- Docente de proyecto
+insert into dimension (id, unidad_id, nombre, grupal) values(44,'PIPST548751_1','Impacto Social', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(44, 'Integración Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(44, 'Proactividad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(44, 'Asistencia e Integración al EVA', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(45,'PIPST548751_1','Desenvolvimiento de los Ponentes', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(45, 'Manejo correcto del lenguaje', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(45, 'Presentación Vocabulario Técnico adecuado', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(45, 'Manejo del tiempo adecuado', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(45, 'Uso y manejo del material', 0.5);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(46,'PIPST548751_1','Evaluación Técnica Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(46, 'Título del proyecto: presenta en forma general el tema de estudio, relacionándose con el objetivo general.', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(46, 'La descripción del diagnóstico situacional: refleja el Problema investigativo de acuerdo a las necesidades de la comunidad abordada.',0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(46, 'Aplica instrumentos para el levantamiento de la información.',0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(46, 'El objetivo general y específico: reflejan el alcance del proyecto, y se relacionan con el título y la propuesta de solución del objetivo general.',0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(46, 'Aborda la Metodología de Investigación',0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(46, 'Diseña Instrumentos de Recolección de Datos así como la interpretación de la información recaba', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(46, 'Redacción, ortografía y lenguaje técnico', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(46, 'Presentan sus referencias Bibliográficas y Electrónicas Siguiendo las Normas APA', 0.5);
+
+-- docente arquitectura - 25%
+insert into dimension (id, unidad_id, nombre, grupal) values(47,'ARQUIT1254578_1','Evaluación Técnica Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Reconoce periféricos de E/S/A del computador.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Reconoce los componentes Internos del computador (Tarjeta Madre, CPU, Fuente, Memorias, Puertos E/S, D.D, entre otros).', 3);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Conoce cómo Ensamblar y Desarmar un equipo.', 3);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Demuestra dominio del lenguaje técnico durante el diagnostico.', 3);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Detecta y corrige las fallas de hardware en una computadora.', 4);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Aplica normas y procedimientos para el mantenimiento preventivo de la PC.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Identifica y Configura la BIOS.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Posee Conocimiento acerca del software necesario para el uso del computador requerido por el usuario.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Participa en el levantamiento del Inventario Tecnológico.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(47, 'Participa de forma activa en las Jornadas de Arquitectura del computador (Prácticas profesionales de soporte técnico)', 3);
+
+-- Electiva I - 5%
+insert into dimension (id, unidad_id, nombre, grupal) values(48,'PIELE548756_1','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(48, 'Diseño sitio Web Básico (etiquetas básicas, css)', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(49,'PIELE548756_1','Desempeño Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(49, 'Asistencia a Talleres', 3);
 
 -- --------------------- trayecto 1 fase 2 ---------------------------
--- insert into dimension (id, unidad_id, nombre, grupal) values(32,'ASESOR3078554_2','Desempeño Grupal', 1);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'Manejo de Conflictos', 0.5);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'Proactividad', 1);
--- insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'Hábitos de Trabajo', 1);
+
+-- Electiva
+insert into dimension (id, unidad_id, nombre, grupal) values(50,'PIELE548756_2','Evaluación Técnica Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(50, 'Creatividad en el Diseño (colores, imágenes, textos, cuadros entre otros)', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(50, 'Dominio de HTML5', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(50, 'Aplicación de Atributos Responsive', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(50, 'Aplicación de menú desplegable', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(50, 'Dominio de clases e identificadores', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(50, 'Diseña Maquetación Web Aplicación de header, nav, footer y section', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(50, 'Dominio de uso de atributos CSS3 y media-min y media-max CSS3', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(50, 'Diseña Formularios con diferentes tipos de elementos', 2);
+
+-- Proyecto - 10%
+insert into dimension (id, unidad_id, nombre, grupal) values(51,'PIPST548751_2','Evaluación Técnica Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(51, 'Responsabilidad y Proactividad', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(52,'PIPST548751_2','Exposición', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(52, 'Se presenta adecuadamente, señala el tema a exponer y viste de manera adecuada', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(52, 'Se expresa con claridad, firmeza y precisión', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(52, 'Demuestra Dominio en el desarrollo del Tema', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(53,'PIPST548751_2','Desempeño Grupal Informe', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(53, 'Presenta Conclusiones y Recomendaciones según el desarrollo del Proyecto', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(53, 'Las bases teóricas están bien fundamentadas en la propuesta presentada.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(53, 'Describen el Impacto Social del Proyecto para la comunidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(53, 'Redacción, ortografía , lenguaje técnico y aplicación de las normas APA', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(53, 'Presentación de Referencias Bibliográficas y electrónicas', 1);
+
+-- docente arquitectura - 10%
+insert into dimension (id, unidad_id, nombre, grupal) values(54,'ARQUIT1254578_1','Evaluación Técnica Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(54, 'Instala sistemas operativos libres y propietarios en la computadora', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(54, 'Configurar driver y paquetes de instalación básicos luego de instalar el sistema operativo', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(54, 'Aplica normas y procedimientos para el mantenimiento preventivo de la Computadora', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(54, 'Reconoce y detecta las fallas de Hardware y software de un PC', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(54, 'Resuelve las fallas de Hardware y software detectadas.', 2);
+
+-- TUTOR
+insert into dimension (id, unidad_id, nombre, grupal) values(55,'ASESOR3078554_2','Evaluación Técnica del Plan de Soporte Técnico a Equipos y Usuarios', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(55, '', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(55, '', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(55, '', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(55, '', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(55, '', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(55, '', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(55, '', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(56,'ASESOR3078554_2','Evaluación Técnica Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(56, '', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(56, '', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(56, '', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(56, '', 2);
+
 -- Proyecto
 
 
