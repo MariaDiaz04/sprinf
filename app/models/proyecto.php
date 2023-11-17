@@ -445,6 +445,15 @@ class proyecto extends model
         return ($result) ? $result : [];
     }
 
+    function findIntegrantes(int $proyecto_id): array
+    {
+        $query = $this->prepare("SELECT * FROM detalles_integrantes WHERE proyecto_id = :id AND estatus = 1");
+        $query->bindParam(":id", $proyecto_id);
+        $query->execute();
+        $result = $query->fetchAll(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
+
     function findIntegrantesReprobados(int $proyecto_id): array
     {
         $query = $this->prepare("SELECT * FROM detalles_integrantes WHERE proyecto_id = :id AND estatus = 0");

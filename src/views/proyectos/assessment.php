@@ -1,12 +1,6 @@
 <div>
-  <div>
-    <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
-      <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div>Baremos <?= $fase->nombre_trayecto . ' - ' . $fase->nombre_fase . ' - ' . $fase->fecha_inicio . '/' . $fase->fecha_cierre ?></div>
-
-
-      </h4>
-    </div>
+  <div class="card mb-4">
+    <h4 class="card-header"><b>Baremos <?= $fase->nombre_trayecto . ' - ' . $fase->nombre_fase . ' - ' . $fase->fecha_inicio . '/' . $fase->fecha_cierre ?></b></h4>
   </div>
   <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
 
@@ -33,6 +27,15 @@
       </ul>
     </div>
   <?php endif; ?>
+
+  <div class="card mb-4">
+    <h5 class="card-header bg-primary text-white mb-3" style="font-weight: bold;">Información de Proyecto</h5>
+    <div class="card-body">
+      <h5 class="card-title"><b>Titulo:</b> <?= $infoProyecto->nombre ?></h5>
+      <h6 class="card-title"><b>Comunidad:</b> <?= $infoProyecto->comunidad ?></h6>
+      <p class="card-text"> <?= $infoProyecto->resumen ?></p>
+    </div>
+  </div>
 
   <?php foreach ($baremos as $materia) : ?>
     <div class="card mb-3">
@@ -106,7 +109,7 @@
 
 
                           <?php foreach ($integrantes as $idIntegrante => $integrante) : ?>
-                            <td><input required type="number" class="form-control " min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->integrante_id}) ? $indicador->calificacion->{$integrante->integrante_id} : 0 ?>" name="indicador_individual[<?= $integrante->integrante_id ?>][<?= $indicador->id ?>]"></td>
+                            <td><input required type="number" class="form-control " min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]"></td>
                           <?php endforeach; ?>
                         </tr>
 

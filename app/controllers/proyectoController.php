@@ -440,7 +440,7 @@ class proyectoController extends controller
         $errors = [];
         try {
             $proyecto = $this->proyecto->find($id);
-            $integrantes = $this->proyecto->obtenerIntegrantes($id);
+            $integrantes = $this->proyecto->findIntegrantes($id);
 
             if (empty($proyecto)) {
                 throw new Exception('Proyecto no existe');
@@ -460,7 +460,7 @@ class proyectoController extends controller
 
             foreach ($integrantes as $key => $integrante) {
                 foreach ($materiasDeDimension as $key => $materia) {
-                    $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['integrante_id'], $materia['codigo']);
+                    $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['id'], $materia['codigo']);
 
                     if (empty($inscripcion)) {
                         if (!str_contains($materia['codigo'], 'ASESOR')) {
@@ -499,7 +499,7 @@ class proyectoController extends controller
                             foreach ($indicadores as $key => $indicador) {
                                 $totalPonderado += $indicador['ponderacion'];
 
-                                $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrantes[0]['integrante_id']);
+                                $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrantes[0]['id']);
                                 if (!empty($itemEstudiante)) $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
                             }
                             $baremos[$materia['codigo']]['grupal'][$dimension['id']]['indicadores'] = $indicadores;
@@ -513,8 +513,8 @@ class proyectoController extends controller
                                 $totalPonderado += $indicador['ponderacion'];
                                 foreach ($integrantes as $key => $integrante) {
 
-                                    $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['integrante_id']);
-                                    if (!empty($itemEstudiante)) $indicador['calificacion'][$integrante['integrante_id']] = $itemEstudiante['calificacion'];
+                                    $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
+                                    if (!empty($itemEstudiante)) $indicador['calificacion'][$integrante['id']] = $itemEstudiante['calificacion'];
                                 }
                                 array_push($dimension['indicadores'], $indicador);
                             }
@@ -529,12 +529,15 @@ class proyectoController extends controller
             }
 
 
-
+            $infoProyecto = $this->proyecto->find($id);
+            $infoIntegrantes = $this->proyecto->findIntegrantes($id);
             // echo json_encode($baremos);
             // exit();
 
             return $this->view('proyectos/assessment', [
                 'proyecto_id' => $id,
+                'infoProyecto' => $infoProyecto,
+                'infoIntegrantes' => $infoIntegrantes,
                 'fase' => $fase,
                 'integrantes' => $integrantes,
                 'baremos' => $baremos,

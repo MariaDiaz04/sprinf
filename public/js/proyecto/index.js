@@ -120,7 +120,7 @@ $(document).ready(function (e) {
                       row[6] == 0
                         ? ` <a class="dropdown-item" href="${
                             urlEvaluar + row[0]
-                          }">Evaluar</a><a class="dropdown-item" onClick="editarIntegrantes('${
+                          }" target="_blank" >Evaluar</a><a class="dropdown-item" onClick="editarIntegrantes('${
                             row[0]
                           }')" href="#">Editar</a>
                           
