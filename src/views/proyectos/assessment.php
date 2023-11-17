@@ -8,7 +8,7 @@
       </h4>
     </div>
   </div>
-  <!-- <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
+  <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
 
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>Atención!</strong> Han ocurrido algunos errores críticos al generar baremos:
@@ -32,7 +32,7 @@
 
       </ul>
     </div>
-  <?php endif; ?> -->
+  <?php endif; ?>
 
   <?php foreach ($baremos as $materia) : ?>
     <div class="card mb-3">

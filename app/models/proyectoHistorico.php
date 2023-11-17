@@ -83,7 +83,7 @@ class proyectoHistorico extends model
 
   function obtenerPendienteReingreso(): array
   {
-    $query = $this->prepare("SELECT * FROM `detalles_historico_proyecto` WHERE `id_proyecto` NOT IN (SELECT DISTINCT `id_proyecto` FROM `proyecto_historico` WHERE `codigo_siguiente_trayecto` IS NULL ) ORDER BY `periodo_final` DESC");
+    $query = $this->prepare("SELECT * FROM `detalles_historico_proyecto` WHERE `estatus` = 1 AND `id_proyecto` NOT IN (SELECT DISTINCT `id_proyecto` FROM `proyecto_historico` WHERE `codigo_siguiente_trayecto` IS NULL ) ORDER BY `periodo_final` DESC");
     $query->execute();
     $result = $query->fetchAll(\PDO::FETCH_ASSOC);
     return ($result) ? $result : [];
@@ -124,7 +124,6 @@ class proyectoHistorico extends model
         $this->tutor_in = $proyecto['tutor_in'];
         $this->tutor_ex = $proyecto['tutor_ex'];
         $this->tlf_tex = $proyecto['tlf_tex'];
-        $this->estatus = $proyecto['estatus'];
         $this->periodo_inicio = $proyecto['fecha_inicio'];
         $this->periodo_final = $proyecto['fecha_cierre'];
 
@@ -145,6 +144,8 @@ class proyectoHistorico extends model
               $this->nota_fase_2 = $calificacionFase['calificacion'];
             }
           }
+          $this->estatus = $integrante['estatus'];
+
           $this->save();
         }
       }

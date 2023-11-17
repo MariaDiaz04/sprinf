@@ -150,7 +150,7 @@ class proyectoController extends controller
     function historicoEstudiantes(): array
     {
         try {
-            $historico = $this->proyectoHistorico->all();
+            $historico = $this->proyectoHistorico->obtenerPendienteReingreso();
 
             $group = [];
             if (!$historico) return [];
