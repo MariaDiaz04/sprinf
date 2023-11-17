@@ -1837,8 +1837,12 @@ GROUP BY malla_curricular.codigo;
 DROP VIEW IF EXISTS detalles_historico_proyecto;
 CREATE VIEW detalles_historico_proyecto AS
 SELECT
-* 
+proyecto_historico.*,
+concat(persona.nombre, ' ', persona.apellido) as nombre_tutor_in,
+persona.telefono as telefono_tutor_in
 FROM proyecto_historico
+LEFT JOIN profesor ON profesor.codigo = proyecto_historico.tutor_in
+LEFT JOIN persona on persona.cedula = profesor.persona_id
 ORDER BY periodo_final DESC;
 
 DROP VIEW IF EXISTS detalles_usuarios;
