@@ -1114,15 +1114,45 @@ delete from materias where true;
 insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ASESOR3078554', 'Tutor Asesor Proyecto II', 72, 6, 3, 4, '',0);
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078554_1', 'TR1_1','ASESOR3078554');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078554_2', 'TR1_2','ASESOR3078554');
+
+-- arquitectura del computador
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ARQUIT1254578', 'Tutor Asesor Proyecto II', 72, 6, 3, 4, '',0);
+insert into malla_curricular (codigo, fase_id, materia_id) values ('ARQUIT1254578_1', 'TR1_1','ARQUIT1254578');
+insert into malla_curricular (codigo, fase_id, materia_id) values ('ARQUIT1254578_2', 'TR1_2','ARQUIT1254578');
+-- proyecto
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIPST548751', 'Proyecto Socio Tecnológico', 216, 18, 9, 6, '');
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST548751_1', 'TR1_1','PIPST548751');
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST548751_2', 'TR1_2','PIPST548751');
+-- electiva
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIELE548756', 'Electiva I', 72, 6, 3, 4, '');
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIELE548756_1', 'TR1_1','PIELE548756');
+
 -- ------------------ TRAYECTO II -------------------------------
 insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('ASESOR3078845', 'Tutor Asesor Proyecto II', 72, 6, 3, 4, '',0);
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078845_1', 'TR2_1','ASESOR3078845');
 insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR3078845_2', 'TR2_2','ASESOR3078845');
+
+-- base de datos
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('PIBAD090203', 'Base de Datos', 72, 6, 3, 4, '',0);
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIBAD090203_1', 'TR2_1','PIBAD090203');
+
+-- ing de software
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('PIINS090203', 'Ingenieria del Software I', 72, 6, 3, 4, '',0);
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIINS090203_1', 'TR2_1','PIINS090203');
+-- proyecto
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('PIPST234209', 'Proyecto Socio Tecnológico II', 72, 6, 3, 4, '',0);
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST234209_1', 'TR2_1','PIPST234209');
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST234209_2', 'TR2_2','PIPST234209');
+
+-- programacion II
+insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje, cursable) values ('PIPRO306212', 'Programación II', 72, 6, 3, 4, '',0);
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPRO306212_1', 'TR2_1','PIPRO306212');
+insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPRO306212_2', 'TR2_2','PIPRO306212');
 -- ------------------ TRAYECTO III -------------------------------
 -- Matemática Aplicada anual trayecto 3
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIMAT156306', 'Matemática Aplicada', 120, 36, 6, 3, '');
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIMAT156306_1', 'TR3_1','PIMAT156306');
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIMAT156306_2', 'TR3_2','PIMAT156306');
+-- insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIMAT156306', 'Matemática Aplicada', 120, 36, 6, 3, '');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIMAT156306_1', 'TR3_1','PIMAT156306');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIMAT156306_2', 'TR3_2','PIMAT156306');
 
 
 -- modelado de bases de datos fase 1 trayecto 3
@@ -1139,8 +1169,8 @@ insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST078303_
 
 
 -- Sistemas Operativos fase 1 trayecto 3
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PISIO078303', 'Sistemas Operativos', 72, 6, 3, 4, '');
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PISIO078303_1', 'TR3_1','PISIO078303');
+-- insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PISIO078303', 'Sistemas Operativos', 72, 6, 3, 4, '');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PISIO078303_1', 'TR3_1','PISIO078303');
 -- vincula a proyecto por lo que se crean dimensiones e indicadores
 -- ....
 
@@ -1162,9 +1192,9 @@ insert into malla_curricular (codigo, fase_id, materia_id) values ('ASESOR307830
 -- ------------ TRAYECTO IV ------------------------
 
 -- Actividades acreditables IV anual trayecto 4 
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIACA078303', 'Actividades acreditables IV', 72, 6, 3, 4, '');
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIACA078303_1', 'TR4_1','PIACA078303');
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIACA078303_2', 'TR4_2','PIACA078303');
+-- insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIACA078303', 'Actividades acreditables IV', 72, 6, 3, 4, '');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIACA078303_1', 'TR4_1','PIACA078303');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIACA078303_2', 'TR4_2','PIACA078303');
 
 -- Administración de bases de datos
 insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIABD078303', 'Administración de bases de datos', 72, 6, 3, 4, '');
@@ -1177,14 +1207,14 @@ insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) v
 insert into malla_curricular (codigo, fase_id, materia_id) values ('PIAUI078303_2','TR4_2','PIAUI078303');
 
 -- Electiva IV
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIELE078303', 'Electiva IV', 72, 6, 3, 4, '');
+-- insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIELE078303', 'Electiva IV', 72, 6, 3, 4, '');
 
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIELE078303_2', 'TR4_2','PIELE078303');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIELE078303_2', 'TR4_2','PIELE078303');
 
 -- Formación Crítica IV
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIFOC078303', 'Formación Crítica IV', 72, 6, 3, 4, '');
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIFOC078303_1', 'TR4_1','PIFOC078303');
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIFOC078303_2', 'TR4_2','PIFOC078303');
+-- insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIFOC078303', 'Formación Crítica IV', 72, 6, 3, 4, '');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIFOC078303_1', 'TR4_1','PIFOC078303');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIFOC078303_2', 'TR4_2','PIFOC078303');
 
 -- Gestión de proyecto informático
 insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIGPI078303', 'Gestión de proyecto informático', 72, 6, 3, 4, '');
@@ -1192,9 +1222,9 @@ insert into malla_curricular (codigo, fase_id, materia_id) values ('PIGPI078303_
 
 
 -- Idiomas II
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIIDI078303', 'Idiomas II', 72, 6, 3, 4, '');
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIIDI078303_1', 'TR4_1','PIIDI078303');
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIIDI078303_2', 'TR4_2','PIIDI078303');
+-- insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIIDI078303', 'Idiomas II', 72, 6, 3, 4, '');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIIDI078303_1', 'TR4_1','PIIDI078303');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIIDI078303_2', 'TR4_2','PIIDI078303');
 
 -- Proyecto Socio Tecnológico IV 
 insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIPST078304', 'Proyecto Socio Tecnológico IV', 72, 6, 3, 4, '');
@@ -1202,9 +1232,8 @@ insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST078304_
 insert into malla_curricular (codigo, fase_id, materia_id) values ('PIPST078304_2', 'TR4_2','PIPST078304');
 
 -- Redes Avanzadas 
-insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIREA078303', 'Redes Avanzadas', 72, 6, 3, 4, '');
-
-insert into malla_curricular (codigo, fase_id, materia_id) values ('PIREA078303_2', 'TR4_2','PIREA078303');
+-- insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PIREA078303', 'Redes Avanzadas', 72, 6, 3, 4, '');
+-- insert into malla_curricular (codigo, fase_id, materia_id) values ('PIREA078303_2', 'TR4_2','PIREA078303');
 
 -- Seguridad Informática
 insert into materias (codigo, nombre, htasist, htind, ucredito, hrs_acad, eje) values ('PISEI078303', 'Seguridad Informática', 72, 6, 3, 4, '');
@@ -1224,213 +1253,265 @@ delete from dimension where true;
 -- TUTORA
 insert into dimension (id, unidad_id, nombre, grupal) values(1,'ASESOR4078303_1','Desempeño Individual',0);
 
-insert into indicadores (dimension_id, nombre, ponderacion) values(1, 'indicador', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(1, 'indicador', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(1, 'Responsabilidad', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(1, 'Activo y participativo', 0.25);
+insert into indicadores (dimension_id, nombre, ponderacion) values(1, 'Integración al grupo', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(1, 'Sensibilidad Social', 0.25);
 
 insert into dimension (id, unidad_id, nombre, grupal) values(2,'ASESOR4078303_1','Desempeño Grupal', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(2, 'indicador grupal', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(2, 'indicador grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(2, 'Manejo de conflictos', 0.25);
+insert into indicadores (dimension_id, nombre, ponderacion) values(2, 'Proactividad', 0.25);
+insert into indicadores (dimension_id, nombre, ponderacion) values(2, 'Recibe de su equipo de proyecto los entregables de trayecto IV', 2);
 
 insert into dimension (id, unidad_id, nombre, grupal) values(3,'ASESOR4078303_1','Avance del Producto Final', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(3, 'indicador avance', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(3, 'indicador avance', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(3, 'Se evidencia que los riesgos presentados en el proyecto están vinculados con la comunidad.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(3, 'Se verifica la existencia de elementos técnicos en cuanto a la base de datos, están aplicados en el proyecto', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(3, 'Los aspectos relacionados a seguridad informática (Métodos de cifrado) están presentes en el proyecto', 2);
 
 -- Gestión de proyecto informatico
-insert into dimension (id, unidad_id, nombre, grupal) values(4,'PIGPI078303_1','Evaluación Tecnica Individual', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(4, 'indicador Tecnica Individual', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(4, 'indicador Tecnica Individual', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(4,'PIGPI078303_1','Evaluación Tecnica Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(4, 'Gestiona los riesgos del proyecto', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(4, 'Analiza y crea estrategias para la administración de riesgo', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(4, 'Controla el proyecto mediante rutas críticas en PERT/CPM', 2.5);
 
 -- Administración de base de datos
-insert into dimension (id, unidad_id, nombre, grupal) values(5,'PIABD078303_1','Evaluación Tecnica Individual', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(5, 'indicador Tecnica Individual', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(5, 'indicador Tecnica Individual', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(5,'PIABD078303_1','Evaluación Tecnica Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(5, 'Presenta plan de optimización de la base de datos.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(5, 'Presenta plan de monitoreo del rendimiento de la base de datos', 3);
+insert into indicadores (dimension_id, nombre, ponderacion) values(5, 'Presenta plan de control de seguridad de la base de datos', 4);
+insert into indicadores (dimension_id, nombre, ponderacion) values(5, 'Presenta plan de respaldos y recuperación de la base de datos', 4);
+insert into indicadores (dimension_id, nombre, ponderacion) values(5, 'Presenta plan de cambios de la base de datos, para la integración de sistemas.', 2);
 
 -- Docente de proyecto
 insert into dimension (id, unidad_id, nombre, grupal) values(6,'PIPST078304_1','Evaluación Del Docente de Proyecto', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'indicador Docente de Proyecto', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'indicador Docente de Proyecto', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Presenta en forma coherente el diagnóstico del proyecto instalado en la comunidad.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'El objetivo general se relaciona con los alcances requeridos en Trayecto IV.', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Los objetivos específicos reflejan el alcance del proyecto y se relacionan con la propuesta del objetivo general.', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Aborda teorías y conocimientos relacionados al Trayecto respectivo y su acreditación', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Presenta la planificación de actividades del proyecto. (Gestión de Proyecto, Base de Datos y Seguridad Informática)', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Identifican, analizan y valoran los riesgos del proyecto con propuestas de administración, monitoreo o mitigación.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Presenta la evaluación de la base de datos del proyecto considerando las transacciones, la concurrencia, el volumen de crecimiento con planes de administración; además de la integración del sistema.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Incorpora el análisis de la seguridad física y lógica donde está ubicado el proyecto en la comunidad.', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Describe la aplicación de métodos de cifrado al sistema con su respectivo algoritmo y establecen políticas de seguridad del proyecto de acuerdo a los resultados generados en el diagnóstico.', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Evidencia el cumplimiento de las tareas y actividades Programadas. (Entregaron Plan de trabajo y avances del Proyecto de acuerdo a sus requerimientos).', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'Presenta de forma correcta la sistematizaciónde los Capítulos I, II y III en conjunto con las páginas preliminares, de acuerdo a los requerimientos exigidos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(6, 'La redacción, análisis y ortografía se adecua a las características de un informe técnico.', 1);
+
+-- seguridad informatica
+insert into dimension (id, unidad_id, nombre, grupal) values(7,'PISEI078303_1','Evaluación Tecnica Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Explica como realizo el Diagnóstico sobre la Seguridad Física, Lógica, Redes y Estaciones de Trabajo, BD en proyecto.', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Demuestra que el Algoritmo asimétrico fue el empleado según el método de cifrado seleccionado en el sistema.', 11);
+insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Analiza la matriz de riesgo de seguridad.', 2);
+
+-- --------------------- trayecto 4 fase 2 ---------------------------
+
+-- Tutor Asesor
+insert into dimension (id, unidad_id, nombre, grupal) values(8,'ASESOR4078303_2','Desempeño Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'Responsabilidad', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'Activo y participativo', 0.25);
+insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'Integración al grupo', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'Sensibilidad Social', 0.25);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(9,'ASESOR4078303_2','Desempeño Grupal', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(9, '', .5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(9, '', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(9, '', 1);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(10,'ASESOR4078303_2','Evaluacion Tecnica Individual', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(10, '', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(10, '', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(10, '', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(10, '', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(10, '', 2);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(11,'ASESOR4078303_2','Plan de Mantenimiento al sistema', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(11, '', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(11, '', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(11, '', 2);
+
+
+-- Docente de proyecto 
+insert into dimension (id, unidad_id, nombre, grupal) values(13,'PIPST078304_2','Aspectos a Evaluar en el Informe de Proyecto', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Refleja la planificación de actividades del proyecto. Auditoría informática y plan de mantenimiento al sistema)', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Plasma la Identificación, análisis y aplicación de la auditoría al sistema. ', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Presenta el análisis del tipo de mantenimiento que deben aplicar y resultados del plan de mantenimiento', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Se evidencia el cumplimiento de las tareas y actividades programadas. (Entregaron Plan de trabajo y avances del Proyecto de acuerdo a sus requerimientos). ', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Presenta la sistematización de los Capítulos IV, V y VI', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Presenta las Conclusiones y Recomendaciones, Referencias y Anexos.', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'La redacción, análisis y ortografía se adecuan a las características de un informe técnico.', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Se entrega, en el tiempo indicado,  el informe final de proyecto IV con todos los requerimientos exigidos', 1);
+
+-- Auditoria Informatica 
+insert into dimension (id, unidad_id, nombre, grupal) values(14,'PIAUI078303_2','Tipo de Auditoria', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Auditoría aplicada al sistema (Explicación del módulo auditado) Tipo de auditoría seleccionada.', 1.25);
+insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Herramienta utilizada. ¿Cuál Utilizo?', 1.25);
+insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Metodología y técnica empleada.', 2.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Resultado en el sistema. (Visualizarlo).', 2.5);
+
+insert into dimension (id, unidad_id, nombre, grupal) values(15,'PIAUI078303_2','Plan de Mantenimiento', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Explicar  el propósito del mantenimiento', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Equipos, periféricos, servidores,  sistemas y documentación. ', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Tipo de mantenimiento. (Predictivo, correctivo, preventivo). (A corto y largo plazo). ', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Establecimiento del plan de mantenimiento Informe de resultados del Mantenimiento.', 1.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Visualizar en el sistema cuál fue el mantenimiento aplicado.', 1.5);
+
 
 -- -------------------- trayecto 3 fase 1 ---------------------------
 -- TUTOR
-insert into dimension (id, unidad_id, nombre, grupal) values(7,'ASESOR3078303_1','Sistema', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de menú amigable al usuario', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de inserción o captura de datos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de confirmación de eliminación de datos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Interfaz de consultar con filtros de búsqueda', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Demuestra conocimiento en la programación modular del Sistema', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Modulo de reportes básicos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Utiliza modelo vista-controlador', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Codifica basado en el Diseño', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(7, 'Justifica la Metodología', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(16,'ASESOR3078303_1','Sistema', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Interfaz de menú amigable al usuario', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Interfaz de inserción o captura de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Interfaz de confirmación de eliminación de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Interfaz de consultar con filtros de búsqueda', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Demuestra conocimiento en la programación modular del Sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Modulo de reportes básicos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Utiliza modelo vista-controlador', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Codifica basado en el Diseño', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Justifica la Metodología', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(8,'ASESOR3078303_1','Informe', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'Capitulo 1', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(8, 'Capitulo 2', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(17,'ASESOR3078303_1','Informe', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Capitulo 1', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Capitulo 2', 2);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(9,'ASESOR3078303_1','Manejo de Equipo', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'Manejo de conflictos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'Responsabilidad', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(9, 'Hábitos de trabajo', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(18,'ASESOR3078303_1','Manejo de Equipo', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Manejo de conflictos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Responsabilidad', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Hábitos de trabajo', 2);
 
 -- INGENIERIA DEL SOFTWARE
-insert into dimension (id, unidad_id, nombre, grupal) values(10,'PINGSO078303_1','Modelado del Negocio', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'Documento de Requisitos S.R.S', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(10, 'Diagramas y Plantilla IBM', 5);
+insert into dimension (id, unidad_id, nombre, grupal) values(19,'PINGSO078303_1','Modelado del Negocio', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Documento de Requisitos S.R.S', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Diagramas y Plantilla IBM', 5);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(11,'PINGSO078303_1','Modelado del Sistema', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Diagrama de Casos de Uso', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Diagrama de Actividad', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Descripción de casos de uso en Plantillas IBM', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Diagrama de clase', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(11, 'Mapa Navegacional', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(20,'PINGSO078303_1','Modelado del Sistema', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Diagrama de Casos de Uso', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Diagrama de Actividad', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Descripción de casos de uso en Plantillas IBM', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Diagrama de clase', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Mapa Navegacional', 1);
 
 
 -- Modelado de base de datos 
-insert into dimension (id, unidad_id, nombre, grupal) values(12,'PIMOB078303_1','Diseño de la Base de datos', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Modelo Entidad Relacion', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Modelo Logico Relacional', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Modelo Fisico', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Utiliza postgres para el diseño fisico de la base de datos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(12, 'Diccionario de datos', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(21,'PIMOB078303_1','Diseño de la Base de datos', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(21, 'Modelo Entidad Relacion', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(21, 'Modelo Logico Relacional', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(21, 'Modelo Fisico', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(21, 'Utiliza postgres para el diseño fisico de la base de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(21, 'Diccionario de datos', 1);
 
 -- Docente de proyecto
-insert into dimension (id, unidad_id, nombre, grupal) values(13,'PIPST078303_1','Aspectos a evaluar', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Titulo del proyecto', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'La descripcion del diagnostico situacional', 0.75);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Aplica e interpreta instrumentos para el levantamiento de la niformación y captura de requisitos', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Presenta una propuesta de solución coherente', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Objetivo general se relaciona con la propuesta de solución', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Objetivos especificos: reflejan el alcance del proyecto y se relacionan con la propuesta de solución del objetivo general', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Justifica las razones para el uso de la propuesta de solución', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'El proyecto describe los procesos llevados a cabo dentro de la comunidad', 0.75);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Aborda teorías y conocimientos cónsonos al trayecto respectivo y su acreditación', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Se aborda el marco legal', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Realiza planificación de actividades del proyecto', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Entrega a tiempo de artefactos correspondientes al diseño del sistema', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Sistematiza Capitulo 1 y 2 del proyecto', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Aplica normas para representar cuadros y figuras', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Redacción, analisis y ortografia', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los participantes se integraron como equipo de trabajo para la resolución de conflictos', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los participantes aplicaron instrumentos de recolección de información', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(13, 'Los participantes cumplieron con las tareas y actividades programadas', 0.5);
+insert into dimension (id, unidad_id, nombre, grupal) values(22,'PIPST078303_1','Aspectos a evaluar', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Titulo del proyecto', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'La descripcion del diagnostico situacional', 0.75);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Aplica e interpreta instrumentos para el levantamiento de la niformación y captura de requisitos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Presenta una propuesta de solución coherente', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Objetivo general se relaciona con la propuesta de solución', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Objetivos especificos: reflejan el alcance del proyecto y se relacionan con la propuesta de solución del objetivo general', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Justifica las razones para el uso de la propuesta de solución', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'El proyecto describe los procesos llevados a cabo dentro de la comunidad', 0.75);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Aborda teorías y conocimientos cónsonos al trayecto respectivo y su acreditación', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Se aborda el marco legal', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Realiza planificación de actividades del proyecto', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Entrega a tiempo de artefactos correspondientes al diseño del sistema', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Sistematiza Capitulo 1 y 2 del proyecto', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Aplica normas para representar cuadros y figuras', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Redacción, analisis y ortografia', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Los participantes se integraron como equipo de trabajo para la resolución de conflictos', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Los participantes aplicaron instrumentos de recolección de información', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Los participantes cumplieron con las tareas y actividades programadas', 0.5);
 
 -- --------------------- trayecto 3 fase 2 ------------------------------
 
 -- TUTORA
-insert into dimension (id, unidad_id, nombre, grupal) values(14,'ASESOR3078303_2','Desempeño Individual',0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'CRUD del sistema. (Por Modulo)', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(14, 'Validación de datos. (Por Modulo)', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(23,'ASESOR3078303_2','Desempeño Individual',0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'CRUD del sistema. (Por Modulo)', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Validación de datos. (Por Modulo)', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(15,'ASESOR3078303_2','Desempeño grupal',1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Responsabilidad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'Integración al grupo', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(15, 'proactividad', 0.5);
+insert into dimension (id, unidad_id, nombre, grupal) values(24,'ASESOR3078303_2','Desempeño grupal',1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Responsabilidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Integración al grupo', 0.5);
+insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'proactividad', 0.5);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(16,'ASESOR3078303_2','Avances de programación (Por Modulo)', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Instalación del software necesario para la ejecución de la aplicación o componentes', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Pantallas bien conectadas con la Base de datos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Los módulos de modificación de base de datos garantizan la integridad referencial', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Desarrollo de todos los modulos diseñados en los diagramas de casos de uso', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Módulos acordes al Diagrama de clases', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Funcionamiento completo de los módulos de automatización', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Correctitud en los reportes estadisticos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Cumplimiento del estandar de programación entregado', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Control de errores', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Gestión de bitácora', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(16, 'Manejo de sesiones respecto a concurrencia de usuarios', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(25,'ASESOR3078303_2','Avances de programación (Por Modulo)', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Instalación del software necesario para la ejecución de la aplicación o componentes', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Pantallas bien conectadas con la Base de datos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Los módulos de modificación de base de datos garantizan la integridad referencial', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Desarrollo de todos los modulos diseñados en los diagramas de casos de uso', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Módulos acordes al Diagrama de clases', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Funcionamiento completo de los módulos de automatización', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Correctitud en los reportes estadisticos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Cumplimiento del estandar de programación entregado', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Control de errores', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Gestión de bitácora', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Manejo de sesiones respecto a concurrencia de usuarios', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(17,'ASESOR3078303_2','Interfaz y estilo', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso adecuado de los colores en la aplicación', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Fondos claros y sencillos', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Uso de iamgenes', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(17, 'Distribución de la interfaz', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(26,'ASESOR3078303_2','Interfaz y estilo', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Uso adecuado de los colores en la aplicación', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Fondos claros y sencillos', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Uso de iamgenes', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Distribución de la interfaz', 2);
 
 -- Ingeniera de Software
-insert into dimension (id, unidad_id, nombre, grupal) values(18,'PINGSO078303_2','Desempeño Tecnico', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Cumple con actividades Asignadas', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Conoce con exactitud el Sistema', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Conoce el uso de Bitacora', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Codifica los requerimientos dados por el docente', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Desarrollo y programo el módulo asignado', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Integro el módulo desarrollado', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Planifica el proceso de Desarrollo del software', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Identifica los escenarios y casos de prueba en el sistema', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Detecta errores, fallas, defectos en el sistema', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(18, 'Planifica las activdades de capacitación', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(27,'PINGSO078303_2','Desempeño Tecnico', 0);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Cumple con actividades Asignadas', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Conoce con exactitud el Sistema', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Conoce el uso de Bitacora', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Codifica los requerimientos dados por el docente', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Desarrollo y programo el módulo asignado', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Integro el módulo desarrollado', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Planifica el proceso de Desarrollo del software', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Identifica los escenarios y casos de prueba en el sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Detecta errores, fallas, defectos en el sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Planifica las activdades de capacitación', 1);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(19,'PINGSO078303_2','Usabilidad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Facilidad de uso', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Tiempos de respuesta del sistema', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Interactividad con el usuario', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(19, 'Ayuda al Usuario', 1);
+insert into dimension (id, unidad_id, nombre, grupal) values(28,'PINGSO078303_2','Usabilidad', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Facilidad de uso', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Tiempos de respuesta del sistema', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Interactividad con el usuario', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Ayuda al Usuario', 1);
 
--- Docente de Proyecto
-insert into dimension (id, unidad_id, nombre, grupal) values(20,'PIPST078303_2','Capitulo III', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Manual de usuario', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Manual de Sistema', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Plan de Pruebas', 3);
-insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Plan de Instalación', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(20, 'Plan de Capacitación', 2);
+-- -- Docente de Proyecto
+insert into dimension (id, unidad_id, nombre, grupal) values(29,'PIPST078303_2','Capitulo III', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Manual de usuario', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Manual de Sistema', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Plan de Pruebas', 3);
+insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Plan de Instalación', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Plan de Capacitación', 2);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(21,'PIPST078303_2','Capitulo IV', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(21, 'Recomendaciones y Evolución Previsible del sistema.', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(30,'PIPST078303_2','Capitulo IV', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Recomendaciones y Evolución Previsible del sistema.', 2);
 
-insert into dimension (id, unidad_id, nombre, grupal) values(22,'PIPST078303_2','Capitulo V', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(22, 'Anexos y Referencias', 2);
-
--- --------------------- trayecto 4 fase 2 ---------------------------
-
--- Auditoria Informatica
-insert into dimension (id, unidad_id, nombre, grupal) values(23,'ASESOR4078303_2','Desempeño Individual', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Responsabilidad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Asistencia', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Integración al grupo', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(23, 'Sensibilidad Social', 1);
-
-insert into dimension (id, unidad_id, nombre, grupal) values(24,'ASESOR4078303_2','Desempeño Grupal', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Manejo de Conflictos', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Proactividad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(24, 'Hábitos de Trabajo', 1);
-
-insert into dimension (id, unidad_id, nombre, grupal) values(25,'PIAUI078303_2','Auditoria Informatica', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Auditoría aplicada al sistema (Explicación del módulo auditado) Tipo de auditoría seleccionada.', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Herramienta utilizada. ¿Cuál Utilizo?', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Metodología y técnica empleada. ', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(25, 'Resultado en el sistema. (Visualizarlo).', 2);
-
-insert into dimension (id, unidad_id, nombre, grupal) values(26,'PIAUI078303_2','Plan de mantenimiento al sistema', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(26, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
-
-insert into dimension (id, unidad_id, nombre, grupal) values(27,'PIAUI078303_2','Mejoras  Aplicadas al Sistema según los requerimientos de trayecto IV ', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Tipo de mantenimiento aplicado al sistema Predictivo, correctivo, preventivo). (a corto y largo plazo). ', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Explicar el modulo que se le realizó mantenimiento, cuáles fueron las mejoras.', 2);
-insert into indicadores (dimension_id, nombre, ponderacion) values(27, 'Informe  final de resultados del Plan de Mantenimiento.', 2);
+insert into dimension (id, unidad_id, nombre, grupal) values(31,'PIPST078303_2','Capitulo V', 1);
+insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Anexos y Referencias', 2);
 
 -- --------------------- trayecto 2 fase 1 ---------------------------
-insert into dimension (id, unidad_id, nombre, grupal) values(28,'ASESOR3078845_1','Desempeño Grupal', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Manejo de Conflictos', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Proactividad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Hábitos de Trabajo', 1);
+-- insert into dimension (id, unidad_id, nombre, grupal) values(28,'ASESOR3078845_1','Desempeño Grupal', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Manejo de Conflictos', 0.5);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Proactividad', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(28, 'Hábitos de Trabajo', 1);
 
 -- --------------------- trayecto 2 fase 2 ---------------------------
-insert into dimension (id, unidad_id, nombre, grupal) values(29,'ASESOR3078845_2','Desempeño Grupal', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Manejo de Conflictos', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Proactividad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Hábitos de Trabajo', 1);
+-- insert into dimension (id, unidad_id, nombre, grupal) values(29,'ASESOR3078845_2','Desempeño Grupal', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Manejo de Conflictos', 0.5);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Proactividad', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(29, 'Hábitos de Trabajo', 1);
 
 -- --------------------- trayecto 1 fase 1 ---------------------------
-insert into dimension (id, unidad_id, nombre, grupal) values(30,'ASESOR3078554_1','Desempeño Grupal', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Manejo de Conflictos', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Proactividad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Hábitos de Trabajo', 1);
+-- insert into dimension (id, unidad_id, nombre, grupal) values(30,'ASESOR3078554_1','Desempeño Grupal', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Manejo de Conflictos', 0.5);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Proactividad', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(30, 'Hábitos de Trabajo', 1);
+
+-- insert into dimension (id, unidad_id, nombre, grupal) values(31,'PIELE548756_1','Desempeño Grupal', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Manejo de Conflictos', 0.5);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Proactividad', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Hábitos de Trabajo', 1);
 
 -- --------------------- trayecto 1 fase 2 ---------------------------
-insert into dimension (id, unidad_id, nombre, grupal) values(31,'ASESOR3078554_2','Desempeño Grupal', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Manejo de Conflictos', 0.5);
-insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Proactividad', 1);
-insert into indicadores (dimension_id, nombre, ponderacion) values(31, 'Hábitos de Trabajo', 1);
+-- insert into dimension (id, unidad_id, nombre, grupal) values(32,'ASESOR3078554_2','Desempeño Grupal', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'Manejo de Conflictos', 0.5);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'Proactividad', 1);
+-- insert into indicadores (dimension_id, nombre, ponderacion) values(32, 'Hábitos de Trabajo', 1);
 -- Proyecto
 
 
@@ -1440,13 +1521,11 @@ delete from inscripcion where true;
 -- delete from clase where true;
 -- actividades acrediables fase 1
 -- prof: hermes 
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_1', 'e-15408');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_1', 'e-63578');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_1', 'e-39263');
+
 -- fase 2
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_2', 'e-15408');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_2', 'e-63578');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_2', 'e-39263');
+-- insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_2', 'e-15408');
+-- insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_2', 'e-63578');
+-- insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-23154875', 'IN4401', 'PIACA078303_2', 'e-39263');
 
 -- administración de base de datos
 insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-654854354', 'IN4401', 'PIABD078303_1', 'e-15408');
@@ -1459,9 +1538,9 @@ insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudian
 insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-234565423','IN4401', 'PIGPI078303_1', 'e-39263');
 
 -- idiomas II
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4401', 'PIIDI078303_1', 'e-15408');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4401', 'PIIDI078303_1', 'e-63578');
-insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4401', 'PIIDI078303_1', 'e-39263');
+-- insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4401', 'PIIDI078303_1', 'e-15408');
+-- insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4401', 'PIIDI078303_1', 'e-63578');
+-- insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-52213548','IN4401', 'PIIDI078303_1', 'e-39263');
 
 -- Seguridad Informatica
 insert into inscripcion (profesor_id, seccion_id, unidad_curricular_id, estudiante_id) values ('p-5428468','IN4401', 'PISEI078303_1', 'e-15408');
