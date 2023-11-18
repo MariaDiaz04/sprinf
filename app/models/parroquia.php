@@ -71,7 +71,7 @@ class parroquia extends model
 
   public function all()
   {
-    $proyectos = $this->select("detalles_parroquia");
+    $proyectos = $this->select("parroquias");
     return $proyectos ? $proyectos : [];
   }
 

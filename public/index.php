@@ -72,6 +72,11 @@ require __DIR__ . '/../config/routes/baremos.php';          ## baremos
 require __DIR__ . '/../config/routes/proyecto.php';         ## proyecto
 require __DIR__ . '/../config/routes/historico.php';         ## historico
 
+// Consejo Comunal
+require __DIR__ . '/../config/routes/consejoComunal.php';  ## ConsejoComunal
+require __DIR__ . '/../config/routes/sector.php';            ## sector
+
+
 // seguridad
 require __DIR__ . '/../config/routes/bitacora.php';         ## bitacora
 require __DIR__ . '/../config/routes/permisos.php';         ## permisos

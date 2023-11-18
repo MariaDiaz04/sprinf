@@ -23,10 +23,15 @@ class consejoComunal extends model
   public int $sector_id;
   public int $telefono;
 
-  public function all(): array
+  public function all()
   {
-    $consejos = $this->select('detalles_consejo_comunal');
-    return $consejos ? $consejos : [];
+    try {
+    $consejos = $this->select("SELECT consejo_comunal.*, sector_consejo_comunal.nombre as sector FROM consejo_comunal INNER JOIN sector_consejo_comunal ON sector_consejo_comunal.id = sector_consejo_comunal.nombre
+    ");
+    return $consejos ? $consejos : null;
+        } catch (Exception $th) {
+            return $th;
+        }
   }
 
   /**
@@ -42,6 +47,24 @@ class consejoComunal extends model
     return !$consejos ? [] : $consejos;
   }
 
+
+
+  public function Selectcod()
+    {
+
+        $codigo = $this->query(
+            'SELECT
+                sector_consejo_comunal.id AS id,
+                sector_consejo_comunal.nombre AS nombre
+            FROM
+                
+                `sector_consejo_comunal`;'
+        );
+        return $codigo;
+    }
+
+
+
   /**
    * save
    * 
@@ -52,11 +75,12 @@ class consejoComunal extends model
    */
   public function save(): int
   {
-    $query = $this->prepare("INSERT INTO consejo_comunal(nombre, nombre_vocero,sector_id,telefono) VALUES (:nombre, :nombre_vocero, :sector_id, :telefono)");
+    $query = $this->prepare("INSERT INTO consejo_comunal(nombre, nombre_vocero, sector_id, telefono) VALUES (:nombre, :nombre_vocero, :sector_id, :telefono)");
     $query->bindParam(":nombre", $this->nombre);
     $query->bindParam(":nombre_vocero", $this->nombre_vocero);
     $query->bindParam(":sector_id", $this->sector_id);
     $query->bindParam(":telefono", $this->telefono);
+    
     $query->execute();
     $this->id = $this->lastInsertId();
     return true;
@@ -73,11 +97,12 @@ class consejoComunal extends model
     $query->bindParam(":nombre_vocero", $this->nombre_vocero);
     $query->bindParam(":sector_id", $this->sector_id);
     $query->bindParam(":telefono", $this->telefono);
+    
 
     return $query->execute();
   }
 
-  function remove(int $id): bool
+  function remove(): bool
   {
     $query = $this->prepare("DELETE FROM consejo_comunal WHERE id=:id");
     $query->bindParam(":id", $id);
@@ -85,7 +110,19 @@ class consejoComunal extends model
     return $query->rowCount() > 0 ? true : false;
   }
 
-
+  function deleteTransaction(string $id): bool
+  {
+      try {
+          parent::beginTransaction();
+          // actualizar tabla materia
+          $delete = $this->delete('consejo_comunal', [['id', '=',  $id ]]);
+          parent::commit();
+          return true;
+      } catch (Exception $e) {
+          parent::rollBack();
+          return false;
+      }
+  }
 
   /**
    * setData
@@ -114,19 +151,19 @@ class consejoComunal extends model
    *
    * @return array
    */
-  public function generarComplexSSP(string $idMateria): array
+  public function generarSSP(): array
   {
     $columns = array(
       array(
-        'db'        => 'consejo_comunal_id',
+        'db'        => 'id',
         'dt'        => 0
       ),
       array(
-        'db'        => 'consejo_comunal_nombre',
+        'db'        => 'nombre',
         'dt'        => 1,
       ),
       array(
-        'db'        => 'consejo_comunal_telefono',
+        'db'        => 'nombre_vocero',
         'dt'        => 2,
       ),
       array(
@@ -134,22 +171,10 @@ class consejoComunal extends model
         'dt'        => 3,
       ),
       array(
-        'db'        => 'sector_nombre',
+        'db'        => 'telefono',
         'dt'        => 4,
-      ),
-      array(
-        'db'        => 'parroquia_id',
-        'dt'        => 5,
-      ),
-      array(
-        'db'        => 'parroquia_nombre',
-        'dt'        => 6,
-      ),
-      array(
-        'db'        => 'municipio_nombre',
-        'dt'        => 7,
       )
     );
-    return $this->getSSP('detalles_consejo_comunal', 'consejo_comunal_id', $columns);
+    return $this->getSSP('consejo_comunal', 'id', $columns);
   }
 }

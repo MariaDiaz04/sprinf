@@ -15,12 +15,23 @@ class sector extends model
     'nombre',
   ];
 
-  public ?int $id;
+  public int $id;
   public int $parroquia_id;
   private string $nombre;
-
   public array $error;
 
+
+  public function all()
+  {
+    try {
+      $sector = $this->querys("SELECT sector_consejo_comunal.*, parroquias.nombre as parroquias FROM sector_consejo_comunal INNER JOIN parroquias ON parroquias.id = sector_consejo_comunal.parroquia_id");
+      return $sector ? $sector : null;
+  } catch (Exception $th) {
+      return $th;
+  }
+  }
+
+  
   /**
    * Retorna los datos del indiacodr
    *
@@ -44,8 +55,9 @@ class sector extends model
    *
    * @return bool - ejecucion exitosa
    */
-  public function save(): int
+  public function save()
   {
+   
     $query = $this->prepare("INSERT INTO sector_consejo_comunal(parroquia_id, nombre) VALUES (:parroquia_id, :nombre)");
     $query->bindParam(":parroquia_id", $this->parroquia_id);
     $query->bindParam(":nombre", $this->nombre);
@@ -67,6 +79,7 @@ class sector extends model
     return $query->execute();
   }
 
+
   function remove(): bool
   {
     $query = $this->prepare("DELETE FROM sector_consejo_comunal WHERE id=:id");
@@ -74,6 +87,23 @@ class sector extends model
     $query->execute();
     return $query->rowCount() > 0 ? true : false;
   }
+
+  function insertTransaction(): String
+    {
+        try {
+
+            parent::beginTransaction();
+            // almacenar 
+            $id = $this->save();
+
+            parent::commit();
+            return $id;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return null;
+        }
+    }
+
 
   /**
    * setData
@@ -95,6 +125,49 @@ class sector extends model
     }
   }
 
+  public function Selectcod()
+    {
+
+        $codigo = $this->query(
+            'SELECT
+                parroquias.id AS id,
+                parroquias.nombre AS nombre
+            FROM
+                
+                `parroquias`;'
+        );
+        return $codigo;
+    }
+
+    function deleteTransaction(string $id): bool
+    {
+        try {
+            parent::beginTransaction();
+            // actualizar tabla materia
+            $delete = $this->delete('sector_consejo_comunal', [['id', '=',  $id ]]);
+            parent::commit();
+            return true;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return false;
+        }
+    }
+
+
+    public function eliminar()
+    {
+
+        try {
+
+            $this->delete('sector', [['id', '=',  $this->fillable['id']]]);
+
+            return $this;
+        } catch (Exception $th) {
+            return $th;
+        }
+    }
+
+
   /**
    * generarComplexSSP
    * 
@@ -102,7 +175,7 @@ class sector extends model
    *
    * @return array
    */
-  public function generarComplexSSP(string $dimension_id): array
+  public function generarSSP(): array
   {
     $columns = array(
       array(
@@ -110,14 +183,14 @@ class sector extends model
         'dt'        => 0
       ),
       array(
-        'db'        => 'nombre',
+        'db'        => 'parroquia_id',
         'dt'        => 1
       ),
       array(
-        'db'        => 'ponderacion',
+        'db'        => 'nombre',
         'dt'        => 2
       )
     );
-    return $this->getComplexSSP('indicadores', 'id', $columns, ['condition' => "dimension_id = '$dimension_id'"]);
+    return $this->getSSP('sector_consejo_comunal', 'id', $columns);
   }
 }
