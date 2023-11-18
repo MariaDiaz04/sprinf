@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">  Consejo Comunal   </span>/ Gestión</div>
+        <div><span class="text-muted font-weight-light"> Consejo Comunal </span>/ Gestión</div>
 
         <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
 
@@ -55,13 +55,13 @@
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre del Vocero</label>
                       <input type="text" required class="form-control mb-1" name="nombre_vocero" id="nombre_vocero">
-                      
+
                     </div>
-                    
+
                   </div>
                   <div class="row form-group">
-                    
-                   
+
+
                     <div class="col-lg-6">
                       <label class="form-label" for="sector_id">Sector *</label>
                       <select class="form-select" name="sector_id" id="sector_id">
@@ -94,8 +94,8 @@
   </div>
 
 
-   <!-- MODAL ACTUALIZAR -->
-   <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editarLabel" aria-hidden="true">
+  <!-- MODAL ACTUALIZAR -->
+  <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editarLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -103,7 +103,7 @@
 
         </div>
         <form action="<?= APP_URL . $this->Route('consejoComunal/update') ?>" method="post" id="actualizar">
-        <input type="hidden" name="id" id="idconsejocomunal">
+          <input type="hidden" name="id" id="idconsejocomunal">
           <div class="modal-body">
             <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
             <input type="hidden" name="estatus" value="1">
@@ -120,13 +120,13 @@
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre del Vocero</label>
                       <input type="text" required class="form-control mb-1" name="nombre_vocero" id="nombre_vocero">
-                      
+
                     </div>
-                    
+
                   </div>
                   <div class="row form-group">
-                    
-                   
+
+
                     <div class="col-lg-6">
                       <label class="form-label" for="sector_id">Sector *</label>
                       <select class="form-select" name="sector_id" id="sector_id">
@@ -164,7 +164,7 @@
 
 
   <script>
-     let updateUrl = "<?= APP_URL . $this->Route('consejoComunal/edit') ?>";
+    let updateUrl = "<?= APP_URL . $this->Route('consejoComunal/edit') ?>";
     let deleteUrl = "<?= APP_URL . $this->Route('consejoComunal/delete') ?>";
 
     $(document).ready(() => {
@@ -235,7 +235,7 @@
             })
 
           },
-      success: function(data, status) {
+          success: function(data, status) {
             table.ajax.reload();
             // usar sweetalerts
             Swal.fire({
@@ -314,77 +314,73 @@
     })
 
     function renderUpdateForm(data) {
-     
-      // console.log(data)
-     $('#editar').modal('show')
-     
-     
-     $(`#actualizar #idconsejocomunal`).val(data.consejoComunal.consejo_comunal_id);
-     $(`#actualizar #nombre`).val(data.consejoComunal.consejo_comunal_nombre);
-     $(`#actualizar #nombre_vocero`).val(data.consejoComunal.nombre_vocero);
-     $(`#actualizar #sector_id option[value='${data.consejoComunal.sector_id}']`).attr("selected", true);
-     $(`#actualizar #telefono`).val(data.consejoComunal.consejo_comunal_telefono);
 
-     }
-     
-     
-     
-         function editar(id) {
-           $.ajax({
-             type: "POST",
-             url: updateUrl,
-             data: {
-               'id': id
-             },
-             error: function(error, status) {
-               Swal.fire({
-                 position: 'bottom-end',
-                 icon: 'error',
-                 title: error.responseText,
-                 showConfirmButton: false,
-                 toast: true,
-                 timer: 2000
-               })
-             },
-             success: function(data, status) {
-               renderUpdateForm(JSON.parse(data))
-             },
-           });
-         }
-     
-         function remove(id) {
-             $.ajax({
-             type: "POST",
-             url: deleteUrl,
-             data: {
-               'id': id
-             },
-             error: function(error, status) {
-               Swal.fire({
-                 position: 'bottom-end',
-                 icon: 'error',
-                 title: error.responseText,
-                 showConfirmButton: false,
-                 toast: true,
-                 timer: 3000
-               })
-     
-             },
-             success: function(data, status) {
-               console.log(data);
-               Swal.fire({
-                 position: 'bottom-end',
-                 icon: 'success',
-                 title: 'El Consejo Comunal fue borrado con exito',
-                 showConfirmButton: false,
-                 toast: true,
-                 timer: 1500
-               })
-               $('#tabla').DataTable().ajax.reload();
-             },
-           });
-           }
-    
+      // console.log(data)
+      $('#editar').modal('show')
+
+      $(`#actualizar #idconsejocomunal`).val(data.consejoComunal.consejo_comunal_id);
+      $(`#actualizar #nombre`).val(data.consejoComunal.consejo_comunal_nombre);
+      $(`#actualizar #nombre_vocero`).val(data.consejoComunal.nombre_vocero);
+      $(`#actualizar #sector_id option[value='${data.consejoComunal.sector_id}']`).attr("selected", true);
+      $(`#actualizar #telefono`).val(data.consejoComunal.consejo_comunal_telefono);
+
+    }
+
+
+
+    function editar(id) {
+      $.ajax({
+        type: "POST",
+        url: updateUrl,
+        data: {
+          'id': id
+        },
+        error: function(error, status) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+        },
+        success: function(data, status) {
+          renderUpdateForm(JSON.parse(data))
+        },
+      });
+    }
+
+    function remove(id) {
+      $.ajax({
+        type: "POST",
+        url: deleteUrl,
+        data: {
+          'id': id
+        },
+        error: function(error, status) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 3000
+          })
+
+        },
+        success: function(data, status) {
+          console.log(data);
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'El Consejo Comunal fue borrado con exito',
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500
+          })
+          $('#tabla').DataTable().ajax.reload();
+        },
+      });
+    }
   </script>
-  
-  

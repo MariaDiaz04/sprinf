@@ -226,7 +226,7 @@
 
           </ul>
         </li>
-        <li class="menu-item <?= in_array($this->currentPath(), ['configuracion', 'trayectos']) ? 'open' : '' ?>">
+        <li class="menu-item <?= in_array($this->currentPath(), ['configuracion', 'respaldo']) ? 'open' : '' ?>">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-layout"></i>
             <div data-i18n="Layouts">Configuración</div>
@@ -236,6 +236,11 @@
             <li class="menu-item <?= $this->currentPath() == 'configuracion' ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('configuracion/aperturar-periodo') ?>" class="menu-link">
                 <div data-i18n="Without menu">Aperturar Lapso</div>
+              </a>
+            </li>
+            <li class="menu-item <?= $this->currentPath() == 'respaldo' ? 'active' : '' ?>">
+              <a href="<?= APP_URL . $this->Route('respaldo') ?>" class="menu-link">
+                <div data-i18n="Without menu">Respaldo</div>
               </a>
             </li>
             <!--  <li class="menu-item <?= $this->currentPath() == 'municipios' ? 'active' : '' ?>">
