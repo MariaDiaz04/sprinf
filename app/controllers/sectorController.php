@@ -48,24 +48,6 @@ final class sectorController extends controller
         return $this->view('sector/gestionar', ['sector' => $sector]);
     }
 
-
-  public function storea(): void
-  {
-
-    $sector = new sector();
-    $sector->setData([
-  
-    'parroquia_id' => '10',
-     'nombre' => 'Eje 5',
-    ]);
-
-    $resultado = $sector->save();
-
-
-    
-  }
-
-  
     public function store(Request $request): void
     {
         try {
@@ -94,27 +76,35 @@ final class sectorController extends controller
         }
     }
 
-
-
-
-
-
-  
-
-  function update(): void
+  function update($request): void
   {
-    $sector = new sector();
-    $sector->setData([
+    try {
+      $data = [];
+      $id = $request->get('id');
+      $parroquia_id = $request->get('parroquia_id');
+      $nombre = $request->get('nombre');
       
-      'parroquia_id' => '10',
-      'nombre' => 'Eje 5 Actualizado',
-    ]);
 
-    $resultado = $sector->actualizar();
+      $sector = $this->sector->find($id);
+      
+      $this->sector->setData([
+        'id' => $id,
+        'parroquia_id' => $parroquia_id,
+        'nombre' => $nombre,
+        
+      ]);
+  
+      $resultado = $this->sector->actualizar();
 
-    $sectorInfo = $sector->find($sector->id);
+      if (!$resultado) throw new Exception('Error al actualizar Consejo Comunal');
 
+      http_response_code(200);
+      echo json_encode(true);
+  } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
   }
+}
 
   function edit($request): void
     {
@@ -134,17 +124,6 @@ final class sectorController extends controller
             echo json_encode($e->getMessage());
         }
     }
-
-  function deletea(): void
-  {
-    $sector = new sector();
-    $sector->setData([
-      
-    ]);
-
-    $resultado = $sector->remove();
-   
-  }
 
   public function delete($request)
     {
@@ -183,5 +162,6 @@ final class sectorController extends controller
 
       return $this->page('errors/501');
   }
+
 
 }

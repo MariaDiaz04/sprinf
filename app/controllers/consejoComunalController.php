@@ -138,9 +138,9 @@ class consejoComunalController extends controller
         $id = $request->get('id');
 
 
-        $consejoComunal = $this->consejoComunal->find($id);
+       $consejoComunal = $this->consejoComunal->find($id);
 
-        $data['consejoComunal'] = $consejoComunal;
+        $data['consejoComunal'] =$consejoComunal;
 
         http_response_code(200);
         echo json_encode($data);

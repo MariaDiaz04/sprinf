@@ -94,6 +94,7 @@
 
         </div>
         <form action="<?= APP_URL . $this->Route('sector/update') ?>" method="post" id="actualizar">
+        <input type="hidden" name="id" id="idsector">
           <div class="modal-body">   
             <div class="container-fluid">
               <div class="row pb-2">
@@ -289,6 +290,7 @@
      
 $('#editar').modal('show')
 
+$(`#actualizar #idsector`).val(data.sector.id);
 $(`#actualizar #nombre`).val(data.sector.nombre);
 $(`#actualizar #parroquia_id option[value='${data.sector.parroquia_id}']`).attr("selected", true);
 // console.log(data.sector.parroquia_id)
