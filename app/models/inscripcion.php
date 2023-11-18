@@ -93,6 +93,13 @@ class inscripcion extends model
   }
 
 
+  
+  function findIntegrantByStudent(string $codigoEstudiante): array
+  {
+    $inscripcion = $this->select('integrante_proyecto', [['estudiante_id', '=', '"' . $codigoEstudiante . '"']]);
+    return !$inscripcion ? [] : $inscripcion;
+  }
+
   /**
    * setData
    * 

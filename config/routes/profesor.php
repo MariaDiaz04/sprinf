@@ -36,7 +36,7 @@ $listaDeRutas['profesor_details'] = new Route(
 
 $listaDeRutas['profesor_edit'] = new Route(
 
-  '/profesores/edit/{id}',
+  '/profesores/edit',
   [
     'controller' => profesorController::class,
     'method' => 'edit',
@@ -49,6 +49,24 @@ $listaDeRutas['/profesores/guardar'] = new Route(
   [
     'controller' => profesorController::class,
     'method' => 'store',
+  ]
+);
+
+$listaDeRutas['/profesorer_actualizar'] = new Route(
+
+  '/profesores/actualizar',
+  [
+    'controller' => profesorController::class,
+    'method' => 'update',
+  ]
+);
+
+$listaDeRutas['/profesorer_delete'] = new Route(
+
+  '/profesores/delete',
+  [
+    'controller' => profesorController::class,
+    'method' => 'delete',
   ]
 );
 

@@ -99,10 +99,10 @@ class estudiante extends model
         return !$estudiante ? [] : $estudiante;
     }
 
-  
+
     function findByCedulaQuery(string $cedula)
     {
-        $estudiante = $this->querys("SELECT persona.nombre, persona.apellido,persona.direccion, persona.cedula, persona.telefono, usuario.email FROM persona LEFT JOIN usuario ON persona.usuario_id = usuario.id WHERE usuario.rol_id= 4 AND persona.cedula = $cedula " );
+        $estudiante = $this->querys("SELECT persona.nombre, persona.apellido,persona.direccion, persona.cedula, persona.telefono, usuario.email FROM persona LEFT JOIN usuario ON persona.usuario_id = usuario.id WHERE usuario.rol_id= 4 AND persona.cedula = $cedula ");
         if (!!$estudiante) {
             foreach ($estudiante[0] as $key => $value) {
                 $this->fillable[$key] = $value;
@@ -112,6 +112,7 @@ class estudiante extends model
             return [];
         }
     }
+
 
     public function findOld(string $cedula)
     {
@@ -141,10 +142,11 @@ class estudiante extends model
      * @param integer $cedula
      * @return array
      */
-    function updateStudent($nombre,$apellido,$email, $direccion, $telefono,$cedula){
+    function updateStudent($nombre, $apellido, $email, $direccion, $telefono, $cedula)
+    {
 
-        $estudiante = $this->querys('UPDATE usuario, persona SET persona.nombre =  "' .$nombre.'", persona.apellido = "'.$apellido.'" , persona.direccion = "'.$direccion.'", persona.telefono = "'.$telefono.'", usuario.email = "'.$email.'" WHERE persona.usuario_id = usuario.id AND persona.cedula = "'.$cedula.'"');
-        return !$estudiante ? [] :$estudiante;
+        $estudiante = $this->querys('UPDATE usuario, persona SET persona.nombre =  "' . $nombre . '", persona.apellido = "' . $apellido . '" , persona.direccion = "' . $direccion . '", persona.telefono = "' . $telefono . '", usuario.email = "' . $email . '" WHERE persona.usuario_id = usuario.id AND persona.cedula = "' . $cedula . '"');
+        return !$estudiante ? [] : $estudiante;
     }
 
     public function pendientesAProyecto()
@@ -157,7 +159,26 @@ class estudiante extends model
         }
     }
 
-
+    /**
+     * Transaccion para el borrado de secciones
+     *
+     * @return String
+     */
+    function deleteTransaction($estudiante_id,$usuario_id): bool
+    {
+        try {
+            parent::beginTransaction();
+            // actualizar tabla materia
+            $this->delete('estudiante', [['id', '=', '"' . $estudiante_id . '"']]);
+            $this->delete('persona', [['usuario_id', '=',  $usuario_id ]]);
+            $this->delete('usuario', [['id', '=',  $usuario_id ]]);
+            parent::commit();
+            return true;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return false;
+        }
+    }
     public function byProject($id)
     {
         try {

@@ -115,23 +115,23 @@
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" required class="form-control mb-1" name="nombre" id="nombreEdit">
+                      <input type="text" required class="form-control mb-1" name="nombre" id="nombreEdit" max="55">
                     </div>
                   </div>
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="apellido">Apellido *</label>
-                      <input type="text" required class="form-control mb-1" name="apellido" id="apellidoEdit">
+                      <input type="text" required class="form-control mb-1" name="apellido" id="apellidoEdit" max="55">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="direccion">Dirección</label>
-                      <input type="text" required class="form-control mb-1" placeholder="..." name="direccion" id="direccionEdit">
+                      <input type="text" required class="form-control mb-1" placeholder="..." name="direccion" id="direccionEdit" max="255">
                     </div>
                   </div>
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="number" required class="form-control mb-1" placeholder="..." name="telefono" id="telefonoEdit">
+                      <input type="text" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required name="telefono" id="telefonoEdit">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="email">Correo Electronico</label>
@@ -161,6 +161,7 @@
     let editUrl = "<?= APP_URL . $this->Route('estudiantes/edit') ?>";
     let showDetailsUrl = "<?= APP_URL . $this->Route('estudiantes/showDetails') ?>";
     let noteUrl = "<?= APP_URL . $this->Route('notes/pdf') ?>";
+    let deleteUrl = "<?= APP_URL . $this->Route('estudiantes/delete') ?>";
 
     $(document).ready(() => {
 
@@ -190,7 +191,7 @@
                         <a class="dropdown-item" onClick="showDetails('${row[4]}')" href="javascript:void(0)">Mostrar Datos de Contacto</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="javascript:void(0)">Editar</a>
                         <a class="dropdown-item" " href="${noteUrl+'/'+row[0]}" target="_blank">Notas</a>
-                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}') href="javascript:void(0)">Eliminar</a>
+                        <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="javascript:void(0)">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
@@ -207,6 +208,75 @@
 
         url = $(this).attr('action');
         data = $(this).serializeArray();
+
+        nombre = $("#guardar #nombre").val();
+
+        if (!onlyLetters(nombre)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Nombre de estudiante no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        apellido = $("#guardar #apellido").val();
+        if (!onlyLetters(apellido)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Apellido no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        telefono = $("#guardar #telefono").val();
+        if (!phoneNumbers(telefono)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Numero de telefono no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        cedula = $("#guardar #cedula").val();
+        if (!onlyNumbers(cedula)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Cedula no valida",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        email = $("#guardar #email").val();
+        if (!onlyEmail(email)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "email no valida",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
         $.ajax({
           type: "POST",
           url: url,
@@ -230,7 +300,7 @@
             Swal.fire({
               position: 'bottom-end',
               icon: 'success',
-              title: 'Estudiante gurdado con exito',
+              title: 'Estudiante guardado con exito',
               showConfirmButton: false,
               toast: true,
               timer: 2000
@@ -250,6 +320,75 @@
         toggleLoading(true, '#actualizar');
         url = $(this).attr('action');
         data = $(this).serializeArray();
+
+        nombre = $("#actualizar #nombreEdit").val();
+        if (!onlyLetters(nombre)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Nombre de estudiante no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        apellido = $("#actualizar #apellidoEdit").val();
+        if (!onlyLetters(apellido)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Apellido no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
+        telefono = $("#actualizar #telefonoEdit").val();
+        if (!phoneNumbers(telefono)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Numero de telefono no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        cedula = $("#actualizar #cedulaEdit").val();
+        if (!onlyNumbers(cedula)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "Cedula no valida",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+        email = $("#actualizar #emailEdit").val();
+        if (!onlyEmail(email)) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: "email no valido",
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+          toggleLoading(false);
+          return false;
+        }
+
         $.ajax({
           type: "POST",
           url: url,
@@ -287,10 +426,6 @@
       function descargarNotasEstudiante(id) {
         alert(`Editing ${id}`)
         console.log('aasddff');
-      }
-
-      function remove(id) {
-        alert(`Removing ${id}`)
       }
 
       // TOGGLE BUTTON AND SPINNER
@@ -368,5 +503,69 @@
           renderUpdateForm(JSON.parse(data))
         },
       });
+    }
+
+    function remove(id) {
+
+      Swal.fire({
+        title: "¿Seguro que desea eliminar el estudiante?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Continuar",
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            type: "POST",
+            url: deleteUrl,
+            data: {
+              'cedula': id
+            },
+            error: function(error, status) {
+              Swal.fire({
+                position: 'bottom-end',
+                icon: 'error',
+                title: error.responseText,
+                showConfirmButton: false,
+                toast: true,
+                timer: 3000
+              })
+
+            },
+            success: function(data, status) {
+              console.log(data);
+              Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: 'Estudiante borrada con exito',
+                showConfirmButton: false,
+                toast: true,
+                timer: 1500
+              })
+              $('#example').DataTable().ajax.reload();
+            },
+          });
+        }
+      });
+
+    }
+
+    function onlyLetters(str) {
+      return /^[A-Za-zñáéíóúü ]*$/.test(str);
+    }
+
+    function phoneNumbers(number) {
+      return /^[04][0-9]{10}$/.test(number);
+    }
+
+    function onlyNumbers(number) {
+      return /^[0-9]{8}$/.test(number);
+    }
+
+    function onlyEmail(email) {
+      return /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(email)
+
     }
   </script>

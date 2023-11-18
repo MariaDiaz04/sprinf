@@ -117,6 +117,7 @@ class model extends conexion
 		} else {
 			$sql = $sql . '1;';
 		}
+		 echo $sql;
 
 		return \PDO::query($sql);
 	} //finaliza delete

@@ -12,6 +12,7 @@ use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;
 use Dompdf\Dompdf;
+use Model\inscripcion;
 
 use PHPUnit\Framework\MockObject\DuplicateMethodException;
 
@@ -25,6 +26,7 @@ class estudianteController extends controller
   private $estudiante;
   private $usuario;
   private $persona;
+  public $inscripcion;
 
   function __construct()
   {
@@ -32,6 +34,7 @@ class estudianteController extends controller
     $this->estudiante = new estudiante();
     $this->usuario = new usuario();
     $this->persona = new persona();
+    $this->inscripcion = new inscripcion();
   }
 
   public function index()
@@ -132,7 +135,100 @@ class estudianteController extends controller
       $date = date('d-m-Y');
       $estudiante =  $this->estudiante->findNotesByStudents($id);
       if (isEmpty($estudiante)) {
-        echo json_encode('No hay notas de estudiantes');
+        $dompdf = new Dompdf();
+        $name_comprobante = 'Calificacion';
+
+        $html = '<!DOCTYPE html>
+        <html lang="es">
+        
+        <head>
+            <meta charset="UTF-8">
+        
+            <title>Reporte de Ventas</title>
+            <link rel="stylesheet" href="{{link_css}}">
+        </head>
+        
+        <body>
+            <div class="container">
+              <h1 class="center">No hay notas del estudiante</h1>
+          </div>
+      
+          </body>
+          <style>
+              html {
+                  margin-left: 22px;
+                  margin-right: 22px;
+                  margin-top: 28px;
+                  margin-bottom: 28px;
+              }
+          
+              *,
+              ::before,
+              ::after {
+                  margin: 0px;
+                  padding: 0px;
+                  box-sizing: border-box;
+              }
+          
+              body {
+                  font-size: 12px;
+                  font-weight: 400;
+                  color: #212529;
+              }
+          
+              body,
+              html {
+                  font-family: sans-serif;
+              }
+          
+              table {
+                  width: 100%;
+              }
+          
+              .th {
+                  font-size: 14px;
+                  color: #fff;
+                  line-height: 1.4;
+                  background-color: #005abd;
+                  /*#6c7ae0 */
+                  padding-top: 10px;
+                  padding-bottom: 10px;
+              }
+          
+              .head {
+                  /* padding-top: 12px;
+              padding-bottom: 12px; */
+              }
+          
+              .center {
+                  text-align: center;
+              }
+          
+              p {
+                  margin-top: 0;
+                  margin-bottom: 0;
+              }
+          
+              ul {
+                  list-style-type: none;
+              }
+          
+              .tablepe>tr:nth-child(even) {
+                  background-color: #f8f6ff;
+              }
+          
+              .tablepe {
+                  border-collapse: collapse;
+              }
+          
+          </style>
+          
+          </html>';
+        $dompdf->loadHtml(utf8_decode($html));
+        $dompdf->render();
+        $dompdf->stream($name_comprobante, array("Attachment" => false));
+        http_response_code(200);
+        echo json_encode($id);
         exit();
       }
       $fase = $estudiante[0]["fase_id"];
@@ -338,6 +434,56 @@ class estudianteController extends controller
       http_response_code(500);
       echo json_encode($e->getMessage());
     }
+  }
+
+
+  public function delete($request)
+  {
+
+    try {
+      $cedula = $request->get('cedula');
+
+      $estudiante = $this->estudiante->findByCedula($cedula);
+      $estudent_id =  $estudiante['id'];
+      $usuario_id =  $estudiante['usuario_id'];
+      // verificar que no cuente con incripciones ya creadas
+      $this->checkIntegrante($estudent_id, 'eliminar');
+      $this->checkInscripcion($estudent_id, 'eliminar');
+      // realizar eliminacion
+      $result = $this->estudiante->deleteTransaction($estudent_id, $usuario_id);
+      return var_dump($result);
+      if (!$result) throw new Exception('Error inesperado al borrar el estudiante.');
+      http_response_code(200);
+      echo json_encode($cedula);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
+    }
+  }
+
+  function checkInscripcion(string $estudent, string $action): bool
+  {
+    // verificar que no cuente con insripciones
+    $inscripciones = $this->inscripcion->findByStudent($estudent);
+    if (!!$inscripciones) {
+      foreach ($inscripciones as $inscripcion) {
+        if (intval($inscripcion) > 0) throw new Exception('No puede ' . $action . ' datos del estudiante por que cuenta con incripciones ya creadas');
+      }
+    }
+    return true;
+  }
+
+
+  function checkIntegrante(string $estudent, string $action): bool
+  {
+    // verificar que no cuente con insripciones
+    $integrantes = $this->inscripcion->findIntegrantByStudent($estudent);
+    if (!!$integrantes) {
+      foreach ($integrantes as $integrant) {
+        if (intval($integrant) > 0) throw new Exception('No puede ' . $action . ' datos del estudiante por que ya es un integrante de un proyecto');
+      }
+    }
+    return true;
   }
   function ssp(Request $query): void
   {

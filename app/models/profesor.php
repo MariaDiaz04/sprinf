@@ -47,6 +47,52 @@ class profesor extends model
   }
 
   /**
+   * Obtener los detalles de una inscripcion
+   * por su código de estudiante
+   *
+   * @param string $cedula
+   * @param string $email
+   * @return array - es un array vacio en caso de que no consiga alguna coincidencia
+   */
+  public function findData(string $tabla,string $campo, string $dato)
+  {
+    $profesor = $this->select($tabla, [[$campo, '=',  "'$dato'"]]);
+    return !$profesor ? [] : $profesor;
+  }
+
+
+  function findByCodigo(string $cedula)
+  {
+      $profesor = $this->select('detalles_profesores', [['cedula', '=',  "'$cedula'"]]);;
+      if (!!$profesor) {
+          foreach ($profesor[0] as $key => $value) {
+              $this->fillable[$key] = $value;
+          }
+          return $this;
+      } else {
+          return [];
+      }
+  }
+
+
+   /**
+     * Actualizar información del estudiante
+     *
+     * @param string $nombre
+     * @param string $apellido
+     * @param string $email
+     * @param string $direccion
+     * @param string $telefono
+     * @param integer $cedula
+     * @return array
+     */
+    function updateProfesor($nombre, $apellido, $email, $direccion, $telefono, $cedula)
+    {
+
+        $estudiante = $this->querys('UPDATE usuario, persona SET persona.nombre =  "' . $nombre . '", persona.apellido = "' . $apellido . '" , persona.direccion = "' . $direccion . '", persona.telefono = "' . $telefono . '", usuario.email = "' . $email . '" WHERE persona.usuario_id = usuario.id AND persona.cedula = "' . $cedula . '"');
+        return !$estudiante ? [] : $estudiante;
+    }
+  /**
    * Generar código de profesor
    * (esta funcion se debe ejecutar antes de crear un profesor)
    *
@@ -88,6 +134,28 @@ class profesor extends model
       return $this->codigo;
     }
   }
+
+  
+    /**
+     * Transaccion para el borrado de secciones
+     *
+     * @return String
+     */
+    function deleteTransaction($codigo,$usuario_id): bool
+    {
+        try {
+            parent::beginTransaction();
+            // actualizar tabla materia
+            $this->delete('profesor', [['codigo', '=', '"' . $codigo . '"']]);
+            $this->delete('persona', [['usuario_id', '=',  $usuario_id ]]);
+            $this->delete('usuario', [['id', '=',  $usuario_id ]]);
+            parent::commit();
+            return true;
+        } catch (Exception $e) {
+            parent::rollBack();
+            return false;
+        }
+    }
 
   /**
    * generarSSP
