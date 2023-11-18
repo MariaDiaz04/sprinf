@@ -2687,6 +2687,23 @@ select
 cc.id as consejo_comunal_id,
 cc.nombre as consejo_comunal_nombre,
 cc.telefono as consejo_comunal_telefono,
+cc.nombre_vocero,
+scc.id as sector_id,
+scc.nombre  as sector_nombre,
+p.id as parroquia_id,
+p.nombre as parroquia_nombre,
+m.nombre as municipio_nombre
+from consejo_comunal cc inner join sector_consejo_comunal scc ON scc.id = cc.sector_id 
+inner join parroquias p on p.id = scc.parroquia_id 
+inner join municipios m on m.id = p.municipio;
+
+
+DROP VIEW IF EXISTS detalles_sector;
+CREATE VIEW detalles_sector AS
+select 
+cc.id as consejo_comunal_id,
+cc.nombre as consejo_comunal_nombre,
+cc.telefono as consejo_comunal_telefono,
 scc.id as sector_id,
 scc.nombre  as sector_nombre,
 p.id as parroquia_id,

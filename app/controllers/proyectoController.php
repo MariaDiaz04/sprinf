@@ -464,7 +464,7 @@ class proyectoController extends controller
 
                     if (empty($inscripcion)) {
                         if (!str_contains($materia['codigo'], 'ASESOR')) {
-                            $errors['warning'][] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "";
+                            $errors['warning'][] = "Integrante " . $integrante['nombre'] . ' ' . $integrante['apellido'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "";
                         } else {
                             // do nothing
                         }
@@ -472,7 +472,7 @@ class proyectoController extends controller
 
                         if ($inscripcion['calificacion'] == null) {
                             // usuario no cuenta con calificación suficiente como para ser evaluado
-                            $errors['danger'][] = "Integrante " . $integrante['nombre'] . ' - ' . $integrante['cedula'] . " no ha sido evaluado en la unidad curricular: " . $materia['nombre'] . "";
+                            $errors['danger'][] = "Integrante " . $integrante['nombre'] . ' ' . $integrante['apellido'] . ' - ' . $integrante['cedula'] . " no ha sido evaluado en la unidad curricular: " . $materia['nombre'] . "";
                         }
                     }
                 }
