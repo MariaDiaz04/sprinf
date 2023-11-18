@@ -124,6 +124,22 @@
         </li>
 
         <li class="menu-header small text-uppercase">
+          <span class="menu-header-text">Consejo Comunal</span>
+        </li>
+        <li class="menu-item <?= $this->currentPath() == 'consejoComunal' ? 'active' : '' ?>">
+          <a href="<?= APP_URL .  $this->Route('consejoComunal') ?>" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-group"></i>
+            <div data-i18n="Analytics">Consejo Comunal</div>
+          </a>
+        </li>
+        <li class="menu-item <?= $this->currentPath() == 'sector' ? 'active' : '' ?>">
+          <a href="<?= APP_URL .  $this->Route('sector') ?>" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-map-pin"></i>
+            <div data-i18n="Analytics">Sector</div>
+          </a>
+        </li>
+
+        <li class="menu-header small text-uppercase">
           <span class="menu-header-text">Baremos</span>
         </li>
         <!-- <li class="menu-item <?= $this->currentPath() == 'dimensiones' ? 'active' : '' ?>">
