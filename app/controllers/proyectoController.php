@@ -68,8 +68,8 @@ class proyectoController extends controller
         $tutores = $this->tutores->all();
         $profesores = $this->profesores->all();
         $trayectos = $this->trayectos->all();
-        $parroquias = $this->parroquia->all();
-        $consejosComunales = $this->consejoComunal->all();
+        $parroquias = $this->parroquia->allDetalles();
+        $consejosComunales = $this->consejoComunal->allDetalles();
 
         $fases = $this->fase->getPrimerFaseDeTrayectos();
 

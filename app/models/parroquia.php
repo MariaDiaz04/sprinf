@@ -75,6 +75,12 @@ class parroquia extends model
     return $proyectos ? $proyectos : [];
   }
 
+  public function allDetalles()
+  {
+    $proyectos = $this->select("detalles_parroquia");
+    return $proyectos ? $proyectos : [];
+  }
+
   /**
    * Retorna los datos del proyecto
    *

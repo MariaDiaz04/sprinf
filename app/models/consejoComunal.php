@@ -26,12 +26,18 @@ class consejoComunal extends model
   public function all()
   {
     try {
-    $consejos = $this->select("SELECT consejo_comunal.*, sector_consejo_comunal.nombre as sector FROM consejo_comunal INNER JOIN sector_consejo_comunal ON sector_consejo_comunal.id = sector_consejo_comunal.nombre
+      $consejos = $this->select("SELECT consejo_comunal.*, sector_consejo_comunal.nombre as sector FROM consejo_comunal INNER JOIN sector_consejo_comunal ON sector_consejo_comunal.id = sector_consejo_comunal.nombre
     ");
-    return $consejos ? $consejos : null;
-        } catch (Exception $th) {
-            return $th;
-        }
+      return $consejos ? $consejos : null;
+    } catch (Exception $th) {
+      return $th;
+    }
+  }
+
+  public function allDetalles()
+  {
+    $proyectos = $this->select("detalles_consejo_comunal");
+    return $proyectos ? $proyectos : [];
   }
 
   /**
@@ -50,18 +56,18 @@ class consejoComunal extends model
 
 
   public function Selectcod()
-    {
+  {
 
-        $codigo = $this->query(
-            'SELECT
+    $codigo = $this->query(
+      'SELECT
                 sector_consejo_comunal.id AS id,
                 sector_consejo_comunal.nombre AS nombre
             FROM
                 
                 `sector_consejo_comunal`;'
-        );
-        return $codigo;
-    }
+    );
+    return $codigo;
+  }
 
 
 
@@ -80,7 +86,7 @@ class consejoComunal extends model
     $query->bindParam(":nombre_vocero", $this->nombre_vocero);
     $query->bindParam(":sector_id", $this->sector_id);
     $query->bindParam(":telefono", $this->telefono);
-    
+
     $query->execute();
     $this->id = $this->lastInsertId();
     return true;
@@ -97,7 +103,7 @@ class consejoComunal extends model
     $query->bindParam(":nombre_vocero", $this->nombre_vocero);
     $query->bindParam(":sector_id", $this->sector_id);
     $query->bindParam(":telefono", $this->telefono);
-    
+
 
     return $query->execute();
   }
@@ -112,16 +118,16 @@ class consejoComunal extends model
 
   function deleteTransaction(string $id): bool
   {
-      try {
-          parent::beginTransaction();
-          // actualizar tabla materia
-          $delete = $this->delete('consejo_comunal', [['id', '=',  $id ]]);
-          parent::commit();
-          return true;
-      } catch (Exception $e) {
-          parent::rollBack();
-          return false;
-      }
+    try {
+      parent::beginTransaction();
+      // actualizar tabla materia
+      $delete = $this->delete('consejo_comunal', [['id', '=',  $id]]);
+      parent::commit();
+      return true;
+    } catch (Exception $e) {
+      parent::rollBack();
+      return false;
+    }
   }
 
   /**
