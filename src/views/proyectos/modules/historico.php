@@ -42,13 +42,13 @@
                 <hr>
                 <div class="row form-group">
                   <div class="col-lg-12">
-                    <label class="form-label" for="nombre"><b>Nombre *</b></label>
+                    <label class="form-label" for="nombre"><b>Nombre de proyecto*</b></label>
                     <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" readonly required>
                   </div>
                 </div>
                 <div class="row form-group mb-2">
                   <div class="col-lg-12">
-                    <label class="form-label" for="direccion"><b>Resumen *</b></label>
+                    <label class="form-label" for="direccion"><b>Resumen de proyecto*</b></label>
                     <textarea class="form-control" placeholder="..." id="resumen" name="resumen" style="height: 50px" readonly required></textarea>
                   </div>
                 </div>
@@ -78,7 +78,7 @@
                     <textarea class="form-control" placeholder="..." id="motor_productivo" name="motor_productivo" style="height: 50px" readonly required></textarea>
                   </div>
                   <div class="col-lg-6">
-                    <label class="form-label" for="direccion"><b>Dirección *</b></label>
+                    <label class="form-label" for="direccion"><b>Dirección Comunidad *</b></label>
                     <textarea class="form-control" placeholder="..." id="direccion" name="direccion" style="height: 50px" readonly required></textarea>
                   </div>
                 </div>
@@ -89,7 +89,7 @@
                   </div>
 
                   <div class="col-lg-6">
-                    <label class="form-label" for="tutor_ex"><b>Tutor Externo *</b></label>
+                    <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
                     <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex" required>
                   </div>
                   <div class="col-lg-6">

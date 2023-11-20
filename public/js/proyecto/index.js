@@ -140,11 +140,65 @@ $(document).ready(function (e) {
       },
     ],
   });
+  // **********************************************
+  //              GUARDAR HISTORICO
+  // **********************************************
+
+  // validaciones de historico de proyecto
+  $("#proyectoGuardarHistorico #tlf_tex").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!phoneNumbers(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoGuardarHistorico #tutor_ex").keyup(function () {
+    let nombreTutor = $(this).val();
+
+    if (!onlyLetters(nombreTutor)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
 
   $("#proyectoGuardarHistorico").submit(function (e) {
     e.preventDefault();
 
     toggleLoading(true, "#proyectoGuardarHistorico");
+
+    // validaciones
+    let nombreTutorExterno = $("#proyectoGuardarHistorico #tutor_ex").val();
+    let telefonoTutorExterno = $("#proyectoGuardarHistorico #tlf_tex").val();
+
+    if (!onlyLetters(nombreTutorExterno)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Nombre de tutor externo de proyecto no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    if (!phoneNumbers(telefonoTutorExterno)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Numero de telefono de tutor externo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
 
     $(this).find("select").prop("disabled", false);
 
@@ -821,5 +875,3 @@ function onlyLetters(str) {
 function phoneNumbers(number) {
   return /^[04][0-9]{10}$/.test(number);
 }
-
-
