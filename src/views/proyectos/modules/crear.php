@@ -20,7 +20,7 @@
               </div>
               <div class="col-lg-9">
                 <label class="form-label" for="nombre"><b>Nombre *</b></label>
-                <input type="text" class="form-control mb-1" placeholder="..." id="nombre" required name="nombre" max="255">
+                <input type="text" class="form-control mb-1" placeholder="..." id="nombre" required name="nombre" maxlength="255">
               </div>
             </div>
             <div class="row form-group mb-3">
@@ -36,13 +36,13 @@
 
               <div class="col-lg-6">
                 <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
-                <input type="text" class="form-control mb-1" placeholder="..." id="tutor_ex" required name="tutor_ex" max="255">
+                <input type="text" class="form-control mb-1" placeholder="..." id="tutor_ex" required name="tutor_ex" maxlength="255">
               </div>
             </div>
             <div class="row form-group mb-3">
               <div class="col-lg-6">
                 <label class="form-label" for="comunidad"><b>Comunidad *</b></label>
-                <textarea class="form-control" placeholder="..." required id="comunidad" name="comunidad" style="height: 50px " max="255"></textarea>
+                <textarea class="form-control" placeholder="..." required id="comunidad" name="comunidad" style="height: 50px " maxlength="255"></textarea>
               </div>
               <div class="col-lg-6">
                 <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
@@ -53,11 +53,11 @@
             <div class="row form-group mb-3">
               <div class="col-lg-6 mb-3">
                 <label class="form-label" for="direccion"><b>Dirección</b></label>
-                <textarea class="form-control" placeholder="..." required id="direccion" name="direccion" style="height: 50px" max="255"></textarea>
+                <textarea class="form-control" placeholder="..." required id="direccion" name="direccion" style="height: 50px" maxlength="255"></textarea>
               </div>
               <div class="col-lg-6 mb-3">
                 <label class="form-label" for="motor_productivo"><b>Motor Productivo</b></label>
-                <textarea class="form-control" placeholder="..." required id="motor_productivo" name="motor_productivo" style="height: 50px" max="255"></textarea>
+                <textarea class="form-control" placeholder="..." required id="motor_productivo" name="motor_productivo" style="height: 50px" maxlength="200"></textarea>
               </div>
             </div>
             <div class="row form-group mb-3">
@@ -94,11 +94,11 @@
             <div class="row form-group mb-3">
               <div class="col-lg-6">
                 <label class="form-label" for="resumen"><b>Resumen *</b></label>
-                <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" style="height: 50px" max="255"></textarea>
+                <textarea class="form-control" placeholder="..." required id="resumen" name="resumen" style="height: 50px" maxlength="255"></textarea>
               </div>
               <div class="col-lg-6">
                 <label class="form-label" for="observaciones"><b>Observaciones </b></label>
-                <textarea class="form-control" placeholder="..." id="observaciones" name="observaciones" style="height: 50px" max="255"></textarea>
+                <textarea class="form-control" placeholder="..." id="observaciones" name="observaciones" style="height: 50px" maxlength="200"></textarea>
               </div>
             </div>
           </div>

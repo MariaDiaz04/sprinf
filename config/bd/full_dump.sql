@@ -114,7 +114,7 @@ CREATE TABLE `sprinf_bd`.`proyecto` (
   `nombre` varchar(255) NOT NULL,
   `comunidad` varchar(255) NOT NULL,
   `motor_productivo` varchar(255),
-  `resumen` varchar(255),
+  `resumen` text,
   `direccion` varchar(255),
   `consejo_comunal_id` int,
   `observaciones` text,
