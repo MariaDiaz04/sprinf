@@ -242,7 +242,6 @@ class proyectoController extends controller
             $observaciones = $nuevoProyecto->request->get('observaciones');
             $id = $nuevoProyecto->request->get('id');
 
-
             $comunidadAutonoma = $nuevoProyecto->request->get('comunidad_autonoma');
 
             $parroquia_id = $nuevoProyecto->request->get('parroquia_id');
@@ -266,6 +265,11 @@ class proyectoController extends controller
 
             if (isset($id)) {
                 $proyectData['id'] = $id;
+
+                $checkProyecto = $this->proyecto->find($id);
+                if (!empty($checkProyecto)) {
+                    throw new Exception('El proyecto ya ha sido registrado');
+                }
             }
 
             $this->proyecto->setProyectData($proyectData);

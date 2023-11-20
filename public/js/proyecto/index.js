@@ -204,6 +204,18 @@ $(document).ready(function (e) {
 
     formData = $(this).serializeArray();
     items = transfer.getSelectedItems();
+    if (items.length > 5) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Ha excedido el limite de estudiantes por proyecto",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
     data = [...formData];
     counter = 0;
     $(this).find("select").prop("disabled", true);
@@ -271,6 +283,7 @@ $(document).ready(function (e) {
     }
   });
 
+  // validaciones de creacion de proyecto
   $("#proyectoGuardar #tlf_tex").keyup(function () {
     let telefono = $(this).val();
 
@@ -299,6 +312,19 @@ $(document).ready(function (e) {
     formData = $(this).serializeArray();
 
     items = transfer2.getSelectedItems();
+
+    if (items.length > 5) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Ha excedido el limite de estudiantes por proyecto",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
     data = [...formData];
     counter = 0;
 
