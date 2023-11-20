@@ -294,6 +294,46 @@ $(document).ready(function (e) {
     }
   });
 
+  $("#proyectoGuardar #nombre").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!onlyLetters(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoGuardar #tutor_ex").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!onlyLetters(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoGuardar #motor_productivo").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!onlyLetters(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoGuardar #resumen").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!onlyLetters(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
   $("#proyectoActualizar #tlf_tex").keyup(function () {
     let telefono = $(this).val();
 
@@ -374,7 +414,7 @@ $(document).ready(function (e) {
 
     // validar nombre
 
-    nombre = $("#proyectoGuardar #nombre").val();
+    let nombre = $("#proyectoGuardar #nombre").val();
 
     if (!onlyLetters(nombre)) {
       Swal.fire({
@@ -389,7 +429,22 @@ $(document).ready(function (e) {
       return false;
     }
 
-    tutor_ex = $("#proyectoGuardar #tutor_ex").val();
+    let resumen = $("#proyectoGuardar #resumen").val();
+
+    if (!onlyLetters(resumen)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Resumen de proyecto no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    let tutor_ex = $("#proyectoGuardar #tutor_ex").val();
     if (!onlyLetters(tutor_ex)) {
       Swal.fire({
         position: "bottom-end",
@@ -403,7 +458,21 @@ $(document).ready(function (e) {
       return false;
     }
 
-    tlf_tex = $("#proyectoGuardar #tlf_tex").val();
+    let motor_productivo = $("#proyectoGuardar #motor_productivo").val();
+    if (!onlyLetters(motor_productivo)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Motor Productivo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    let tlf_tex = $("#proyectoGuardar #tlf_tex").val();
     if (!phoneNumbers(tlf_tex)) {
       Swal.fire({
         position: "bottom-end",
@@ -895,7 +964,7 @@ function removeProject(id) {
 }
 
 function onlyLetters(str) {
-  return /^[A-Za-zñáéíóúü ]*$/.test(str);
+  return /^[A-Za-zñáéíóúü ]*$/.test(str) && str.trim().length > 0;
 }
 
 function phoneNumbers(number) {
