@@ -334,16 +334,6 @@ $(document).ready(function (e) {
     }
   });
 
-  $("#proyectoActualizar #tlf_tex").keyup(function () {
-    let telefono = $(this).val();
-
-    if (!phoneNumbers(telefono)) {
-      $(this).addClass("is-invalid");
-    } else {
-      $(this).removeClass("is-invalid");
-    }
-  });
-
   $("#proyectoGuardar").submit(function (e) {
     e.preventDefault();
 
@@ -535,12 +525,63 @@ $(document).ready(function (e) {
     });
   });
 
+  // validaciones de actualizacion de proyecto
+  $("#proyectoActualizar #tlf_tex").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!phoneNumbers(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoActualizar #nombre").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!onlyLetters(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoActualizar #tutor_ex").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!onlyLetters(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoActualizar #motor_productivo").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!onlyLetters(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
+  $("#proyectoActualizar #resumen").keyup(function () {
+    let telefono = $(this).val();
+
+    if (!onlyLetters(telefono)) {
+      $(this).addClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+    }
+  });
+
   $("#proyectoActualizar").submit(function (e) {
     e.preventDefault();
 
     formData = $(this).serializeArray();
 
-    nombre = $("#proyectoActualizar #nombre").val();
+    let nombre = $("#proyectoGuardar #nombre").val();
 
     if (!onlyLetters(nombre)) {
       Swal.fire({
@@ -555,7 +596,22 @@ $(document).ready(function (e) {
       return false;
     }
 
-    tutor_ex = $("#proyectoActualizar #tutor_ex").val();
+    let resumen = $("#proyectoGuardar #resumen").val();
+
+    if (!onlyLetters(resumen)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Resumen de proyecto no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    let tutor_ex = $("#proyectoGuardar #tutor_ex").val();
     if (!onlyLetters(tutor_ex)) {
       Swal.fire({
         position: "bottom-end",
@@ -569,7 +625,21 @@ $(document).ready(function (e) {
       return false;
     }
 
-    tlf_tex = $("#proyectoActualizar #tlf_tex").val();
+    let motor_productivo = $("#proyectoGuardar #motor_productivo").val();
+    if (!onlyLetters(motor_productivo)) {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Motor Productivo no valido",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000,
+      });
+      toggleLoading(false);
+      return false;
+    }
+
+    let tlf_tex = $("#proyectoGuardar #tlf_tex").val();
     if (!phoneNumbers(tlf_tex)) {
       Swal.fire({
         position: "bottom-end",
@@ -622,7 +692,7 @@ $(document).ready(function (e) {
             toast: true,
             timer: 1000,
           }).then(() => location.reload());
-          document.getElementById("proyectoGuardar").reset();
+          document.getElementById("proyectoActualizar").reset();
           $("#actualizar").modal("hide");
         },
       });
@@ -868,7 +938,14 @@ $("#anadirEstudiante").click(function (e) {
   ).children.length;
 
   if (studentsAlreadyAppened >= 5) {
-    alert("limite de estudiantes alcanzado");
+    Swal.fire({
+      position: "bottom-end",
+      icon: "error",
+      title: "Ha excedido el limite de estudiantes por proyecto",
+      showConfirmButton: false,
+      toast: true,
+      timer: 2000,
+    });
   } else {
     let selectedStudent = $("#selectEstudiante option:selected");
 
