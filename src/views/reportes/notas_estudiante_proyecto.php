@@ -79,6 +79,16 @@
     background: url(dimension.png);
   }
 
+  h4 {
+    border-bottom: 1px solid #5D6975;
+    color: #5D6975;
+    font-size: 1em;
+    font-weight: normal;
+    text-align: center;
+    margin: 0 0 15px 0;
+    background: url(dimension.png);
+  }
+
   #project {
     float: left;
   }
@@ -173,6 +183,10 @@
     padding: 8px 0;
     text-align: center;
   }
+
+  .page_break {
+    page-break-before: always;
+  }
 </style>
 
 <body>
@@ -200,28 +214,67 @@
         <td>C.I. <?= $integrante['cedula'] ?></td>
         <td><a href="mailto:<?= $estudiante['email'] ?>"><?= $estudiante['email'] ?></a></td>
         <td>+54<?= $estudiante['telefono'] ?></td>
-
-
       </tr>
-
-
     </table>
-    <!-- <div id="project">
-      <!-- <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div> -->
-    <!-- <div><span>DUE DATE</span> September 17, 2015</div>
-    </div> -->
+
     <h3>Resumen de notas de baremos</h3>
+    <?php
+    $ponderacionFinal = 0;
+    $calificacionFinal = 0;
+    ?>
+    <?php foreach ($materiasporFase as $fase) : ?>
+      <?php
+      $totalPonderadoMaterias = 0;
+      $totalCalificadoMaterias = 0;
+      ?>
+      <h4><?= $fase['nombre'] ?></h4>
+      <table id="info">
+        <thead>
+          <tr>
+            <th>Unidad Curricular</th>
+            <th>Ponderado</th>
+            <th>Calificación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($fase['materias'] as $materia) : ?>
+            <?php
+            $totalPonderadoMaterias += $materia['ponderado_baremos'];
+            $totalCalificadoMaterias += $materia['ponderado'];
+            ?>
+            <tr>
+              <td><?= $materia['nombre'] ?></td>
+              <td><?= $materia['ponderado_baremos'] ?></td>
+              <td><?= $materia['ponderado'] ?></td>
+            </tr>
+          <?php endforeach; ?>
+          <tr>
+            <td colspan="1" class="grand total">TOTAL (%)</td>
+            <td class="grand total"><?= $totalPonderadoMaterias ?></td>
+            <td class="grand total"><?= $totalCalificadoMaterias ?></td>
+          </tr>
+        </tbody>
+      </table>
+      <?php
+      $calificacionFinal += $totalCalificadoMaterias;
+      $ponderacionFinal += $totalPonderadoMaterias;
+      ?>
+    <?php endforeach; ?>
+
+
+
     <table id="info">
-      <thead>
-        <tr>
-          <th>Unidad Curricular</th>
-          <th>Calificación</th>
-        </tr>
-      </thead>
-
-
+      <tr>
+        <th><span>TOTAL PONDERADO</span></th>
+        <td><?= $ponderacionFinal ?></td>
+      </tr>
+      <tr>
+        <th><span>TOTAL CALIFICACION</span></th>
+        <td><?= $calificacionFinal ?></td>
+      </tr>
     </table>
   </header>
+  <div class="page_break"></div>
   <main>
     <h2>Proyecto Sociotecnologico - 10%</h2>
     <h3>Desempeño Individual</h3>

@@ -1010,8 +1010,9 @@ class proyectoController extends controller
 
             // obtener calificacion de materias de baremos
             $fases = $this->fase->getByTrayecto($proyecto['codigo_trayecto']);
-            $materias = [];
+            $materiasPorFase = [];
             foreach ($fases as $fase) {
+                $materiasporFase[$fase['codigo_fase']]['nombre'] = $fase['nombre_fase'];
                 $materiasDeDimension = $this->dimension->materiasDeBaremos($fase['codigo_fase']);
                 foreach ($materiasDeDimension as $materia) {
                     $totalCalificacion = 0;
@@ -1035,11 +1036,13 @@ class proyectoController extends controller
                     }
                     $materia['ponderado'] = $totalCalificacion;
                     $materia['dimensiones'] = $dimensiones;
-                    $materias[$fase['codigo_fase']][$materia['codigo']] = $materia;
+
+
+                    $materiasporFase[$fase['codigo_fase']]['materias'][$materia['codigo']] = $materia;
                 }
             }
-            echo json_encode($materias);
-            exit();
+            // echo json_encode($materiasporFase);
+            // exit();
 
             //Y debes activar esta opción "TRUE"
             $options->set('isRemoteEnabled', TRUE);
