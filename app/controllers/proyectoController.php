@@ -461,14 +461,22 @@ class proyectoController extends controller
             if (empty($materiasDeDimension)) {
                 throw new Exception('Baremos no cuenta con dimensiones');
             }
-
+            $errors['warning'] = [];
+            $errors['danger'] = [];
             foreach ($integrantes as $key => $integrante) {
+
                 foreach ($materiasDeDimension as $key => $materia) {
-                    $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['id'], $materia['codigo']);
+                    $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['estudiante_id'], $materia['codigo']);
 
                     if (empty($inscripcion)) {
                         if (!str_contains($materia['codigo'], 'ASESOR')) {
-                            $errors['warning'][] = "Integrante " . $integrante['nombre'] . ' ' . $integrante['apellido'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "";
+                            $errorInfo = [
+                                'message' => "Integrante " . $integrante['nombre'] . ' ' . $integrante['apellido'] . ' - ' . $integrante['cedula'] . " no está cursando la materia " . $materia['nombre'] . "",
+                                'action' => APP_URL . $this->route('materias/' . $fase['codigo_trayecto'] . '/' . $materia['codigo_materia'])
+                            ];
+                            array_push($errors['warning'], $errorInfo);
+
+                            // $errors['warning'][$integrante['cedula']][] = ;
                         } else {
                             // do nothing
                         }
@@ -476,11 +484,19 @@ class proyectoController extends controller
 
                         if ($inscripcion['calificacion'] == null) {
                             // usuario no cuenta con calificación suficiente como para ser evaluado
-                            $errors['danger'][] = "Integrante " . $integrante['nombre'] . ' ' . $integrante['apellido'] . ' - ' . $integrante['cedula'] . " no ha sido evaluado en la unidad curricular: " . $materia['nombre'] . "";
+                            $errorInfo = [
+                                'message' => "Integrante " . $integrante['nombre'] . ' ' . $integrante['apellido'] . ' - ' . $integrante['cedula'] . " no ha sido evaluado en la unidad curricular: " . $materia['nombre'] . "",
+                                'action' => APP_URL . $this->route('materias/' . $fase['codigo_trayecto'] . '/' . $materia['codigo_materia'])
+                            ];
+
+                            array_push($errors['danger'], $errorInfo);
                         }
                     }
                 }
             }
+
+            // echo json_encode($errors);
+            // exit();
 
 
             foreach ($materiasDeDimension as $key => $materia) {

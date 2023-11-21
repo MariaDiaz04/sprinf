@@ -1,27 +1,32 @@
+<style>
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+</style>
 <div>
   <div class="card mb-4">
     <h4 class="card-header"><b>Baremos <?= $fase->nombre_trayecto . ' - ' . $fase->nombre_fase . ' - ' . $fase->fecha_inicio . '/' . $fase->fecha_cierre ?></b></h4>
   </div>
-  <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
+  <?php if (!empty($errors->danger)) : ?>
 
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>Atención!</strong> Han ocurrido algunos errores críticos al generar baremos:
       <ul>
         <?php foreach ($errors->danger as $error) : ?>
-          <li><?= $error ?></li>
+          <li><?= $error->message ?> ( <a href="<?= $error->action ?>" target="_blank">Gestionar</a> )</li>
         <?php endforeach; ?>
 
       </ul>
     </div>
   <?php endif; ?>
 
-  <?php if (is_object($errors) && property_exists($errors, 'warning')) : ?>
+  <?php if (!empty($errors->warning)) : ?>
 
     <div class="alert alert-secondary alert-dismissible fade show" role="alert">
       <strong>Atención!</strong> El equipo de proyecto cuenta con las siguientes caracteristicas:
       <ul>
         <?php foreach ($errors->warning as $error) : ?>
-          <li><?= $error ?></li>
+          <li><?= $error->message ?> ( <a href="<?= $error->action ?>" target="_blank">Gestionar</a> )</li>
         <?php endforeach; ?>
 
       </ul>
@@ -64,7 +69,7 @@
                         <tr>
                           <th scope="row"><?= $indicador->nombre ?></th>
                           <td><b><?= $indicador->ponderacion ?> %</b></td>
-                          <td><input required type="number" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]"></td>
+                          <td><input required type="number" pattern="^[0-9]+$" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]"></td>
                         </tr>
 
                       <?php endforeach; ?>
@@ -109,7 +114,12 @@
 
 
                           <?php foreach ($integrantes as $idIntegrante => $integrante) : ?>
-                            <td><input required type="number" class="form-control " min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]"></td>
+                            <td>
+                              <input required type="number" aria-describedby="invalidCheck3Feedback" class="form-control" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]" data-max="<?= $indicador->ponderacion ?>">
+                              <div id="invalidCheck3Feedback" class="invalid-feedback">
+                                Max: <?= $indicador->ponderacion ?>%
+                              </div>
+                            </td>
                           <?php endforeach; ?>
                         </tr>
 
@@ -151,6 +161,36 @@
 </div>
 
 <script>
+  $('input[type="number"]').on('keydown', function(event) {
+    const keyCode = event.keyCode;
+    console.log(keyCode)
+    // Comprueba si el código de la tecla presionada es un número
+    if (isLetterOrSpecialCharacter(keyCode)) {
+      // Acepta el valor
+      event.preventDefault();
+
+    }
+  })
+  $('input[type="number"]').on('keyup', function() {
+    const value = $(this).val();
+
+    console.log(value)
+    if (value.length > 5 || (!value && !value.endsWith('.'))) {
+      // Establece el valor en el límite
+      // $(this).val(value.substring(0, 5));
+      console.log('no pasa')
+    }
+
+    // Comprueba si el valor coincide con la expresión regular
+    if (!/^\d+(\.\d{1,2})?$/.test(value) || value < 0 || value > $(this).data('max')) {
+      // Si no coincide, muestra un mensaje de error
+      $(this).addClass('is-invalid')
+
+    } else {
+      // Si coincide, elimina el mensaje de error
+      $(this).removeClass('is-invalid')
+    }
+  });
   let urlEvaluar = "<?= APP_URL . $this->Route('proyectos/subir-notas') ?>";
   $(document).ready(() => {
 
@@ -257,4 +297,29 @@
 
     }
   });
+
+  function isLetterOrSpecialCharacter(keyCode) {
+    // Lista de keycodes de letras
+    const lettersKeyCodes = [
+      65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86,
+      87, 88, 89, 90,
+    ];
+
+    // Lista de keycodes de caracteres especiales
+    const specialCharactersKeyCodes = [
+      160, // á
+      161, // é
+      162, // í
+      163, // ó
+      164, // ú
+      209, // ñ
+      91, // [
+      92, // \
+      93, // ]
+      96, // `
+    ];
+
+    // Devuelve true si el keycode es de una letra o caracter especial
+    return lettersKeyCodes.includes(keyCode) || specialCharactersKeyCodes.includes(keyCode);
+  }
 </script>
