@@ -83,6 +83,12 @@ class inscripcion extends model
     return !$inscripcion ? [] : $inscripcion;
   }
 
+  function findStudentSubject(string $codigoEstudiante, string $codigo_materia): array
+  {
+    $inscripcion = $this->selectOne('detalles_inscripciones', [['estudiante_id', '=', '"' . $codigoEstudiante . '"'], ['codigo_materia', '=', '"' . $codigo_materia . '"']]);
+    return !$inscripcion ? [] : $inscripcion;
+  }
+
   function findPendingEnrollment($codigo_materia): array
   {
     $query = $this->prepare("SELECT `id`,nombre, apellido,`cedula` FROM `detalles_estudiantes` WHERE `id` NOT IN (SELECT `estudiante_id` FROM `detalles_inscripciones` WHERE codigo_materia = :codigo_materia)");
@@ -93,7 +99,7 @@ class inscripcion extends model
   }
 
 
-  
+
   function findIntegrantByStudent(string $codigoEstudiante): array
   {
     $inscripcion = $this->select('integrante_proyecto', [['estudiante_id', '=', '"' . $codigoEstudiante . '"']]);

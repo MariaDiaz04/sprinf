@@ -42,12 +42,40 @@
     </div>
   </div>
 
-  <?php foreach ($baremos as $materia) : ?>
+  <?php foreach ($baremos as $idMateria => $materia) : ?>
     <div class="card mb-3">
-      <h5 class="card-header bg-primary text-white " style="font-weight: bold;"><?= $materia->nombre ?> - <?= $materia->ponderado ?>%</h5>
+      <h5 class="card-header bg-primary text-white d-flex justify-content-between" style="font-weight: bold;">
+        <span class="inline-block"><?= $materia->nombre ?> - <?= $materia->ponderado ?>%</span>
+
+      </h5>
+
       <form action="<?= APP_URL . $this->Route('proyectos/editarNotaBaremos') ?>" method="post" class="editarNotaBaremos">
         <input type="hidden" name="proyecto_id" value="<?= $proyecto_id ?>">
         <div class="card-body px-3 pt-3">
+          <?php if (!empty($materia->inscripcion) && count($materia->inscripcion) > 0) : ?>
+            <p class="d-flex justify-content-end">
+              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#notas-<?= $idMateria ?>" aria-expanded="false" aria-controls="notas-<?= $idMateria ?>">
+                <i class='bx bx-search-alt'></i> Ver Notas de Unidad Curricular
+              </button>
+            </p>
+            <div class="collapse" id="notas-<?= $idMateria ?>">
+              <table class="table table-striped mb-4">
+                <tr>
+                  <th>Estudiante</th>
+                  <th>Ponderado</th>
+                </tr>
+                <tbody>
+                  <?php foreach ($materia->inscripcion as $inscripcion) : ?>
+                    <tr>
+                      <td> <?= $inscripcion->nombre_estudiante ?></td>
+                      <td><b><?= $inscripcion->calificacion ?></b></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          <?php endif; ?>
+
           <?php if (property_exists($materia, 'grupal') && !empty($materia->grupal)) : ?>
             <?php foreach ($materia->grupal as $dimension) : ?>
               <div class="container mb-5  ">
@@ -150,7 +178,7 @@
   <?php endforeach; ?>
   <div class="mt-5"></div>
   <hr class="border-light m-0">
-  <?php if (is_object($errors) && property_exists($errors, 'danger')) : ?>
+  <?php if (!empty($errors->danger)) : ?>
     <p>
       No se podrá evaluar baremos hasta que se resuelvan los conflictos críticos
     </p>

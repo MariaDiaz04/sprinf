@@ -466,6 +466,8 @@ class proyectoController extends controller
             foreach ($integrantes as $key => $integrante) {
 
                 foreach ($materiasDeDimension as $key => $materia) {
+                    $baremos[$materia['codigo']]['inscripcion'] = [];
+
                     $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['estudiante_id'], $materia['codigo']);
 
                     if (empty($inscripcion)) {
@@ -501,7 +503,7 @@ class proyectoController extends controller
 
             foreach ($materiasDeDimension as $key => $materia) {
                 $dimensiones = $this->dimension->findBySubject($materia['codigo']);
-
+                $baremos[$materia['codigo']]['inscripcion'] = [];
                 $baremos[$materia['codigo']]['nombre'] = $materia['nombre'];
 
                 $baremos[$materia['codigo']]['individual'] = [];
@@ -546,6 +548,12 @@ class proyectoController extends controller
                     // TODO CALCULAR TOTAL PONDERADO POR DIMENSION
                 }
                 $baremos[$materia['codigo']]['ponderado'] = $totalPonderado;
+
+                foreach ($integrantes as $key => $integrante) {
+
+                    $inscripcion = $this->inscripcion->findStudentSubject($integrante['estudiante_id'], $materia['codigo_materia']);
+                    array_push($baremos[$materia['codigo']]['inscripcion'], $inscripcion);
+                }
             }
 
 
