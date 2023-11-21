@@ -5,7 +5,7 @@
         <div><span class="text-muted font-weight-light">Baremos </span>/ Gestión</div>
 
         <a class="btn btn-outline-primary btn-round d-block" href="<?= APP_URL . $this->Route('baremos/crear') ?>">
-          <span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+          <span class="ion ion-md-add"></span>&nbsp; Registrar</a>
 
       </h4>
     </div>

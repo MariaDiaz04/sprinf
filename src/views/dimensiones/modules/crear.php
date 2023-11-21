@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="row form-group justify-content-center">
-                  <table class="table table-striped">
+                  <table class="table table-striped table-responsive">
                     <thead class="thead-dark">
                       <tr>
                         <th scope="col">Nombre Indicador</th>

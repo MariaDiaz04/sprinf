@@ -328,7 +328,7 @@ insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo
 insert into usuario (rol_id, email, contrasena, token) values (1,'root@gmail.com',"$2y$10$rLBxGygGRsLKk.nNNhbs1OD5PeH4ST/.LNG/93b49/lUA2/iaeM72", 'fsadfsadfsadf');
 
 insert into persona (usuario_id, cedula, nombre, apellido, direccion, telefono, estatus) 
-values (1, '28566432', 'Admin', 'admin', 'Urb. La Concordia', '04247777777', 1);
+values (1, '100', 'Admin', 'admin', 'Urb. La Concordia', '04247777777', 1);
 
 -- usuarios roles
 -- insert into roles_usuarios (rol_id, usuario_id) values (1,1);
@@ -1040,7 +1040,7 @@ insert into indicadores (dimension_id, nombre, ponderacion) values(50, 'Diseña 
 
 -- Proyecto - 10%
 insert into dimension (id, unidad_id, nombre, grupal) values(51,'PIPST548751_2','Evaluación Técnica Individual', 0);
-insert into indicadores (dimension_id, nombre, ponderacion) values(51, 'Responsabilidad y Proactividad', 2);
+insert into indicadores (dimension_id, nombre, ponderacion) values(51, 'Responsabilidad y Proactividad', 1.5);
 insert into dimension (id, unidad_id, nombre, grupal) values(52,'PIPST548751_2','Exposición', 1);
 insert into indicadores (dimension_id, nombre, ponderacion) values(52, 'Se presenta adecuadamente, señala el tema a exponer y viste de manera adecuada', 0.5);
 insert into indicadores (dimension_id, nombre, ponderacion) values(52, 'Se expresa con claridad, firmeza y precisión', 1);

@@ -4,7 +4,7 @@
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
         <div><span class="text-muted font-weight-light">Secciones </span>/ Gestión</div>
 
-        <a class="btn btn-primary btn-round d-block flex-shrink-0" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+        <a class="btn btn-primary btn-round d-block flex-shrink-0" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Registrar</a>
 
       </h4>
     </div>
@@ -13,7 +13,7 @@
   <div class="card">
     <h6 class="card-header bg-primary text-white">Secciones</h6>
     <div class="card-body px-3 pt-3">
-      <table id="example" class="table table-striped" style="width:100%">
+      <table id="example" class="table table-striped table-responsive" style="width:100%">
         <thead class="thead-dark">
           <tr>
             <th>Código</th>
@@ -92,6 +92,9 @@
         ajax: '<?= $this->Route('seccion/ssp') ?>',
         processing: true,
         serverSide: true,
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: true,
         pageLength: 30,
         columnDefs: [{
           data: null,

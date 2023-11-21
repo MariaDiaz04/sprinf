@@ -8,6 +8,7 @@ let regexAlfabeto = /^[a-z]+$/i;
 
 $(document).ready(function (e) {
   // cargar informacion en formulario de registro historico
+
   $("#cargarInformacion").click(function (e) {
     e.preventDefault();
 
@@ -81,6 +82,10 @@ $(document).ready(function (e) {
     processing: true,
     serverSide: true,
     pageLength: 30,
+    scrollX: true,
+    scrollY: false,
+    scrollCollapse: true,
+    responsive: true,
 
     columnDefs: [
       {
@@ -99,8 +104,8 @@ $(document).ready(function (e) {
       {
         data: null,
         render: function (data, type, row, meta) {
-          return `<div class="dropleft show">
-                    <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${
+          return `<div class="dropleft show ">
+                    <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow " href="#" role="button" id="dropdown-${
                       row[0]
                     }" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="bx bx-dots-vertical-rounded"></i>
@@ -111,6 +116,9 @@ $(document).ready(function (e) {
                     <a class="dropdown-item" href="${
                       noteUrl + "/" + row[0]
                     }" target="_blank">Notas</a>
+                    <a class="dropdown-item" href="${
+                      urlHistorico + row[0]
+                    }">Ver Histórico</a>
                     ${
                       row[8] > 0
                         ? `<a class="dropdown-item" onClick="reprobados('${row[0]}')" href="#">Gestionar Reprobados</a>`
@@ -297,7 +305,7 @@ $(document).ready(function (e) {
   $("#proyectoGuardar #nombre").keyup(function () {
     let telefono = $(this).val();
 
-    if (!onlyLetters(telefono)) {
+    if (!letterAndFewSpecial(telefono)) {
       $(this).addClass("is-invalid");
     } else {
       $(this).removeClass("is-invalid");
@@ -327,7 +335,7 @@ $(document).ready(function (e) {
   $("#proyectoGuardar #resumen").keyup(function () {
     let telefono = $(this).val();
 
-    if (!onlyLetters(telefono)) {
+    if (!letterAndFewSpecial(telefono)) {
       $(this).addClass("is-invalid");
     } else {
       $(this).removeClass("is-invalid");
@@ -406,7 +414,7 @@ $(document).ready(function (e) {
 
     let nombre = $("#proyectoGuardar #nombre").val();
 
-    if (!onlyLetters(nombre)) {
+    if (!letterAndFewSpecial(nombre)) {
       Swal.fire({
         position: "bottom-end",
         icon: "error",
@@ -421,7 +429,7 @@ $(document).ready(function (e) {
 
     let resumen = $("#proyectoGuardar #resumen").val();
 
-    if (!onlyLetters(resumen)) {
+    if (!letterAndFewSpecial(resumen)) {
       Swal.fire({
         position: "bottom-end",
         icon: "error",
@@ -539,9 +547,10 @@ $(document).ready(function (e) {
   $("#proyectoActualizar #nombre").keyup(function () {
     let telefono = $(this).val();
 
-    if (!onlyLetters(telefono)) {
+    if (!letterAndFewSpecial(telefono)) {
       $(this).addClass("is-invalid");
     } else {
+      $(this).val(capitalizeText(telefono));
       $(this).removeClass("is-invalid");
     }
   });
@@ -569,7 +578,7 @@ $(document).ready(function (e) {
   $("#proyectoActualizar #resumen").keyup(function () {
     let telefono = $(this).val();
 
-    if (!onlyLetters(telefono)) {
+    if (!letterAndFewSpecial(telefono)) {
       $(this).addClass("is-invalid");
     } else {
       $(this).removeClass("is-invalid");
@@ -581,9 +590,9 @@ $(document).ready(function (e) {
 
     formData = $(this).serializeArray();
 
-    let nombre = $("#proyectoGuardar #nombre").val();
+    let nombre = $("#proyectoActualizar #nombre").val();
 
-    if (!onlyLetters(nombre)) {
+    if (!letterAndFewSpecial(nombre)) {
       Swal.fire({
         position: "bottom-end",
         icon: "error",
@@ -596,9 +605,9 @@ $(document).ready(function (e) {
       return false;
     }
 
-    let resumen = $("#proyectoGuardar #resumen").val();
+    let resumen = $("#proyectoActualizar #resumen").val();
 
-    if (!onlyLetters(resumen)) {
+    if (!letterAndFewSpecial(resumen)) {
       Swal.fire({
         position: "bottom-end",
         icon: "error",
@@ -611,7 +620,7 @@ $(document).ready(function (e) {
       return false;
     }
 
-    let tutor_ex = $("#proyectoGuardar #tutor_ex").val();
+    let tutor_ex = $("#proyectoActualizar #tutor_ex").val();
     if (!onlyLetters(tutor_ex)) {
       Swal.fire({
         position: "bottom-end",
@@ -625,7 +634,7 @@ $(document).ready(function (e) {
       return false;
     }
 
-    let motor_productivo = $("#proyectoGuardar #motor_productivo").val();
+    let motor_productivo = $("#proyectoActualizar #motor_productivo").val();
     if (!onlyLetters(motor_productivo)) {
       Swal.fire({
         position: "bottom-end",
@@ -639,7 +648,7 @@ $(document).ready(function (e) {
       return false;
     }
 
-    let tlf_tex = $("#proyectoGuardar #tlf_tex").val();
+    let tlf_tex = $("#proyectoActualizar #tlf_tex").val();
     if (!phoneNumbers(tlf_tex)) {
       Swal.fire({
         position: "bottom-end",
@@ -1041,9 +1050,24 @@ function removeProject(id) {
 }
 
 function onlyLetters(str) {
-  return /^[A-Za-zñáéíóúü ]*$/.test(str) && str.trim().length > 0;
+  return /^[A-Za-zñáéíóúü ]*$/.test(str);
+}
+
+function letterAndFewSpecial(str) {
+  return (
+    /^[A-Za-zñáéíóúüÁÉÍÓÚÑÜ \- \– '"() , “” .]*$/.test(str) &&
+    str.trim().length > 0
+  );
 }
 
 function phoneNumbers(number) {
   return /^[04][0-9]{10}$/.test(number);
+}
+
+function capitalizeText(mySentence) {
+  let words = mySentence.toLowerCase();
+
+  words = words.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
+
+  return words;
 }

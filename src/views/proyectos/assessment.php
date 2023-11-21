@@ -62,12 +62,18 @@
               <table class="table table-striped mb-4">
                 <tr>
                   <th>Estudiante</th>
-                  <th>Ponderado</th>
+                  <th>
+                    <span class="d-flex align-items-center">
+                      <span class="d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="Incluye las calificaciones de Fase I y Fase II">Calificación Total
+                        <i class='ml-2 bx bxs-info-circle'></i>
+                      </span>
+                    </span>
+                  </th>
                 </tr>
                 <tbody>
                   <?php foreach ($materia->inscripcion as $inscripcion) : ?>
                     <tr>
-                      <td> <?= $inscripcion->nombre_estudiante ?></td>
+                      <td><?= $inscripcion->cedula ?> - <?= $inscripcion->nombre_estudiante ?></td>
                       <td><b><?= $inscripcion->calificacion ?></b></td>
                     </tr>
                   <?php endforeach; ?>
@@ -217,7 +223,9 @@
   });
   let urlEvaluar = "<?= APP_URL . $this->Route('proyectos/subir-notas') ?>";
   $(document).ready(() => {
-
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
     toggleLoading(false)
 
     $('#evaluarProyecto').submit(function(e) {

@@ -25,8 +25,8 @@
         <div><span class="text-muted font-weight-light">Proyectos </span>/ Gestión</div>
 
         <div class="d-flex">
-          <a class="btn btn-primary btn-round d-block d-inline-block " style="margin-right: 10px;" href="#" data-bs-toggle="modal" data-bs-target="#historico"><span class="ion ion-md-add" id="cargarHistoricoBtn"></span>&nbsp; Registrar Histórico </a>
-          <a class="btn btn-primary btn-round d-block d-inline-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+          <a class="btn btn-primary btn-round d-block d-inline-block " style="margin-right: 10px;" href="#" data-bs-toggle="modal" data-bs-target="#historico"><span class="ion ion-md-add" id="cargarHistoricoBtn"></span>&nbsp; Registrar desde Histórico </a>
+          <a class="btn btn-primary btn-round d-block d-inline-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Registrar</a>
         </div>
 
       </h4>
@@ -61,7 +61,7 @@
     </div>
 
     <div class="card-body px-3 pt-3">
-      <table id="example" class="table table-striped" style="width:100%">
+      <table id="example" class="table table-striped table-responsive" style="width:100%">
         <thead class="thead-dark">
           <tr>
             <th>ID</th>
@@ -98,6 +98,7 @@
     let noteUrl = "<?= APP_URL . $this->Route('proyectnotes/pdf') ?>";
     let deleteUrl = "<?= APP_URL . $this->Route('proyectos/borrar') ?>";
     let reprobadosUrl = "<?= APP_URL . $this->Route('proyectos/reprobados/') ?>";
+    let urlHistorico = '<?= APP_URL . $this->route('historico?id_proyecto=') ?>';
 
 
 

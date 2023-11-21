@@ -20,7 +20,10 @@
               </div>
               <div class="col-lg-9">
                 <label class="form-label" for="nombre"><b>Nombre *</b></label>
-                <input type="text" class="form-control mb-1" placeholder="..." id="nombre" required name="nombre" maxlength="255">
+                <input type="text" aria-describedby="creacionNombreValidation" class="form-control mb-1" placeholder="..." id="nombre" required name="nombre" maxlength="255">
+                <div id="creacionNombreValidation" class="invalid-feedback">
+                  Por favor proporcione una ciudad válida
+                </div>
               </div>
             </div>
             <div class="row form-group mb-3">
@@ -36,7 +39,10 @@
 
               <div class="col-lg-6">
                 <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
-                <input type="text" class="form-control mb-1" placeholder="..." id="tutor_ex" required name="tutor_ex" maxlength="255">
+                <input type="text" aria-describedby="creacionNombreTutorValidation" class="form-control mb-1" placeholder="..." id="tutor_ex" required name="tutor_ex" maxlength="255">
+                <div id="creacionNombreTutorValidation" class="invalid-feedback">
+                  Por favor, proporcione un nombre válido.
+                </div>
               </div>
             </div>
             <div class="row form-group mb-3">
@@ -46,7 +52,10 @@
               </div>
               <div class="col-lg-6">
                 <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
-                <input type="text" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required id="tlf_tex" name="tlf_tex">
+                <input type="text" aria-describedby="creacionTelefonoValidation" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required id="tlf_tex" name="tlf_tex">
+                <div id="creacionTelefonoValidation" class="invalid-feedback">
+                  Por favor, proporcione un teléfono válido.
+                </div>
               </div>
             </div>
 

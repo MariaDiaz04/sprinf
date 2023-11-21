@@ -12,7 +12,7 @@
   <div class="card">
     <h6 class="card-header bg-primary text-white">Trayectos</h6>
     <div class="card-body px-3 pt-3">
-      <table id="example" class="table table-striped" style="width:100%">
+      <table id="example" class="table table-striped table-responsive" style="width:100%">
         <thead class="thead-dark">
           <tr>
             <th>ID</th>
@@ -46,6 +46,9 @@
         ajax: '<?= $this->Route('trayectos/ssp') ?>',
         processing: true,
         serverSide: true,
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: true,
         pageLength: 30,
 
       });

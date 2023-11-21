@@ -17,7 +17,10 @@
                 <div class="row form-group">
                   <div class="col-lg-12">
                     <label class="form-label" for="nombre"><b>Nombre *</b></label>
-                    <input type="text" class="form-control mb-1" placeholder="..." required name="nombre" id="nombre" max="255">
+                    <input type="text" aria-describedby="actualizacionNombreValido" class="form-control mb-1" placeholder="..." required name="nombre" id="nombre" max="255">
+                    <div id="actualizacionNombreValido" class="invalid-feedback">
+                      Por favor, proporcione un nombre válido.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -29,7 +32,10 @@
                 </div>
                 <div class="col-lg-6 mb-3">
                   <label class="form-label" for="motor_productivo"><b>Motor Productivo</b></label>
-                  <textarea class="form-control" placeholder="..." required id="motor_productivo" name="motor_productivo" style="height: 50px" max="255"></textarea>
+                  <textarea class="form-control" aria-describedby="actualizacionMotorValido" placeholder="..." required id="motor_productivo" name="motor_productivo" style="height: 50px" max="255"></textarea>
+                  <div id="actualizacionMotorValido" class="invalid-feedback">
+                    Por favor, proporcione un motor productivo válido.
+                  </div>
                 </div>
               </div>
               <div class="row form-group mb-3">
@@ -45,7 +51,10 @@
 
                 <div class="col-lg-6">
                   <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
-                  <input type="text" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex" max="255">
+                  <input type="text" aria-describedby="actualizacionNombreTutorValido" class="form-control mb-1" placeholder="..." required name="tutor_ex" id="tutor_ex" max="255">
+                  <div id="actualizacionNombreTutorValido" class="invalid-feedback">
+                    Por favor, proporcione un nombre válido.
+                  </div>
                 </div>
               </div>
               <div class="row form-group mb-3">
@@ -56,7 +65,10 @@
 
                 <div class="col-lg-6">
                   <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
-                  <input type="text" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required name="tlf_tex" id="tlf_tex">
+                  <input type="text" aria-describedby="actualizacionTelefonoValido" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required name="tlf_tex" id="tlf_tex">
+                  <div id="actualizacionTelefonoValido" class="invalid-feedback">
+                    Por favor, proporcione un teléfono válido.
+                  </div>
                 </div>
               </div>
               <div class="row form-group mb-3">
@@ -120,7 +132,7 @@
                 </div>
               </div>
               <div class="row form-group justify-content-center">
-                <table class="table table-striped">
+                <table class="table table-striped table-responsive">
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col">C.I.</th>
@@ -136,7 +148,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" onClick="return false;" data-bs-dismiss="modal">Cancelar</button>
-                <input type="submit" class="btn btn-primary" value="Actualizar" id="submit">
+                <input type="submit" class="btn btn-primary" value="Guardar Cambios" id="submit">
                 <div id="loading">
                   <div class="spinner-border text-primary" role="status">
                     <span class="sr-only"></span>

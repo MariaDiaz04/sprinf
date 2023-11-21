@@ -39,10 +39,10 @@
         ajax: '<?= APP_URL . $this->Route('historico/ssp') ?><?= (!is_null($filtro)) ? $filtro : '' ?>',
         processing: true,
         serverSide: true,
-        pageLength: 10,
         scrollX: true,
         scrollCollapse: true,
         responsive: true,
+        pageLength: 10,
         columnDefs: [{
           visible: false,
           targets: [0, 1, 2]

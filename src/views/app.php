@@ -58,7 +58,14 @@
 
   <!-- JS HOME-->
 
-
+  <style>
+    /* table .dropdown-menu {
+      position: fixed !important;
+      top: 50% !important;
+      left: 92% !important;
+      transform: translate(-92%, -50%) !important;
+    } */
+  </style>
 </head>
 
 <body class='font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;'>

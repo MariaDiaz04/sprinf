@@ -90,7 +90,10 @@
 
                   <div class="col-lg-6">
                     <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
-                    <input type="text" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex" required>
+                    <input type="text" aria-describedby="historicoNombreTutorExt" class="form-control mb-1" placeholder="..." name="tutor_ex" id="tutor_ex" required>
+                    <div id="historicoNombreTutorExt" class="invalid-feedback">
+                      Por favor, proporcione un nombre válido.
+                    </div>
                   </div>
                   <div class="col-lg-6">
                     <label class="form-label" for="tutor_in"><b>Tutor Interno *</b></label>
@@ -104,7 +107,10 @@
 
                   <div class="col-lg-6">
                     <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
-                    <input type="text" class="form-control mb-1" placeholder="..." name="tlf_tex" id="tlf_tex" required>
+                    <input type="text" aria-describedby="historicoTlfExt" class="form-control mb-1" placeholder="..." name="tlf_tex" id="tlf_tex" required>
+                    <div id="historicoTlfExt" class="invalid-feedback">
+                      Por favor, proporcione un telefono válido.
+                    </div>
                   </div>
 
                 </div>

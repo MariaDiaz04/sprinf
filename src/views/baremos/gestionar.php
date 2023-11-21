@@ -30,7 +30,7 @@
         </tbody>
       </table>
       <h3 class="mb-4">Gestión</h3>
-      <table id="example" class="table table-striped" style="width:100%">
+      <table id="example" class="table table-striped table-responsive" style="width:100%">
         <thead class="thead-dark">
           <tr>
             <th>Unidad Curricular</th>
@@ -64,6 +64,9 @@
         ajax: '<?= $this->Route('ssp/' . $idTrayecto) ?>',
         processing: true,
         serverSide: true,
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: true,
         pageLength: 10,
         order: [
           [1, 'asc']

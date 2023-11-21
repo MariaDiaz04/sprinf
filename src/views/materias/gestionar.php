@@ -15,7 +15,7 @@
           <div><span class="text-muted font-weight-light">Unidades Curriculares / <?= $trayecto->nombre ?> </span>/ Gestión</div>
           <?php if ($permisos->crear == 1) : ?>
 
-            <a class="btn btn-primary btn-round d-block flex-shrink-0" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+            <a class="btn btn-primary btn-round d-block flex-shrink-0" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Registrar</a>
           <?php endif; ?>
 
         </h4>
@@ -25,7 +25,7 @@
     <div class="card">
       <h6 class="card-header bg-primary text-white">Unidades Curriculares</h6>
       <div class="card-body px-3 pt-3">
-        <table id="example" class="table table-striped" style="width:100%">
+        <table id="example" class="table table-striped table-responsive" style="width:100%">
           <thead class="thead-dark">
             <tr>
               <th>Trayecto</th>
@@ -244,6 +244,9 @@
         ajax: '<?= $this->Route('ssp/' . $idTrayecto) ?>',
         processing: true,
         serverSide: true,
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: true,
         pageLength: 30,
 
         columnDefs: [{
@@ -269,7 +272,7 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[1]}">
-                        ${(row[5] ? `<a class="dropdown-item" target="_blank" href="<?= APP_URL . $this->Route("materias/" . $idTrayecto) ?>/${row[1]}">Inscripciones</a>`:'' )}
+                        ${(row[5] ? `<a class="dropdown-item" href="<?= APP_URL . $this->Route("materias/" . $idTrayecto) ?>/${row[1]}">Inscripciones</a>`:'' )}
                         <?php if ($permisos->actualizar == 1) : ?>
                         <a class="dropdown-item" onClick="edit('${row[1]}')" href="#">Editar</a>
                         <?php endif; ?>

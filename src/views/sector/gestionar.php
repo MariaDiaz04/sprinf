@@ -2,9 +2,9 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">   Sector    </span>/ Gestión</div>
+        <div><span class="text-muted font-weight-light"> Sector </span>/ Gestión</div>
 
-        <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Nuevo </a>
+        <a class="btn btn-primary btn-round d-block" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Registrar</a>
 
       </h4>
     </div>
@@ -13,7 +13,7 @@
   <div class="card">
     <h6 class="card-header bg-primary text-white"> Sector </h6>
     <div class="card-body px-3 pt-3">
-      <table id="tabla" class="table table-striped" style="width:100%">
+      <table id="tabla" class="table table-striped table-responsive" style="width:100%">
         <thead>
           <tr>
             <th>Código</th>
@@ -61,7 +61,7 @@
                     </div>
                   </div>
                   <div class="row form-group">
-                    
+
 
 
                   </div>
@@ -94,8 +94,8 @@
 
         </div>
         <form action="<?= APP_URL . $this->Route('sector/update') ?>" method="post" id="actualizar">
-        <input type="hidden" name="id" id="idsector">
-          <div class="modal-body">   
+          <input type="hidden" name="id" id="idsector">
+          <div class="modal-body">
             <div class="container-fluid">
               <div class="row pb-2">
                 <div class="col-12">
@@ -133,7 +133,7 @@
   </div>
 
 
-  
+
   <script>
     let updateUrl = "<?= APP_URL . $this->Route('sector/edit') ?>";
     let deleteUrl = "<?= APP_URL . $this->Route('sector/delete') ?>";
@@ -156,6 +156,9 @@
         ajax: '<?= $this->Route('sector/ssp') ?>',
         processing: true,
         serverSide: true,
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: true,
         pageLength: 30,
 
         columnDefs: [{
@@ -187,7 +190,7 @@
         url = $(this).attr('action');
         data = $(this).serializeArray();
 
-        console.log(url+'  '+data);
+        console.log(url + '  ' + data);
 
 
         $.ajax({
@@ -273,7 +276,7 @@
 
       })
 
-  
+
       function toggleLoading(show, form = '') {
         if (show) {
           $(`${form} #loading`).show();
@@ -287,14 +290,14 @@
     })
 
     function renderUpdateForm(data) {
-     
-$('#editar').modal('show')
 
-$(`#actualizar #idsector`).val(data.sector.id);
-$(`#actualizar #nombre`).val(data.sector.nombre);
-$(`#actualizar #parroquia_id option[value='${data.sector.parroquia_id}']`).attr("selected", true);
-// console.log(data.sector.parroquia_id)
-}
+      $('#editar').modal('show')
+
+      $(`#actualizar #idsector`).val(data.sector.id);
+      $(`#actualizar #nombre`).val(data.sector.nombre);
+      $(`#actualizar #parroquia_id option[value='${data.sector.parroquia_id}']`).attr("selected", true);
+      // console.log(data.sector.parroquia_id)
+    }
 
 
 
@@ -322,7 +325,7 @@ $(`#actualizar #parroquia_id option[value='${data.sector.parroquia_id}']`).attr(
     }
 
     function remove(id) {
-        $.ajax({
+      $.ajax({
         type: "POST",
         url: deleteUrl,
         data: {
@@ -352,8 +355,5 @@ $(`#actualizar #parroquia_id option[value='${data.sector.parroquia_id}']`).attr(
           $('#tabla').DataTable().ajax.reload();
         },
       });
-      }
-
-    
-
+    }
   </script>
