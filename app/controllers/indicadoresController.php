@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Model\indicadores;
 use Model\dimension;
+use Model\malla;
+use Model\fase;
+use Model\trayectos;
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;
@@ -15,12 +18,18 @@ class indicadoresController extends controller
 
   private $indicadores;
   private $dimensiones;
+  private $malla;
+  private $trayectos;
+  private $fase;
 
   function __construct()
   {
     $this->tokenExist();
     $this->indicadores = new indicadores();
     $this->dimensiones = new dimension();
+    $this->malla = new malla();
+    $this->trayectos = new trayectos();
+    $this->fase = new fase();
   }
 
   public function index(Request $indicador, $idDimension)
@@ -28,11 +37,19 @@ class indicadoresController extends controller
     $dimension = $this->dimensiones->find($idDimension);
     $indicadores = $this->indicadores->findByDimension($idDimension);
 
+    $unidad_curricular = $this->malla->findMateria($dimension['unidad_id']);
+
+    $trayecto = $this->trayectos->find($unidad_curricular['codigo_trayecto']);
+
+    $detallesFase = $this->fase->getByTrayecto($unidad_curricular['codigo_trayecto']);
 
     return $this->view('indicadores/gestionar', [
+      'fases' => $detallesFase,
       'dimension' => $dimension,
+      'trayecto' => $trayecto,
       'indicadores' => $indicadores,
       'idDimension' => $idDimension,
+      'unidadCurricular' => $unidad_curricular,
     ]);
   }
 

@@ -13,23 +13,41 @@
 
     </h6>
     <div class="card-body px-3 pt-3">
-      <h3 class="mb-4">Información</h3>
-      <table class="table table-striped mb-4">
-        <tr>
-          <th>Fase</th>
-          <th>Ponderado</th>
-        </tr>
-        <tbody>
-
-          <?php foreach ($fases as $fase) : ?>
+      <p class="d-flex justify-content-end">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#verResumenBaremos" aria-expanded="false" aria-controls="notas-<?= $idMateria ?>">
+          <i class='bx bx-search-alt'></i> Ver Resumen de Baremos
+        </button>
+      </p>
+      <div class="collapse" id="verResumenBaremos">
+        <h4 class="mb-4">Información Baremos</h4>
+        <table class="table table-striped mb-4" id="resumenBaremos">
+          <thead>
             <tr>
-              <td> <?= $fase->nombre_fase ?></td>
-              <td><b><?= $fase->ponderado_baremos ?>%</b></td>
+              <th>Fase</th>
+              <th>Ponderado (%)</th>
             </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-      <h3 class="mb-4">Gestión</h3>
+          </thead>
+
+          <tbody>
+
+            <?php foreach ($fases as $fase) : ?>
+              <tr>
+                <td> <?= $fase->nombre_fase ?></td>
+                <td><?= $fase->ponderado_baremos ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="1" style="text-align:right">Total:</th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="my-3"></div>
+      <hr>
+      <div class="my-3"></div>
       <table id="example" class="table table-striped table-responsive" style="width:100%">
         <thead class="thead-dark">
           <tr>
@@ -44,7 +62,43 @@
     </div>
   </div>
 
+  <script>
+    $(document).ready(() => {
+      let tableResumen = new DataTable('#resumenBaremos', {
+        footerCallback: function(row, data, start, end, display) {
+          let api = this.api();
 
+          // Remove the formatting to get integer data for summation
+          let intVal = function(i) {
+            console.log(i)
+            return typeof i === 'string' ?
+              i.replace(/[\$,]/g, '') * 1 :
+              typeof i === 'number' ?
+              i :
+              0;
+          };
+
+          // Total over all pages
+          total = api
+            .column(1)
+            .data()
+            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+          // Total over this page
+          pageTotal = api
+            .column(1, {
+              page: 'current'
+            })
+            .data()
+            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+          // Update footer
+          api.column(1).footer().innerHTML =
+            total + '%';
+        }
+      })
+    })
+  </script>
 
   <script>
     $(document).ready(() => {

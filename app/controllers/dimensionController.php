@@ -11,6 +11,7 @@ use Model\baremos;
 use Model\dimension;
 use Model\materias;
 use Model\malla;
+use Model\fase;
 use Model\trayectos;
 use Exception;
 
@@ -21,6 +22,7 @@ class dimensionController extends controller
   public $trayectos;
   public $dimension;
   public $malla;
+  public $fase;
   public $materias;
 
   function __construct()
@@ -31,6 +33,7 @@ class dimensionController extends controller
     $this->trayectos = new trayectos();
     $this->materias = new materias();
     $this->malla = new malla();
+    $this->fase = new fase();
   }
 
   public function index(Request $dimension, $codigoMateria)
@@ -38,10 +41,13 @@ class dimensionController extends controller
     $dimensiones = $this->dimension->all();
     $unidad_curricular = $this->malla->findMateria($codigoMateria);
     $trayecto = $this->trayectos->find($unidad_curricular['codigo_trayecto']);
+    $detallesFase = $this->fase->getByTrayecto($unidad_curricular['codigo_trayecto']);
 
     return $this->view('dimensiones/gestionar', [
       'codigoMateria' => $codigoMateria,
       'unidadCurricular' => $unidad_curricular,
+      'trayecto' => $trayecto,
+      'fases' => $detallesFase,
     ]);
   }
 

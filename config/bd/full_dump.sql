@@ -1270,9 +1270,15 @@ LEFT JOIN usuario ON usuario.id = persona.usuario_id;
 
 DROP VIEW IF EXISTS detalles_trayecto;
 CREATE VIEW detalles_trayecto AS
-SELECT trayecto.*, periodo.fecha_inicio, periodo.fecha_cierre
+SELECT trayecto.*, periodo.fecha_inicio, periodo.fecha_cierre,
+ROUND(SUM(indicadores.ponderacion),2) as ponderado_baremos
 FROM trayecto
-INNER JOIN periodo ON periodo.id = trayecto.periodo_id;
+INNER JOIN periodo ON periodo.id = trayecto.periodo_id
+INNER JOIN fase ON fase.trayecto_id = trayecto.codigo
+LEFT JOIN malla_curricular ON malla_curricular.fase_id = fase.codigo
+LEFT OUTER JOIN dimension ON dimension.unidad_id = malla_curricular.codigo
+LEFT OUTER JOIN indicadores ON indicadores.dimension_id = dimension.id
+GROUP BY trayecto.codigo;
 
 DROP VIEW IF EXISTS detalles_seccion;
 CREATE VIEW detalles_seccion AS

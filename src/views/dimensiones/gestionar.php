@@ -2,9 +2,15 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Baremos / <?= $unidadCurricular->nombre_trayecto ?> </span>/ <?= $unidadCurricular->nombre ?> - <b><?= $unidadCurricular->ponderado_baremos ?>%</b></div>
+        <div><span class="text-muted font-weight-light">Baremos / <a href="<?= APP_URL . $this->route('baremos/' . $unidadCurricular->codigo_trayecto) ?>"><?= $unidadCurricular->nombre_trayecto ?></a> </span>/ <?= $unidadCurricular->nombre ?> - <b><?= $unidadCurricular->ponderado_baremos ?>%</b></div>
 
-        <a class="btn btn-primary btn-round d-block flex-shrink-0" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Registrar</a>
+        <?php if ((int)$trayecto->ponderado_baremos >= 100) : ?>
+          <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Ya ha sido evaluado 100% para el baremos de <?= $unidadCurricular->nombre_trayecto ?>.">
+            <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Registrar</button>
+          </span>
+        <?php else : ?>
+          <a class="btn btn-primary btn-round d-block flex-shrink-0" href="#" data-bs-toggle="modal" data-bs-target="#crear"><span class="ion ion-md-add"></span>&nbsp; Registrar</a>
+        <?php endif; ?>
 
       </h4>
     </div>
@@ -13,6 +19,42 @@
   <div class="card">
     <h6 class="card-header bg-primary text-white">Dimensiones</h6>
     <div class="card-body px-3 pt-3">
+      <p class="d-flex justify-content-end">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#verResumenBaremos" aria-expanded="false" aria-controls="notas-<?= $idMateria ?>">
+          <i class='bx bx-search-alt'></i> Ver Resumen de Baremos
+        </button>
+      </p>
+      <div class="collapse" id="verResumenBaremos">
+        <h4 class="mb-4">Información Baremos</h4>
+        <table class="table table-striped mb-4" id="resumenBaremos">
+          <thead>
+            <tr>
+              <th>Fase</th>
+              <th>Ponderado (%)</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <?php foreach ($fases as $fase) : ?>
+              <tr>
+                <td> <?= $fase->nombre_fase ?></td>
+                <td><?= $fase->ponderado_baremos ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="1" style="text-align:right">Total:</th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="my-3"></div>
+      <hr>
+      <div class="my-3"></div>
+
       <table id="example" class="table table-striped table-responsive" style="width:100%">
         <thead class="thead-dark">
           <tr>
@@ -26,6 +68,12 @@
             <th>Acción</th>
           </tr>
         </thead>
+        <tfoot>
+          <tr>
+            <th colspan="6" style="text-align:right">Total:</th>
+            <th></th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -35,6 +83,43 @@
   include 'modules/actualizar.php';
   ?>
 
+  <script>
+    $(document).ready(() => {
+      let tableResumen = new DataTable('#resumenBaremos', {
+        footerCallback: function(row, data, start, end, display) {
+          let api = this.api();
+
+          // Remove the formatting to get integer data for summation
+          let intVal = function(i) {
+            console.log(i)
+            return typeof i === 'string' ?
+              i.replace(/[\$,]/g, '') * 1 :
+              typeof i === 'number' ?
+              i :
+              0;
+          };
+
+          // Total over all pages
+          total = api
+            .column(1)
+            .data()
+            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+          // Total over this page
+          pageTotal = api
+            .column(1, {
+              page: 'current'
+            })
+            .data()
+            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+          // Update footer
+          api.column(1).footer().innerHTML =
+            total + '%';
+        }
+      })
+    })
+  </script>
 
   <script>
     let UrlGestionarIndicadores = "<?= APP_URL . $this->Route('indicadores/'); ?>";
@@ -89,7 +174,38 @@
                     </div>`;
           }, // combino los botons de acción
           targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
-        }]
+        }],
+        footerCallback: function(row, data, start, end, display) {
+          let api = this.api();
+
+          // Remove the formatting to get integer data for summation
+          let intVal = function(i) {
+            console.log(i)
+            return typeof i === 'string' ?
+              i.replace(/[\$,]/g, '') * 1 :
+              typeof i === 'number' ?
+              i :
+              0;
+          };
+
+          // Total over all pages
+          total = api
+            .column(6)
+            .data()
+            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+          // Total over this page
+          pageTotal = api
+            .column(6, {
+              page: 'current'
+            })
+            .data()
+            .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+          // Update footer
+          api.column(6).footer().innerHTML =
+            total + '%';
+        }
       });
 
 

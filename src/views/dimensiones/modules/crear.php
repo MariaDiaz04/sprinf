@@ -14,10 +14,16 @@
               <div class="col-12">
                 <div class="row form-group mb-3">
                   <input type="hidden" name="unidad_id" value="<?= $unidadCurricular->codigo ?>">
-
+                  <input type="hidden" id="valorBaremosActual" data-ponderado="<?= $trayecto->ponderado_baremos ?>">
                   <div class="col-lg-12">
+                    <div class="alert alert-secondary" role="alert">
+                      Ingrese nombre y ponderación de cada indicador de esta dimensión <?= $unidadCurricular->ponderado_baremos ?>.
+                    </div>
                     <label class="form-label" for="nombre">Nombre Dimensión *</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" onkeydown="return /[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255" required>
+                    <input type="text" class="form-control mb-1" placeholder="Desempeño Individual..." name="nombre" id="nombre" onkeydown="return letterAndFewSpecial(event.key)" maxlength="255" required>
+                    <div id="creacionNombreTutorValidation" class="invalid-feedback">
+                      Por favor, proporcione un nombre de dimensión válido.
+                    </div>
                   </div>
                 </div>
                 <div class="row form-group mb-3">
@@ -36,17 +42,24 @@
                   Ingrese nombre y ponderación de cada indicador de esta dimensión.
                 </div>
                 <div class="row form-group align-items-end">
-                  <div class="col-lg-5">
+                  <div class="col-lg-7">
                     <label class="form-label" for="nombreItem">Nombre Indicador *</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." id="nombreItem" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255">
+                    <input type="text" aria-describedby="creacionNombreIndicadorValido" class="form-control mb-1" placeholder="Responsabilidad..." id="nombreItem" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255">
+                    <div id="creacionNombreIndicadorValido" class="invalid-feedback">
+                      Por favor, proporcione un nombre de indicador válido.
+                    </div>
                   </div>
-                  <div class="col-lg-4">
+                  <div class="col-lg-3 ">
                     <label class="form-label" for="ponderacionItem">Ponderación (%) *</label>
-                    <input type="number" class="form-control mb-1" placeholder="..." id="ponderacionItem" value="0" max="100">
+                    <input type="number" aria-describedby="creacionPonderacionIndicadorValido" class="form-control mb-1" placeholder="1.." id="ponderacionItem" onkeydown="return (event.keyCode === 8) ? true : /[0-9 .]/i.test(event.key)" max="100" step="0.01">
+                    <div id="creacionPonderacionIndicadorValido" class="invalid-feedback">
+                      Por favor, proporcione solo valores númericos.
+                    </div>
                   </div>
-                  <div class="col-lg-3 align-middle">
+                  <div class="col-lg-2 align-middle mb-1">
                     <button class="btn btn-primary" id="anadirItem">Añadir</button>
                   </div>
+
                 </div>
 
                 <div class="row form-group justify-content-center">
@@ -81,3 +94,97 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(() => {
+    $('#nombre').on('keyup', function() {
+      const value = $(this).val();
+      if (!letterAndFewSpecial(value)) {
+        // Si no coincide, muestra un mensaje de error
+        $(this).addClass('is-invalid')
+
+      } else {
+        // Si coincide, elimina el mensaje de error
+        $(this).removeClass('is-invalid')
+      }
+    })
+    $('#nombreItem').on('keyup', function() {
+      const value = $(this).val();
+      if (!letterAndFewSpecial(value)) {
+        // Si no coincide, muestra un mensaje de error
+        $(this).addClass('is-invalid')
+
+      } else {
+        // Si coincide, elimina el mensaje de error
+        $(this).removeClass('is-invalid')
+      }
+    })
+    $('#nombreItem').on("paste", function(evt) {
+      catchPaste(evt, this, function(clipData) {
+        console.log(clipData);
+        if (!letterAndFewSpecial(clipData)) {
+          evt.preventDefault();
+
+        }
+      });
+    });
+
+    $('#guardar #ponderacionItem').on('keyup', function() {
+      const value = $(this).val();
+
+      if (value.length > 5) {
+        // Establece el valor en el límite
+        $(this).val(value.substring(0, 5));
+      }
+
+    })
+    $('#ponderacionItem').on("paste", function(evt) {
+      evt.preventDefault();
+    });
+
+  })
+
+  function onlyLetters(str) {
+    return /^[A-Za-zñáéíóúü ]*$/.test(str);
+  }
+
+  function letterAndFewSpecial(str) {
+    return (
+      /^[A-Za-zñáéíóúüÁÉÍÓÚÑÜ \- \– '"() , “” .]*$/.test(str) &&
+      str.trim().length > 0
+    );
+  }
+
+  function phoneNumbers(number) {
+    return /^[04][0-9]{10}$/.test(number);
+  }
+
+  function capitalizeText(mySentence) {
+    let words = mySentence.toLowerCase();
+
+    words = words.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
+
+    return words;
+  }
+
+  function catchPaste(evt, elem, callback) {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      // modern approach with Clipboard API
+      navigator.clipboard.readText().then(callback);
+    } else if (evt.originalEvent && evt.originalEvent.clipboardData) {
+      // OriginalEvent is a property from jQuery, normalizing the event object
+      callback(evt.originalEvent.clipboardData.getData('text'));
+    } else if (evt.clipboardData) {
+      // used in some browsers for clipboardData
+      callback(evt.clipboardData.getData('text/plain'));
+    } else if (window.clipboardData) {
+      // Older clipboardData version for Internet Explorer only
+      callback(window.clipboardData.getData('Text'));
+    } else {
+      // Last resort fallback, using a timer
+      setTimeout(function() {
+        callback(elem.value)
+      }, 100);
+    }
+  }
+</script>

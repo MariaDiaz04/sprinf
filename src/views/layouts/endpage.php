@@ -41,6 +41,9 @@
       $(this).css("padding-bottom", 0);
     });
   })();
+  $(function() {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 </script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
