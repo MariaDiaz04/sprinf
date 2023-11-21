@@ -1004,6 +1004,9 @@ class proyectoController extends controller
         try {
             // $date = date('d-m-Y');
             $integrante = $this->proyecto->findIntegrante($idIntegrante);
+            if (empty($integrante)) {
+                $this->redirect('/proyectos');
+            }
             $estudiante = $this->estudiantes->find($integrante['estudiante_id']);
             $proyecto = $this->proyecto->find($integrante['proyecto_id']);
             $options = new Options();

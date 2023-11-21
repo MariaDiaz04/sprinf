@@ -14,7 +14,11 @@
             <div class="col-12">
               <div class="row form-group">
                 <div class="col-lg-12">
+                  <div class="alert alert-secondary" role="alert">
+                    Ingrese calificaciones por fase de estudiante, se tiene un limite de 20 puntos.
+                  </div>
                   <div id="actualizarEvaluacion"></div>
+
                 </div>
               </div>
             </div>

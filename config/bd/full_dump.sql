@@ -1206,7 +1206,16 @@ SELECT
   materias.codigo as codigo_materia, 
   materias.nombre as nombre_materia, 
   fase.nombre as nombre_fase,
-  round(sum(inscripcion.calificacion),2) as calificacion
+  round(sum(inscripcion.calificacion),2) as calificacion,
+  count(inscripcion.calificacion) as inscripciones,
+  count(malla_curricular.codigo) as mallas,
+  CASE
+	WHEN count(inscripcion.calificacion) = count(malla_curricular.codigo)
+    THEN 'Evaluado'
+	WHEN count(inscripcion.calificacion) != 0 AND count(malla_curricular.codigo) > count(inscripcion.calificacion)
+    THEN 'Pendiente a evaluar segunda fase'
+    ELSE 'Pendiente a evaluar'
+   END AS estatus
 FROM `estudiante`
 INNER JOIN persona ON persona.cedula = estudiante.persona_id 
 INNER JOIN inscripcion ON inscripcion.estudiante_id = estudiante.id 

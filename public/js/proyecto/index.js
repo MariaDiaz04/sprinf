@@ -115,7 +115,7 @@ $(document).ready(function (e) {
                     }">
                     <a class="dropdown-item" href="${
                       noteUrl + "/" + row[0]
-                    }" target="_blank">Notas</a>
+                    }">Notas</a>
                     <a class="dropdown-item" href="${
                       urlHistorico + row[0]
                     }">Ver Histórico</a>

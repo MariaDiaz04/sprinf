@@ -221,6 +221,10 @@ class inscripcion extends model
       array(
         'db'        => 'calificacion',
         'dt'        => 7,
+      ),
+      array(
+        'db'        => 'estatus',
+        'dt'        => 8,
       )
     );
     return $this->getComplexSSP('detalles_inscripciones', 'id_inscripcion', $columns, ['condition' => "codigo_materia = '$idMateria'"]);

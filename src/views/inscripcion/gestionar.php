@@ -44,6 +44,7 @@
             <th>Código de Materia</th>
             <th>Nombre de Materia</th>
             <th>calificacion</th>
+            <th>Estatus</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -107,6 +108,13 @@
           {
             data: null,
             render: function(data, type, row, meta) {
+              return (row[8] == 'Evaluado') ? `<span class="badge rounded-pill bg-success">${row[8]}</span>` : `<span class="badge rounded-pill bg-secondary">${row[8]}</span>`;
+            }, // combino los botons de acción
+            targets: 8 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          },
+          {
+            data: null,
+            render: function(data, type, row, meta) {
               return `<div class="dropleft show">
                       <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" id="dropdown-${row[0]}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="bx bx-dots-vertical-rounded"></i>
@@ -117,7 +125,7 @@
                       </div>
                     </div>`;
             }, // combino los botons de acción
-            targets: 8
+            targets: 9
           }
         ]
 
@@ -204,8 +212,33 @@
 
       })
 
+
+
       $('#evaluarInscripcion').submit(function(e) {
         e.preventDefault()
+
+        let calificaciones = $('#evaluarInscripcion #calificacion')
+        let sumaCalificacion = 0;
+        if (calificaciones.length > 1) {
+          calificaciones.map((index, calificacion) => {
+            sumaCalificacion += parseFloat($(calificacion).val())
+          })
+        } else {
+          sumaCalificacion = parseFloat($('#evaluarInscripcion #calificacion').val())
+        }
+
+        if (sumaCalificacion > 20) {
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: 'Excede el limite de ponderación (20 pts)',
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+
+          return false;
+        }
 
         toggleLoading(true, '#evaluarInscripcion');
 
@@ -262,7 +295,6 @@
       $(function() {
         $('#input-estudiante').on('change', function() {
           let val = $(this).val();
-          console.log(val);
           //$('#buscarCarreras').attr('href','/inscribir_nuevo/'+val);
           //$('#buscarCarreras').attr('href','/inscribir_nuevo/'+val);
         });
@@ -272,7 +304,6 @@
 
     async function evaluar(id) {
       let inscripcion = await obtenerInscripcion(id)
-      console.log(inscripcion)
       renderEvaluarForm(inscripcion)
       return false;
     }
@@ -301,17 +332,19 @@
       $('#actualizarEvaluacion').empty()
       counter = 0;
       data.inscripciones.forEach(inscripcion => {
-        console.log(inscripcion)
         let evaluacion =
-          `<div class="form-group row mb-2">
+          `<div class="form-group row mb-2 justify-content-around">
           <input type="hidden" name="inscripcion[${counter}][id]" value="${inscripcion.id_inscripcion}">
-            <label for="calificacion" class="col-sm-2 col-form-label">${inscripcion.nombre_fase}</label>
-            <div class="col-sm-10">
-              <input type="number" min="0" step="0.01" name="inscripcion[${counter}][calificacion]" class="form-control" id="calificacion" placeholder="0" ${(inscripcion.calificacion != null ? 'value="'+ inscripcion.calificacion + '"' : '')}>
+            <label for="calificacion" class="col col-form-label">${inscripcion.seccion_id} | ${inscripcion.nombre_materia} ${inscripcion.nombre_fase}</label>
+            <div class="col-sm-3">
+              <input type="number" min="0" step="0.01" required aria-describedby="calificacionValida" onkeydown="return ([8,9,37,38,39,40].includes(event.keyCode)) ? true : /[0-9 .]/i.test(event.key)" onkeyup="validarCalificacion()" name="inscripcion[${counter}][calificacion]" class="form-control calificacion" id="calificacion" placeholder="0" ${(inscripcion.calificacion != null ? 'value="'+ inscripcion.calificacion + '"' : '')}>
             </div>
-          </div>`;
+          </div>
+          <hr>`;
 
         $('#actualizarEvaluacion').append(evaluacion)
+
+
         counter++
       });
 
@@ -392,5 +425,28 @@
                 }));
             });
       }*/
+    }
+
+    function validarCalificacion() {
+      let calificaciones = $('#evaluarInscripcion #calificacion')
+      let sumaCalificacion = 0;
+      if (calificaciones.length > 1) {
+        calificaciones.map((index, calificacion) => {
+          let value = $(calificacion).val()
+          sumaCalificacion += parseFloat(value)
+          if (value.length > 5) {
+            $(calificacion).val(value.substring(0, 5))
+          }
+        })
+      } else {
+        sumaCalificacion = parseFloat($('#evaluarInscripcion #calificacion').val())
+      }
+
+      if (sumaCalificacion > 20) {
+        $('#evaluarInscripcion #calificacion').addClass("is-invalid");
+      } else {
+        $('#evaluarInscripcion #calificacion').removeClass("is-invalid");;
+
+      }
     }
   </script>

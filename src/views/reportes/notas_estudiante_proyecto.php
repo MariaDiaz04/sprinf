@@ -70,7 +70,6 @@
   }
 
   h3 {
-    border-bottom: 1px solid #5D6975;
     color: #5D6975;
     font-size: 1.5em;
     font-weight: normal;
@@ -80,7 +79,6 @@
   }
 
   h4 {
-    border-bottom: 1px solid #5D6975;
     color: #5D6975;
     font-size: 1em;
     font-weight: normal;
@@ -150,6 +148,11 @@
   table#info td {
     text-align: left;
     padding: 10px;
+  }
+
+  table#infoSmaller td {
+    text-align: left;
+    padding: 5px;
   }
 
   table td.service,
@@ -276,33 +279,52 @@
   </header>
   <div class="page_break"></div>
   <main>
-    <h2>Proyecto Sociotecnologico - 10%</h2>
-    <h3>Desempeño Individual</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Aspectos a evaluar</th>
-          <th>Ponderación Máxima</th>
-          <th>Calificación</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="service">Creating a recognizable design solution based on the company's existing visual identity</td>
-          <td class="desc">1%</td>
-          <td class="total">0.4</td>
-        </tr>
+    <?php foreach ($materiasporFase as $fase) : ?>
+      <h2>Baremos <?= $fase['nombre'] ?></h2>
 
-        <tr>
-          <td colspan="2" class="grand total">TOTAL (%)</td>
-          <td class="grand total">$6,500.00</td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- <div id="notices">
-      <div>NOTICE:</div>
-      <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-    </div> -->
+      <?php foreach ($fase['materias'] as $materia) : ?>
+        <h3><?= $materia['nombre'] ?> - <?= $materia['ponderado_baremos'] ?>%</h3>
+        <?php foreach ($materia['dimensiones'] as $dimension) : ?>
+          <?php
+          $totalCalificacionDimension = 0;
+          $totalPonderacionDimension = 0;
+          ?>
+          <h4><?= $dimension['nombre'] ?> - <?= $dimension['ponderacion_items'] ?>%</h4>
+          <table id="infoSmaller">
+            <thead>
+              <tr>
+                <th>Aspectos a evaluar</th>
+                <th>Ponderación Máxima</th>
+                <th>Calificación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($dimension['indicadores'] as $indicador) : ?>
+                <?php
+                if (isset($indicador['calificacion'])) {
+                  $totalCalificacionDimension += $indicador['calificacion'];
+                }
+                $totalPonderacionDimension += $indicador['ponderacion'];
+                ?>
+                <tr>
+                  <td class="service"><?= $indicador['nombre'] ?></td>
+                  <td class="desc"><?= $indicador['ponderacion'] ?></td>
+                  <td class="total"><?= $indicador['calificacion'] ?? 0 ?></td>
+                </tr>
+              <?php endforeach; ?>
+
+              <tr>
+                <td colspan="1" class="grand total">TOTAL (%)</td>
+                <td class="grand total"><?= $totalPonderacionDimension ?>%</td>
+                <td class="grand total"><?= $totalCalificacionDimension ?>%</td>
+              </tr>
+            </tbody>
+          </table>
+        <?php endforeach; ?>
+      <?php endforeach; ?>
+      <div class="page_break"></div>
+    <?php endforeach; ?>
+
   </main>
   <!-- <footer>
     Invoice was created on a computer and is valid without the signature and seal.

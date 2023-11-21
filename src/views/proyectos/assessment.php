@@ -107,7 +107,7 @@
                           <th scope="row"><?= $indicador->nombre ?></th>
                           <td><b><?= $indicador->ponderacion ?> %</b></td>
                           <td>
-                            <input required type="number" onkeydown="return (event.keyCode === 8) ? true : /[0-9 .]/i.test(event.key)" aria-describedby="invalidPonderacion" data-max="<?= $indicador->ponderacion ?>" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
+                            <input required type="number" onkeydown="return ([8,9,37,38,39,40].includes(event.keyCode)) ? true : /[0-9 .]/i.test(event.key)" aria-describedby="invalidPonderacion" data-max="<?= $indicador->ponderacion ?>" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
                             <div id="invalidPonderacion" class="invalid-feedback">
                               Max: <?= $indicador->ponderacion ?>%
                             </div>
@@ -156,7 +156,7 @@
 
                           <?php foreach ($integrantes as $idIntegrante => $integrante) : ?>
                             <td>
-                              <input required type="number" onkeydown="return (event.keyCode === 8) ? true : /[0-9 .]/i.test(event.key)" aria-describedby="invalidCheck3Feedback" class="form-control" min="0" step="0.01" data-max="<?= $indicador->ponderacion ?>" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]" data-max="<?= $indicador->ponderacion ?>">
+                              <input required type="number" onkeydown="return ([8,9,37,38,39,40].includes(event.keyCode)) ? true : /[0-9 .]/i.test(event.key)" aria-describedby="invalidCheck3Feedback" class="form-control" min="0" step="0.01" data-max="<?= $indicador->ponderacion ?>" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]" data-max="<?= $indicador->ponderacion ?>">
                               <div id="invalidCheck3Feedback" class="invalid-feedback">
                                 Max: <?= $indicador->ponderacion ?>%
                               </div>
