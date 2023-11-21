@@ -134,6 +134,15 @@ $listaDeRutas['proyectos_historico'] = new Route(
   ]
 );
 
+// reportes
+$listaDeRutas['notas_proyecto'] = new Route(
+  '/proyectos/calificaciones/{idIntegrante}',
+  [
+    'controller' => proyectoController::class,
+    'method' => 'notasIntegrante',
+  ]
+);
+
 $listaDeRutas['proyectos_show'] = new Route(
   '/proyectos/{id}',
   [

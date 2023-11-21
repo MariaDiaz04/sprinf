@@ -17,6 +17,7 @@ use Model\tutor;
 use Model\parroquia;
 use Model\trayectos;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
 use Traits\Excel;
 
@@ -990,6 +991,35 @@ class proyectoController extends controller
             $dompdf->loadHtml($render);
             $dompdf->render();
             $dompdf->stream($name_comprobante, array("Attachment" => false));
+            http_response_code(200);
+            echo json_encode($id);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode($e->getMessage());
+        }
+    }
+
+    public function notasIntegrante(Request $request, $idIntegrante)
+    {
+        try {
+            // $date = date('d-m-Y');
+            $integrante = $this->proyecto->findIntegrante($idIntegrante);
+            $estudiante = $this->estudiantes->find($integrante['estudiante_id']);
+            $proyecto = $this->proyecto->find($integrante['proyecto_id']);
+            $options = new Options();
+
+            //Y debes activar esta opción "TRUE"
+            $options->set('isRemoteEnabled', TRUE);
+            $dompdf = new Dompdf($options);
+
+            include '../src/views/reportes/notas_estudiante_proyecto.php';
+            $render = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $htmlFormat);
+            // echo $render;
+            // exit();
+            $dompdf->loadHtml($htmlFormat);
+            $dompdf->setPaper('A4', 'vertical');
+            $dompdf->render();
+            $dompdf->stream('Reporte Notas Proyecto', array("Attachment" => false));
             http_response_code(200);
             echo json_encode($id);
         } catch (Exception $e) {

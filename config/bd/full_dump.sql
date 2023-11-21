@@ -1325,6 +1325,7 @@ SELECT
   concat(tutor_info.nombre, ' ', tutor_info.apellido) as tutor_in_nombre,
   tutor_info.cedula as tutor_in_cedula,
   tutor_info.telefono as tutor_in_telefono,
+  tutor_usuario.email as tutor_in_email,
   trayecto.nombre as nombre_trayecto,
   trayecto.codigo as codigo_trayecto, 
   trayecto.siguiente_trayecto as codigo_siguiente_trayecto, 
@@ -1343,6 +1344,7 @@ INNER JOIN trayecto ON trayecto.codigo = fase.trayecto_id
 INNER JOIN periodo ON periodo.id = trayecto.periodo_id
 INNER JOIN profesor as tutor ON tutor.codigo = proyecto.tutor_in
 INNER JOIN persona as tutor_info ON tutor_info.cedula = tutor.persona_id
+LEFT JOIN usuario as tutor_usuario on tutor_usuario.id = tutor_info.usuario_id
 INNER JOIN parroquias ON parroquias.id = proyecto.parroquia_id 
 INNER JOIN municipios ON municipios.id = parroquias.municipio
 LEFT join consejo_comunal cc on cc.id = proyecto.consejo_comunal_id 
