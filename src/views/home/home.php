@@ -125,7 +125,7 @@
       </div>
     </div> -->
     <!-- Total Revenue -->
-  <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
+    <!-- <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
       <div class="card">
         <div class="row row-bordered g-0">
           <div class="col-md-8">
@@ -447,7 +447,7 @@
           </div>
         </div>
       </div>
-    </div> 
+    </div>  -->
     <!--/ Total Revenue -->
     <!--  <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
       <div class="row">
@@ -602,5 +602,145 @@
         </div>
       </div>
     </div> -->
+
+  </div>
+  <div class="col-12 col-md-12 col-lg-12 mb-4">
+    <div class="row">
+
+      <div class="col-6 ">
+        <figure class="highcharts-figure">
+          <div id="container"></div>
+          <!-- <p class="highcharts-description">
+            Bar chart showing horizontal columns.
+          </p> -->
+        </figure>
+      </div>
+      <div class="col-6 ">
+        <figure class="highcharts-figure">
+          <div id="municipios"></div>
+          <!-- <p class="highcharts-description">
+            Bar chart showing horizontal columns.
+          </p> -->
+        </figure>
+      </div>
+    </div>
   </div>
 </div>
+<script>
+  Highcharts.chart('container', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'Proyectos aprobados',
+      align: 'left'
+    },
+    subtitle: {
+      text: 'Fuente: <a target="_blank" ' +
+        'href="">Base de datos Sprinf</a>',
+      align: 'left'
+    },
+    xAxis: {
+      categories: ['Proyectos'],
+      crosshair: true,
+      accessibility: {
+        description: 'proyectos'
+      }
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: ''
+      }
+    },
+    tooltip: {
+      valueSuffix: ' Cantidades'
+    },
+    plotOptions: {
+      column: {
+        pointPadding: 0.2,
+        borderWidth: 0
+      }
+    },
+    series: [{
+        name: 'Aprobados',
+        data: [<?=$Aprobados?>]
+      },
+      {
+        name: 'Desaprobados',
+        data: [<?=$Desaprobados?>]
+      }
+    ]
+  });
+
+  Highcharts.chart('municipios', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'Proyectos por municipios',
+      align: 'left'
+    },
+    subtitle: {
+      text: 'Fuente: <a target="_blank" ' +
+        'href="">Base de datos Sprinf</a>',
+      align: 'left'
+    },
+    xAxis: {
+      categories: ['Municipios'],
+      crosshair: true,
+      accessibility: {
+        description: 'proyectos'
+      }
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: ''
+      }
+    },
+    tooltip: {
+      valueSuffix: ' Cantidades'
+    },
+    plotOptions: {
+      column: {
+        pointPadding: 0.2,
+        borderWidth: 0
+      }
+    },
+    series: [
+      {
+        name: 'Crespo',
+        data: [<?=$Crespo?>]
+      },
+      {
+        name: 'Irribarren',
+        data: [<?=$Iribarren?>]
+      },
+      {
+        name: 'Jimenez',
+        data: [<?=$Jimenez?>]
+      },
+      {
+        name: 'Moran',
+        data: [<?=$Moran?>]
+      },
+      {
+        name: 'Palavecino',
+        data: [<?=$Palavecino?>]
+      }, 
+       {
+        name: 'Simon planas',
+        data: [<?=$SimonPlanas?>]
+      },
+      {
+        name: 'Torres',
+        data: [<?=$Torres?>]
+      },
+      {
+        name: 'Urdaneta',
+        data: [<?=$Urdaneta?>]
+      } 
+    ]
+  });
+</script>

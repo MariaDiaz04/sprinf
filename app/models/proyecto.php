@@ -199,6 +199,34 @@ class proyecto extends model
         return ($result) ? $result : [];
     }
 
+     /**
+     * Retorna los datos del proyecto
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function findActive(): array
+    {
+        $query = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 1");
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
+
+    
+     /**
+     * Retorna los datos del proyecto
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function findDesaprobados(): array
+    {
+        $query = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 0");
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
     /**
      * Encontrar proyecto al que el estudiante pertenece
      *
@@ -496,7 +524,59 @@ class proyecto extends model
         }
     }
 
+    /**
+     * Retorna los datos del proyecto
+     *
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function findByMunicipios(): array
+    {
+        $data = [];
 
+        $Crespo = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE municipio = 'Crespo'");
+        $Crespo->execute();
+        $resultCrespo = $Crespo->fetch(\PDO::FETCH_ASSOC);
+
+        $Iribarren = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE municipio = 'Iribarren'");
+        $Iribarren->execute();
+        $resultIribarren = $Iribarren->fetch(\PDO::FETCH_ASSOC);
+
+        $Jimenez = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE municipio = 'Jiménez'");
+        $Jimenez->execute();
+        $resultJimenez = $Jimenez->fetch(\PDO::FETCH_ASSOC);
+
+        $Moran = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE municipio = 'Moran'");
+        $Moran->execute();
+        $resultMoran = $Moran->fetch(\PDO::FETCH_ASSOC);
+
+        $Palavecino = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE municipio = 'Palavecino'");
+        $Palavecino->execute();
+        $resultPalavecino = $Palavecino->fetch(\PDO::FETCH_ASSOC);
+
+        $SimonPlanas = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE municipio = 'Simon Planas'");
+        $SimonPlanas->execute();
+        $resultSimonPlanas = $SimonPlanas->fetch(\PDO::FETCH_ASSOC);
+
+        $Torres = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE municipio = 'Torres'");
+        $Torres->execute();
+        $resultTorres = $Torres->fetch(\PDO::FETCH_ASSOC);
+
+        $Urdaneta = $this->prepare("SELECT COUNT(*) FROM detalles_proyecto WHERE municipio = 'Urdaneta'");
+        $Urdaneta->execute();
+        $resultUrdaneta = $Urdaneta->fetch(\PDO::FETCH_ASSOC);
+
+        $data = [
+            'Crespo' => $resultCrespo["COUNT(*)"],
+            'Iribarren' => $resultIribarren["COUNT(*)"],
+            'Jimenez' => $resultJimenez["COUNT(*)"],
+            'Moran' => $resultMoran["COUNT(*)"],
+            'Palavecino' => $resultPalavecino["COUNT(*)"],
+            'SimonPlanas' => $resultSimonPlanas["COUNT(*)"],
+            'Torres' => $resultTorres["COUNT(*)"],
+            'Urdaneta' => $resultUrdaneta["COUNT(*)"]
+        ];
+        return ($data) ? $data : null;
+    }
 
     /**
      * generarSSP
