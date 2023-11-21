@@ -552,7 +552,9 @@ class proyectoController extends controller
                 foreach ($integrantes as $key => $integrante) {
 
                     $inscripcion = $this->inscripcion->findStudentSubject($integrante['estudiante_id'], $materia['codigo_materia']);
-                    array_push($baremos[$materia['codigo']]['inscripcion'], $inscripcion);
+                    if (!empty($inscripcion)) {
+                        array_push($baremos[$materia['codigo']]['inscripcion'], $inscripcion);
+                    }
                 }
             }
 

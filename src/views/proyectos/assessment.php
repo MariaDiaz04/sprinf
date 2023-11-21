@@ -5,7 +5,7 @@
 </style>
 <div>
   <div class="card mb-4">
-    <h4 class="card-header"><b>Baremos <?= $fase->nombre_trayecto . ' - ' . $fase->nombre_fase . ' - ' . $fase->fecha_inicio . '/' . $fase->fecha_cierre ?></b></h4>
+    <h4 class="card-header"><b>Baremos <?= $fase->nombre_trayecto . ' - ' . $fase->nombre_fase . ' - ' . $fase->ponderado_baremos . '% - ' . $fase->fecha_inicio . '/' . $fase->fecha_cierre ?></b></h4>
   </div>
   <?php if (!empty($errors->danger)) : ?>
 
@@ -74,6 +74,9 @@
                 </tbody>
               </table>
             </div>
+            <div class="my-3"></div>
+            <hr>
+            <div class="my-3"></div>
           <?php endif; ?>
 
           <?php if (property_exists($materia, 'grupal') && !empty($materia->grupal)) : ?>
@@ -113,14 +116,13 @@
                 </div>
               </div>
             <?php endforeach; ?>
-          <?php endif; ?>
-
-
-
-          <?php if (property_exists($materia, 'individual') && !empty($materia->individual)) : ?>
             <div class="my-3"></div>
             <hr>
             <div class="my-3"></div>
+          <?php endif; ?>
+
+          <?php if (property_exists($materia, 'individual') && !empty($materia->individual)) : ?>
+
 
             <?php foreach ($materia->individual as $dimension) : ?>
               <div class="container mb-3">
