@@ -210,7 +210,7 @@
       <!-- <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div> -->
     <!-- <div><span>DUE DATE</span> September 17, 2015</div>
     </div> -->
-    <h3>Resumen de notas</h3>
+    <h3>Resumen de notas de baremos</h3>
     <table id="info">
       <thead>
         <tr>

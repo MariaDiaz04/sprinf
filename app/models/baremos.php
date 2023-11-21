@@ -44,6 +44,13 @@ class baremos extends model
     return !$materias ? [] : $materias;
   }
 
+  function findStudentsGrades(string $codigoMateria, string $codigoEstudiante): array
+  {
+
+    $materias = $this->select('detalles_baremos', [['codigo_fase', '=', "'" . $codigoFase . "'"]]);
+    return !$materias ? [] : $materias;
+  }
+
   /**
    * Se encarga de crear o actualizar registro de nota de 
    * integrante de proyecto

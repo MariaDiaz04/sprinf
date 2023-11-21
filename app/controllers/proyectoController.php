@@ -1008,6 +1008,39 @@ class proyectoController extends controller
             $proyecto = $this->proyecto->find($integrante['proyecto_id']);
             $options = new Options();
 
+            // obtener calificacion de materias de baremos
+            $fases = $this->fase->getByTrayecto($proyecto['codigo_trayecto']);
+            $materias = [];
+            foreach ($fases as $fase) {
+                $materiasDeDimension = $this->dimension->materiasDeBaremos($fase['codigo_fase']);
+                foreach ($materiasDeDimension as $materia) {
+                    $totalCalificacion = 0;
+                    $inscripcion = $this->inscripcion->usuarioCursaMateria($integrante['estudiante_id'], $materia['codigo']);
+                    $materia['inscripcion'] = $inscripcion;
+
+
+                    $dimensiones = $this->dimension->findBySubject($materia['codigo']);
+
+                    foreach ($dimensiones as $dimensionKey => $dimension) {
+                        $indicadores = $this->dimension->obtenerIndicadores($dimension['id']);
+                        foreach ($indicadores as $key => $indicador) {
+
+                            $itemEstudiante = $this->baremos->findStudentItem($indicador['id'], $integrante['id']);
+                            if (!empty($itemEstudiante)) {
+                                $indicadores[$key]['calificacion'] = $itemEstudiante['calificacion'];
+                                $totalCalificacion += $itemEstudiante['calificacion'];
+                            }
+                        }
+                        $dimensiones[$dimensionKey]['indicadores'] = $indicadores;
+                    }
+                    $materia['ponderado'] = $totalCalificacion;
+                    $materia['dimensiones'] = $dimensiones;
+                    $materias[$fase['codigo_fase']][$materia['codigo']] = $materia;
+                }
+            }
+            echo json_encode($materias);
+            exit();
+
             //Y debes activar esta opción "TRUE"
             $options->set('isRemoteEnabled', TRUE);
             $dompdf = new Dompdf($options);
