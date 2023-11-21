@@ -69,7 +69,12 @@
                         <tr>
                           <th scope="row"><?= $indicador->nombre ?></th>
                           <td><b><?= $indicador->ponderacion ?> %</b></td>
-                          <td><input required type="number" pattern="^[0-9]+$" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]"></td>
+                          <td>
+                            <input required type="number" aria-describedby="invalidPonderacion" data-max="<?= $indicador->ponderacion ?>" class="form-control mb-1" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') ? $indicador->calificacion : 0 ?>" name="indicador_grupal[<?= $indicador->id ?>]" id="indicador_grupal[<?= $indicador->id ?>]">
+                            <div id="invalidPonderacion" class="invalid-feedback">
+                              Max: <?= $indicador->ponderacion ?>%
+                            </div>
+                          </td>
                         </tr>
 
                       <?php endforeach; ?>
@@ -115,7 +120,7 @@
 
                           <?php foreach ($integrantes as $idIntegrante => $integrante) : ?>
                             <td>
-                              <input required type="number" aria-describedby="invalidCheck3Feedback" class="form-control" min="0" step="0.01" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]" data-max="<?= $indicador->ponderacion ?>">
+                              <input required type="number" aria-describedby="invalidCheck3Feedback" class="form-control" min="0" step="0.01" data-max="<?= $indicador->ponderacion ?>" max="<?= $indicador->ponderacion ?>" placeholder="..." value="<?= property_exists($indicador, 'calificacion') && isset($indicador->calificacion->{$integrante->id}) ? $indicador->calificacion->{$integrante->id} : 0 ?>" name="indicador_individual[<?= $integrante->id ?>][<?= $indicador->id ?>]" data-max="<?= $indicador->ponderacion ?>">
                               <div id="invalidCheck3Feedback" class="invalid-feedback">
                                 Max: <?= $indicador->ponderacion ?>%
                               </div>
@@ -161,26 +166,15 @@
 </div>
 
 <script>
-  $('input[type="number"]').on('keydown', function(event) {
-    const keyCode = event.keyCode;
-    console.log(keyCode)
-    // Comprueba si el código de la tecla presionada es un número
-    if (isLetterOrSpecialCharacter(keyCode)) {
-      // Acepta el valor
-      event.preventDefault();
-
-    }
-  })
   $('input[type="number"]').on('keyup', function() {
     const value = $(this).val();
 
     console.log(value)
-    if (value.length > 5 || (!value && !value.endsWith('.'))) {
+    if (value.length > 5) {
       // Establece el valor en el límite
-      // $(this).val(value.substring(0, 5));
-      console.log('no pasa')
+      $(this).val(value.substring(0, 5));
     }
-
+    console.log($(this).data('max'))
     // Comprueba si el valor coincide con la expresión regular
     if (!/^\d+(\.\d{1,2})?$/.test(value) || value < 0 || value > $(this).data('max')) {
       // Si no coincide, muestra un mensaje de error
