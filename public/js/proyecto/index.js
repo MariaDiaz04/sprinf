@@ -119,6 +119,9 @@ $(document).ready(function (e) {
                     <a class="dropdown-item" href="${
                       urlHistorico + row[0]
                     }">Ver Histórico</a>
+                    <a class="dropdown-item" href="${
+                      urlIntegrantes + row[0]
+                    }">Ver Integrantes</a>
                     ${
                       row[8] > 0
                         ? `<a class="dropdown-item" onClick="reprobados('${row[0]}')" href="#">Gestionar Reprobados</a>`

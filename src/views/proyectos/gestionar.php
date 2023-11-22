@@ -99,6 +99,7 @@
     let deleteUrl = "<?= APP_URL . $this->Route('proyectos/borrar') ?>";
     let reprobadosUrl = "<?= APP_URL . $this->Route('proyectos/reprobados/') ?>";
     let urlHistorico = '<?= APP_URL . $this->route('historico?id_proyecto=') ?>';
+    let urlIntegrantes = '<?= APP_URL . $this->route('estudiantes?id_proyecto=') ?>';
 
 
 

@@ -37,13 +37,15 @@ class estudianteController extends controller
     $this->inscripcion = new inscripcion();
   }
 
-  public function index()
+  public function index(Request $consulta)
   {
-
     $estudiantes = $this->estudiante->all();
+
+    $filtro = (int)$consulta->query->get('id_proyecto') != 0 ? '?id_proyecto=' . (int)$consulta->query->get('id_proyecto') : null;
 
     return $this->view('estudiantes/gestionar', [
       'estudiante' => $estudiantes,
+      'filtro' => $filtro,
     ]);
   }
 
@@ -485,11 +487,23 @@ class estudianteController extends controller
     }
     return true;
   }
-  function ssp(Request $query): void
+  // function ssp(Request $query): void
+  // {
+  //   try {
+  //     http_response_code(200);
+  //     echo json_encode($this->estudiante->generarSSP());
+  //   } catch (Exception $e) {
+  //     http_response_code(500);
+  //     echo json_encode($e->getMessage());
+  //   }
+  // }
+  function ssp(Request $consulta): void
   {
     try {
+      $id_proyecto = (int)$consulta->query->get('id_proyecto') != 0 ? (int)$consulta->query->get('id_proyecto') : null;
       http_response_code(200);
-      echo json_encode($this->estudiante->generarSSP());
+
+      echo json_encode($this->estudiante->generarSSP($id_proyecto));
     } catch (Exception $e) {
       http_response_code(500);
       echo json_encode($e->getMessage());

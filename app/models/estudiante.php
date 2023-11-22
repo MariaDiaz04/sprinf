@@ -196,7 +196,7 @@ class estudiante extends model
      *
      * @return array
      */
-    public function generarSSP(): array
+    public function generarSSP(int $idProyecto = null): array
     {
         $columns = array(
             array(
@@ -232,7 +232,12 @@ class estudiante extends model
                 'dt'        => 7
             ),
         );
-        return $this->getSSP('detalles_estudiantes', 'cedula', $columns);
+        if (empty($idProyecto)) {
+            return $this->getSSP('detalles_estudiantes', 'id', $columns);
+        } else {
+
+            return $this->getComplexSSP('detalles_estudiantes', 'id', $columns, ['condition' => "proyecto_id = $idProyecto"]);
+        }
     }
 
     /**

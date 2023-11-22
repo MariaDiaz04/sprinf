@@ -179,7 +179,7 @@
       // contiene el nombre de alguna acción que haya definido
 
       let table = new DataTable('#example', {
-        ajax: '<?= $this->Route('estudiantes/ssp') ?>',
+        ajax: '<?= APP_URL . $this->Route('estudiantes/ssp') ?><?= (!is_null($filtro)) ? $filtro : '' ?>',
         processing: true,
         serverSide: true,
         scrollX: true,
