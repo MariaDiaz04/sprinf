@@ -45,7 +45,7 @@
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
                       <label class="form-label" for="trayecto_id">Trayecto *</label>
-                      <select class="form-select" name="trayecto_id" id="id">
+                      <select class="form-select" name="trayecto_id" id="id" required>
                         <option>Seleccione</option>
                         <?php foreach ($trayectos as $trayecto) : ?>
                           <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre" ?></option>
@@ -54,17 +54,14 @@
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Código *</label>
-                      <input type="text" class="form-control mb-1" placeholder="IN...." pattern="([A-Z]{2,3})([1-9]){4}$" name="codigo" id="codigo" autocomplete="off">
-                      <h6 id="codigoCheck" style="color: red;">
-                        ** El código es requerido **
-                      </h6>
+                      <input type="text" class="form-control mb-1" placeholder="IN...." pattern="([A-Z]{2,3})([1-9]){4}$" name="codigo" id="codigo" autocomplete="off" required maxlength="8">
                     </div>
                   </div>
                   <div class="row form-group">
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-12">
                       <label class="form-label" for="nombre">Observación</label>
-                      <input type="textarea" class="form-control mb-1" name="observacion" id="observacion" autocomplete="off">
+                      <input type="textarea" class="form-control mb-1" name="observacion" id="observacion" autocomplete="off" maxlength="40">
                       <h6 id="observacionCheck" style="color: red;">
                       </h6>
                     </div>
@@ -106,7 +103,7 @@
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="trayecto_id">Trayectos *</label>
-                      <select class="form-select" name="trayecto_id" id="trayecto_idEdit">
+                      <select class="form-select" name="trayecto_id" id="trayecto_idEdit" required>
                         <?php foreach ($trayectos as $trayecto) : ?>
                           <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre" ?></option>
                         <?php endforeach; ?>
@@ -114,14 +111,14 @@
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Código *</label>
-                      <input type="text" class="form-control mb-1" placeholder="IN...." pattern="([A-Z]{2,3})([1-9]){4}$" id="codigoEdit" autocomplete="off" disabled>
+                      <input type="text" class="form-control mb-1" placeholder="IN...." pattern="([A-Z]{2,3})([1-9]){4}$" id="codigoEdit" autocomplete="off" disabled required maxlength="8">
                       <input type="hidden" name="codigo" id="codigoEditTwo">
                     </div>
                   </div>
                   <div class="row form-group">
                     <div class="col-lg-12">
                       <label class="form-label" for="observacionEdit">Observaciones</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="observacion" id="observacionEdit">
+                      <input type="text" class="form-control mb-1" placeholder="..." name="observacion" id="observacionEdit" maxlength="40">
                     </div>
                   </div>
                 </div>

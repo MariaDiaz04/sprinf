@@ -30,7 +30,7 @@ class homeController extends controller
         $proyectosMunicipios = $this->PROYECTO->findByMunicipios();
         $Aprobados = $this->PROYECTO->findActive();
         $Desaprobados = $this->PROYECTO->findDesaprobados();
-        
+
 
         $Crespo = $proyectosMunicipios['Crespo'];
         $Iribarren = $proyectosMunicipios['Iribarren'];
@@ -41,9 +41,11 @@ class homeController extends controller
         $Torres = $proyectosMunicipios['Torres'];
         $Urdaneta = $proyectosMunicipios['Urdaneta'];
 
-        return $this->view('home/home', ['usuarios' => $usuarios, 'activos' => $activos, 'inactivos' => $inactivos, 
-        'Crespo'=>$Crespo, 'Iribarren'=>$Iribarren, 'Jimenez'=>$Jimenez,'Moran'=>$Moran, 'Palavecino'=>$Palavecino, 
-        'SimonPlanas'=>$SimonPlanas,'Torres'=>$Torres, 'Urdaneta'=>$Urdaneta, 'Aprobados'=>$Aprobados["COUNT(*)"], 'Desaprobados'=>$Desaprobados["COUNT(*)"]]);
+        return $this->view('home/home', [
+            'usuarios' => $usuarios, 'activos' => $activos, 'inactivos' => $inactivos,
+            'Crespo' => $Crespo, 'Iribarren' => $Iribarren, 'Jimenez' => $Jimenez, 'Moran' => $Moran, 'Palavecino' => $Palavecino,
+            'SimonPlanas' => $SimonPlanas, 'Torres' => $Torres, 'Urdaneta' => $Urdaneta, 'Aprobados' => $Aprobados["COUNT(*)"], 'Desaprobados' => $Desaprobados["COUNT(*)"]
+        ]);
     }
 
     public function E501()
