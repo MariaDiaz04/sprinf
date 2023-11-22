@@ -29,136 +29,10 @@
       </table>
     </div>
   </div>
-
-  <!-- MODAL CREAR -->
-  <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nuevo Estudiante</h5>
-
-        </div>
-        <form action="<?= APP_URL . $this->Route('estudiantes/guardar') ?>" method="post" id="guardar">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
-            <div class="container-fluid">
-              <div class="row pb-2">
-                <div class="col-12">
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Cedula *</label>
-                      <input type="text" required class="form-control mb-1" placeholder="..." name="cedula" id="cedula">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" required class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="apellido">Apellido *</label>
-                      <input type="text" required class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="direccion">Dirección</label>
-                      <input type="text" required class="form-control mb-1" placeholder="..." name="direccion" id="direccion">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="number" required class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="email">Correo Electronico</label>
-                      <input type="email" required class="form-control mb-1" placeholder="..." name="email" id="email">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Guardar" id="guardar">
-            <div id="loading">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL ACTUALIZAR -->
-
-  <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editarLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editarLabel">Editar Estudiante</h5>
-
-        </div>
-        <form action="<?= APP_URL . $this->Route('estudiantes/update') ?>" method="post" id="actualizar">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
-            <div class="container-fluid">
-              <div class="row pb-2">
-                <div class="col-12">
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Cedula *</label>
-                      <input type="text" require disabled class="form-control mb-1" id="cedulaEdit">
-                      <input type="hidden" required class="form-control mb-1" name="cedula" id="cedulaEditTwo">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" required class="form-control mb-1" name="nombre" id="nombreEdit" max="55">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="apellido">Apellido *</label>
-                      <input type="text" required class="form-control mb-1" name="apellido" id="apellidoEdit" max="55">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="direccion">Dirección</label>
-                      <input type="text" required class="form-control mb-1" placeholder="..." name="direccion" id="direccionEdit" max="255">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="text" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required name="telefono" id="telefonoEdit">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="email">Correo Electronico</label>
-                      <input type="email" required class="form-control mb-1" placeholder="..." name="email" id="emailEdit">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="editarSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Editar" id="editar">
-            <div id="loading">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  <?php
+  include 'modules/crear.php';
+  include 'modules/actualizar.php';
+  ?>
 
   <script>
     let editUrl = "<?= APP_URL . $this->Route('estudiantes/edit') ?>";
@@ -579,7 +453,7 @@
     }
 
     function onlyNumbers(number) {
-      return /^[0-9]{8}$/.test(number);
+      return /^[0-9]{7,8}$/.test(number);
     }
 
     function onlyEmail(email) {

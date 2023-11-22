@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editar">Nuevo Docente</h5>
+        <h5 class="modal-title" id="editar">Actualizar Docente</h5>
 
       </div>
       <form action="<?= APP_URL . $this->Route('profesores/actualizar') ?>" method="post" id="actualizar">
@@ -21,13 +21,19 @@
                   </div>
                   <div class="col-lg-6">
                     <label class="form-label" for="nombre">Nombre *</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
+                    <input type="text" aria-describedby="checkNombre" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
+                    <div id="checkNombre" class="invalid-feedback">
+                      Por favor, proporcione un nombre válido.
+                    </div>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-lg-6">
                     <label class="form-label" for="apellido">Apellido *</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
+                    <input type="text" aria-describedby="checkApellido" class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
+                    <div id="checkApellido" class="invalid-feedback">
+                      Por favor, proporcione un apellido válido.
+                    </div>
                   </div>
 
                   <!-- <div class="row form-group"> -->
@@ -39,11 +45,17 @@
                 <div class="row form-group">
                   <div class="col-lg-6">
                     <label class="form-label" for="telefono">Teléfono</label>
-                    <input type="number" class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
+                    <input type="number" aria-describedby="checkTelefono" class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
+                    <div id="checkTelefono" class="invalid-feedback">
+                      Por favor, proporcione un numero de telefono válido.
+                    </div>
                   </div>
                   <div class="col-lg-6">
                     <label class="form-label" for="email">Correo Electronico</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." name="email" id="email">
+                    <input type="text" aria-describedby="checkEmail" class="form-control mb-1" placeholder="..." name="email" id="email">
+                    <div id="checkEmail" class="invalid-feedback">
+                      Por favor, proporcione un Correo Electronico válido.
+                    </div>
                   </div>
                 </div>
 
@@ -92,14 +104,7 @@
         $(this).removeClass("is-invalid");
       }
     })
-    $("#actualizar #cedula").on('keyup', function() {
-      let cedula = $(this).val();
-      if (!onlyNumbers(cedula)) {
-        $(this).addClass("is-invalid");
-      } else {
-        $(this).removeClass("is-invalid");
-      }
-    })
+    
     $("#actualizar #email").on('keyup', function() {
       let email = $(this).val();
       if (!onlyEmail(email)) {

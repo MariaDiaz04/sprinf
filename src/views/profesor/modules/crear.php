@@ -47,8 +47,8 @@
                 <div class="row form-group">
                   <div class="col-lg-6">
                     <label class="form-label" for="telefono">Teléfono</label>
-                    <input type="text" inputmode="numeric" class="form-control mb-1" placeholder="04XXXXXXXXX" name="telefono" id="telefono" required maxlength="11">
-                    <div id="checkEmail" class="invalid-feedback">
+                    <input type="text" aria-describedby="checkTelefono" inputmode="numeric" class="form-control mb-1" placeholder="04XXXXXXXXX" name="telefono" id="telefono" required maxlength="11">
+                    <div id="checkTelefono" class="invalid-feedback">
                       Por favor, proporcione un numero de telefono válido.
                     </div>
                   </div>
