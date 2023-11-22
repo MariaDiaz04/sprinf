@@ -201,9 +201,9 @@ class profesorController extends controller
       $profesor = $this->profesor->findByCodigo($cedula);
       $codigo = $profesor->fillable['codigo'];
       $usuario_id = $profesor->fillable['usuario_id'];
-    
+
       // verificar que no cuente con incripciones ya creadas
-      $this->checkDataDelete($codigo,'eliminar');
+      $this->checkDataDelete($codigo, 'eliminar');
       // realizar eliminacion
       $result = $this->profesor->deleteTransaction($codigo, $usuario_id);
       return var_dump($result);
@@ -227,7 +227,7 @@ class profesorController extends controller
     }
   }
 
-  function checkData(string $cedula , string $email ,string $action): bool
+  function checkData(string $cedula, string $email, string $action)
   {
     // verificar que no cuente con insripciones
     if (isset($cedula)) {
@@ -268,7 +268,7 @@ class profesorController extends controller
     }
   }
 
-  function checkDataDelete( string $codigo , string $action): bool
+  function checkDataDelete(string $codigo, string $action): bool
   {
     if (isset($codigo)) {
       $profesores = $this->profesor->findData('detalles_proyecto', 'tutor_in', $codigo);

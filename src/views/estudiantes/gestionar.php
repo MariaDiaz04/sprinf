@@ -432,17 +432,17 @@
         console.log('aasddff');
       }
 
-      // TOGGLE BUTTON AND SPINNER
-      function toggleLoading(show, form = '') {
-        if (show) {
-          $(`${form} #loading`).show();
-          $(`${form} #submit`).hide();
-        } else {
-          $(`${form} #loading`).hide();
-          $(`${form} #submit`).show();
-        }
-      }
     })
+    // TOGGLE BUTTON AND SPINNER
+    function toggleLoading(show, form = '') {
+      if (show) {
+        $(`${form} #loading`).show();
+        $(`${form} #submit`).hide();
+      } else {
+        $(`${form} #loading`).hide();
+        $(`${form} #submit`).show();
+      }
+    }
 
     function showDetails(id) {
 

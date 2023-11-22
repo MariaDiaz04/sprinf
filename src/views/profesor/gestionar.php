@@ -27,152 +27,10 @@
     </div>
   </div>
 
-  <!-- MODAL CREAR -->
-  <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nuevo Docente</h5>
-
-        </div>
-        <form action="<?= APP_URL . $this->Route('profesores/guardar') ?>" method="post" id="guardar">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
-            <div class="container-fluid">
-              <div class="row pb-2">
-                <div class="col-12">
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Cedula *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="cedula" id="cedula">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="apellido">Apellido *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
-                    </div>
-
-                    <!-- <div class="row form-group"> -->
-                    <div class="col-lg-6">
-                      <label class="form-label" for="direccion">Dirección</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="direccion" id="direccion">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
-                    </div>
-                  </div>
-
-                  <!-- <div class="row form-group"> -->
-                  <br>
-                  <hr>
-                  <h5 class="modal-title" id="crearLabel">Usuario Docente</h5>
-                  <br>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="email">Correo Electronico</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="email" id="email">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="contrasena">Contraseña</label>
-                      <input type="password" class="form-control mb-1" placeholder="..." name="contrasena" id="contrasena">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crear">Cancelar</button>
-
-            <input type="submit" class="btn btn-primary" value="Guardar" id="guardar">
-            <div id="loading">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL ACTUALIZAR -->
-  <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editar" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editar">Nuevo Docente</h5>
-
-        </div>
-        <form action="<?= APP_URL . $this->Route('profesores/actualizar') ?>" method="post" id="actualizar">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
-            <div class="container-fluid">
-              <div class="row pb-2">
-                <div class="col-12">
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Cedula *</label>
-                      <input type="text" disabled class="form-control mb-1" id="cedulaEdit">
-                      <input type="hidden" class="form-control mb-1" placeholder="..." name="cedula" id="cedula">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="apellido">Apellido *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="apellido" id="apellido">
-                    </div>
-
-                    <!-- <div class="row form-group"> -->
-                    <div class="col-lg-6">
-                      <label class="form-label" for="direccion">Dirección</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="direccion" id="direccion">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="email">Correo Electronico</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="email" id="email">
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="editarSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Editar" id="editar">
-            <div id="loading">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  <?php
+  include 'modules/crear.php';
+  include 'modules/actualizar.php';
+  ?>
 
   <!-- MODAL DATOS CONTACTO -->
   <div class="modal fade" id="datos" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
@@ -486,16 +344,18 @@
 
 
       // TOGGLE BUTTON AND SPINNER
-      function toggleLoading(show, form = '') {
-        if (show) {
-          $(`${form} #loading`).show();
-          $(`${form} #submit`).hide();
-        } else {
-          $(`${form} #loading`).hide();
-          $(`${form} #submit`).show();
-        }
-      }
+
     })
+
+    function toggleLoading(show, form = "") {
+      if (show) {
+        $(`${form} #loading`).show();
+        $(`${form} #submit`).hide();
+      } else {
+        $(`${form} #loading`).hide();
+        $(`${form} #submit`).show();
+      }
+    }
 
     function showDetails(id) {
 
@@ -534,7 +394,7 @@
     }
 
     function onlyNumbers(number) {
-      return /^[0-9]{8}$/.test(number);
+      return /^[0-9]{7,8}$/.test(number);
     }
 
     function onlyEmail(email) {
