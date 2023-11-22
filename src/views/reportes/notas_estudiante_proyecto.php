@@ -240,17 +240,20 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($fase['materias'] as $materia) : ?>
-            <?php
-            $totalPonderadoMaterias += $materia['ponderado_baremos'];
-            $totalCalificadoMaterias += $materia['ponderado'];
-            ?>
-            <tr>
-              <td><?= $materia['nombre'] ?></td>
-              <td><?= $materia['ponderado_baremos'] ?></td>
-              <td><?= $materia['ponderado'] ?></td>
-            </tr>
-          <?php endforeach; ?>
+          <?php if (isset($fase['materias'])) : ?>
+
+            <?php foreach ($fase['materias'] as $materia) : ?>
+              <?php
+              $totalPonderadoMaterias += $materia['ponderado_baremos'];
+              $totalCalificadoMaterias += $materia['ponderado'];
+              ?>
+              <tr>
+                <td><?= $materia['nombre'] ?></td>
+                <td><?= $materia['ponderado_baremos'] ?></td>
+                <td><?= $materia['ponderado'] ?></td>
+              </tr>
+            <?php endforeach; ?>
+          <?php endif; ?>
           <tr>
             <td colspan="1" class="grand total">TOTAL (%)</td>
             <td class="grand total"><?= $totalPonderadoMaterias ?></td>
@@ -281,47 +284,49 @@
   <main>
     <?php foreach ($materiasporFase as $fase) : ?>
       <h2>Baremos <?= $fase['nombre'] ?></h2>
+      <?php if (isset($fase['materias'])) : ?>
 
-      <?php foreach ($fase['materias'] as $materia) : ?>
-        <h3><?= $materia['nombre'] ?> - <?= $materia['ponderado_baremos'] ?>%</h3>
-        <?php foreach ($materia['dimensiones'] as $dimension) : ?>
-          <?php
-          $totalCalificacionDimension = 0;
-          $totalPonderacionDimension = 0;
-          ?>
-          <h4><?= $dimension['nombre'] ?> - <?= $dimension['ponderacion_items'] ?>%</h4>
-          <table id="infoSmaller">
-            <thead>
-              <tr>
-                <th>Aspectos a evaluar</th>
-                <th>Ponderación Máxima</th>
-                <th>Calificación</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($dimension['indicadores'] as $indicador) : ?>
-                <?php
-                if (isset($indicador['calificacion'])) {
-                  $totalCalificacionDimension += $indicador['calificacion'];
-                }
-                $totalPonderacionDimension += $indicador['ponderacion'];
-                ?>
+        <?php foreach ($fase['materias'] as $materia) : ?>
+          <h3><?= $materia['nombre'] ?> - <?= $materia['ponderado_baremos'] ?>%</h3>
+          <?php foreach ($materia['dimensiones'] as $dimension) : ?>
+            <?php
+            $totalCalificacionDimension = 0;
+            $totalPonderacionDimension = 0;
+            ?>
+            <h4><?= $dimension['nombre'] ?> - <?= $dimension['ponderacion_items'] ?>%</h4>
+            <table id="infoSmaller">
+              <thead>
                 <tr>
-                  <td class="service"><?= $indicador['nombre'] ?></td>
-                  <td class="desc"><?= $indicador['ponderacion'] ?></td>
-                  <td class="total"><?= $indicador['calificacion'] ?? 0 ?></td>
+                  <th>Aspectos a evaluar</th>
+                  <th>Ponderación Máxima</th>
+                  <th>Calificación</th>
                 </tr>
-              <?php endforeach; ?>
+              </thead>
+              <tbody>
+                <?php foreach ($dimension['indicadores'] as $indicador) : ?>
+                  <?php
+                  if (isset($indicador['calificacion'])) {
+                    $totalCalificacionDimension += $indicador['calificacion'];
+                  }
+                  $totalPonderacionDimension += $indicador['ponderacion'];
+                  ?>
+                  <tr>
+                    <td class="service"><?= $indicador['nombre'] ?></td>
+                    <td class="desc"><?= $indicador['ponderacion'] ?></td>
+                    <td class="total"><?= $indicador['calificacion'] ?? 0 ?></td>
+                  </tr>
+                <?php endforeach; ?>
 
-              <tr>
-                <td colspan="1" class="grand total">TOTAL (%)</td>
-                <td class="grand total"><?= $totalPonderacionDimension ?>%</td>
-                <td class="grand total"><?= $totalCalificacionDimension ?>%</td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <td colspan="1" class="grand total">TOTAL (%)</td>
+                  <td class="grand total"><?= $totalPonderacionDimension ?>%</td>
+                  <td class="grand total"><?= $totalCalificacionDimension ?>%</td>
+                </tr>
+              </tbody>
+            </table>
+          <?php endforeach; ?>
         <?php endforeach; ?>
-      <?php endforeach; ?>
+      <?php endif; ?>
       <div class="page_break"></div>
     <?php endforeach; ?>
 

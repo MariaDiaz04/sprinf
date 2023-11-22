@@ -11,7 +11,7 @@
   </div>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white">Periodos</h6>
+    <h6 class="card-header bg-primary text-white">Estudiantes</h6>
     <div class="card-body px-3 pt-3">
       <table id="example" class="table table-striped table-responsive" style="width:100%">
         <thead class="thead-dark">
@@ -20,6 +20,9 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
+            <th>Telefono</th>
+            <th>Seccion</th>
+            <th>Proyecto</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -161,6 +164,7 @@
     let editUrl = "<?= APP_URL . $this->Route('estudiantes/edit') ?>";
     let showDetailsUrl = "<?= APP_URL . $this->Route('estudiantes/showDetails') ?>";
     let noteUrl = "<?= APP_URL . $this->Route('notes/pdf') ?>";
+    let notasProyectoUrl = "<?= APP_URL . $this->Route('proyectos/calificaciones') ?>";
     let deleteUrl = "<?= APP_URL . $this->Route('estudiantes/delete') ?>";
 
     $(document).ready(() => {
@@ -184,6 +188,15 @@
         pageLength: 30,
 
         columnDefs: [{
+          visible: false,
+          targets: [0, 2]
+        }, {
+          data: null,
+          render: function(data, type, row, meta) {
+            return row[1] + ' ' + row[2];
+          }, // combino los botons de acción
+          targets: 1 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+        }, {
           data: null,
           render: function(data, type, row, meta) {
             return `<div class="btn-group dropstart">
@@ -195,11 +208,12 @@
                         <a class="dropdown-item" href="<?= APP_URL . $this->route('historico?cedula=') ?>${row[0]}">Ver Histórico</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="javascript:void(0)">Editar</a>
                         <a class="dropdown-item" " href="${noteUrl+'/'+row[0]}" target="_blank">Notas</a>
+                        <a class="dropdown-item" " href="${notasProyectoUrl+'/'+row[7]}" target="_blank">Notas Proyecto</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="javascript:void(0)">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
-          targets: 4 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
 

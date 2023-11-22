@@ -45,11 +45,11 @@
         pageLength: 10,
         columnDefs: [{
           visible: false,
-          targets: [0, 1, 2]
+          targets: [0, 1, 2, 8, 10, 12, 13]
         }, {
           data: null,
           render: function(data, type, row, meta) {
-            return row[14] == 1 ? '<span class="badge rounded-pill bg-success">Aprobado</span>' : '<span class="badge rounded-pill bg-secondary">Reprobado</span>';
+            return row[14] == 1 ? `<span class="badge rounded-pill bg-success">Aprobado - ${row[13]}%</span>` : '<span class="badge rounded-pill bg-secondary">Reprobado</span>';
           },
           targets: 14
         }]

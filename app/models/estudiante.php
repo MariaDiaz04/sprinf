@@ -164,14 +164,14 @@ class estudiante extends model
      *
      * @return String
      */
-    function deleteTransaction($estudiante_id,$usuario_id): bool
+    function deleteTransaction($estudiante_id, $usuario_id): bool
     {
         try {
             parent::beginTransaction();
             // actualizar tabla materia
             $this->delete('estudiante', [['id', '=', '"' . $estudiante_id . '"']]);
-            $this->delete('persona', [['usuario_id', '=',  $usuario_id ]]);
-            $this->delete('usuario', [['id', '=',  $usuario_id ]]);
+            $this->delete('persona', [['usuario_id', '=',  $usuario_id]]);
+            $this->delete('usuario', [['id', '=',  $usuario_id]]);
             parent::commit();
             return true;
         } catch (Exception $e) {
@@ -218,7 +218,19 @@ class estudiante extends model
             array(
                 'db'        => 'telefono',
                 'dt'        => 4
-            )
+            ),
+            array(
+                'db'        => 'seccion_id',
+                'dt'        => 5
+            ),
+            array(
+                'db'        => 'nombre_proyecto',
+                'dt'        => 6
+            ),
+            array(
+                'db'        => 'integrante_id',
+                'dt'        => 7
+            ),
         );
         return $this->getSSP('detalles_estudiantes', 'cedula', $columns);
     }

@@ -1255,12 +1255,14 @@ SELECT
   detalles_inscripciones.seccion_id, 
   integrante_proyecto.id as integrante_id,
   integrante_proyecto.proyecto_id,
+  proyecto.nombre as nombre_proyecto,
   trayecto.codigo as trayecto_id
 FROM persona
 INNER JOIN estudiante ON estudiante.persona_id = persona.cedula
 LEFT JOIN usuario ON usuario.id = persona.usuario_id
 LEFT JOIN detalles_inscripciones ON detalles_inscripciones.id_inscripcion = estudiante.id
 LEFT JOIN integrante_proyecto ON integrante_proyecto.estudiante_id = estudiante.id
+LEFT JOIN proyecto ON proyecto.id = integrante_proyecto.proyecto_id
 LEFT JOIN seccion ON seccion.codigo = detalles_inscripciones.seccion_id
 LEFT JOIN trayecto ON trayecto.codigo = seccion.trayecto_id
 GROUP BY persona.cedula, detalles_inscripciones.seccion_id;
