@@ -28,140 +28,10 @@
     </div>
   </div>
 
-  <!-- MODAL CREAR -->
-  <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Nuevo Consejo Comunal</h5>
-
-        </div>
-        <form action="<?= APP_URL . $this->Route('consejoComunal/guardar') ?>" method="post" id="guardar" name="consejoComunalguardar">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
-            <div class="container-fluid">
-              <div class="row pb-2">
-                <div class="col-12">
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre del Consejo Comunal *</label>
-                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre">
-                      <h6 id="codigoCheck" style="color: red;">
-                        ** El nombre es requerido **
-                      </h6>
-                    </div>
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre del Vocero</label>
-                      <input type="text" required class="form-control mb-1" name="nombre_vocero" id="nombre_vocero">
-
-                    </div>
-
-                  </div>
-                  <div class="row form-group">
-
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="sector_id">Sector *</label>
-                      <select class="form-select" name="sector_id" id="sector_id">
-                        <option>Seleccione</option>
-                        <?php foreach ($sectores as $sector) : ?>
-                          <option value="<?= $sector->id ?>"><?= "$sector->nombre" ?></option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="number" required class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Guardar" id="submit">
-            <div id="loading">
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- MODAL ACTUALIZAR -->
-  <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="editarLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="crearLabel">Actualizar Consejo Comunal</h5>
-
-        </div>
-        <form action="<?= APP_URL . $this->Route('consejoComunal/update') ?>" method="post" id="actualizar">
-          <input type="hidden" name="id" id="idconsejocomunal">
-          <div class="modal-body">
-            <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
-            <input type="hidden" name="estatus" value="1">
-            <div class="container-fluid">
-              <div class="row pb-2">
-                <div class="col-12">
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre del Consejo Comunal *</label>
-                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre">
-
-                    </div>
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="nombre">Nombre del Vocero</label>
-                      <input type="text" required class="form-control mb-1" name="nombre_vocero" id="nombre_vocero">
-
-                    </div>
-
-                  </div>
-                  <div class="row form-group">
-
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="sector_id">Sector *</label>
-                      <select class="form-select" name="sector_id" id="sector_id">
-                        <option>Seleccione</option>
-                        <?php foreach ($sectores as $sector) : ?>
-                          <option value="<?= $sector->id ?>"><?= "$sector->nombre" ?></option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="telefono">Teléfono</label>
-                      <input type="number" required class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- footer de acciones -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="crearSubmit">Cancelar</button>
-            <input type="submit" class="btn btn-primary" value="Guardar" id="submit">
-            <div id="loading">
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-
+  <?php
+  include 'modules/crear.php';
+  include 'modules/actualizar.php';
+  ?>
 
   <script>
     let updateUrl = "<?= APP_URL . $this->Route('consejoComunal/edit') ?>";
@@ -209,17 +79,57 @@
       });
 
 
+      $('#actualizar #nombre').on('keyup', function() {
+        let value = $(this).val();
+        if (!letterAndFewSpecial(value)) {
+          $(this).addClass("is-invalid");
+        } else {
+          $(this).removeClass("is-invalid");
+        }
+      })
+      $('#actualizar #nombre_vocero').on('keyup', function() {
+        let value = $(this).val();
+        if (!onlyLetters(value)) {
+          $(this).addClass("is-invalid");
+        } else {
+          $(this).removeClass("is-invalid");
+        }
+      })
+      $('#actualizar #telefono').on('keyup', function() {
+        let value = $(this).val();
+        if (!phoneNumbers(value)) {
+          $(this).addClass("is-invalid");
+        } else {
+          $(this).removeClass("is-invalid");
+        }
+      })
+
 
       $('#guardar').submit(function(e) {
         e.preventDefault()
 
+
+        let nombre = $('#guardar #nombre').val()
+        if (!letterAndFewSpecial(nombre)) {
+          $('#guardar #nombre').addClass("is-invalid");
+          return false;
+        }
+
+        let nombreVocero = $('#guardar #nombre_vocero').val()
+        if (!onlyLetters(nombre)) {
+          $('#guardar #nombre_vocero').addClass("is-invalid");
+          return false;
+        }
+        let telefono = $('#guardar #telefono').val()
+        if (!phoneNumbers(telefono)) {
+          $('#guardar #telefono').addClass("is-invalid");
+          return false;
+        }
         toggleLoading(true);
 
 
         url = $(this).attr('action');
         data = $(this).serializeArray();
-
-
 
 
         $.ajax({
@@ -259,11 +169,53 @@
 
       })
 
+      $('#actualizar #nombre').on('keyup', function() {
+        let value = $(this).val();
+        if (!letterAndFewSpecial(value)) {
+          $(this).addClass("is-invalid");
+        } else {
+          $(this).removeClass("is-invalid");
+        }
+      })
+      $('#actualizar #nombre_vocero').on('keyup', function() {
+        let value = $(this).val();
+        if (!onlyLetters(value)) {
+          $(this).addClass("is-invalid");
+        } else {
+          $(this).removeClass("is-invalid");
+        }
+      })
+      $('#actualizar #telefono').on('keyup', function() {
+        let value = $(this).val();
+        if (!phoneNumbers(value)) {
+          $(this).addClass("is-invalid");
+        } else {
+          $(this).removeClass("is-invalid");
+        }
+      })
+
       $('#actualizar').submit(function(e) {
         e.preventDefault()
 
-        toggleLoading(true, '#actualizar');
 
+
+        let nombre = $('#actualizar #nombre').val()
+        if (!letterAndFewSpecial(nombre)) {
+          $('#actualizar #nombre').addClass("is-invalid");
+          return false;
+        }
+
+        let nombreVocero = $('#actualizar #nombre_vocero').val()
+        if (!onlyLetters(nombre)) {
+          $('#actualizar #nombre_vocero').addClass("is-invalid");
+          return false;
+        }
+        let telefono = $('#actualizar #telefono').val()
+        if (!phoneNumbers(telefono)) {
+          $('#actualizar #telefono').addClass("is-invalid");
+          return false;
+        }
+        toggleLoading(true, '#actualizar');
 
         url = $(this).attr('action');
         data = $(this).serializeArray();
@@ -385,5 +337,28 @@
           $('#tabla').DataTable().ajax.reload();
         },
       });
+    }
+
+    function onlyLetters(str) {
+      return /^[A-Za-zñáéíóúüÁÉÍÓÚÑÜ ]*$/.test(str);
+    }
+
+    function letterAndFewSpecial(str) {
+      return (
+        /^[A-Za-zñáéíóúüÁÉÍÓÚÑÜ \- \– '"() , “” .]*$/.test(str) &&
+        str.trim().length > 0
+      );
+    }
+
+    function phoneNumbers(number) {
+      return /^[04][0-9]{10}$/.test(number);
+    }
+
+    function capitalizeText(mySentence) {
+      let words = mySentence.toLowerCase();
+
+      words = words.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
+
+      return words;
     }
   </script>
