@@ -165,7 +165,7 @@ class inscripcionController extends controller
 
       foreach ($inscripciones as $inscripcion) {
 
-        $resultado = $this->inscripciones->remove($inscripcion['id']);
+        $resultado = $this->inscripciones->remove($inscripcion['id_inscripcion']);
 
         if (!$resultado) {
           throw new Exception($this->inscripciones->error['message'], (int)$this->inscripciones->error['code']);

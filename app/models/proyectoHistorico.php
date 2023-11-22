@@ -41,7 +41,7 @@ class proyectoHistorico extends model
     'periodo_final',
   ];
   private int $id_proyecto;
-  public int $consejo_comunal_id;
+  public ?int $consejo_comunal_id;
   public string $codigo_trayecto;
   public ?string $codigo_siguiente_trayecto;
   public string $nombre_estudiante;
@@ -52,10 +52,10 @@ class proyectoHistorico extends model
   public string $direccion;
   public string $comunidad;
   public string $motor_productivo;
-  public string $nombre_consejo_comunal;
-  public string $nombre_vocero_consejo_comunal;
-  public string $telefono_consejo_comunal;
-  public string $sector_consejo_comunal;
+  public ?string $nombre_consejo_comunal;
+  public ?string $nombre_vocero_consejo_comunal;
+  public ?string $telefono_consejo_comunal;
+  public ?string $sector_consejo_comunal;
   public string $municipio;
   public string $parroquia;
   public int $parroquia_id;
@@ -110,7 +110,7 @@ class proyectoHistorico extends model
         $this->nombre_trayecto = $proyecto['nombre_trayecto'];
         $this->resumen = $proyecto['resumen'];
         $this->direccion = $proyecto['direccion'];
-        $this->consejo_comunal_id = $proyecto['consejo_comunal_id'];
+        $this->consejo_comunal_id = $proyecto['consejo_comunal_id'] ?? null;
         $this->nombre_consejo_comunal = $proyecto['nombre_consejo_comunal'];
         $this->nombre_vocero_consejo_comunal = $proyecto['nombre_vocero_consejo_comunal'];
         $this->telefono_consejo_comunal = $proyecto['telefono_consejo_comunal'];

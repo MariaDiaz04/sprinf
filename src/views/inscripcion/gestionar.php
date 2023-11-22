@@ -337,7 +337,7 @@
           <input type="hidden" name="inscripcion[${counter}][id]" value="${inscripcion.id_inscripcion}">
             <label for="calificacion" class="col col-form-label">${inscripcion.seccion_id} | ${inscripcion.nombre_materia} ${inscripcion.nombre_fase}</label>
             <div class="col-sm-3">
-              <input type="number" min="0" step="0.01" required aria-describedby="calificacionValida" onkeydown="return ([8,9,37,38,39,40].includes(event.keyCode)) ? true : /[0-9 .]/i.test(event.key)" onkeyup="validarCalificacion()" name="inscripcion[${counter}][calificacion]" class="form-control calificacion" id="calificacion" placeholder="0" ${(inscripcion.calificacion != null ? 'value="'+ inscripcion.calificacion + '"' : '')}>
+              <input type="number" min="0" step="0.01" ${inscripcion.unidad_curricular_id.endsWith('_2') ? '' : 'required'} aria-describedby="calificacionValida" onkeydown="return ([8,9,37,38,39,40].includes(event.keyCode)) ? true : /[0-9 .]/i.test(event.key)" onkeyup="validarCalificacion()" name="inscripcion[${counter}][calificacion]" class="form-control calificacion" id="calificacion" placeholder="0" ${(inscripcion.calificacion != null ? 'value="'+ inscripcion.calificacion + '"' : '')}>
             </div>
           </div>
           <hr>`;

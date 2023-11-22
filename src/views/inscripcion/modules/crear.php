@@ -15,7 +15,7 @@
               <div class="row form-group">
                 <div class="col-lg-6">
                   <label class="form-label" for="profesor_id">Profesor *</label>
-                  <select class="form-select" name="profesor_id" id="profesor_id">
+                  <select class="form-select" name="profesor_id" id="profesor_id" required>
                     <option value="" disabled="disabled" selected="selected" id="ningunProfesor">-- Ninguno --</option>
                     <?php foreach ($profesores as $profesor) : ?>
                       <option value="<?= $profesor->codigo ?>"><?= "$profesor->nombre $profesor->apellido" ?></option>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-lg-6">
                   <label class="form-label" for="seccion_id">Seccion *</label>
-                  <select class="form-select" name="seccion_id" id="seccion_id">
+                  <select class="form-select" name="seccion_id" id="seccion_id" required>
                     <option value="" disabled="disabled" selected="selected" id="ningunaSeccion">-- Ninguno --</option>
                     <?php foreach ($secciones as $seccion) : ?>
                       <option value="<?= $seccion->codigo ?>"><?= "$seccion->codigo" ?></option>

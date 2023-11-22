@@ -1,3 +1,8 @@
+<style>
+  .dropdown-menu {
+    max-width: 500px;
+  }
+</style>
 <div class="modal fade" id="historico" role="dialog" aria-labelledby="historicoLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -13,7 +18,7 @@
                 <div class="row form-group mb-3">
                   <div class="col-lg-9">
                     <label class="form-label" for="nombre"><b>Proyecto *</b></label>
-                    <select class="form-select" name="id" id="selectProyecto" required>
+                    <select class="d-block selectpicker" data-width="100%" data-live-search="true" name="id" id="selectProyecto" required>
                       <option disabled selected value> -- Seleccione un Proyecto -- </option>
                       <?php foreach ($historicoProyectos as $idProyecto => $proyecto) : ?>
                         <option value="<?= $idProyecto ?>" data-nombre="<?= $proyecto->nombre ?>" data-tlf_tex="<?= $proyecto->tlf_tex ?>" data-comunidad="<?= $proyecto->comunidad ?>" data-resumen="<?= $proyecto->resumen ?>" data-motor_productivo="<?= $proyecto->motor_productivo ?>" data-direccion="<?= $proyecto->direccion ?>" data-consejo_comunal_id="<?= $proyecto->consejo_comunal_id ?>" data-codigo-siguiente-trayecto="<?= $proyecto->codigo_siguiente_trayecto ?>" data-tutor_in="<?= $proyecto->tutor_in ?>" data-tutor_ex="<?= $proyecto->tutor_ex ?>" data-parroquia_id="<?= $proyecto->parroquia_id ?>">
