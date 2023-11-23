@@ -76,6 +76,7 @@
 
       toggleLoading(false)
 
+
       // DATATABLE CRUD
 
       // las acciones son definidas en la clase que contiene el botón, es decir,
@@ -88,6 +89,7 @@
         processing: true,
         serverSide: true,
         scrollX: true,
+        scrollY: false,
         scrollCollapse: true,
         responsive: true,
         pageLength: 30,
