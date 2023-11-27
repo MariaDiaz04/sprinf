@@ -68,41 +68,94 @@ class proyecto extends model
         }
     }
 
-    public function save($id = null)
+    /**
+     * Transaccion para inserción de proyectos
+     *
+     * @return bool - exito de ejecución
+     */
+    function insertTransaction(): bool
     {
-        $preparedSql = "";
-        if ($id) {
-            $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, motor_productivo,consejo_comunal_id, parroquia_id , observaciones,direccion, tutor_in, tutor_ex, tlf_tex,cerrado) "
-                . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :motor_productivo,:consejo_comunal_id, :parroquia_id , :observaciones,:direccion,  :tutor_in, :tutor_ex,:tlf_tex, 0)";
-        } else {
-            $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen,motor_productivo,consejo_comunal_id, parroquia_id , observaciones, direccion, tutor_in, tutor_ex,tlf_tex, cerrado) "
-                . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :motor_productivo,:consejo_comunal_id, :parroquia_id , :observaciones, :direccion, :tutor_in, :tutor_ex,:tlf_tex, 0)";
+        try {
+            parent::beginTransaction();
+            $this->save((isset($this->id) ? $this->id : null));
+            if (!property_exists($this, 'integrantes') || empty($this->integrantes)) {
+                throw new Exception('No se puede generar un proyecto sin integrantes');
+            }
+            foreach ($this->integrantes as $integrante) {
+                // chequear si estudiante ya pertenece a proyecto
+                $checkEstudiante = $this->findByStudent($integrante);
+                if (!empty($checkEstudiante)) {
+                    $infoIntegrante = $this->findIntegrante($checkEstudiante['id']);
+                    $errorMsg = "El/la estudiante " . $infoIntegrante['cedula'] . " - " . $infoIntegrante['nombre'] . " " . $infoIntegrante['apellido'] . " Ya pertence a un proyecto.";
+                    throw new Exception($errorMsg, 401);
+                } else {
+                    // crear registro de estudiante como integrante del proyecto a crear
+                    $resultado = $this->guardarIntegrante($integrante);
+                    if (!$resultado) {
+                        throw new Exception('No se ha podido añadir el integrante ' . $integrante);
+                    }
+                }
+            }
+            parent::commit();
+            return true;
+        } catch (Exception $e) {
+
+            $this->error = [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ];
+            parent::rollBack();
+            return false;
         }
-        $query = $this->prepare($preparedSql);
+    }
 
+    /**
+     * Ejecuta script de creación de proyecto en BD
+     *
+     * @param integer|null $id - Opcionalmente se puede definir el ID del proyecto a crear
+     * @return boolean
+     */
+    public function save(int $id = null): bool
+    {
+        try {
+            $preparedSql = "";
+            if ($id) {
+                $preparedSql = "INSERT INTO proyecto(id, fase_id, nombre, comunidad, resumen, motor_productivo,consejo_comunal_id, parroquia_id , observaciones,direccion, tutor_in, tutor_ex, tlf_tex,cerrado) "
+                    . "VALUES (:id, :fase_id, :nombre, :comunidad,  :resumen, :motor_productivo,:consejo_comunal_id, :parroquia_id , :observaciones,:direccion,  :tutor_in, :tutor_ex,:tlf_tex, 0)";
+            } else {
+                $preparedSql = "INSERT INTO proyecto(fase_id, nombre, comunidad, resumen,motor_productivo,consejo_comunal_id, parroquia_id , observaciones, direccion, tutor_in, tutor_ex,tlf_tex, cerrado) "
+                    . "VALUES (:fase_id, :nombre, :comunidad,  :resumen, :motor_productivo,:consejo_comunal_id, :parroquia_id , :observaciones, :direccion, :tutor_in, :tutor_ex,:tlf_tex, 0)";
+            }
+            $query = $this->prepare($preparedSql);
 
-        if ($id) {
-            $query->bindParam(":id", $this->id);
-        }
-        $query->bindParam(":fase_id", $this->fase_id);
-        $query->bindParam(":nombre", $this->nombre);
-        $query->bindParam(":comunidad", $this->comunidad);
-        $query->bindParam(":resumen", $this->resumen);
-        $query->bindParam(":direccion", $this->direccion);
-        $query->bindParam(":motor_productivo", $this->motor_productivo);
-        $query->bindParam(":consejo_comunal_id", $this->consejo_comunal_id);
-        $query->bindParam(":tutor_in", $this->tutor_in);
-        $query->bindParam(":parroquia_id", $this->parroquia_id);
-        $query->bindParam(":tutor_ex", $this->tutor_ex);
-        $query->bindParam(":observaciones", $this->observaciones);
-        $query->bindParam(":tlf_tex", $this->tlf_tex);
+            if ($id) {
+                $query->bindParam(":id", $this->id);
+            }
 
+            $query->bindParam(":fase_id", $this->fase_id);
+            $query->bindParam(":nombre", $this->nombre);
+            $query->bindParam(":comunidad", $this->comunidad);
+            $query->bindParam(":resumen", $this->resumen);
+            $query->bindParam(":direccion", $this->direccion);
+            $query->bindParam(":motor_productivo", $this->motor_productivo);
+            $query->bindParam(":consejo_comunal_id", $this->consejo_comunal_id);
+            $query->bindParam(":tutor_in", $this->tutor_in);
+            $query->bindParam(":parroquia_id", $this->parroquia_id);
+            $query->bindParam(":tutor_ex", $this->tutor_ex);
+            $query->bindParam(":observaciones", $this->observaciones);
+            $query->bindParam(":tlf_tex", $this->tlf_tex);
 
-        if ($query->execute()) {
+            $query->execute();
             $this->id = $this->lastInsertId();
-            return $this->id;
-        } else {
-            throw new Exception();
+            return true;
+        } catch (Exception $e) {
+            $this->error = [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString()
+            ];
+            return false;
         }
     }
 
@@ -199,7 +252,7 @@ class proyecto extends model
         return ($result) ? $result : [];
     }
 
-     /**
+    /**
      * Retorna los datos del proyecto
      *
      * @param [type] $id
@@ -213,8 +266,8 @@ class proyecto extends model
         return ($result) ? $result : [];
     }
 
-    
-     /**
+
+    /**
      * Retorna los datos del proyecto
      *
      * @param [type] $id
@@ -315,38 +368,7 @@ class proyecto extends model
         return $proyectos ? $proyectos : [];
     }
 
-    /**
-     * Transaccion para inserción de proyectos
-     *
-     * @return bool - exito de ejecución
-     */
-    function insertTransaction(): bool
-    {
-        try {
-            parent::beginTransaction();
-            // almacenar materia
-            $this->id = $this->save((isset($this->id) ? $this->id : null));
-            if (!property_exists($this, 'integrantes') || empty($this->integrantes)) {
-                throw new Exception('No se puede generar un proyecto sin integrantes');
-            }
-            foreach ($this->integrantes as $integrante) {
-                $resultado = $this->guardarIntegrante($integrante);
-                if (!$resultado) {
-                    throw new Exception('No se ha podido añadir el integrante ' . $integrante);
-                }
-            }
-            parent::commit();
-            return true;
-        } catch (Exception $e) {
-            $this->error = [
-                'code' => $e->getCode(),
-                'message' => $e->getMessage(),
-                'stackTrace' => $e->getTraceAsString()
-            ];
-            parent::rollBack();
-            return false;
-        }
-    }
+
 
     /**
      * Transaccion que recorre todos los proyectos para

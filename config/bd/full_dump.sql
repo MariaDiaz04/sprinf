@@ -283,9 +283,9 @@ ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`consejo_comunal_id`) REFERE
 
 ALTER TABLE `sprinf_bd`.`proyecto` ADD FOREIGN KEY (`parroquia_id`) REFERENCES `sprinf_bd`.`parroquias` (`id`);
 
-ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`);
+ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`estudiante_id`) REFERENCES `sprinf_bd`.`estudiante` (`id`) ON DELETE CASCADE;
 
-ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`proyecto_id`) REFERENCES `sprinf_bd`.`proyecto` (`id`);
+ALTER TABLE `sprinf_bd`.`integrante_proyecto` ADD FOREIGN KEY (`proyecto_id`) REFERENCES `sprinf_bd`.`proyecto` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `sprinf_bd`.`notas_integrante_proyecto` ADD FOREIGN KEY (`indicador_id`) REFERENCES `sprinf_bd`.`indicadores` (`id`) ON DELETE CASCADE;
 
@@ -1182,8 +1182,8 @@ values (
   0,
   1);
 insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-15408');
-insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-63578');
-insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-39263');
+-- insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-63578');
+-- insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-39263');
 
 -- TRAYECTO 4 PROYECTO LA ROCA
 -- insert into proyecto (id, fase_id, nombre, comunidad, area, motor_productivo, resumen, direccion, municipio, parroquia)

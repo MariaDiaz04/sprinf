@@ -11,7 +11,6 @@ final class ProyectoTest extends TestCase
   public function testInsertTransaction(): void
   {
     $proyecto = new Proyecto();
-    $comunidadAutonoma = 1;
     $data = [
       'cerrado' => 0,
       'nombre' => 'Gestion de Proyectos PNFI',
@@ -19,14 +18,14 @@ final class ProyectoTest extends TestCase
       'comunidad' => 'UPTAEB',
       'direccion' => 'Av. La Salle',
       'resumen' => 'Proyecto sociotecnologico',
-      'consejo_comunal_id' => ($comunidadAutonoma == 1) ? null : 1,
+      'consejo_comunal_id' => null,
       'motor_productivo' => 'Productivo',
       'parroquia_id' => 1,
       'tutor_in' => 'p-135482354',
       'tutor_ex' => 'Jose',
       'observaciones' => 'asdasd',
       'tlf_tex' => 3232323,
-      'integrantes' => ['e-63578', 'e-77765', 'e-80516'],
+      'integrantes' => ['e-39263', 'e-63578'],
     ];
     $proyecto->setProyectData($data);
 
@@ -64,7 +63,7 @@ final class ProyectoTest extends TestCase
       'tutor_ex' => 'Jose',
       'observaciones' => 'asdasd',
       'tlf_tex' => 3232323,
-      'integrantes' => ['e-63578', 'e-77765', 'e-80516'],
+      'integrantes' => ['e-39263', 'e-63578'],
     ];
 
     $proyecto->setProyectData($data);
@@ -89,9 +88,9 @@ final class ProyectoTest extends TestCase
     $this->assertNotEmpty($integrantes);
     $idIntegrantes = array_column($integrantes, 'id');
 
-    $this->assertContains('e-80516', $idIntegrantes);
+    $this->assertContains('e-39263', $idIntegrantes);
 
-    $idIntegrantes = array_diff($idIntegrantes, ["e-80516"]);
+    $idIntegrantes = array_diff($idIntegrantes, ["e-39263"]);
 
     $data = [
       'id' => self::$idProyecto,
@@ -106,7 +105,7 @@ final class ProyectoTest extends TestCase
     $this->assertNotEmpty($integrantesActualizados);
     $integrantesActualizados = array_column($integrantesActualizados, 'id');
     // verificar que no contenga integrante eliminado de grupo de proyecto
-    $this->assertNotContains('e-80516', $integrantesActualizados);
+    $this->assertNotContains('e-39263', $integrantesActualizados);
   }
 
   public function testFindByStudent(): void
