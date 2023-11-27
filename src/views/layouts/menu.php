@@ -189,12 +189,28 @@
             <div data-i18n="Analytics">Historico</div>
           </a>
         </li>
-        <!-- <li class="menu-item <?= $this->currentPath() == 'municipios' ? 'active' : '' ?>">
-          <a href="<?= APP_URL .  $this->Route('municipios') ?>" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-code"></i>
-            <div data-i18n="Analytics">Municipios</div>
+        <li class="menu-header small text-uppercase">
+          <span class="menu-header-text">Reportes</span>
+        </li>
+
+        <li class="menu-item <?= in_array($this->currentPath(), ['bitacora', 'permisos', 'modulos']) ? 'open' : '' ?>">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+            <div data-i18n="Authentications">Reportes</div>
           </a>
-        </li> -->
+          <ul class="menu-sub">
+            <li class="menu-item <?= $this->currentPath() == 'bitacora' ? 'active' : '' ?>">
+              <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
+                <div data-i18n="Basic">Notas Proyecto</div>
+              </a>
+            </li>
+            <li class="menu-item <?= $this->currentPath() == 'permisos' ? 'active' : '' ?>">
+              <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
+                <div data-i18n="Basic">Notas Unidad Curricular</div>
+              </a>
+            </li>
+          </ul>
+        </li>
 
 
         <li class="menu-header small text-uppercase">
@@ -210,7 +226,7 @@
           <ul class="menu-sub">
             <li class="menu-item <?= $this->currentPath() == 'bitacora' ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
-                <div data-i18n="Basic">Bitacora</div>
+                <div data-i18n="Basic">Bitácora</div>
               </a>
             </li>
             <li class="menu-item <?= $this->currentPath() == 'permisos' ? 'active' : '' ?>">
@@ -218,17 +234,28 @@
                 <div data-i18n="Basic">Permisos</div>
               </a>
             </li>
-            <li class="menu-item <?= $this->currentPath() == 'modulos' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('modulos') ?>" class="menu-link">
-                <div data-i18n="Basic">Modulo</div>
-              </a>
-            </li>
-
           </ul>
         </li>
+        <!-- MANTENIMIENTO -->
         <li class="menu-item <?= in_array($this->currentPath(), ['configuracion', 'respaldo']) ? 'open' : '' ?>">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bx-layout"></i>
+            <i class="menu-icon tf-icons bx bx-data"></i>
+            <div data-i18n="Layouts">Mantenimiento</div>
+          </a>
+
+          <ul class="menu-sub">
+            <li class="menu-item <?= $this->currentPath() == 'respaldo' ? 'active' : '' ?>">
+              <a href="<?= APP_URL . $this->Route('respaldo') ?>" class="menu-link">
+                <div data-i18n="Without menu">Respaldo</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- CONFIGURACION DEL SISTEMA -->
+        <li class="menu-item <?= in_array($this->currentPath(), ['configuracion', 'respaldo']) ? 'open' : '' ?>">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-cog"></i>
             <div data-i18n="Layouts">Configuración</div>
           </a>
 
@@ -238,25 +265,30 @@
                 <div data-i18n="Without menu">Aperturar Lapso</div>
               </a>
             </li>
+          </ul>
+        </li>
+        <!-- AYUDA -->
+        <li class="menu-item <?= in_array($this->currentPath(), ['configuracion', 'respaldo']) ? 'open' : '' ?>">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-help-circle"></i>
+            <div data-i18n="Layouts">Ayuda</div>
+          </a>
+
+          <ul class="menu-sub">
             <li class="menu-item <?= $this->currentPath() == 'respaldo' ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('respaldo') ?>" class="menu-link">
-                <div data-i18n="Without menu">Respaldo</div>
+                <div data-i18n="Without menu">Manual de Usuario</div>
               </a>
             </li>
-            <!--  <li class="menu-item <?= $this->currentPath() == 'municipios' ? 'active' : '' ?>">
-            <a href="<?= APP_URL .  $this->Route('municipios') ?>" class="menu-link">
-              <div data-i18n="Analytics">Municipios</div>
-            </a>
-          </li>  -->
+            <li class="menu-item <?= $this->currentPath() == 'respaldo' ? 'active' : '' ?>">
+              <a href="<?= APP_URL . $this->Route('respaldo') ?>" class="menu-link">
+                <div data-i18n="Without menu">Manual del Sistema</div>
+              </a>
+            </li>
           </ul>
-          <!-- <li class="menu-item <?= $this->currentPath() == 'usuarioCrear' ? 'active' : '' ?>">
-        <a href="<?= APP_URL .  $this->Route('usuarioCrear') ?>" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-group"></i>
-          <div data-i18n="Analytics">Docentes</div>
-        </a>
-      </li> -->
-        <?php endif ?>
-        <?php if ($_SESSION['rol_id'] == 2) : ?>
+        </li>
+      <?php endif ?>
+      <?php if ($_SESSION['rol_id'] == 2) : ?>
         <li class="menu-header small text-uppercase">
           <span class="menu-header-text">Organización Docente</span>
         </li>

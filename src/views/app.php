@@ -36,7 +36,12 @@
   <link rel="stylesheet" href="<?= APP_URL ?>assets/css/jquery.transfer.css" />
   <link rel="stylesheet" type="text/css" href="<?= APP_URL ?>assets/icon_font/css/icon_font.css" />
 
-
+  <style>
+    .menu-vertical .menu-header {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
 
 
   <!-- Vendors CSS -->
