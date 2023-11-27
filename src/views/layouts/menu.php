@@ -150,7 +150,7 @@
 
         <li class="menu-item <?= in_array($this->currentPath(), ['bitacora', 'permisos', 'modulos']) ? 'open' : '' ?>">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+            <i class="menu-icon tf-icons bx bxs-report"></i>
             <div data-i18n="Authentications">Reportes</div>
           </a>
           <ul class="menu-sub">
