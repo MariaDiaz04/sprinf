@@ -105,9 +105,9 @@ $(document).ready(function (e) {
         data: null,
         render: function (data, type, row, meta) {
           return `<div class="dropleft show ">
-                    <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow " href="#" role="button" id="dropdown-${
+                    <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown-${
                       row[0]
-                    }" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    }" >
                     <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdown-${

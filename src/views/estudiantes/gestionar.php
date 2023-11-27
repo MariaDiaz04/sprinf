@@ -56,14 +56,15 @@
         ajax: '<?= APP_URL . $this->Route('estudiantes/ssp') ?><?= (!is_null($filtro)) ? $filtro : '' ?>',
         processing: true,
         serverSide: true,
+        pageLength: 30,
         scrollX: true,
+        scrollY: false,
         scrollCollapse: true,
         responsive: true,
-        pageLength: 30,
 
         columnDefs: [{
           visible: false,
-          targets: [ 2,4]
+          targets: [2, 4]
         }, {
           data: null,
           render: function(data, type, row, meta) {
@@ -73,8 +74,8 @@
         }, {
           data: null,
           render: function(data, type, row, meta) {
-            return `<div class="btn-group dropstart">
-                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown-${row[0]}" >
+            return `<div class="dropleft show">
+                      <button class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown-${row[0]}" >
                       <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdown-${row[0]}">
