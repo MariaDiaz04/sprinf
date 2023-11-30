@@ -44,10 +44,10 @@
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre del Sector *</label>
-                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre">
-                      <h6 id="codigoCheck" style="color: red;">
-                        ** El nombre es requerido **
-                      </h6>
+                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre"  aria-describedby="nombreCheck">
+                      <div id="nombreCheck" class="invalid-feedback">
+                        Por favor proporcione un nombre válido
+                      </div>
                     </div>
 
                     <div class="col-lg-6">
@@ -102,8 +102,10 @@
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre del Sector *</label>
-                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre">
-
+                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre"  aria-describedby="nombreCheck">
+                      <div id="nombreCheck" class="invalid-feedback">
+                        Por favor proporcione un nombre válido
+                      </div>
                     </div>
 
                     <div class="col-lg-6">
@@ -184,15 +186,16 @@
       $('#guardar').submit(function(e) {
         e.preventDefault()
 
+
+        let nombre = $('#guardar #nombre').val()
+        if (!LettersAndNumber(nombre)) {
+          $('#guardar #nombre').addClass("is-invalid");
+          return false;
+        }
+
         toggleLoading(true);
-
-
         url = $(this).attr('action');
         data = $(this).serializeArray();
-
-        console.log(url + '  ' + data);
-
-
         $.ajax({
           type: "POST",
           url: url,
@@ -207,9 +210,6 @@
               toast: true,
               timer: 2000
             })
-
-
-
           },
           success: function(data, status) {
             table.ajax.reload();
@@ -235,12 +235,15 @@
       $('#actualizar').submit(function(e) {
         e.preventDefault()
 
+        
+        let nombre = $('#actualizar #nombre').val()
+        if (!LettersAndNumber(nombre)) {
+          $('#actualizar #nombre').addClass("is-invalid");
+          return false;
+        }
         toggleLoading(true, '#actualizar');
-
-
         url = $(this).attr('action');
         data = $(this).serializeArray();
-
         $.ajax({
           type: "POST",
           url: url,
@@ -296,7 +299,6 @@
       $(`#actualizar #idsector`).val(data.sector.id);
       $(`#actualizar #nombre`).val(data.sector.nombre);
       $(`#actualizar #parroquia_id option[value='${data.sector.parroquia_id}']`).attr("selected", true);
-      // console.log(data.sector.parroquia_id)
     }
 
 
@@ -355,5 +357,16 @@
           $('#tabla').DataTable().ajax.reload();
         },
       });
+    }
+
+    function LettersAndNumber(str) {
+      return /^[A-Za-zñáéíóúüÁÉÍÓÚÑÜ0-9\s]*$/.test(str);
+    }
+
+
+    function capitalizeText(mySentence) {
+      let words = mySentence.toLowerCase();
+      words = words.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
+      return words;
     }
   </script>

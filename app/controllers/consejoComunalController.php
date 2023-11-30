@@ -70,7 +70,7 @@ class consejoComunalController extends controller
       
           // Obtener datos del formulario utilizando el objeto Request
           $nombre = $request->get('nombre');
-          $nombre_vocero = $request->get('nombre'); $nombre_vocero = $request->get('nombre');
+          $nombre_vocero = $request->get('nombre_vocero'); 
           $telefono = $request->get('telefono');
           $sector_id = $request->get('sector_id');
           

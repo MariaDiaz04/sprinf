@@ -131,6 +131,21 @@ class estudiante extends model
         }
     }
 
+
+    /**
+     * Obtener los detalles de una inscripcion
+     * por su código de estudiante
+     *
+     * @param string $cedula
+     * @param string $email
+     * @return array - es un array vacio en caso de que no consiga alguna coincidencia
+     */
+    public function findData(string $tabla, string $campo, string $dato)
+    {
+        $estudiante = $this->select($tabla, [[$campo, '=',  "'$dato'"]]);
+        return !$estudiante ? [] : $estudiante;
+    }
+
     /**
      * Actualizar información del estudiante
      *
