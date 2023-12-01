@@ -344,12 +344,17 @@
           });
           return false;
         }
-        if (typeof ponderacionItem === 'number' && ponderacionItem < 100) {
+        let totalPonderado = 0;
+        let itemvalues = $('.itemValue').each(function(_, element) {
+          totalPonderado += parseInt($(element).val())
+        })
+
+        if (typeof ponderacionItem === 'number' && ponderacionItem <= (<?= $pendientePorPonderar ?> - totalPonderado)) {
 
           let fila = `<tr id="appenedItem-${length}" class="nuevoIndicador">
                       <th scope="row">
                       <input type="text" name="indicadores[${length}][nombre]" class="form-control-plaintext" value="${nombreItem}" hidden>
-                      <input type="text" name="indicadores[${length}][ponderacion]" class="form-control-plaintext" value="${ponderacionItem}" hidden>
+                      <input type="text" name="indicadores[${length}][ponderacion]" class="form-control-plaintext itemValue" value="${ponderacionItem}" hidden>
                       ${nombreItem}
                       </th>
                       <td>${ponderacionItem}</td>
@@ -360,7 +365,7 @@
           Swal.fire({
             position: "bottom-end",
             icon: "error",
-            title: 'Ponderación no valida',
+            title: 'Ponderación no valida. Se dispone de <?= $pendientePorPonderar ?>% por ponderar y se ha evaluado ' + totalPonderado + '.',
             showConfirmButton: false,
             toast: true,
             timer: 2000,

@@ -43,8 +43,16 @@ class dimensionController extends controller
     $trayecto = $this->trayectos->find($unidad_curricular['codigo_trayecto']);
     $detallesFase = $this->fase->getByTrayecto($unidad_curricular['codigo_trayecto']);
 
+    $ponderado = array_sum(array_map(function ($fase) {
+      return $fase['ponderado_baremos'];
+    }, $detallesFase));
+
+
+
     return $this->view('dimensiones/gestionar', [
       'codigoMateria' => $codigoMateria,
+      'ponderado' => $ponderado,
+      'pendientePorPonderar' => 100 - $ponderado,
       'unidadCurricular' => $unidad_curricular,
       'trayecto' => $trayecto,
       'fases' => $detallesFase,

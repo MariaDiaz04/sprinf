@@ -20,7 +20,7 @@
                       Ingrese nombre y ponderación de cada indicador de esta dimensión <?= $unidadCurricular->ponderado_baremos ?>.
                     </div>
                     <label class="form-label" for="nombre">Nombre Dimensión *</label>
-                    <input type="text" class="form-control mb-1" placeholder="Desempeño Individual..." name="nombre" id="nombre" onkeydown="return letterAndFewSpecial(event.key)" maxlength="255" required>
+                    <input type="text" class="form-control mb-1" placeholder="Desempeño Individual..." name="nombre" id="nombre" maxlength="255" required>
                     <div id="creacionNombreTutorValidation" class="invalid-feedback">
                       Por favor, proporcione un nombre de dimensión válido.
                     </div>
@@ -39,12 +39,12 @@
                 </div>
                 <hr>
                 <div class="alert alert-secondary" role="alert">
-                  Ingrese nombre y ponderación de cada indicador de esta dimensión.
+                  Ingrese nombre y ponderación de cada indicador de esta dimensión. <br>Se dispone de <span id="porPonderar" class="font-weight-bold" style="font-weight: bold;"><?= $pendientePorPonderar ?></span>% disponible por ponderar.
                 </div>
                 <div class="row form-group align-items-end">
                   <div class="col-lg-7">
                     <label class="form-label" for="nombreItem">Nombre Indicador *</label>
-                    <input type="text" aria-describedby="creacionNombreIndicadorValido" class="form-control mb-1" placeholder="Responsabilidad..." id="nombreItem" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255">
+                    <input type="text" aria-describedby="creacionNombreIndicadorValido" class="form-control mb-1" placeholder="Responsabilidad..." id="nombreItem" maxlength="255">
                     <div id="creacionNombreIndicadorValido" class="invalid-feedback">
                       Por favor, proporcione un nombre de indicador válido.
                     </div>
@@ -98,6 +98,7 @@
 <script>
   $(document).ready(() => {
     $('#nombre').on('keyup', function() {
+      $(this).val(titleCase($(this).val()))
       const value = $(this).val();
       if (!letterAndFewSpecial(value)) {
         // Si no coincide, muestra un mensaje de error
@@ -150,8 +151,7 @@
 
   function letterAndFewSpecial(str) {
     return (
-      /^[A-Za-zñáéíóúüÁÉÍÓÚÑÜ \- \– '"() , “” .]*$/.test(str) &&
-      str.trim().length > 0
+      /^[0-9A-Za-zÑñÁáÉéÍíÓóÚúÜü ()% ]+$/.test(str)
     );
   }
 
