@@ -9,8 +9,6 @@ use Bcrypt\Bcrypt;
 
 use Model\baremos;
 use Model\fase;
-use Model\tutor;
-use Model\trayectos;
 use Exception;
 
 class baremosController extends controller

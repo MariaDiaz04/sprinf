@@ -1396,7 +1396,7 @@ ORDER BY codigo_trayecto;
 DROP VIEW IF EXISTS detalles_integrantes;
 
 CREATE VIEW detalles_integrantes AS
-SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.apellido, persona.cedula, round(SUM(notas_integrante_proyecto.calificacion),2) as calificaciones, round(trayecto.calificacion_minima,2) as calificacion_minima_trayecto,
+SELECT integrante_proyecto.id, proyecto.id as proyecto_id, estudiante.id as estudiante_id, proyecto.nombre as proyecto_nombre, persona.nombre, persona.apellido, CONCAT(persona.nombre,' ',persona.apellido) as nombre_completo, persona.cedula, round(SUM(notas_integrante_proyecto.calificacion),2) as calificaciones, round(trayecto.calificacion_minima,2) as calificacion_minima_trayecto,
 integrante_proyecto.estatus
 FROM integrante_proyecto
 INNER JOIN estudiante ON estudiante.id = integrante_proyecto.estudiante_id

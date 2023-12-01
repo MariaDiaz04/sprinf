@@ -13,7 +13,6 @@ use Model\inscripcion;
 use Model\baremos;
 use Model\fase;
 use Model\dimension;
-use Model\tutor;
 use Model\parroquia;
 use Model\trayectos;
 use Dompdf\Dompdf;
@@ -32,7 +31,6 @@ class proyectoController extends controller
     public $proyecto;
     private $estudiantes;
     private $dimension;
-    private $tutores;
     private $profesores;
     private $baremos;
     private $fase;
@@ -52,7 +50,6 @@ class proyectoController extends controller
         $this->parroquia = new parroquia();
         $this->consejoComunal = new consejoComunal();
         $this->dimension = new dimension();
-        $this->tutores = new tutor();
         $this->profesores = new profesor();
         $this->trayectos = new trayectos();
         $this->baremos = new baremos();
@@ -66,7 +63,6 @@ class proyectoController extends controller
 
         $proyectos = $this->proyecto->all();
         $pendientes = $this->proyecto->pendientesACerrar();
-        $tutores = $this->tutores->all();
         $profesores = $this->profesores->all();
         $trayectos = $this->trayectos->all();
         $parroquias = $this->parroquia->allDetalles();
@@ -93,9 +89,6 @@ class proyectoController extends controller
             }
         }
 
-        // echo json_encode($listaEstudiantes);
-        // exit();
-
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'parroquias' => $parroquias,
@@ -104,7 +97,6 @@ class proyectoController extends controller
             'profesores' => $profesores,
             'fases' => $fases,
             'cerrarFase' => empty($pendientes) && !empty($proyectos),
-            'tutores' => $tutores,
             'trayectos' => $trayectos,
             'historicoProyectos' => $historicoProyectos,
             'historicoEstudiantes' => $historicoEstudiantes,
@@ -189,18 +181,6 @@ class proyectoController extends controller
         } catch (Exception $e) {
             return [];
         }
-    }
-
-
-    public function create()
-    {
-        $tutores = $this->tutores->all();
-        $trayectos = $this->trayectos->all();
-
-        return $this->view('proyectos/crear', [
-            'tutores' => $tutores,
-            'trayectos' => $trayectos
-        ]);
     }
 
     public function store(Request $nuevoProyecto)
