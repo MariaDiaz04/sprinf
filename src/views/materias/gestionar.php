@@ -115,60 +115,25 @@
               <div class="row pb-2">
                 <div class="col-12">
                   <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="trayecto_id">Trayectos *</label>
-                      <select class="form-select" name="trayecto_id">
-                        <?php foreach ($trayectos as $trayecto) : ?>
-                          <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre - $trayecto->fecha_inicio / $trayecto->fecha_cierre" ?></option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                       <label class="form-label" for="periodo">Tipo Periodo *</label>
                       <select class="form-select" id="periodo" name="periodo">
+                        <option value="anual">Anual</option>
                         <option value="fase_1">Fase 1</option>
                         <option value="fase_2">Fase 2</option>
-                        <option value="anual">Anual</option>
                       </select>
                     </div>
-                  </div>
-                  <div class="row form-group">
-                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                       <label class="form-label" for="nombre">Código *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="codigo" id="codigo" readonly>
+                      <input type="text" class="form-control mb-1" placeholder="ABCDE123456" name="codigo" maxlength="11" onkeyup="validar('actualizar')" id="codigo" aria-describedby="invalidCodigoactualizar" readonly>
+                      <div id="invalidCodigoactualizar" class="invalid-feedback">
+                      </div>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
-                    </div>
-                  </div>
-
-                  <div class="row form-group">
-                    <!-- horas -->
-                    <div class="col-lg-4">
-                      <label class="form-label" for="htasist">Horas Total Asist *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="htasist" id="htasist">
-                    </div>
-                    <div class="col-lg-4">
-                      <label class="form-label" for="htind">Horas Total ind *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="htind" id="htind">
-                    </div>
-
-                    <div class="col-lg-4">
-                      <label class="form-label" for="ucredito">Horas Academicas *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="ucredito" id="ucredito">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="hrs_acad">UCredito *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="hrs_acad" id="hrs_acad">
-                    </div>
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="eje">Eje *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="eje" id="eje">
+                      <input type="text" class="form-control mb-1" placeholder="..." onkeyup="validar('actualizar')" name="nombre" id="nombre" maxlength="100" aria-describedby="invalidNombreactualizar">
+                      <div id="invalidNombreactualizar" class="invalid-feedback">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -257,7 +222,21 @@
 
       $('#guardar').submit(function(e) {
         e.preventDefault()
+        errores = validar('guardar')
+        if (errores != null) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: errores,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+          return false;
+        }
+
         toggleLoading(true, '#guardar');
+
         url = $(this).attr('action');
         data = $(this).serializeArray();
         $.ajax({
@@ -437,17 +416,21 @@
     let codigoDeMateriasCreados = JSON.parse('<?= json_encode($codigoDeMateriasCreados) ?>');
 
     function validar(form) {
-      let nombre = $(`#${form} #nombre`);
-
+      let nombre = $(`#${form} #nombre`)
       $(nombre).val(titleCase($(nombre).val()))
       let erroresNombre = validarNombre(nombre)
       checkInputError(nombre, erroresNombre)
-      // código
-      let codigo = $(`#${form} #codigo`);
-      $(codigo).val($(codigo).val().toUpperCase())
 
+
+      let codigo = $(`#${form} #codigo`)
+      $(codigo).val($(codigo).val().toUpperCase())
       erroresCodigo = validarCodigo(codigo)
       checkInputError(codigo, erroresCodigo)
+
+      if (erroresNombre != null) return erroresNombre;
+      if (erroresCodigo != null) return erroresCodigo;
+
+      return null;
     }
 
     function checkInputError(input, errores) {
@@ -455,8 +438,10 @@
         $(input).addClass('is-invalid')
         let errorElement = $(input).attr('aria-describedby')
         $(`#${errorElement}`).text(errores)
+        return true;
       } else {
         $(input).removeClass('is-invalid')
+        return false;
       }
     }
 
@@ -464,22 +449,22 @@
       let value = $(input).val();
       let regex = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü ]+$/;
       if (!regex.test(value)) {
-        return 'Formató invalido'
+        return 'Formato de nombre invalido'
       }
 
       return null;
     }
 
     function validarCodigo(input) {
-
+      let readonly = $(input).attr('readonly')
       let value = $(input).val();
       let regex = /^[A-Za-z]{5}[0-9]{6}$/;
       if (!regex.test(value)) {
-        return 'Formató invalido'
+        return 'Formato de código invalido'
       }
 
-      if (codigoDeMateriasCreados.includes(value)) {
-        return 'Ya ha sido creado'
+      if (!readonly && codigoDeMateriasCreados.includes(value)) {
+        return 'Código duplicado'
       }
 
       return null;
