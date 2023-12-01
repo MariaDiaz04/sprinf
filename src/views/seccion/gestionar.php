@@ -61,9 +61,10 @@
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-12">
                       <label class="form-label" for="nombre">Observación</label>
-                      <input type="textarea" class="form-control mb-1" name="observacion" id="observacion" autocomplete="off" maxlength="40">
-                      <h6 id="observacionCheck" style="color: red;">
-                      </h6>
+                      <input type="textarea" class="form-control mb-1" name="observacion" id="observacion" aria-describedby="observacionCheck" autocomplete="off" maxlength="40">
+                      <div id="observacionCheck" class="invalid-feedback">
+                        Por favor el campo observacion no acepta caracteres especiales
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -119,6 +120,7 @@
                     <div class="col-lg-12">
                       <label class="form-label" for="observacionEdit">Observaciones</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="observacion" id="observacionEdit" maxlength="40">
+                    
                     </div>
                   </div>
                 </div>
@@ -191,7 +193,6 @@
       function validateCodigo() {
         let codigoValue = $("#codigo").val();
         if (codigoValue.length == "") {
-          console.log('entre en vacio');
           $("#codigoCheck").show();
           codigoError = false;
           return false;
@@ -212,29 +213,22 @@
         validateObservacion();
       });
 
-      function validateObservacion() {
-        let observacionValue = $("#observacion").val();
-        if (observacionValue.length >= 205) {
-          $("#observacionCheck").show();
-          $("#observacionCheck").html("**La observación máximo 205 dígitos");
-          observacionError = false;
-          $('#guardarSubmit').attr('disabled', true);
-          return false;
-        } else if (observacionValue.length <= 205) {
-          $("#observacionCheck").hide();
-          observacionError = true;
-          $('#guardarSubmit').attr('disabled', false);
-        } else {
-          $("#observacionCheck").hide();
-          observacionError = true;
-        }
-      }
+      
+
+    
+      
       $('#guardar').submit(function(e) {
         e.preventDefault()
+        let observacionValue = $("#guardar #observacion").val();
+        if (!LettersAndNumber(observacionValue) ||  (observacionValue.length >= 205) ) {
+          $('#guardar #observacion').addClass("is-invalid");
+          return false;
+        }
         toggleLoading(true, '#guardar');
         url = $(this).attr('action');
         data = $(this).serializeArray();
         validateCodigo();
+        
         if (codigoError == false) {
           Swal.fire({
             position: 'bottom-end',
@@ -260,14 +254,13 @@
                 title: error.responseText,
                 showConfirmButton: false,
                 toast: true,
-                timer: 2000
+                timer: 3000
               })
               console.log(error)
             },
             success: function(data, status) {
               table.ajax.reload();
               // usar sweetalerts
-              console.log(data)
               document.getElementById("guardar").reset();
               toggleLoading(false, '#guardar')
               $('#crear').modal('hide');
@@ -397,5 +390,9 @@
           $('#example').DataTable().ajax.reload();
         },
       });
+    }
+
+    function LettersAndNumber(str) {
+      return /^[A-Za-zñáéíóúüÁÉÍÓÚÑÜ0-9\s]*$/.test(str);
     }
   </script>

@@ -24,7 +24,9 @@
                   <div class="col-lg-6">
                     <label class="form-label" for="nombre">Nombre del Vocero</label>
                     <input type="text" required class="form-control mb-1" name="nombre_vocero" id="nombre_vocero">
-
+                    <div id="nombrevoceroCheck" class="invalid-feedback">
+                      Por favor proporcione un nombre de vocero válido
+                    </div>
                   </div>
 
                 </div>

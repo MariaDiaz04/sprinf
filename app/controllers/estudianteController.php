@@ -57,7 +57,6 @@ class estudianteController extends controller
       // creación de usuario
       $email = $newestudiante->request->get('email');
       $contrasena = $newestudiante->request->get('cedula');
-      // var_dump($contrasena);
 
       // encriptar contraseña de usuario
       $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
@@ -67,17 +66,19 @@ class estudianteController extends controller
         'email' => $email,
         'contrasena' => $contrasena
       ]);
-
+      
       $idUsuario = $this->usuario->save();
-
-      // creacion de persona
-
+      
       $cedula = $newestudiante->request->get('cedula');
       $usuario_id = $idUsuario;
       $nombre = $newestudiante->request->get('nombre');
       $apellido = $newestudiante->request->get('apellido');
       $direccion = $newestudiante->request->get('direccion');
       $telefono = $newestudiante->request->get('telefono');
+      
+      $this->checkData($cedula, $email, 'guardar');
+      // creacion de persona
+
 
 
       $this->persona->setPersona([
@@ -487,16 +488,30 @@ class estudianteController extends controller
     }
     return true;
   }
-  // function ssp(Request $query): void
-  // {
-  //   try {
-  //     http_response_code(200);
-  //     echo json_encode($this->estudiante->generarSSP());
-  //   } catch (Exception $e) {
-  //     http_response_code(500);
-  //     echo json_encode($e->getMessage());
-  //   }
-  // }
+
+  function checkData(string $cedula, string $email, string $action)
+  {
+    // verificar que no cuente con insripciones
+    if (isset($cedula)) {
+      $estudiantees = $this->estudiante->findData('detalles_estudiantes', 'cedula', $cedula);
+      if (count($estudiantees) > 0) {
+        foreach ($estudiantees as $estudiante) {
+          if (intval($estudiante) > 0) throw new Exception('No se puede ' . $action . ' datos del estudiante por que el numero de cedula ' . $cedula . ' ya esta registrado');
+        }
+        return true;
+      }
+    }
+    if (isset($email)) {
+      $estudiantees = $this->estudiante->findData('detalles_usuarios', 'email', $email);
+      if (count($estudiantees) > 0) {
+        foreach ($estudiantees as $estudiante) {
+          if (intval($estudiante) > 0) throw new Exception('No se puede ' . $action . ' datos del estudiante por que el email ' . $email . ' ya esta registrado');
+        }
+        return true;
+      }
+    }
+  }
+
   function ssp(Request $consulta): void
   {
     try {

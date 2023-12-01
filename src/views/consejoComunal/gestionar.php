@@ -19,8 +19,8 @@
             <th>Código</th>
             <th>Consejo Comunal</th>
             <th>Vocero</th>
-            <th>Teléfono</th>
             <th>Sector</th>
+            <th>Teléfono</th>
             <th>Acción</th>
           </tr>
         </thead>
@@ -116,7 +116,7 @@
         }
 
         let nombreVocero = $('#guardar #nombre_vocero').val()
-        if (!onlyLetters(nombre)) {
+        if (!onlyLetters(nombreVocero)) {
           $('#guardar #nombre_vocero').addClass("is-invalid");
           return false;
         }
@@ -178,16 +178,16 @@
         }
       })
       $('#actualizar #nombre_vocero').on('keyup', function() {
-        let value = $(this).val();
-        if (!onlyLetters(value)) {
+        let nombre_vocero = $(this).val();
+        if (!onlyLetters(nombre_vocero)) {
           $(this).addClass("is-invalid");
         } else {
           $(this).removeClass("is-invalid");
         }
       })
       $('#actualizar #telefono').on('keyup', function() {
-        let value = $(this).val();
-        if (!phoneNumbers(value)) {
+        let telefono = $(this).val();
+        if (!phoneNumbers(telefono)) {
           $(this).addClass("is-invalid");
         } else {
           $(this).removeClass("is-invalid");
@@ -197,8 +197,6 @@
       $('#actualizar').submit(function(e) {
         e.preventDefault()
 
-
-
         let nombre = $('#actualizar #nombre').val()
         if (!letterAndFewSpecial(nombre)) {
           $('#actualizar #nombre').addClass("is-invalid");
@@ -206,12 +204,14 @@
         }
 
         let nombreVocero = $('#actualizar #nombre_vocero').val()
-        if (!onlyLetters(nombre)) {
+        if (!onlyLetters(nombreVocero)) {
           $('#actualizar #nombre_vocero').addClass("is-invalid");
           return false;
         }
+
         let telefono = $('#actualizar #telefono').val()
-        if (!phoneNumbers(telefono)) {
+        console.log(telefono.length);
+        if (!phoneNumbers(telefono))  {
           $('#actualizar #telefono').addClass("is-invalid");
           return false;
         }
@@ -351,14 +351,13 @@
     }
 
     function phoneNumbers(number) {
-      return /^[04][0-9]{10}$/.test(number);
+      return /^[04][0-9]{9}$/.test(number);
     }
 
     function capitalizeText(mySentence) {
       let words = mySentence.toLowerCase();
-
       words = words.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
-
       return words;
     }
+
   </script>
