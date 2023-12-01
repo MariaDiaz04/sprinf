@@ -54,64 +54,30 @@
           <div class="modal-body">
             <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
             <input type="hidden" name="estatus" value="1">
+            <input type="hidden" name="trayecto_id" value="<?= $idTrayecto ?>">
             <div class="container-fluid">
               <div class="row pb-2">
                 <div class="col-12">
                   <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="trayecto_id">Trayectos *</label>
-                      <select class="form-select" name="trayecto_id">
-                        <?php foreach ($trayectos as $trayecto) : ?>
-                          <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre - $trayecto->fecha_inicio / $trayecto->fecha_cierre" ?></option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label" for="periodo">Periodo *</label>
+                    <div class="col-lg-3">
+                      <label class="form-label" for="periodo">Tipo Periodo *</label>
                       <select class="form-select" id="periodo" name="periodo">
+                        <option value="anual">Anual</option>
                         <option value="fase_1">Fase 1</option>
                         <option value="fase_2">Fase 2</option>
-                        <option value="anual">Anual</option>
                       </select>
                     </div>
-                  </div>
-                  <div class="row form-group">
-                    <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                       <label class="form-label" for="nombre">Código *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="codigo" id="codigo">
+                      <input type="text" class="form-control mb-1" placeholder="ABCDE123456" name="codigo" maxlength="11" onkeyup="validar('guardar')" id="codigo" aria-describedby="invalidCodigoGuardar">
+                      <div id="invalidCodigoGuardar" class="invalid-feedback">
+                      </div>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre">
-                    </div>
-                  </div>
-
-                  <div class="row form-group">
-                    <!-- horas -->
-                    <div class="col-lg-4">
-                      <label class="form-label" for="htasist">Horas Total Asist *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="htasist" id="htasist">
-                    </div>
-                    <div class="col-lg-4">
-                      <label class="form-label" for="htind">Horas Total ind *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="htind" id="htind">
-                    </div>
-
-                    <div class="col-lg-4">
-                      <label class="form-label" for="ucredito">Horas Academicas *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="ucredito" id="ucredito">
-                    </div>
-                  </div>
-                  <div class="row form-group">
-                    <div class="col-lg-6">
-                      <label class="form-label" for="hrs_acad">UCredito *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="hrs_acad" id="hrs_acad">
-                    </div>
-
-                    <div class="col-lg-6">
-                      <label class="form-label" for="eje">Eje *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="eje" id="eje">
+                      <input type="text" class="form-control mb-1" placeholder="..." onkeyup="validar('guardar')" name="nombre" id="nombre" maxlength="100" aria-describedby="invalidNombreGuardar">
+                      <div id="invalidNombreGuardar" class="invalid-feedback">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -158,7 +124,7 @@
                       </select>
                     </div>
                     <div class="col-lg-6">
-                      <label class="form-label" for="periodo">Periodo *</label>
+                      <label class="form-label" for="periodo">Tipo Periodo *</label>
                       <select class="form-select" id="periodo" name="periodo">
                         <option value="fase_1">Fase 1</option>
                         <option value="fase_2">Fase 2</option>
@@ -464,5 +430,72 @@
           $('#example').DataTable().ajax.reload();
         },
       });
+    }
+  </script>
+
+  <script>
+    let codigoDeMateriasCreados = JSON.parse('<?= json_encode($codigoDeMateriasCreados) ?>');
+
+    function validar(form) {
+      let nombre = $(`#${form} #nombre`);
+
+      $(nombre).val(titleCase($(nombre).val()))
+      let erroresNombre = validarNombre(nombre)
+      checkInputError(nombre, erroresNombre)
+      // código
+      let codigo = $(`#${form} #codigo`);
+      $(codigo).val($(codigo).val().toUpperCase())
+
+      erroresCodigo = validarCodigo(codigo)
+      checkInputError(codigo, erroresCodigo)
+    }
+
+    function checkInputError(input, errores) {
+      if (errores != null) {
+        $(input).addClass('is-invalid')
+        let errorElement = $(input).attr('aria-describedby')
+        $(`#${errorElement}`).text(errores)
+      } else {
+        $(input).removeClass('is-invalid')
+      }
+    }
+
+    function validarNombre(input) {
+      let value = $(input).val();
+      let regex = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü ]+$/;
+      if (!regex.test(value)) {
+        return 'Formató invalido'
+      }
+
+      return null;
+    }
+
+    function validarCodigo(input) {
+
+      let value = $(input).val();
+      let regex = /^[A-Za-z]{5}[0-9]{6}$/;
+      if (!regex.test(value)) {
+        return 'Formató invalido'
+      }
+
+      if (codigoDeMateriasCreados.includes(value)) {
+        return 'Ya ha sido creado'
+      }
+
+      return null;
+    }
+  </script>
+
+  <script>
+    // helpers
+    function titleCase(str) {
+      var splitStr = str.split(' ');
+      for (var i = 0; i < splitStr.length; i++) {
+        // You do not need to check if i is larger than splitStr length, as your for does that for you
+        // Assign it back to the array
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+      }
+      // Directly return the joined string
+      return splitStr.join(' ');
     }
   </script>

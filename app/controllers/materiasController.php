@@ -44,8 +44,13 @@ class materiasController extends controller
         $trayectos = $this->TRAYECTO->all();
         $trayecto = $this->TRAYECTO->find($idTrayecto);
 
+        $codigoDeMateriasCreados = array_map(function ($materia) {
+            return $materia['codigo_materia'];
+        }, $materias);
+
         return $this->view('materias/gestionar', [
             'trayecto' => $trayecto,
+            'codigoDeMateriasCreados' => $codigoDeMateriasCreados,
             'idTrayecto' => $idTrayecto,
             'materias' => $materias,
             'trayectos' => $trayectos,
