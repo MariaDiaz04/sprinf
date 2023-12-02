@@ -177,62 +177,54 @@ class SSP
 		$globalSearch = array();
 		$columnSearch = array();
 		$dtColumns = self::pluck($columns, 'dt');
-
 		if (isset($request['search']) && $request['search']['value'] != '') {
 			$str = $request['search']['value'];
-
 			for ($i = 0, $ien = count($request['columns']); $i < $ien; $i++) {
 				$requestColumn = $request['columns'][$i];
 				$columnIdx = array_search($requestColumn['data'], $dtColumns);
 				$column = $columns[$columnIdx];
-
 				if ($requestColumn['searchable'] == 'true') {
-					if (!empty($column['db'])) {
-						$binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
-						$globalSearch[] = "`" . $column['db'] . "` LIKE " . $binding;
-					}
+					$binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
+					$globalSearch[] = "`" . $column['db'] . "` LIKE " . $binding;
 				}
 			}
 		}
-
 		// Individual column filtering
 		if (isset($request['columns'])) {
 			for ($i = 0, $ien = count($request['columns']); $i < $ien; $i++) {
 				$requestColumn = $request['columns'][$i];
 				$columnIdx = array_search($requestColumn['data'], $dtColumns);
 				$column = $columns[$columnIdx];
-
 				$str = $requestColumn['search']['value'];
-
 				if (
 					$requestColumn['searchable'] == 'true' &&
-					$str != ''
+					$str != '' && $requestColumn['search']['regex']  == 'false'
 				) {
-					if (!empty($column['db'])) {
-						$binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
-						$columnSearch[] = "`" . $column['db'] . "` LIKE " . $binding;
-					}
+					$binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
+					$columnSearch[] = "`" . $column['db'] . "` LIKE " . $binding;
+				}
+				if (
+					$requestColumn['searchable'] == 'true' &&
+					$str != '' && $requestColumn['search']['regex']  == 'true'
+				) {
+					$binding = self::bind($bindings, $str, PDO::PARAM_STR);
+					$columnSearch[] = "`" . $column['db'] . "` REGEXP " . $binding;
 				}
 			}
 		}
-
 		// Combine the filters into a single string
 		$where = '';
-
 		if (count($globalSearch)) {
 			$where = '(' . implode(' OR ', $globalSearch) . ')';
 		}
-
 		if (count($columnSearch)) {
 			$where = $where === '' ?
 				implode(' AND ', $columnSearch) :
 				$where . ' AND ' . implode(' AND ', $columnSearch);
 		}
-
 		if ($where !== '') {
 			$where = 'WHERE ' . $where;
 		}
-
 		return $where;
 	}
 

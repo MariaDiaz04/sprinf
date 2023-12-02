@@ -22,6 +22,14 @@
             <th>Acción</th>
           </tr>
         </thead>
+        <tfoot>
+          <tr>
+            <th>codigo</th>
+            <th>trayecto</th>
+            <th>observacion</th>
+            <th>Acción</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -120,7 +128,7 @@
                     <div class="col-lg-12">
                       <label class="form-label" for="observacionEdit">Observaciones</label>
                       <input type="text" class="form-control mb-1" placeholder="..." name="observacion" id="observacionEdit" maxlength="40">
-                    
+
                     </div>
                   </div>
                 </div>
@@ -162,11 +170,11 @@
         ajax: '<?= $this->Route('seccion/ssp') ?>',
         processing: true,
         serverSide: true,
+        "ordering": false,
         scrollX: true,
         scrollCollapse: true,
         responsive: true,
         pageLength: 30,
-
         columnDefs: [{
           data: null,
           render: function(data, type, row, meta) {
@@ -181,7 +189,47 @@
                     </div>`;
           }, // combino los botons de acción
           targets: 3 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
-        }]
+        }],
+        initComplete: function() {
+          this.api()
+            .columns()
+            .every(function(index) {
+              let column = this;
+
+              if (index != 1) {
+                return false;
+              }
+
+              let nombre = index == 0 ? 'Código' : (index == 1) ? 'Trayectos' : '';
+
+              // Create select element
+              let select = document.createElement('select');
+              select.add(new Option(nombre, ''));
+              column.header().replaceChildren(select);
+
+              // Apply listener for user change in value
+              select.addEventListener('change', function() {
+                var val = DataTable.util.escapeRegex(select.value);
+                console.log('sdasd ', val)
+                let search = val ? '^' + val + '$' : '';
+                if (search.length > 0) {
+                  column.search(search, true, false).draw();
+                } else {
+                  console.log('ddddddddd')
+                  column.search('').draw();
+                }
+              });
+
+              // Add list of options
+              column
+                .data()
+                .unique()
+                .sort()
+                .each(function(d, j) {
+                  select.add(new Option(d));
+                });
+            });
+        },
       });
 
       $("#codigoCheck").hide();
@@ -213,14 +261,14 @@
         validateObservacion();
       });
 
-      
 
-    
-      
+
+
+
       $('#guardar').submit(function(e) {
         e.preventDefault()
         let observacionValue = $("#guardar #observacion").val();
-        if (!LettersAndNumber(observacionValue) ||  (observacionValue.length >= 205) ) {
+        if (!LettersAndNumber(observacionValue) || (observacionValue.length >= 205)) {
           $('#guardar #observacion').addClass("is-invalid");
           return false;
         }
@@ -228,7 +276,7 @@
         url = $(this).attr('action');
         data = $(this).serializeArray();
         validateCodigo();
-        
+
         if (codigoError == false) {
           Swal.fire({
             position: 'bottom-end',

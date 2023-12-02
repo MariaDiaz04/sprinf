@@ -14,6 +14,7 @@ use Model\baremos;
 use Model\fase;
 use Model\dimension;
 use Model\parroquia;
+use Model\municipio;
 use Model\trayectos;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -38,6 +39,7 @@ class proyectoController extends controller
     private $trayectos;
     private $inscripcion;
     private $parroquia;
+    private $municipios;
     private $consejoComunal;
 
     function __construct()
@@ -51,6 +53,7 @@ class proyectoController extends controller
         $this->consejoComunal = new consejoComunal();
         $this->dimension = new dimension();
         $this->profesores = new profesor();
+        $this->municipios = new municipio();
         $this->trayectos = new trayectos();
         $this->baremos = new baremos();
         $this->fase = new fase();
@@ -64,6 +67,7 @@ class proyectoController extends controller
         $proyectos = $this->proyecto->all();
         $pendientes = $this->proyecto->pendientesACerrar();
         $profesores = $this->profesores->all();
+        $municipios = $this->municipios->all();
         $trayectos = $this->trayectos->all();
         $parroquias = $this->parroquia->allDetalles();
         $consejosComunales = $this->consejoComunal->allDetalles();
@@ -92,6 +96,7 @@ class proyectoController extends controller
         return $this->view('proyectos/gestionar', [
             'proyectos' => $proyectos,
             'parroquias' => $parroquias,
+            'municipios' => $municipios,
             'consejosComunales' => $consejosComunales,
             'periodo' => $periodo,
             'profesores' => $profesores,

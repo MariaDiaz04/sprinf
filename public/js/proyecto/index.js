@@ -309,6 +309,7 @@ $(document).ready(function (e) {
   });
 
   $("#proyectoGuardar #nombre").keyup(function () {
+    $(this).val(titleCase($(this).val()));
     let telefono = $(this).val();
 
     if (!letterAndFewSpecial(telefono)) {
@@ -319,9 +320,10 @@ $(document).ready(function (e) {
   });
 
   $("#proyectoGuardar #tutor_ex").keyup(function () {
-    let telefono = $(this).val();
+    $(this).val(titleCase($(this).val()));
+    let tutor_ex = $(this).val();
 
-    if (!onlyLetters(telefono)) {
+    if (!onlyLetters(tutor_ex)) {
       $(this).addClass("is-invalid");
     } else {
       $(this).removeClass("is-invalid");
@@ -551,6 +553,7 @@ $(document).ready(function (e) {
   });
 
   $("#proyectoActualizar #nombre").keyup(function () {
+    $(this).val(titleCase($(this).val()));
     let telefono = $(this).val();
 
     if (!letterAndFewSpecial(telefono)) {
@@ -562,6 +565,7 @@ $(document).ready(function (e) {
   });
 
   $("#proyectoActualizar #tutor_ex").keyup(function () {
+    $(this).val(titleCase($(this).val()));
     let telefono = $(this).val();
 
     if (!onlyLetters(telefono)) {
