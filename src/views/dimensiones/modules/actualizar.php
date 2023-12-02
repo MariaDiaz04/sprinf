@@ -18,7 +18,10 @@
 
                   <div class="col-12">
                     <label class="form-label" for="nombre">Nombre Dimensión *</label>
-                    <input type="text" class="form-control mb-1" placeholder="..." name="nombre" id="nombre" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255" required>
+                    <input type="text" class="form-control mb-1" placeholder="..." name="nombre" aria-describedby="invalidNombreActualizar" id="nombreDimension" maxlength="255" required>
+                    <div id="invalidNombreActualizar" class="invalid-feedback">
+                      Nombre de dimensión no válido.
+                    </div>
                   </div>
                 </div>
                 <div class="row form-group">
@@ -51,3 +54,63 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#nombreDimension').on('keyup', function() {
+      $(this).val(titleCase($(this).val()))
+      const value = $(this).val();
+      if (!letterAndFewSpecial(value)) {
+        // Si no coincide, muestra un mensaje de error
+        $(this).addClass('is-invalid')
+
+      } else {
+        // Si coincide, elimina el mensaje de error
+        $(this).removeClass('is-invalid')
+      }
+    })
+
+    $('#dimensionActualizar').submit(function(e) {
+      e.preventDefault()
+      const nombreDimension = $('#nombreDimension').val();
+      if (!letterAndFewSpecial(nombreDimension)) {
+        alertError('Nombre de dimensión no valido')
+        return false;
+      }
+
+
+
+      url = $(this).attr('action');
+      data = $(this).serializeArray();
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        error: function(error, status) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+
+        },
+        success: function(data, status) {
+          var table = $('#example').DataTable();
+          table.ajax.reload();
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Actualización Exitosa",
+            showConfirmButton: false,
+            toast: true,
+            timer: 1000,
+          }).then(() => location.reload());
+          $('#actualizar').modal('hide')
+        },
+      });
+    });
+  })
+</script>

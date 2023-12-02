@@ -179,7 +179,6 @@
 
           // Remove the formatting to get integer data for summation
           let intVal = function(i) {
-            console.log(i)
             return typeof i === 'string' ?
               i.replace(/[\$,]/g, '') * 1 :
               typeof i === 'number' ?
@@ -269,49 +268,7 @@
         });
       })
 
-      $('#dimensionActualizar').submit(function(e) {
-        e.preventDefault()
 
-        toggleLoading(true, '#actualizar');
-
-
-        url = $(this).attr('action');
-        data = $(this).serializeArray();
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: data,
-          error: function(error, status) {
-            toggleLoading(false)
-            Swal.fire({
-              position: 'bottom-end',
-              icon: 'error',
-              title: error.responseText,
-              showConfirmButton: false,
-              toast: true,
-              timer: 2000
-            })
-
-          },
-          success: function(data, status) {
-            table.ajax.reload();
-            // usar sweetalerts
-            // document.getElementById("guardar").reset();
-            // actualizar tabla
-            Swal.fire({
-              position: "bottom-end",
-              icon: "success",
-              title: "Actualización Exitosa",
-              showConfirmButton: false,
-              toast: true,
-              timer: 1000,
-            })
-            $('#actualizar').modal('hide')
-            // .then(() => location.reload());
-            toggleLoading(false)
-          },
-        });
-      });
 
 
       // TOGGLE BUTTON AND SPINNER
@@ -357,7 +314,7 @@
       $("#actualizar").modal("show");
 
       $("#actualizar #id").val(id);
-      $("#actualizar #nombre").val(nombre);
+      $("#actualizar #nombreDimension").val(nombre);
 
       if (grupal == 1) {
         $('#actualizar #grupal').prop('checked', true);
