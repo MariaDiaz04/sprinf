@@ -51,8 +51,8 @@
                 <textarea class="form-control" placeholder="..." required id="comunidad" name="comunidad" style="height: 50px " maxlength="255"></textarea>
               </div>
               <div class="col-lg-6">
-                <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
-                <input type="text" aria-describedby="creacionTelefonoValidation" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required id="tlf_tex" name="tlf_tex">
+                <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo</b></label>
+                <input type="text" aria-describedby="creacionTelefonoValidation" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" id="tlf_tex" name="tlf_tex">
                 <div id="creacionTelefonoValidation" class="invalid-feedback">
                   Por favor, proporcione un teléfono válido.
                 </div>

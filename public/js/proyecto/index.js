@@ -159,7 +159,7 @@ $(document).ready(function (e) {
   $("#proyectoGuardarHistorico #tlf_tex").keyup(function () {
     let telefono = $(this).val();
 
-    if (!phoneNumbers(telefono)) {
+    if (telefono.length > 0 && !phoneNumbers(telefono)) {
       $(this).addClass("is-invalid");
     } else {
       $(this).removeClass("is-invalid");
@@ -198,7 +198,10 @@ $(document).ready(function (e) {
       return false;
     }
 
-    if (!phoneNumbers(telefonoTutorExterno)) {
+    if (
+      telefonoTutorExterno.length > 0 &&
+      !phoneNumbers(telefonoTutorExterno)
+    ) {
       Swal.fire({
         position: "bottom-end",
         icon: "error",
@@ -298,7 +301,7 @@ $(document).ready(function (e) {
   $("#proyectoGuardar #tlf_tex").keyup(function () {
     let telefono = $(this).val();
 
-    if (!phoneNumbers(telefono)) {
+    if (telefono.length > 0 && !phoneNumbers(telefono)) {
       $(this).addClass("is-invalid");
     } else {
       $(this).removeClass("is-invalid");
@@ -474,7 +477,7 @@ $(document).ready(function (e) {
     }
 
     let tlf_tex = $("#proyectoGuardar #tlf_tex").val();
-    if (!phoneNumbers(tlf_tex)) {
+    if (tlf_tex.length > 0 && !phoneNumbers(tlf_tex)) {
       Swal.fire({
         position: "bottom-end",
         icon: "error",
@@ -540,7 +543,7 @@ $(document).ready(function (e) {
   $("#proyectoActualizar #tlf_tex").keyup(function () {
     let telefono = $(this).val();
 
-    if (!phoneNumbers(telefono)) {
+    if (telefono.length > 0 && !phoneNumbers(telefono)) {
       $(this).addClass("is-invalid");
     } else {
       $(this).removeClass("is-invalid");
@@ -652,7 +655,7 @@ $(document).ready(function (e) {
     }
 
     let tlf_tex = $("#proyectoActualizar #tlf_tex").val();
-    if (!phoneNumbers(tlf_tex)) {
+    if (tlf_tex.length > 0 && !phoneNumbers(tlf_tex)) {
       Swal.fire({
         position: "bottom-end",
         icon: "error",
