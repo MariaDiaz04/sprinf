@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between align-items-center w-100 font-weight-bold mb-2">
       <h4 class="d-flex justify-content-between align-items-center w-100 font-weight-bold py-3 mb-4">
-        <div><span class="text-muted font-weight-light">Baremos / <a href="<?= APP_URL . $this->route('baremos/' . $unidadCurricular->codigo_trayecto) ?>"><?= $unidadCurricular->nombre_trayecto ?></a> / <a href="<?= APP_URL . $this->route('dimensiones/' . $dimension->unidad_id) ?>"><?= $dimension->nombre_materia ?></a> </span>/ <?= $dimension->nombre ?> - <b><?= $dimension->ponderacion_items ?>%</b></div>
+        <div><span class="text-muted font-weight-light">Baremos / <a href="<?= APP_URL . $this->route('baremos/' . $unidadCurricular->codigo_trayecto) ?>"><?= $unidadCurricular->nombre_trayecto ?></a> / <a href="<?= APP_URL . $this->route('dimensiones/' . $dimension->unidad_id) ?>"><?= $dimension->nombre_materia ?></a> </span>/ <?= $dimension->nombre ?> - <b><?= $dimension->ponderacion_items ?? '0' ?>%</b></div>
         <?php if ((int)$trayecto->ponderado_baremos >= 100) : ?>
           <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Ya ha sido evaluado 100% para el baremos de <?= $unidadCurricular->nombre_trayecto ?>.">
             <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Registrar</button>
@@ -79,7 +79,6 @@
 
           // Remove the formatting to get integer data for summation
           let intVal = function(i) {
-            console.log(i)
             return typeof i === 'string' ?
               i.replace(/[\$,]/g, '') * 1 :
               typeof i === 'number' ?
@@ -164,49 +163,7 @@
         }]
       });
 
-      $('#guardar').submit(function(e) {
-        e.preventDefault()
 
-        toggleLoading(true);
-
-        url = $(this).attr('action');
-        data = $(this).serializeArray();
-
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: data,
-          error: function(error, status) {
-            toggleLoading(false)
-            Swal.fire({
-              position: "bottom-end",
-              icon: "error",
-              title: status + ": " + error.error.message,
-              showConfirmButton: false,
-              toast: true,
-              timer: 2000,
-            });
-
-          },
-          success: function(data, status) {
-            table.ajax.reload();
-            // usar sweetalerts
-            // document.getElementById("guardar").reset();
-            // actualizar tabla
-            Swal.fire({
-              position: "bottom-end",
-              icon: "success",
-              title: "Creación Exitosa",
-              showConfirmButton: false,
-              toast: true,
-              timer: 1000,
-            }).then(() => location.reload());
-            document.getElementById("guardar").reset()
-            $('#crear').modal('hide')
-            toggleLoading(false)
-          },
-        });
-      })
 
 
 
@@ -258,7 +215,6 @@
 
     async function actualizar(id) {
       let indicador = await obtenerIndicador(id)
-      console.log(indicador)
       renderEvaluarForm(indicador.indicador)
       return false;
     }

@@ -52,9 +52,9 @@ class seccionController extends controller
             $trayectoId = $seccion->get('trayecto_id');
             $observacion = $seccion->get('observacion');
 
-            
-           $this->checkCodigo($codigo, 'guardar');
-         
+
+            $this->checkCodigo($codigo, 'guardar');
+
             $this->seccion->setData($seccion->request->all());
 
             // ejecutar transacción de insert
@@ -157,11 +157,10 @@ class seccionController extends controller
 
         // verificar que no cuente con insripciones
         $secciones = $this->seccion->find($codigo);
-            foreach ($secciones as $seccion) {
-                if (intval($seccion) > 0) 
-                return var_dump($seccion);
-                return throw new Exception('No puede ' . $action . ' datos de la seccion por que ya existe una seccion con ese codigo');
-            }
+        foreach ($secciones as $seccion) {
+            if (intval($seccion) > 0)
+                throw new Exception('No puede ' . $action . ' datos de la seccion por que ya existe una seccion con ese codigo');
+        }
     }
     function ssp(Request $query): void
     {

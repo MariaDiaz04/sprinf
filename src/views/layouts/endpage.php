@@ -58,6 +58,17 @@
     // Directly return the joined string
     return splitStr.join(' ');
   }
+
+  function alertError(msg) {
+    Swal.fire({
+      position: "bottom-end",
+      icon: "error",
+      title: msg,
+      showConfirmButton: false,
+      toast: true,
+      timer: 2000,
+    });
+  }
 </script>
 
 <!-- Place this tag in your head or just before your close body tag. -->

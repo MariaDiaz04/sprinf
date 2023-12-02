@@ -43,9 +43,15 @@ class indicadoresController extends controller
 
     $detallesFase = $this->fase->getByTrayecto($unidad_curricular['codigo_trayecto']);
 
+    $ponderado = array_sum(array_map(function ($fase) {
+      return $fase['ponderado_baremos'];
+    }, $detallesFase));
+
     return $this->view('indicadores/gestionar', [
       'fases' => $detallesFase,
       'dimension' => $dimension,
+      'ponderado' => $ponderado,
+      'pendientePorPonderar' => 100 - $ponderado,
       'trayecto' => $trayecto,
       'indicadores' => $indicadores,
       'idDimension' => $idDimension,

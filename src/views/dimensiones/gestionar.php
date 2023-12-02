@@ -91,7 +91,6 @@
 
           // Remove the formatting to get integer data for summation
           let intVal = function(i) {
-            console.log(i)
             return typeof i === 'string' ?
               i.replace(/[\$,]/g, '') * 1 :
               typeof i === 'number' ?
@@ -326,53 +325,7 @@
         }
       }
 
-      $('#anadirItem').click(function(e) {
-        e.preventDefault();
 
-        let length = document.getElementById("cuerpoTablaItems").children.length;
-
-        let nombreItem = $('#nombreItem').val();
-        let ponderacionItem = parseFloat($('#ponderacionItem').val())
-        if (nombreItem.length == 0) {
-          Swal.fire({
-            position: "bottom-end",
-            icon: "error",
-            title: 'Ingrese un nombre de indicador',
-            showConfirmButton: false,
-            toast: true,
-            timer: 2000,
-          });
-          return false;
-        }
-        let totalPonderado = 0;
-        let itemvalues = $('.itemValue').each(function(_, element) {
-          totalPonderado += parseInt($(element).val())
-        })
-
-        if (typeof ponderacionItem === 'number' && ponderacionItem <= (<?= $pendientePorPonderar ?> - totalPonderado)) {
-
-          let fila = `<tr id="appenedItem-${length}" class="nuevoIndicador">
-                      <th scope="row">
-                      <input type="text" name="indicadores[${length}][nombre]" class="form-control-plaintext" value="${nombreItem}" hidden>
-                      <input type="text" name="indicadores[${length}][ponderacion]" class="form-control-plaintext itemValue" value="${ponderacionItem}" hidden>
-                      ${nombreItem}
-                      </th>
-                      <td>${ponderacionItem}</td>
-                      <td><a href="#" class="btn btn-secondary" onClick="removeItem(${length})">Eliminar</a href="javascript:void(0)"></td>
-                    </tr>`;
-          $('#cuerpoTablaItems').append(fila);
-        } else {
-          Swal.fire({
-            position: "bottom-end",
-            icon: "error",
-            title: 'Ponderación no valida. Se dispone de <?= $pendientePorPonderar ?>% por ponderar y se ha evaluado ' + totalPonderado + '.',
-            showConfirmButton: false,
-            toast: true,
-            timer: 2000,
-          });
-        }
-
-      })
 
     })
 

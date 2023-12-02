@@ -96,6 +96,50 @@
 </div>
 
 <script>
+  $(document).ready(function() {
+    $('#anadirItem').click(function(e) {
+      e.preventDefault();
+
+      let length = document.getElementById("cuerpoTablaItems").children.length;
+
+      let nombreItem = $('#nombreItem').val();
+      let ponderacionItem = parseFloat($('#ponderacionItem').val())
+
+      if (nombreItem.length == 0) {
+        alertError('Ingrese un nombre de indicador')
+        return false;
+      }
+      if (!letterAndFewSpecial(nombreItem)) {
+        alertError('Nombre de ítem contiene caracteres no válidos')
+        return false;
+      }
+
+      let totalPonderado = 0;
+      let itemvalues = $('.itemValue').each(function(_, element) {
+        totalPonderado += parseInt($(element).val())
+      })
+
+      if (typeof ponderacionItem != 'number' || ponderacionItem > (<?= $pendientePorPonderar ?> - totalPonderado)) {
+        alertError('Ponderación no valida. Se dispone de <?= $pendientePorPonderar ?>% por ponderar y se ha evaluado ' + totalPonderado + '.')
+        return false;
+      }
+
+      let fila = `<tr id="appenedItem-${length}" class="nuevoIndicador">
+                      <th scope="row">
+                      <input type="text" name="indicadores[${length}][nombre]" class="form-control-plaintext" value="${nombreItem}" hidden>
+                      <input type="text" name="indicadores[${length}][ponderacion]" class="form-control-plaintext itemValue" value="${ponderacionItem}" hidden>
+                      ${nombreItem}
+                      </th>
+                      <td>${ponderacionItem}</td>
+                      <td><a href="#" class="btn btn-secondary" onClick="removeItem(${length})">Eliminar</a href="javascript:void(0)"></td>
+                    </tr>`;
+      $('#cuerpoTablaItems').append(fila);
+
+    })
+  })
+</script>
+
+<script>
   $(document).ready(() => {
     $('#nombre').on('keyup', function() {
       $(this).val(titleCase($(this).val()))
@@ -110,6 +154,7 @@
       }
     })
     $('#nombreItem').on('keyup', function() {
+      $(this).val(titleCase($(this).val()))
       const value = $(this).val();
       if (!letterAndFewSpecial(value)) {
         // Si no coincide, muestra un mensaje de error

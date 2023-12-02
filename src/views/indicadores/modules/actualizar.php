@@ -13,13 +13,15 @@
           <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
           <div class="container-fluid">
             <div class="row form-group align-items-end">
+
+
               <div class="col-lg-9">
                 <label class="form-label" for="nombreItem">Nombre Indicador *</label>
                 <input type="text" class="form-control mb-1" name="nombre" id="nombre" placeholder="..." id="nombreItem" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255">
               </div>
               <div class="col-lg-3">
                 <label class="form-label" for="ponderacionItem">Ponderación (%) *</label>
-                <input type="number" class="form-control mb-1" min="0" step="0.01" name="ponderacion" id="ponderacion" placeholder="..." id="ponderacionItem" value="0" max="100">
+                <input type="number" class="form-control mb-1" min="0" step="0.01" name="ponderacion" id="ponderacion" placeholder="..." id="ponderacionItem" value="0" max="<?= $pendientePorPonderar ?>">
               </div>
             </div>
           </div>

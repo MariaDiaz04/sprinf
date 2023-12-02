@@ -11,14 +11,22 @@
         <div class="modal-body">
           <!-- el action será tomado en la función que ejecuta el llamado asincrono -->
           <div class="container-fluid">
-            <div class="row form-group align-items-end">
+            <div class="row form-group align-items-start">
+              <div class="alert alert-secondary" role="alert">
+                Ingrese nombre y ponderación de cada indicador de la dimensión <span style="font-weight: bold;"><?= $dimension->nombre ?></span>. <br>
+                Se dispone de <span style="font-weight: bold;"><?= $pendientePorPonderar ?>%</span> por ponderar en Baremos.
+              </div>
               <div class="col-lg-9">
                 <label class="form-label" for="nombreItem">Nombre Indicador *</label>
-                <input type="text" class="form-control mb-1" name="nombre" placeholder="..." id="nombreItem" onkeydown="return /[[\[\].,a-zA-Z_ñáéíóúü ]/i.test(event.key)" maxlength="255">
+                <input type="text" class="form-control mb-1" name="nombre" aria-describedby="invalidNombreGuardar" placeholder="..." id="nombreItem" onkeyup="validar('guardar')" maxlength="255" require>
+                <div id="invalidNombreGuardar" class="invalid-feedback">
+                </div>
               </div>
               <div class="col-lg-3">
                 <label class="form-label" for="ponderacionItem">Ponderación (%) *</label>
-                <input type="number" class="form-control mb-1" min="0" step="0.01" name="ponderacion" placeholder="..." id="ponderacionItem" value="0" max="100">
+                <input type="text" inputmode="numeric" maxlength="5" class="form-control mb-1" min="0" step="0.01" aria-describedby="invalidPonderacionGuardar" name="ponderacion" placeholder="..." id="ponderacionItem" onkeyup="validar('guardar')" value="0" max="<?= $pendientePorPonderar ?>" require>
+                <div id="invalidPonderacionGuardar" class="invalid-feedback">
+                </div>
               </div>
             </div>
           </div>
@@ -37,3 +45,124 @@
     </div>
   </div>
 </div>
+
+<script>
+  function validar(form) {
+    let nombre = $(`#${form} #nombreItem`)
+    $(nombre).val(titleCase($(nombre).val()))
+    let erroresNombre = validarNombre(nombre)
+    checkInputError(nombre, erroresNombre)
+
+
+    let ponderacion = $(`#${form} #ponderacionItem`)
+    // $(ponderacion).val(parseFloat($(ponderacion).val()))
+    erroresPonderacion = validarPonderacion(ponderacion)
+    checkInputError(ponderacion, erroresPonderacion)
+
+    if (erroresNombre != null) return erroresNombre;
+    if (erroresPonderacion != null) return erroresPonderacion;
+
+    return null;
+  }
+
+  function checkInputError(input, errores) {
+    if (errores != null) {
+      $(input).addClass('is-invalid')
+      let errorElement = $(input).attr('aria-describedby')
+      $(`#${errorElement}`).text(errores)
+      return true;
+    } else {
+      $(input).removeClass('is-invalid')
+      return false;
+    }
+  }
+
+  function validarNombre(input) {
+    let value = $(input).val();
+    let regex = /^[0-9A-Za-zÑñÁáÉéÍíÓóÚúÜü ()% ]+$/;
+    if (!regex.test(value)) {
+      return 'Nombre de indicador no valido'
+    }
+
+    return null;
+  }
+
+  function validarPonderacion(input) {
+    let value = $(input).val();
+    let regex = /^[+-]?([0-9]*[.])?[0-9]+$/;
+    if (!regex.test(value)) {
+      return 'Ponderación invalida'
+    }
+    if (value <= 0) {
+      return 'La ponderación debe ser mayor a 0';
+    }
+    if (value > <?= $pendientePorPonderar ?>) {
+      return 'Excede límite de evaluación de baremos.'
+    }
+
+    return null;
+  }
+</script>
+
+<script>
+  $(document).ready(function() {
+    $('#guardar').submit(function(e) {
+      e.preventDefault()
+
+      let errores = validar('guardar')
+
+      if (errores != null) {
+        Swal.fire({
+          position: "bottom-end",
+          icon: "error",
+          title: errores,
+          showConfirmButton: false,
+          toast: true,
+          timer: 2000,
+        });
+        return false;
+      }
+
+      toggleLoading(true);
+
+      url = $(this).attr('action');
+      data = $(this).serializeArray();
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        error: function(error, status) {
+          toggleLoading(false)
+          Swal.fire({
+            position: "bottom-end",
+            icon: "error",
+            title: status + ": " + error.error.message,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000,
+          });
+
+        },
+        success: function(data, status) {
+          var table = $('#example').DataTable();
+          table.ajax.reload();
+          // usar sweetalerts
+          // document.getElementById("guardar").reset();
+          // actualizar tabla
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Creación Exitosa",
+            showConfirmButton: false,
+            toast: true,
+            timer: 1000,
+          }).then(() => location.reload());
+          document.getElementById("guardar").reset()
+          $('#crear').modal('hide')
+          toggleLoading(false)
+        },
+      });
+    })
+  })
+</script>
