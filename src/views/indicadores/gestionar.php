@@ -132,20 +132,6 @@
         scrollCollapse: true,
         responsive: true,
         pageLength: 30,
-
-        // columnDefs: [{
-        //     visible: false,
-        //     targets: [0, 2, 5, 6]
-        //   },
-        //   {
-        //     data: null,
-        //     render: function(data, type, row, meta) {
-        //       return (row[7]) ? row[7] : 'No evaluado';
-        //     }, // combino los botons de acción
-        //     targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
-        //   }
-        // ]
-
         columnDefs: [{
           data: null,
           render: function(data, type, row, meta) {
@@ -162,72 +148,20 @@
           targets: 3 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
-
-
-
-
-
-      $('#actualizarIndicador').submit(function(e) {
-        e.preventDefault()
-
-        toggleLoading(true);
-
-        url = $(this).attr('action');
-        data = $(this).serializeArray();
-
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: data,
-          error: function(error, status) {
-            toggleLoading(false)
-            Swal.fire({
-              position: "bottom-end",
-              icon: "error",
-              title: status + ": " + error.error.message,
-              showConfirmButton: false,
-              toast: true,
-              timer: 2000,
-            });
-
-          },
-          success: function(data, status) {
-            table.ajax.reload();
-            // usar sweetalerts
-            // document.getElementById("guardar").reset();
-            // actualizar tabla
-            Swal.fire({
-              position: "bottom-end",
-              icon: "success",
-              title: "Actualización Exitosa",
-              showConfirmButton: false,
-              toast: true,
-              timer: 1000,
-            }).then(() => location.reload());
-            document.getElementById("guardar").reset()
-            $('#actualizar').modal('hide')
-            toggleLoading(false)
-          },
-        });
-      })
-
     })
 
     async function actualizar(id) {
       let indicador = await obtenerIndicador(id)
-      renderEvaluarForm(indicador.indicador)
+      actualizarDatos(indicador.indicador)
       return false;
     }
 
-    function renderEvaluarForm(data) {
-
+    function actualizarDatos(data) {
       $('#actualizar #idIndicador').val(data.id)
       $('#actualizar #dimension_id').val(data.dimension_id)
-      $('#actualizar #nombre').val(data.nombre)
-      $('#actualizar #ponderacion').val(data.ponderacion)
+      $('#actualizar #nombreItem').val(data.nombre)
+      $('#actualizar #ponderacionItem').val(data.ponderacion)
       $('#actualizar').modal('show')
-
-
     }
 
     async function obtenerIndicador(id) {
@@ -297,5 +231,62 @@
         $(`${form} #loading`).hide();
         $(`${form} #submit`).show();
       }
+    }
+  </script>
+  <script>
+    function validar(form) {
+      let nombre = $(`#${form} #nombreItem`)
+      $(nombre).val(titleCase($(nombre).val()))
+      let erroresNombre = validarNombre(nombre)
+      checkInputError(nombre, erroresNombre)
+
+
+      let ponderacion = $(`#${form} #ponderacionItem`)
+      // $(ponderacion).val(parseFloat($(ponderacion).val()))
+      erroresPonderacion = validarPonderacion(ponderacion)
+      checkInputError(ponderacion, erroresPonderacion)
+
+      if (erroresNombre != null) return erroresNombre;
+      if (erroresPonderacion != null) return erroresPonderacion;
+
+      return null;
+    }
+
+    function checkInputError(input, errores) {
+      if (errores != null) {
+        $(input).addClass('is-invalid')
+        let errorElement = $(input).attr('aria-describedby')
+        $(`#${errorElement}`).text(errores)
+        return true;
+      } else {
+        $(input).removeClass('is-invalid')
+        return false;
+      }
+    }
+
+    function validarNombre(input) {
+      let value = $(input).val();
+      let regex = /^[0-9A-Za-zÑñÁáÉéÍíÓóÚúÜü ()% ]+$/;
+      if (!regex.test(value)) {
+        return 'Nombre de indicador no valido'
+      }
+
+      return null;
+    }
+
+    function validarPonderacion(input) {
+      let value = $(input).val();
+      let regex = /^[+-]?([0-9]*[.])?[0-9]+$/;
+      if (!regex.test(value)) {
+        return 'Ponderación invalida'
+      }
+      if (value <= 0) {
+        return 'La ponderación debe ser mayor a 0';
+      }
+      if (value > <?= $pendientePorPonderar ?>) {
+        return 'Excede límite de evaluación de baremos.'
+      }
+
+      return null;
     }
   </script>

@@ -46,63 +46,7 @@
   </div>
 </div>
 
-<script>
-  function validar(form) {
-    let nombre = $(`#${form} #nombreItem`)
-    $(nombre).val(titleCase($(nombre).val()))
-    let erroresNombre = validarNombre(nombre)
-    checkInputError(nombre, erroresNombre)
 
-
-    let ponderacion = $(`#${form} #ponderacionItem`)
-    // $(ponderacion).val(parseFloat($(ponderacion).val()))
-    erroresPonderacion = validarPonderacion(ponderacion)
-    checkInputError(ponderacion, erroresPonderacion)
-
-    if (erroresNombre != null) return erroresNombre;
-    if (erroresPonderacion != null) return erroresPonderacion;
-
-    return null;
-  }
-
-  function checkInputError(input, errores) {
-    if (errores != null) {
-      $(input).addClass('is-invalid')
-      let errorElement = $(input).attr('aria-describedby')
-      $(`#${errorElement}`).text(errores)
-      return true;
-    } else {
-      $(input).removeClass('is-invalid')
-      return false;
-    }
-  }
-
-  function validarNombre(input) {
-    let value = $(input).val();
-    let regex = /^[0-9A-Za-zÑñÁáÉéÍíÓóÚúÜü ()% ]+$/;
-    if (!regex.test(value)) {
-      return 'Nombre de indicador no valido'
-    }
-
-    return null;
-  }
-
-  function validarPonderacion(input) {
-    let value = $(input).val();
-    let regex = /^[+-]?([0-9]*[.])?[0-9]+$/;
-    if (!regex.test(value)) {
-      return 'Ponderación invalida'
-    }
-    if (value <= 0) {
-      return 'La ponderación debe ser mayor a 0';
-    }
-    if (value > <?= $pendientePorPonderar ?>) {
-      return 'Excede límite de evaluación de baremos.'
-    }
-
-    return null;
-  }
-</script>
 
 <script>
   $(document).ready(function() {
