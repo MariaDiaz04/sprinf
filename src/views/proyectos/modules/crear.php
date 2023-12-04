@@ -190,7 +190,6 @@
 <script>
   $(document).ready(function() {
     $('#ccNoCreado').hide()
-    $('#crear').modal('show')
 
     $('#proyectoGuardar #comunidadAutonoma').change(function() {
       if ($(this).is(':checked')) {
