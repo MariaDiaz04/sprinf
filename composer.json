@@ -10,6 +10,11 @@
       "name": "Kevin Heredia",
       "email": "heredickevin@gmail.com",
       "role": "developer"
+    },
+    {
+      "name": "Sarai Perez",
+      "email": "perezpsaraij@gmail.com",
+      "role": "developer"
     }
   ],
   "autoload": {

@@ -4,17 +4,23 @@ namespace Controllers;
 
 use Model\modulo;
 use Symfony\Component\HttpFoundation\Request;
+use Model\bitacoraAcciones;
+use app\enums\acciones;
+use app\enums\modulos;
 
 use Exception;
 
 class moduloController extends controller
 {
     public $MODULO;
+    public $ACCIONES;
 
     function __construct()
     {
         $this->tokenExist();
         $this->MODULO = new modulo();
+        $this->ACCIONES = new bitacoraAcciones();
+
     }
 
     public function index()
@@ -43,6 +49,7 @@ class moduloController extends controller
                 </script>';
                 header('refresh:1 ' . APP_URL . 'modulos');
             } else {
+                 $this->ACCIONES->lastSave(modulos::$modulo_modulos,acciones::$accion_insertar);
                 return $this->redirect(APP_URL . 'modulos');
             }
             http_response_code(200);

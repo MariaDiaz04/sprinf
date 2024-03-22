@@ -83,7 +83,6 @@ class consejoComunalController extends controller
               'nombre_vocero' => $nombre_vocero,
               'telefono' => $telefono,
               'sector_id' => $sector_id,
-              
           ]);
   
           // Ejecutar transacción de insert
