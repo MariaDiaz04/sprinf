@@ -15,6 +15,11 @@
       "name": "Sarai Perez",
       "email": "perezpsaraij@gmail.com",
       "role": "developer"
+    },
+    {
+      "name": "Carlos Ramirez",
+      "email": "ramirezcoronelcarlos@gmail.com",
+      "role": "developer"
     }
   ],
   "autoload": {
