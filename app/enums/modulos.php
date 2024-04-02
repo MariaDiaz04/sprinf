@@ -10,7 +10,7 @@ namespace app\enums;
  * @package app\enums
  * @author  Kevin Heredia
  */
-class Modulos
+class modulos
 {
     /**
      * Modulo Inicio
@@ -31,7 +31,7 @@ class Modulos
      *
      * @var int
      */
-    public static $modulo_estuantes = 3;
+    public static $modulo_estudiantes = 3;
 
     /**
      * Modulo Secciones

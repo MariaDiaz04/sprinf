@@ -1,6 +1,6 @@
 <?php
 
-namespace app\enums;
+namespace App\enums;
 
 /**
  * Class acciones
