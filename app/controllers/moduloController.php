@@ -4,17 +4,24 @@ namespace Controllers;
 
 use Model\modulo;
 use Symfony\Component\HttpFoundation\Request;
+use Model\bitacoraAcciones;
+use App\enums\acciones;
+use App\enums\modulos;
 
 use Exception;
 
 class moduloController extends controller
 {
     public $MODULO;
+    public $ACCIONES;
+ 
 
     function __construct()
     {
         $this->tokenExist();
         $this->MODULO = new modulo();
+        $this->ACCIONES = new bitacoraAcciones();
+
     }
 
     public function index()
@@ -31,10 +38,9 @@ class moduloController extends controller
     public function store($modulo)
     {
         try {
-            $guardar = $this->MODULO->create([
+             $guardar = $this->MODULO->create([
                 'nombre' => $modulo->request->get('nombre')
             ])->save();
-
 
             if ($guardar == null) {
                 echo '
@@ -43,8 +49,9 @@ class moduloController extends controller
                 </script>';
                 header('refresh:1 ' . APP_URL . 'modulos');
             } else {
+                 $this->ACCIONES->lastSave($this->modulo_modulos,$this->accion_insertar);
                 return $this->redirect(APP_URL . 'modulos');
-            }
+            }  
             http_response_code(200);
             echo json_encode($this->MODULO);
         } catch (Exception $e) {
@@ -71,6 +78,11 @@ class moduloController extends controller
         $modulo->actualizar([
             'nombre' => '"' .  $request->request->get('nombre') . '"',
         ]);
+        if (!is_null($modulo)) {
+        $this->ACCIONES->lastSave($this->modulo_modulos,$this->accion_actualizar);
+        }
+
+
         return $this->redirect(APP_URL . 'modulos');
     }
 

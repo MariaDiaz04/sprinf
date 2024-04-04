@@ -78,7 +78,7 @@ class modulo extends model
     public function actualizar($modulo)
     {
 
-        $this->update('modulo', $modulo, [['id', '=', $this->fillable['modulo_id']]]);
+        $this->update('modulo', $modulo, [['id', '=', $this->fillable['id']]]);
         return $this;
     }
 

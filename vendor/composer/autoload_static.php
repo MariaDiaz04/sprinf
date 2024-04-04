@@ -275,6 +275,7 @@ class ComposerStaticInitd992f0f84eb944fc783f652ba9c7b740
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Controllers\\baremosController' => __DIR__ . '/../..' . '/app/controllers/baremosController.php',
+        'Controllers\\bitacoraAccionesController' => __DIR__ . '/../..' . '/app/controllers/bitacoraAccionesController.php',
         'Controllers\\bitacoraController' => __DIR__ . '/../..' . '/app/controllers/bitacoraController.php',
         'Controllers\\configuracionController' => __DIR__ . '/../..' . '/app/controllers/configuracionController.php',
         'Controllers\\consejoComunalController' => __DIR__ . '/../..' . '/app/controllers/consejoComunalController.php',

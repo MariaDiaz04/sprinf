@@ -313,7 +313,7 @@ delete from persona where true;
 delete from usuario where true;
 
 -- ROLES
-insert into roles (id, nombre) values (1, 'administrador'), (2, 'profesor'), (3, 'coordinador'), (4, 'estudiante');
+insert into roles (id, nombre) values (1, 'administrador'), (2, 'coordinador'), (3, 'docente de proyecto'), (4, 'estudiante'), (5, 'tutor'), (6, 'docente'), (7, 'secretaria');
 
 -- modulos
 insert into modulo (id, nombre) values (1, 'Proyecto');

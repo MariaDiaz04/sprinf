@@ -173,7 +173,7 @@
         </li>
         <!-- Layouts -->
 
-        <li class="menu-item <?= in_array($this->currentPath(), ['bitacora', 'permisos', 'modulos']) ? 'open' : '' ?>">
+        <li class="menu-item <?= in_array($this->currentPath(), ['bitacora', 'acciones',  'permisos', 'modulos']) ? 'open' : '' ?>">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
             <div data-i18n="Authentications">Seguridad</div>
@@ -183,6 +183,11 @@
               <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
                 <div data-i18n="Basic">Bitácora</div>
               </a>
+              <li class="menu-item <?= $this->currentPath() == 'acciones' ? 'active' : '' ?>">
+              <a href="<?= APP_URL . $this->Route('acciones') ?>" class="menu-link">
+                <div data-i18n="Basic">Bitacora Acciones</div>
+              </a>
+            </li>
             </li>
             <li class="menu-item <?= $this->currentPath() == 'permisos' ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
