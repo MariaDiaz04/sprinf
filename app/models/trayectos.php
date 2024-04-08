@@ -138,4 +138,23 @@ class trayectos extends model
     );
     return $this->getSSP('detalles_trayecto', 'codigo', $columns);
   }
+
+  /**
+   * Retorna los datos del indiacodr
+   *
+   * @param [type] $id
+   * @return array es vacio si no consigue el indicador
+   */
+  public function findByPeriodo($id): array
+  {
+    $query = $this->prepare("SELECT * FROM periodo p INNER JOIN trayecto t ON p.id = t.periodo_id WHERE id = :id;");
+    $query->bindParam(":id", $id);
+    $query->execute();
+    //$result = $query->fetch(\PDO::FETCH_ASSOC);
+    $v = array();
+			while ($item = $query->fetch(\PDO::FETCH_ASSOC)) {
+				$v[] = $item;
+			}
+    return $v;
+  }
 }
