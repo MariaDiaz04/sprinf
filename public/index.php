@@ -91,6 +91,8 @@ require __DIR__ . '/../config/routes/usuario.php';          ## usuario
 
 // report
 require __DIR__ . '/../config/routes/reportesn.php';    ## reportes
+require __DIR__ . '/../config/routes/reporteMunicipio.php';    ## reportes
+require __DIR__ . '/../config/routes/reporteAprobado.php';    ## reportes
 
 
 

@@ -53,31 +53,132 @@ class reportesnController extends controller
 
 	public function listar_trayectos(Request $request)
 	{
+		//Obtiene el id del periodo
 		$periodo_id = $request->get('periodo_id');
-		$trayectos = $this->TRAYECTOS->findByPeriodo($periodo_id);
-		$total_proyectos = $this->PERIODO->total($periodo_id);
-		$aprobados = $this->PERIODO->aprobados($periodo_id);
-		$reprobados = $this->PERIODO->reprobados($periodo_id);
-		$porcentaje_aprobado = (intval($aprobados['aprobados'])/intval($total_proyectos['total']))*100;
-		$porcentaje_reprobados = (intval($reprobados['reprobados'])/intval($total_proyectos['total']))*100;
-		echo json_encode([
-			'resultado' => 'listar_trayectos',
-			'trayectos' => $trayectos,
-			'aprobados' => $porcentaje_aprobado,
-			'reprobados' => $porcentaje_reprobados
-		]);
+		//Valida que existe el periodo buscado
+		$buscar_periodo = $this->PERIODO->find($periodo_id);
+		if($buscar_periodo == null){
+			echo json_encode([
+				'resultado' => 'error',
+				'mensaje' => 'Periodo no encontrado'
+			]);
+		}
+		else{
+			//En caso de encontrar el periodo
+			$proyecto_periodo = $this->PERIODO->findbyproyecto($periodo_id);
+			if($proyecto_periodo == null){
+				echo json_encode([
+					'resultado' => 'error',
+					'mensaje' => 'No existe proyectos con el periodo indicado'
+				]);
+			}
+			else
+			{
+				//PARA CARGAR EL SELECT
+				// Muestra trayecto de acuerdo al periodo_id
+				$trayectos = $this->TRAYECTOS->findByPeriodo($periodo_id);
+				//PARA LA GRAFICA
+				//Muestra el total de proyectos segun el periodo
+				$total_proyectos = $this->PERIODO->total($periodo_id);
+				//Muestra los proyectos aprobados de acuerdo con el periodo
+				$aprobados = $this->PERIODO->aprobados($periodo_id);
+				//Muestra los proyectos reprobados de acuerdo con el periodo
+				$reprobados = $this->PERIODO->reprobados($periodo_id);
+
+				//Formula para obtener el porcentaje de aprobados y reprobados
+				$porcentaje_aprobado = (intval($aprobados['aprobados'])/intval($total_proyectos['total']))*100;
+				$porcentaje_reprobados = (intval($reprobados['reprobados'])/intval($total_proyectos['total']))*100;
+
+				echo json_encode([
+					'resultado' => 'listar_trayectos',
+					'trayectos' => $trayectos,
+					'aprobados' => $porcentaje_aprobado,
+					'reprobados' => $porcentaje_reprobados
+				]);
+			}
+
+		}
 		return 0;
+		
 	}
 	
 	public function listar_secciones(Request $request)
 	{
 		$trayecto_id = $request->get('trayecto_id');
-		$secciones = $this->SECCION->findByTrayecto($trayecto_id);
-		echo json_encode([
-			'resultado' => 'listar_secciones',
-			'secciones' => $secciones
-		]);
+		$buscar_trayectos = $this->TRAYECTOS->find($trayecto_id);
+		if($buscar_trayectos == null){
+			echo json_encode([
+				'resultado' => 'error',
+				'mensaje' => 'Trayecto no encontrado'
+			]);
+		}
+		else{
+			$secciones = $this->SECCION->findByTrayecto($trayecto_id);
+			$proyecto_trayecto = $this->TRAYECTOS->findbyproyecto($trayecto_id);
+			if($proyecto_trayecto == null){
+				echo json_encode([
+					'resultado' => 'error',
+					'mensaje' => 'No existe proyectos con el trayecto indicado'
+				]);
+			}
+			else{
+				$total_proyectos = $this->TRAYECTOS->total($trayecto_id);
+				//Muestra los proyectos aprobados de acuerdo con el TRAYECTO
+				$aprobados = $this->TRAYECTOS->aprobados($trayecto_id);
+				//Muestra los proyectos reprobados de acuerdo con el TRAYECTO
+				$reprobados = $this->TRAYECTOS->reprobados($trayecto_id);
+				//Formula para obtener el porcentaje de aprobados y reprobados
+				$porcentaje_aprobado = (intval($aprobados['aprobados'])/intval($total_proyectos['total']))*100;
+				$porcentaje_reprobados = (intval($reprobados['reprobados'])/intval($total_proyectos['total']))*100;
+				echo json_encode([
+					'resultado' => 'listar_secciones',
+					'secciones' => $secciones,
+					'aprobados' => $porcentaje_aprobado,
+					'reprobados' => $porcentaje_reprobados
+				]);
+
+			}
+		}
 		return 0;
+	}
+
+	public function listar_secciones_trayectos(Request $request)
+	{
+
+		$seccion_id = $request->get('seccion_id');
+		$buscar_seccion = $this->SECCION->find($seccion_id);
+		if($buscar_seccion == null){
+			echo json_encode([
+				'resultado' => 'error',
+				'mensaje' => 'Sección no encontrada'
+			]);
+		}
+		else{
+			$proyecto_seccion = $this->SECCION->findbyseccion($seccion_id);
+			if($proyecto_seccion == null){
+				echo json_encode([
+					'resultado' => 'error',
+					'mensaje' => 'No existe proyectos con la sección indicada'
+				]);
+			}
+			else{
+				$total_proyectos = $this->SECCION->total($seccion_id);
+				//Muestra los proyectos aprobados de acuerdo con el TRAYECTO
+				$aprobados = $this->SECCION->aprobados($seccion_id);
+				//Muestra los proyectos reprobados de acuerdo con el TRAYECTO
+				$reprobados = $this->SECCION->reprobados($seccion_id);
+				//Formula para obtener el porcentaje de aprobados y reprobados
+				$porcentaje_aprobado = (intval($aprobados['aprobados'])/intval($total_proyectos['total']))*100;
+				$porcentaje_reprobados = (intval($reprobados['reprobados'])/intval($total_proyectos['total']))*100;
+				echo json_encode([
+					'resultado' => 'listar_secciones_trayecto',
+					'aprobados' => $porcentaje_aprobado,
+					'reprobados' => $porcentaje_reprobados
+				]);
+
+			}
+		}
+		return 0;	
 	}
 	
 

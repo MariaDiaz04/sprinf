@@ -27,4 +27,14 @@ $listaDeRutas['listar_secciones'] = new Route(
     'controller' => reportesnController::class,
     'method' => 'listar_secciones',
   ]
+  
+);
+
+$listaDeRutas['listar_secciones_trayectos'] = new Route(
+  '/reporte/grafica-seccion',
+  [
+    'controller' => reportesnController::class,
+    'method' => 'listar_secciones_trayectos',
+  ]
+  
 );

@@ -207,7 +207,17 @@
           <ul class="menu-sub">
             <li class="menu-item <?= $this->currentLastPath() == 'reportesn' ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('reportesn') ?>" class="menu-link">
-                <div data-i18n="Basic">Notas Proyectos</div>
+                <div data-i18n="Basic">Proyectos aprobados con filtro</div>
+              </a>
+            </li>
+            <li class="menu-item <?= $this->currentLastPath() == 'reporte_aprobado' ? 'active' : '' ?>">
+              <a href="<?= APP_URL . $this->Route('reporte-aprobado') ?>" class="menu-link">
+                <div data-i18n="Basic">Proyectos aprobados general</div>
+              </a>
+            </li>
+            <li class="menu-item <?= $this->currentLastPath() == 'reporte_municipio' ? 'active' : '' ?>">
+              <a href="<?= APP_URL . $this->Route('reporte-municipio') ?>" class="menu-link">
+                <div data-i18n="Basic">Proyectos por municipios</div>
               </a>
             </li>
             <li class="menu-item <?= $this->currentLastPath() == 'notasu' ? 'active' : '' ?>">

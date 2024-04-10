@@ -37,7 +37,7 @@
 
                     <div class="col-lg-3">
                       <label class="form-label" for="seccion">seccion *</label>
-                      <select class="form-select" name="seccion" id="secciones">
+                      <select class="form-select" name="seccion" id="secciones" onchange="muestraSecciones_Trayecto();">
                       </select>
                     </div>
 

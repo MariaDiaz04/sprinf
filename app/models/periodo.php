@@ -181,4 +181,19 @@ class periodo extends model
         $result = $query->fetch(\PDO::FETCH_ASSOC);
         return ($result) ? $result : [];
     }
+
+    /**
+     * Retorna los datos del proyecto
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function findbyproyecto($id)
+    {
+      $query = $this->prepare("SELECT * FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo  INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
+      $query->bindParam(":id", $id);
+      $query->execute();
+      $result = $query->fetch(\PDO::FETCH_ASSOC);
+      return ($result) ? $result : [];
+    }
 }
