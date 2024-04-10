@@ -220,11 +220,11 @@
                 <div data-i18n="Basic">Proyectos por municipios</div>
               </a>
             </li>
-            <li class="menu-item <?= $this->currentLastPath() == 'notasu' ? 'active' : '' ?>">
+            <!--<li class="menu-item <?= $this->currentLastPath() == 'notasu' ? 'active' : '' ?>">
               <a href="<?= APP_URL . $this->Route('notasu') ?>" class="menu-link">
                 <div data-i18n="Basic">Notas Unidad Curricular</div>
               </a>
-            </li>
+            </li-->
 
 
           </ul>
