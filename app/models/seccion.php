@@ -251,7 +251,7 @@ class seccion extends model
          */
         public function aprobados($id): array
         {
-            $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 1) AS aprobados FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
+            $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 1) AS aprobados FROM detalles_proyecto dp  WHERE dp.seccion LIKE :id;");
             $query->bindParam(":id", $id);
             $query->execute();
             $result = $query->fetch(\PDO::FETCH_ASSOC);
@@ -266,7 +266,7 @@ class seccion extends model
          */
         public function reprobados($id): array
         {
-            $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 0) AS reprobados FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
+            $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 0) AS reprobados FROM detalles_proyecto dp WHERE dp.seccion LIKE :id;");
             $query->bindParam(":id", $id);
             $query->execute();
             $result = $query->fetch(\PDO::FETCH_ASSOC);
@@ -281,7 +281,7 @@ class seccion extends model
          */
         public function total($id): array
         {
-            $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto) AS total FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
+            $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto) AS total FROM detalles_proyecto dp  WHERE dp.seccion LIKE :id;");
             $query->bindParam(":id", $id);
             $query->execute();
             $result = $query->fetch(\PDO::FETCH_ASSOC);
@@ -291,7 +291,7 @@ class seccion extends model
 
         public function findbyseccion(string $id)
         {
-          $query = $this->prepare("SELECT * FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo WHERE t.codigo = :id");
+          $query = $this->prepare("SELECT * FROM detalles_proyecto dp WHERE dp.seccion LIKE :id");
           $query->bindParam(":id", $id);
           $query->execute();
           $result = $query->fetch(\PDO::FETCH_ASSOC);

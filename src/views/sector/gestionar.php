@@ -44,7 +44,7 @@
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre del Sector *</label>
-                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre"  aria-describedby="nombreCheck">
+                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre"  aria-describedby="nombreCheck" maxlength="50">
                       <div id="nombreCheck" class="invalid-feedback">
                         Por favor proporcione un nombre válido
                       </div>
@@ -102,7 +102,7 @@
                   <div class="row form-group">
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre del Sector *</label>
-                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre"  aria-describedby="nombreCheck">
+                      <input type="text" required class="form-control mb-1" name="nombre" id="nombre"  aria-describedby="nombreCheck"  maxlength="50">
                       <div id="nombreCheck" class="invalid-feedback">
                         Por favor proporcione un nombre válido
                       </div>

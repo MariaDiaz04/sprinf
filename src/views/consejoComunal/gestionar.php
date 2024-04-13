@@ -277,7 +277,7 @@
       $(`#actualizar #nombre`).val(data.consejoComunal.consejo_comunal_nombre);
       $(`#actualizar #nombre_vocero`).val(data.consejoComunal.nombre_vocero);
       $(`#actualizar #sector_id option[value='${data.consejoComunal.sector_id}']`).attr("selected", true);
-      $(`#actualizar #telefono`).val(data.consejoComunal.consejo_comunal_telefono);
+      $(`#actualizar #phone`).val(data.consejoComunal.consejo_comunal_telefono);
 
     }
 
@@ -359,5 +359,7 @@
       words = words.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
       return words;
     }
+
+
 
   </script>

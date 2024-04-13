@@ -46,7 +46,8 @@
 
                   <div class="col-lg-6">
                     <label class="form-label" for="telefono">Teléfono</label>
-                    <input type="text" inputmode="numeric" aria-describedby="telefonoCheck" required class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
+                    <input type="text" inputmode="numeric" required class="form-control mb-1" placeholder="..." name="telefono" id="telefono" required maxlength="11">
+                    <span id="stelefono"></span>
                     <div id="telefonoCheck" class="invalid-feedback">
                       Por favor proporcione un número de telefono válido
                     </div>
@@ -67,3 +68,47 @@
     </div>
   </div>
 </div>
+<script>
+  var keyup_telefono = /^[0-9]{11}$/;
+  document.onload = carga();
+  function carga() {
+    /*--------------VALIDACION PARA CEDULA--------------------*/
+    document.getElementById("telefono").maxLength = 11;
+    document.getElementById("telefono").onkeypress = function (e) {
+      er = /^[0-9]*$/;
+      validarkeypress(er, e);
+    };
+    document.getElementById("telefono").onkeyup = function () {
+      r = validarkeyup(
+        keyup_telefono,
+        this,
+        document.getElementById("stelefono"),
+        ""
+      );
+    };
+    /*--------------FIN VALIDACION PARA CEDULA--------------------*/
+  };
+
+  function validarkeyup(er, etiqueta, etiquetamensaje, mensaje) {
+    a = er.test(etiqueta.value);
+    if (!a) {
+      etiquetamensaje.innerText = mensaje;
+      etiquetamensaje.style.color = "red";
+      etiqueta.classList.add("is-invalid");
+      return 0;
+    } else {
+      etiquetamensaje.innerText = "";
+      etiqueta.classList.remove("is-invalid");
+      etiqueta.classList.add("is-valid");
+      return 1;
+    }
+  }
+  function validarkeypress(er, e) {
+    key = e.keyCode || e.which;
+    tecla = String.fromCharCode(key);
+    a = er.test(tecla);
+    if (!a) {
+      e.preventDefault();
+    }
+  }
+</script>

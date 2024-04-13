@@ -19,7 +19,7 @@
                     <div class="col-lg-3">
                       <label class="form-label" for="nombre">Periodo *</label>
                       <select class="form-select" name="periodo" id="periodos" onchange="muestraTrayectos();">
-                        <option>Seleccione</option>
+                        <option value="0" selected>Seleccione</option>
                         <?php foreach ($periodo as $p) : ?>
                           <option value="<?= $p->id ?>"><?= "$p->fecha_inicio / $p->fecha_cierre" ?></option>
                         <?php endforeach; ?>

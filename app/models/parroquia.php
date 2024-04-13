@@ -89,7 +89,7 @@ class parroquia extends model
    */
   public function find($id): array
   {
-    $query = $this->prepare("SELECT * FROM detalles_parroquia WHERE parroqua_id = :id");
+    $query = $this->prepare("SELECT * FROM detalles_parroquia WHERE parroquia_id = :id");
     $query->bindParam(":id", $id);
     $query->execute();
     $result = $query->fetch(\PDO::FETCH_ASSOC);

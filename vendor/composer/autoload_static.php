@@ -4,16 +4,15 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
+class ComposerStaticInitfcdc2b1141ab5f7c51524efc6b56b5b6
 {
     public static $files = array (
-        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
-        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
-        '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '6beb3b9beb06c05058ccf93d9932ff2a' => __DIR__ . '/../..' . '/config/config.php',
     );
@@ -33,7 +32,6 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         ),
         'S' => 
         array (
-            'Symfony\\Polyfill\\Php83\\' => 23,
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
@@ -58,6 +56,7 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         ),
         'M' => 
         array (
+            'MyCLabs\\Enum\\' => 13,
             'Monolog\\' => 8,
             'Model\\' => 6,
             'Matrix\\' => 7,
@@ -109,10 +108,6 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'Traits\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app/traits',
-        ),
-        'Symfony\\Polyfill\\Php83\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php83',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -186,6 +181,10 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'MyCLabs\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
         ),
         'Monolog\\' => 
         array (
@@ -293,21 +292,12 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'Controllers\\permisosController' => __DIR__ . '/../..' . '/app/controllers/permisosController.php',
         'Controllers\\profesorController' => __DIR__ . '/../..' . '/app/controllers/profesorController.php',
         'Controllers\\proyectoController' => __DIR__ . '/../..' . '/app/controllers/proyectoController.php',
+        'Controllers\\reportesnController' => __DIR__ . '/../..' . '/app/controllers/reportesnController.php',
         'Controllers\\respaldoController' => __DIR__ . '/../..' . '/app/controllers/respaldoController.php',
         'Controllers\\seccionController' => __DIR__ . '/../..' . '/app/controllers/seccionController.php',
         'Controllers\\sectorController' => __DIR__ . '/../..' . '/app/controllers/sectorController.php',
         'Controllers\\trayectosController' => __DIR__ . '/../..' . '/app/controllers/trayectosController.php',
-        'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
-        'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
-        'DateInvalidOperationException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',
-        'DateInvalidTimeZoneException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidTimeZoneException.php',
-        'DateMalformedIntervalStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedIntervalStringException.php',
-        'DateMalformedPeriodStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedPeriodStringException.php',
-        'DateMalformedStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedStringException.php',
-        'DateObjectError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateObjectError.php',
-        'DateRangeError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateRangeError.php',
         'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
-        'Override' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/Override.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\ActualValueIsNotAnObjectException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ActualValueIsNotAnObjectException.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',
@@ -698,7 +688,6 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'PharIo\\Manifest\\ManifestLoader' => __DIR__ . '/..' . '/phar-io/manifest/src/ManifestLoader.php',
         'PharIo\\Manifest\\ManifestLoaderException' => __DIR__ . '/..' . '/phar-io/manifest/src/exceptions/ManifestLoaderException.php',
         'PharIo\\Manifest\\ManifestSerializer' => __DIR__ . '/..' . '/phar-io/manifest/src/ManifestSerializer.php',
-        'PharIo\\Manifest\\NoEmailAddressException' => __DIR__ . '/..' . '/phar-io/manifest/src/exceptions/NoEmailAddressException.php',
         'PharIo\\Manifest\\PhpElement' => __DIR__ . '/..' . '/phar-io/manifest/src/xml/PhpElement.php',
         'PharIo\\Manifest\\PhpExtensionRequirement' => __DIR__ . '/..' . '/phar-io/manifest/src/values/PhpExtensionRequirement.php',
         'PharIo\\Manifest\\PhpVersionRequirement' => __DIR__ . '/..' . '/phar-io/manifest/src/values/PhpVersionRequirement.php',
@@ -730,7 +719,6 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
         'PharIo\\Version\\VersionConstraintValue' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintValue.php',
         'PharIo\\Version\\VersionNumber' => __DIR__ . '/..' . '/phar-io/version/src/VersionNumber.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
-        'SQLite3Exception' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',
         'SebastianBergmann\\CliParser\\Exception' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/Exception.php',
         'SebastianBergmann\\CliParser\\OptionDoesNotAllowArgumentException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/OptionDoesNotAllowArgumentException.php',
@@ -949,10 +937,10 @@ class ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6b9b7de890d1707efb1e5cfd547b40ec::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitfcdc2b1141ab5f7c51524efc6b56b5b6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitfcdc2b1141ab5f7c51524efc6b56b5b6::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitfcdc2b1141ab5f7c51524efc6b56b5b6::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitfcdc2b1141ab5f7c51524efc6b56b5b6::$classMap;
 
         }, null, ClassLoader::class);
     }
