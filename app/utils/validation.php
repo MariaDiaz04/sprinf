@@ -15,17 +15,18 @@ class Validation
      * @param   string $required
      * @return array
      */
-    public function validate($name, $value, $type, $size_min, $size_max, $required){
-        switch($type){
+    static function validate($name, $value, $type, $size_min, $size_max, $required)
+    {
+        switch ($type) {
             case 'int':
-                $standard = '/^[0-9]{'.$size_min.','.$size_max.'}$/';
+                $standard = '/^[0-9]{' . $size_min . ',' . $size_max . '}$/';
                 break;
             case 'string':
-                $standard = '/^[A-ZÁÉÍÓÚa-zñáéíóú0-9,.#%$^&*:\s]{'.$size_min.','.$size_max.'}$/';
+                $standard = '/^[A-ZÁÉÍÓÚa-zñáéíóú0-9,.#%$^&*:\s]{' . $size_min . ',' . $size_max . '}$/';
                 break;
         }
         //Para evaluar si la variable es requerida pero se encuentra vacia
-        if($required == 'required' && trim($value)==''){
+        if ($required == 'required' && trim($value) == '') {
             $error = ([
                 'campo' => $name,
                 'detalle' => 'Es requerido',
@@ -34,13 +35,12 @@ class Validation
         }
 
         //Evaluar en caso de que no cumpla con los standares de ser entero y con el minimo y maximo de caracteres
-        if(!preg_match_all($standard,$value)){
+        if (!preg_match_all($standard, $value)) {
             $error = ([
                 'campo' => $name,
-                'detalle' => 'Debe ser '.$type.' y la cantidad de caracteres entre '.$size_min.' y '.$size_max.'',
+                'detalle' => 'Debe ser ' . $type . ' y la cantidad de caracteres entre ' . $size_min . ' y ' . $size_max . '',
             ]);
             return $error;
         }
     }
-    
 }

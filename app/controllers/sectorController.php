@@ -22,7 +22,6 @@ final class sectorController extends controller
 
         $this->sector = new sector();
         $this->PARROQUIA = new PARROQUIA();
-        $this->VALIDATION = new VALIDATION();
     }
 
 
@@ -65,7 +64,7 @@ final class sectorController extends controller
             ];
 
             foreach ($campos as $campo) {
-                $validacion = $this->VALIDATION->validate(...$campo);
+                $validacion = Validation::validate(...$campo);
                 if ($validacion == true) {
                     http_response_code(400);
                     echo json_encode($validacion);
@@ -118,7 +117,7 @@ final class sectorController extends controller
             ];
 
             foreach ($campos as $campo) {
-                $validacion = $this->VALIDATION->validate(...$campo);
+                $validacion = Validation::validate(...$campo);
                 if ($validacion == true) {
                     http_response_code(400);
                     echo json_encode($validacion);
@@ -179,7 +178,7 @@ final class sectorController extends controller
             ];
 
             foreach ($campos as $campo) {
-                $validacion = $this->VALIDATION->validate(...$campo);
+                $validacion = Validation::validate(...$campo);
                 if ($validacion == true) {
                     http_response_code(400);
                     echo json_encode($validacion);
@@ -218,7 +217,7 @@ final class sectorController extends controller
             ];
 
             foreach ($campos as $campo) {
-                $validacion = $this->VALIDATION->validate(...$campo);
+                $validacion = Validation::validate(...$campo);
                 if ($validacion == true) {
                     http_response_code(400);
                     echo json_encode($validacion);
