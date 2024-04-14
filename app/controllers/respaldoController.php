@@ -6,7 +6,6 @@ use PDO;
 use Exception;
 use Traits\utility;
 use Model\usuario;
-use Controllers\Controller;
 
 class respaldoController extends Controller
 {
