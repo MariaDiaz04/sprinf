@@ -7,7 +7,7 @@ use Exception;
 use Traits\utility;
 use Model\usuario;
 
-class respaldoController extends Controller
+class respaldoController extends controller
 {
   use Utility;
   public function index()
