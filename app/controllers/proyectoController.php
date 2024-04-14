@@ -19,7 +19,7 @@ use Model\trayectos;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-use Traits\Excel;
+use Traits\excel;
 
 use Exception;
 use PDOException;

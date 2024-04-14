@@ -8,7 +8,7 @@ use Model\estudiante;
 use Model\inscripcion;
 use Controllers\controller;
 use Exception;
-use Traits\Excel;
+use Traits\excel;
 use Traits\utility;
 
 use Firebase\JWT\JWT;
