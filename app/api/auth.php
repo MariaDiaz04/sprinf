@@ -5,7 +5,7 @@ namespace API;
 use Model\usuario;
 use Model\proyecto;
 use Controllers\controller;
-use Traits\Utility;
+use Traits\utility;
 
 use Firebase\JWT\JWT;
 use PHPUnit\Util\Json;

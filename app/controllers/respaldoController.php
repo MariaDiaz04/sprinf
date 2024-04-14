@@ -4,7 +4,7 @@ namespace Controllers;
 
 use PDO;
 use Exception;
-use Traits\Utility;
+use Traits\utility;
 use Model\usuario;
 use Controllers\Controller;
 

@@ -7,7 +7,7 @@ use Model\proyecto;
 use Controllers\controller;
 use Exception;
 use Traits\Excel;
-use Traits\Utility;
+use Traits\utility;
 
 use Firebase\JWT\JWT;
 

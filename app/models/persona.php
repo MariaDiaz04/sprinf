@@ -4,7 +4,7 @@ namespace Model;
 
 use Model\model;
 
-use Traits\Utility;
+use Traits\utility;
 
 use Exception;
 
