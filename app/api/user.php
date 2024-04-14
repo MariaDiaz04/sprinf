@@ -4,7 +4,7 @@ namespace API;
 
 use Model\usuario;
 use Controllers\controller;
-use Traits\Utility;
+use Traits\utility;
 
 use Firebase\JWT\JWT;
 

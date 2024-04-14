@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Model\estudiante;
 use Model\usuario;
 use Model\persona;
-use Traits\Utility;
+use Traits\utility;
 use Exception;
 use Utils\DateValidator;
 use Utils\Sanitizer;
@@ -66,16 +66,16 @@ class estudianteController extends controller
         'email' => $email,
         'contrasena' => $contrasena
       ]);
-      
+
       $idUsuario = $this->usuario->save();
-      
+
       $cedula = $newestudiante->request->get('cedula');
       $usuario_id = $idUsuario;
       $nombre = $newestudiante->request->get('nombre');
       $apellido = $newestudiante->request->get('apellido');
       $direccion = $newestudiante->request->get('direccion');
       $telefono = $newestudiante->request->get('telefono');
-      
+
       $this->checkData($cedula, $email, 'guardar');
       // creacion de persona
 

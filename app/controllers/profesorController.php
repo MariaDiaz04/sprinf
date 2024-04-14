@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Model\profesor;
 use Model\usuario;
 use Model\persona;
-use Traits\Utility;
+use Traits\utility;
 
 
 use Exception;
