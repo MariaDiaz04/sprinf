@@ -6,8 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Model\periodo;
 use Exception;
-use Utils\DateValidator;
-use Utils\Sanitizer;
+use Utils\dateValidator;
+use Utils\sanitizer;
 
 class periodoController extends controller
 {

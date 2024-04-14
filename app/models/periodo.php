@@ -5,7 +5,7 @@ namespace Model;
 use Model\model;
 
 use Exception;
-use Utils\Sanitizer;
+use Utils\sanitizer;
 
 class periodo extends model
 {
@@ -137,63 +137,63 @@ class periodo extends model
     return ($result) ? $result : [];
   }
 
-    /**
-     * Retorna los datos del proyecto
-     *
-     * @param [type] $id
-     * @return array es vacio si no consigue el proyecto
-     */
-    public function aprobados($id): array
-    {
-        $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 1) AS aprobados FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
-        $query->bindParam(":id", $id);
-        $query->execute();
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
-        return ($result) ? $result : [];
-    }
+  /**
+   * Retorna los datos del proyecto
+   *
+   * @param [type] $id
+   * @return array es vacio si no consigue el proyecto
+   */
+  public function aprobados($id): array
+  {
+    $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 1) AS aprobados FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
+    $query->bindParam(":id", $id);
+    $query->execute();
+    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
+  }
 
-    /**
-     * Retorna los datos del proyecto
-     *
-     * @param [type] $id
-     * @return array es vacio si no consigue el proyecto
-     */
-    public function reprobados($id): array
-    {
-        $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 0) AS reprobados FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
-        $query->bindParam(":id", $id);
-        $query->execute();
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
-        return ($result) ? $result : [];
-    }
+  /**
+   * Retorna los datos del proyecto
+   *
+   * @param [type] $id
+   * @return array es vacio si no consigue el proyecto
+   */
+  public function reprobados($id): array
+  {
+    $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 0) AS reprobados FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
+    $query->bindParam(":id", $id);
+    $query->execute();
+    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
+  }
 
-    /**
-     * Retorna los datos del proyecto
-     *
-     * @param [type] $id
-     * @return array es vacio si no consigue el proyecto
-     */
-    public function total($id): array
-    {
-        $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto) AS total FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
-        $query->bindParam(":id", $id);
-        $query->execute();
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
-        return ($result) ? $result : [];
-    }
+  /**
+   * Retorna los datos del proyecto
+   *
+   * @param [type] $id
+   * @return array es vacio si no consigue el proyecto
+   */
+  public function total($id): array
+  {
+    $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto) AS total FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
+    $query->bindParam(":id", $id);
+    $query->execute();
+    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
+  }
 
-    /**
-     * Retorna los datos del proyecto
-     *
-     * @param [type] $id
-     * @return array es vacio si no consigue el proyecto
-     */
-    public function findbyproyecto($id)
-    {
-      $query = $this->prepare("SELECT * FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo  INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
-      $query->bindParam(":id", $id);
-      $query->execute();
-      $result = $query->fetch(\PDO::FETCH_ASSOC);
-      return ($result) ? $result : [];
-    }
+  /**
+   * Retorna los datos del proyecto
+   *
+   * @param [type] $id
+   * @return array es vacio si no consigue el proyecto
+   */
+  public function findbyproyecto($id)
+  {
+    $query = $this->prepare("SELECT * FROM detalles_proyecto dp INNER JOIN trayecto t ON dp.codigo_trayecto = t.codigo  INNER JOIN periodo p ON p.id = t.periodo_id WHERE p.id = :id;");
+    $query->bindParam(":id", $id);
+    $query->execute();
+    $result = $query->fetch(\PDO::FETCH_ASSOC);
+    return ($result) ? $result : [];
+  }
 }

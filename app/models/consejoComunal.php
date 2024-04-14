@@ -5,7 +5,7 @@ namespace Model;
 use Model\model;
 
 use Exception;
-use Utils\Sanitizer;
+use Utils\sanitizer;
 
 class consejoComunal extends model
 {

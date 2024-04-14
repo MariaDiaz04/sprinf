@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Bcrypt\Bcrypt;
-use Utils\Sanitizer;
+use Utils\sanitizer;
 
 use Exception;
 
@@ -243,60 +243,58 @@ class seccion extends model
 
 
 
-        /**
-         * Retorna los datos del proyecto
-         *
-         * @param [type] $id
-         * @return array es vacio si no consigue el proyecto
-         */
-        public function aprobados($id): array
-        {
-            $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 1) AS aprobados FROM detalles_proyecto dp  WHERE dp.seccion LIKE :id;");
-            $query->bindParam(":id", $id);
-            $query->execute();
-            $result = $query->fetch(\PDO::FETCH_ASSOC);
-            return ($result) ? $result : [];
-        }
+    /**
+     * Retorna los datos del proyecto
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function aprobados($id): array
+    {
+        $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 1) AS aprobados FROM detalles_proyecto dp  WHERE dp.seccion LIKE :id;");
+        $query->bindParam(":id", $id);
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
 
-        /**
-         * Retorna los datos del proyecto
-         *
-         * @param [type] $id
-         * @return array es vacio si no consigue el proyecto
-         */
-        public function reprobados($id): array
-        {
-            $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 0) AS reprobados FROM detalles_proyecto dp WHERE dp.seccion LIKE :id;");
-            $query->bindParam(":id", $id);
-            $query->execute();
-            $result = $query->fetch(\PDO::FETCH_ASSOC);
-            return ($result) ? $result : [];
-        }
+    /**
+     * Retorna los datos del proyecto
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function reprobados($id): array
+    {
+        $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto WHERE estatus = 0) AS reprobados FROM detalles_proyecto dp WHERE dp.seccion LIKE :id;");
+        $query->bindParam(":id", $id);
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
 
-        /**
-         * Retorna los datos del proyecto
-         *
-         * @param [type] $id
-         * @return array es vacio si no consigue el proyecto
-         */
-        public function total($id): array
-        {
-            $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto) AS total FROM detalles_proyecto dp  WHERE dp.seccion LIKE :id;");
-            $query->bindParam(":id", $id);
-            $query->execute();
-            $result = $query->fetch(\PDO::FETCH_ASSOC);
-            return ($result) ? $result : [];
-        }
-
-
-        public function findbyseccion(string $id)
-        {
-          $query = $this->prepare("SELECT * FROM detalles_proyecto dp WHERE dp.seccion LIKE :id");
-          $query->bindParam(":id", $id);
-          $query->execute();
-          $result = $query->fetch(\PDO::FETCH_ASSOC);
-          return ($result) ? $result : [];
-        }
+    /**
+     * Retorna los datos del proyecto
+     *
+     * @param [type] $id
+     * @return array es vacio si no consigue el proyecto
+     */
+    public function total($id): array
+    {
+        $query = $this->prepare("SELECT (SELECT COUNT(*) FROM detalles_proyecto) AS total FROM detalles_proyecto dp  WHERE dp.seccion LIKE :id;");
+        $query->bindParam(":id", $id);
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
 
 
+    public function findbyseccion(string $id)
+    {
+        $query = $this->prepare("SELECT * FROM detalles_proyecto dp WHERE dp.seccion LIKE :id");
+        $query->bindParam(":id", $id);
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return ($result) ? $result : [];
+    }
 }

@@ -3,7 +3,7 @@
 namespace Model;
 
 use Model\model;
-use Utils\Sanitizer;
+use Utils\sanitizer;
 
 use Exception;
 use PDOException;

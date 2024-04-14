@@ -8,7 +8,7 @@ use Model\integrantes;
 use Model\estudiante;
 use Model\proyecto;
 use Exception;
-use Utils\Sanitizer;
+use Utils\sanitizer;
 
 class integrantesController extends controller
 {

@@ -10,8 +10,8 @@ use Model\malla;
 use Model\fase;
 use Model\trayectos;
 use Exception;
-use Utils\DateValidator;
-use Utils\Sanitizer;
+use Utils\dateValidator;
+use Utils\sanitizer;
 
 class indicadoresController extends controller
 {

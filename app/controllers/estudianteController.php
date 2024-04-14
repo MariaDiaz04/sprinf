@@ -9,8 +9,8 @@ use Model\usuario;
 use Model\persona;
 use Traits\utility;
 use Exception;
-use Utils\DateValidator;
-use Utils\Sanitizer;
+use Utils\dateValidator;
+use Utils\sanitizer;
 use Dompdf\Dompdf;
 use Model\inscripcion;
 

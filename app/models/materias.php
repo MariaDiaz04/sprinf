@@ -4,7 +4,7 @@ namespace Model;
 
 use Model\model;
 use Model\malla;
-use Utils\Sanitizer;
+use Utils\sanitizer;
 
 use Exception;
 

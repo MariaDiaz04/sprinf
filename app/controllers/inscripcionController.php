@@ -12,8 +12,8 @@ use Model\profesor;
 use Model\estudiante;
 use Model\seccion;
 use Exception;
-use Utils\DateValidator;
-use Utils\Sanitizer;
+use Utils\dateValidator;
+use Utils\sanitizer;
 
 class inscripcionController extends controller
 {

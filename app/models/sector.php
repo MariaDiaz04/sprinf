@@ -3,7 +3,7 @@
 namespace Model;
 
 use Model\model;
-use Utils\Sanitizer;
+use Utils\sanitizer;
 use Exception;
 
 class sector extends model
@@ -26,12 +26,12 @@ class sector extends model
     try {
       $sector = $this->querys("SELECT sector_consejo_comunal.*, parroquias.nombre as parroquias FROM sector_consejo_comunal INNER JOIN parroquias ON parroquias.id = sector_consejo_comunal.parroquia_id");
       return $sector ? $sector : null;
-  } catch (Exception $th) {
+    } catch (Exception $th) {
       return $th;
-  }
+    }
   }
 
-  
+
   /**
    * Retorna los datos del indiacodr
    *
@@ -57,7 +57,7 @@ class sector extends model
    */
   public function save()
   {
-   
+
     $query = $this->prepare("INSERT INTO sector_consejo_comunal(parroquia_id, nombre) VALUES (:parroquia_id, :nombre)");
     $query->bindParam(":parroquia_id", $this->parroquia_id);
     $query->bindParam(":nombre", $this->nombre);
@@ -89,20 +89,20 @@ class sector extends model
   }
 
   function insertTransaction(): String
-    {
-        try {
+  {
+    try {
 
-            parent::beginTransaction();
-            // almacenar 
-            $id = $this->save();
+      parent::beginTransaction();
+      // almacenar 
+      $id = $this->save();
 
-            parent::commit();
-            return $id;
-        } catch (Exception $e) {
-            parent::rollBack();
-            return null;
-        }
+      parent::commit();
+      return $id;
+    } catch (Exception $e) {
+      parent::rollBack();
+      return null;
     }
+  }
 
 
   /**
@@ -126,46 +126,46 @@ class sector extends model
   }
 
   public function Selectcod()
-    {
+  {
 
-        $codigo = $this->query(
-            'SELECT
+    $codigo = $this->query(
+      'SELECT
                 parroquias.id AS id,
                 parroquias.nombre AS nombre
             FROM
                 
                 `parroquias`;'
-        );
-        return $codigo;
+    );
+    return $codigo;
+  }
+
+  function deleteTransaction(string $id): bool
+  {
+    try {
+      parent::beginTransaction();
+      // actualizar tabla materia
+      $delete = $this->delete('sector_consejo_comunal', [['id', '=',  $id]]);
+      parent::commit();
+      return true;
+    } catch (Exception $e) {
+      parent::rollBack();
+      return false;
     }
+  }
 
-    function deleteTransaction(string $id): bool
-    {
-        try {
-            parent::beginTransaction();
-            // actualizar tabla materia
-            $delete = $this->delete('sector_consejo_comunal', [['id', '=',  $id ]]);
-            parent::commit();
-            return true;
-        } catch (Exception $e) {
-            parent::rollBack();
-            return false;
-        }
+
+  public function eliminar()
+  {
+
+    try {
+
+      $this->delete('sector', [['id', '=',  $this->fillable['id']]]);
+
+      return $this;
+    } catch (Exception $th) {
+      return $th;
     }
-
-
-    public function eliminar()
-    {
-
-        try {
-
-            $this->delete('sector', [['id', '=',  $this->fillable['id']]]);
-
-            return $this;
-        } catch (Exception $th) {
-            return $th;
-        }
-    }
+  }
 
 
   /**

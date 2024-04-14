@@ -6,8 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Exception;
 use Model\historico;
-use Utils\DateValidator;
-use Utils\Sanitizer;
+use Utils\dateValidator;
+use Utils\sanitizer;
 
 class historicoController extends controller
 {
