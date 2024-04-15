@@ -5,7 +5,6 @@ namespace Controllers;
 use Symfony\Component\HttpFoundation\Request;
 
 use Exception;
-use Model\conexion;
 use Model\sector;
 use Model\parroquia;
 use Utils\Validation;
@@ -15,6 +14,7 @@ final class sectorController extends controller
    protected static int $idIndicadorPrueba;
     private $sector;
     public $PARROQUIA;
+    public $VALIDATION;
 
     function __construct()
     {
