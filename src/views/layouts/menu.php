@@ -144,28 +144,7 @@
             <div data-i18n="Analytics">Historico</div>
           </a>
         </li>
-        <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Reportes</span>
-        </li>
-
-        <li class="menu-item <?= in_array($this->currentPath(), ['bitacora', 'permisos', 'modulos']) ? 'open' : '' ?>">
-          <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bxs-report"></i>
-            <div data-i18n="Authentications">Reportes</div>
-          </a>
-          <ul class="menu-sub">
-            <li class="menu-item <?= $this->currentPath() == 'bitacora' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('bitacora') ?>" class="menu-link">
-                <div data-i18n="Basic">Notas Proyecto</div>
-              </a>
-            </li>
-            <li class="menu-item <?= $this->currentPath() == 'permisos' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('permisos') ?>" class="menu-link">
-                <div data-i18n="Basic">Notas Unidad Curricular</div>
-              </a>
-            </li>
-          </ul>
-        </li>
+        
 
         <li class="menu-header small text-uppercase">
           <span class="menu-header-text">Reportes</span>
@@ -204,43 +183,6 @@
 
 
 
-
-
-
-
-        <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Reportes</span>
-        </li>
-        <li class="menu-item <?= in_array('reportes', $this->fullPath()) ? 'open' : '' ?>">
-          <a href="javascript:void(0)" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons bx bx-poll"></i>
-            <div data-i18n="Analytics">Reportes</div>
-          </a>
-          <ul class="menu-sub">
-            <li class="menu-item <?= $this->currentLastPath() == 'reportesn' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('reportesn') ?>" class="menu-link">
-                <div data-i18n="Basic">Proyectos aprobados con filtro</div>
-              </a>
-            </li>
-            <li class="menu-item <?= $this->currentLastPath() == 'reporte_aprobado' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('reporte-aprobado') ?>" class="menu-link">
-                <div data-i18n="Basic">Proyectos aprobados general</div>
-              </a>
-            </li>
-            <li class="menu-item <?= $this->currentLastPath() == 'reporte_municipio' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('reporte-municipio') ?>" class="menu-link">
-                <div data-i18n="Basic">Proyectos por municipios</div>
-              </a>
-            </li>
-            <!--<li class="menu-item <?= $this->currentLastPath() == 'notasu' ? 'active' : '' ?>">
-              <a href="<?= APP_URL . $this->Route('notasu') ?>" class="menu-link">
-                <div data-i18n="Basic">Notas Unidad Curricular</div>
-              </a>
-            </li-->
-
-
-          </ul>
-        </li>
 
 
 
