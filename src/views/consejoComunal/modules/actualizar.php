@@ -44,10 +44,11 @@
                   </div>
 
                   <div class="col-lg-6">
-                    <label class="form-label" for="telefono">Teléfono</label>
-                    <input type="number" required class="form-control mb-1" placeholder="..." name="telefono" id="telefono">
-                    <div id="telefonoCheck" class="invalid-feedback">
-                      Por favor proporcione un número de telefono válido
+                    <label class="form-label" for="phone">Teléfono</label>
+                    <input type="text" inputmode="numeric" required class="form-control mb-1" placeholder="..." name="phone" id="phone" required maxlength="11">
+                    <span id="sphone"></span>
+                    <div id="phoneCheck" class="invalid-feedback">
+                      Por favor proporcione un número de phone válido
                     </div>
                   </div>
                 </div>
@@ -69,3 +70,48 @@
     </div>
   </div>
 </div>
+<script>
+  
+  var keyup_phone = /^[0-9]{11}$/;
+  document.onload = carga();
+  function carga() {
+    /*--------------VALIDACION PARA CEDULA--------------------*/
+    document.getElementById("phone").maxLength = 11;
+    document.getElementById("phone").onkeypress = function (e) {
+      er = /^[0-9]*$/;
+      validarkeypress(er, e);
+    };
+    document.getElementById("phone").onkeyup = function () {
+      r = validarkeyup(
+        keyup_phone,
+        this,
+        document.getElementById("sphone"),
+        ""
+      );
+    };
+    /*--------------FIN VALIDACION PARA CEDULA--------------------*/
+  };
+
+  function validarkeyup(er, etiqueta, etiquetamensaje, mensaje) {
+    a = er.test(etiqueta.value);
+    if (!a) {
+      etiquetamensaje.innerText = mensaje;
+      etiquetamensaje.style.color = "red";
+      etiqueta.classList.add("is-invalid");
+      return 0;
+    } else {
+      etiquetamensaje.innerText = "";
+      etiqueta.classList.remove("is-invalid");
+      etiqueta.classList.add("is-valid");
+      return 1;
+    }
+  }
+  function validarkeypress(er, e) {
+    key = e.keyCode || e.which;
+    tecla = String.fromCharCode(key);
+    a = er.test(tecla);
+    if (!a) {
+      e.preventDefault();
+    }
+  }
+</script>

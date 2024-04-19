@@ -8,6 +8,7 @@ use Exception;
 use Model\conexion;
 use Model\sector;
 use Model\parroquia;
+use Utils\Validation;
 
 final class sectorController extends controller
 {
@@ -20,6 +21,7 @@ final class sectorController extends controller
  
         $this->sector = new sector();
         $this->PARROQUIA = new PARROQUIA();
+        $this->VALIDATION = new VALIDATION();
        
     }
 
@@ -48,77 +50,162 @@ final class sectorController extends controller
         return $this->view('sector/gestionar', ['sector' => $sector]);
     }
 
-    public function store(Request $request): void
+    public function store(Request $request)
     {
         try {
         
             // Obtener datos del formulario utilizando el objeto Request
             $parroquia_id = $request->get('parroquia_id');
             $nombre = $request->get('nombre');
-            
-            
-            // Crear una nueva instancia del modelo y establecer los datos
-            $sector = new sector();
-            $sector->setData([
-                'parroquia_id' => $parroquia_id,
-                'nombre' => $nombre,
-            ]);
-    
-            // Ejecutar transacción de insert
-            $resultado = $sector->save();
 
+            //Se recibe: el nombre del campo, el valor del mismo, el tipo de variable, la cantidad minima, maxima, y si es requerido
+            $campos = [
+                ['parroquia_id', $parroquia_id, 'int', 1, 4, ''],
+                ['nombre', $nombre, 'string', 5, 50, 'required']
+            ];
     
-            http_response_code(200);
-            echo json_encode($resultado);
+            foreach ($campos as $campo) {
+                $validacion = $this->VALIDATION->validate(...$campo);
+                if ($validacion == true) {
+                    http_response_code(400);
+                    echo json_encode($validacion);
+                    return 0;
+                }
+            }
+            
+            $parroquia = $this->PARROQUIA->find($parroquia_id);
+            if($parroquia == null){
+                //Se establecen los valores a mostrar en caso de no encontrar la parroquia
+                $error = ([
+                    'error' => '404',
+                    'detalle' => 'No existe la parroquia indicada',
+                ]);
+                //Error de 404 cuando no encuentra un dato
+                http_response_code(404);
+                echo json_encode($error);
+            }
+            else{
+                // Crear una nueva instancia del modelo y establecer los datos
+                $sector = new sector();
+                $sector->setData([
+                    'parroquia_id' => $parroquia_id,
+                    'nombre' => $nombre,
+                ]);
+        
+                // Ejecutar transacción de insert
+                $resultado = $sector->save();
+                http_response_code(200);
+                echo json_encode($resultado);
+            }
+            
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());
         }
     }
 
-  function update($request): void
+  function update($request)
   {
     try {
-      $data = [];
-      $id = $request->get('id');
-      $parroquia_id = $request->get('parroquia_id');
-      $nombre = $request->get('nombre');
+        $data = [];
+        $id = $request->get('id');
+        $parroquia_id = $request->get('parroquia_id');
+        $nombre = $request->get('nombre');
       
+        //Se recibe: el nombre del campo, el valor del mismo, el tipo de variable, la cantidad minima, maxima, y si es requerido
+        $campos = [
+            ['id', $id, 'int', 1, 4, 'required'],
+            ['parroquia_id', $parroquia_id, 'int', 1, 4, 'required'],
+            ['nombre', $nombre, 'string', 5, 50, 'required']
+        ];
 
-      $sector = $this->sector->find($id);
-      
-      $this->sector->setData([
-        'id' => $id,
-        'parroquia_id' => $parroquia_id,
-        'nombre' => $nombre,
-        
-      ]);
-  
-      $resultado = $this->sector->actualizar();
+        foreach ($campos as $campo) {
+            $validacion = $this->VALIDATION->validate(...$campo);
+            if ($validacion == true) {
+                http_response_code(400);
+                echo json_encode($validacion);
+                return 0;
+            }
+        }
 
-      if (!$resultado) throw new Exception('Error al actualizar Consejo Comunal');
 
-      http_response_code(200);
-      echo json_encode(true);
-  } catch (Exception $e) {
+        $parroquia = $this->PARROQUIA->find($parroquia_id);
+        if($parroquia == null){
+            //Se establecen los valores a mostrar en caso de no encontrar la parroquia
+            $error = ([
+                'error' => '404',
+                'detalle' => 'No existe la parroquia indicada',
+            ]);
+            //Error de 404 cuando no encuentra un dato
+            http_response_code(404);
+            echo json_encode($error);
+        }
+        else{
+            $sector = $this->sector->find($id);
+            if($sector == null){
+                //Se establecen los valores a mostrar en caso de no encontrar el sector
+                $error = ([
+                    'error' => '404',
+                    'detalle' => 'No existe el id del sector indicado',
+                ]);
+                //Error de 404 cuando no encuentra un dato
+                http_response_code(404);
+                echo json_encode($error);
+            }
+            else{
+                $this->sector->setData([
+                    'id' => $id,
+                    'parroquia_id' => $parroquia_id,
+                    'nombre' => $nombre,
+                ]);
+                $resultado = $this->sector->actualizar();
+                if (!$resultado) throw new Exception('Error al actualizar Consejo Comunal');
+                http_response_code(200);
+                echo json_encode(true);
+            }
+        }  
+    } catch (Exception $e) {
       http_response_code(500);
       echo json_encode($e->getMessage());
-  }
+    }
 }
 
-  function edit($request): void
+  function edit($request)
     {
         try {
             $data = [];
             $id = $request->get('id');
 
-
             $sector = $this->sector->find($id);
+            //Se recibe: el nombre del campo, el valor del mismo, el tipo de variable, la cantidad minima, maxima, y si es requerido
+            $campos = [
+                ['id', $id, 'int', 1, 4, 'required']
+            ];
+                
+            foreach ($campos as $campo) {
+                $validacion = $this->VALIDATION->validate(...$campo);
+                if ($validacion == true) {
+                    http_response_code(400);
+                    echo json_encode($validacion);
+                    return 0;
+                }
+            }
 
-            $data['sector'] = $sector;
-
-            http_response_code(200);
-            echo json_encode($data);
+            if($sector == null){
+                //Se establecen los valores a mostrar en caso de no encontrar el sector
+                $error = ([
+                    'error' => '404',
+                    'detalle' => 'No existe el id del sector indicado',
+                ]);
+                //Error de 404 cuando no encuentra un dato
+                http_response_code(404);
+                echo json_encode($error);
+            }
+            else{
+                $data['sector'] = $sector;
+                http_response_code(200);
+                echo json_encode($data);
+            }
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());
@@ -130,14 +217,39 @@ final class sectorController extends controller
 
         try {
             $id = $request->get('id');
+            //Se recibe: el nombre del campo, el valor del mismo, el tipo de variable, la cantidad minima, maxima, y si es requerido
+            $campos = [
+                ['id', $id, 'int', 1, 4, 'required']
+            ];
+                
+            foreach ($campos as $campo) {
+                $validacion = $this->VALIDATION->validate(...$campo);
+                if ($validacion == true) {
+                    http_response_code(400);
+                    echo json_encode($validacion);
+                    return 0;
+                }
+            }
 
-            
-            // realizar eliminacion
-            $result = $this->sector->deleteTransaction($id);
-            
-            if (!$result) throw new Exception('Error inesperado al borrar el sector.');
-            http_response_code(200);
-            echo json_encode($id);
+            $sector = $this->sector->find($id);
+            if($sector == null){
+                //Se establecen los valores a mostrar en caso de no encontrar el sector
+                $error = ([
+                    'error' => '404',
+                    'detalle' => 'No existe el id del sector indicado',
+                ]);
+                //Error de 404 cuando no encuentra un dato
+                http_response_code(404);
+                echo json_encode($error);
+            }
+            else{
+                // realizar eliminacion
+                $result = $this->sector->deleteTransaction($id);
+                            
+                if (!$result) throw new Exception('Error inesperado al borrar el sector.');
+                http_response_code(200);
+                echo json_encode($id);
+            } 
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode($e->getMessage());

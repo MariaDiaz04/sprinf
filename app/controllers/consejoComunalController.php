@@ -74,8 +74,6 @@ class consejoComunalController extends controller
           $telefono = $request->get('telefono');
           $sector_id = $request->get('sector_id');
           
-          
-          
           // Crear una nueva instancia del modelo y establecer los datos
           $consejoComunal = new consejoComunal();
           $consejoComunal->setData([

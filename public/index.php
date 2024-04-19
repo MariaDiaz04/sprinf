@@ -77,6 +77,7 @@ require __DIR__ . '/../config/routes/consejoComunal.php';  ## ConsejoComunal
 require __DIR__ . '/../config/routes/sector.php';            ## sector
 
 
+
 // seguridad
 require __DIR__ . '/../config/routes/bitacora.php';         ## bitacora
 require __DIR__ . '/../config/routes/permisos.php';         ## permisos
@@ -87,6 +88,11 @@ require __DIR__ . '/../config/routes/configuracion.php';    ## modulo
 require __DIR__ . '/../config/routes/periodo.php';          ## periodo
 require __DIR__ . '/../config/routes/trayecto.php';         ## trayecto
 require __DIR__ . '/../config/routes/usuario.php';          ## usuario
+
+// report
+require __DIR__ . '/../config/routes/reportesn.php';    ## reportes
+require __DIR__ . '/../config/routes/reporteMunicipio.php';    ## reportes
+require __DIR__ . '/../config/routes/reporteAprobado.php';    ## reportes
 
 
 
