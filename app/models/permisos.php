@@ -12,6 +12,7 @@ class permisos extends model
         'actualizar',
         'crear',
         'eliminar',
+        'evaluar',
         'rol_id',
         'modulo_id',
     ];
@@ -21,7 +22,7 @@ class permisos extends model
     public function all()
     {
         try {
-            $permisos = $this->querys('SELECT permisos.id, permisos.consultar, permisos.actualizar, permisos.crear, permisos.eliminar, permisos.rol_id, permisos.modulo_id, roles.nombre, modulo.nombre AS nombmodulo FROM permisos INNER JOIN roles ON permisos.rol_id = roles.id INNER JOIN modulo ON permisos.modulo_id = modulo.id ');
+            $permisos = $this->querys('SELECT permisos.id, permisos.consultar, permisos.actualizar, permisos.crear, permisos.eliminar, permisos.evaluar, permisos.rol_id, permisos.modulo_id, roles.nombre, modulo.nombre AS nombmodulo FROM permisos INNER JOIN roles ON permisos.rol_id = roles.id INNER JOIN modulo ON permisos.modulo_id = modulo.id ');
             return $permisos ? $permisos : null;
         } catch (\PDOException $th) {
             return $th;
@@ -48,6 +49,7 @@ class permisos extends model
                 'actualizar' => '"' . $this->fillable['actualizar'] . '"',
                 'crear' => '"' . $this->fillable['crear'] . '"',
                 'eliminar' => '"' . $this->fillable['eliminar'] . '"',
+                'evaluar' => '"' . $this->fillable['evaluar'] . '"',
                 'rol_id' => '"' . $this->fillable['rol_id'] . '"',
                 'modulo_id' => '"' . $this->fillable['modulo_id'] . '"',
             ]);
@@ -112,4 +114,15 @@ class permisos extends model
             return $th;
         }
     }
+
+      // ======================== CONSULT=========================
+      public function findPermisionbyRol($rol_id)
+      {
+          try {
+              $permisos_rol = $this->querys('SELECT permisos.id, permisos.consultar, permisos.actualizar, permisos.crear, permisos.eliminar, permisos.evaluar, modulo.nombre FROM permisos INNER JOIN modulo ON permisos.modulo_id = modulo.id AND  permisos.rol_id = ' . $rol_id .'');
+              return $permisos_rol ? $permisos_rol : null;
+          } catch (\PDOException $th) {
+              return $th;
+          }
+      }
 }//===================================/ CLASS==============================================   

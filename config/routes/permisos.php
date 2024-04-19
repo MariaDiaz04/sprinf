@@ -11,9 +11,9 @@ $listaDeRutas['/permisos'] = new Route(
     'method' => 'index',
   ]
 );
-$listaDeRutas['/permisos/crear'] = new Route(
+$listaDeRutas['/permisos/crear/{id}'] = new Route(
 
-  '/permisos/crear',
+  '/permisos/crear/{id}',
   [
     'controller' => permisosController::class,
     'method' => 'create',
@@ -35,9 +35,9 @@ $listaDeRutas['/permisos/eliminar'] = new Route(
     'method' => 'delete',
   ]
 );
-$listaDeRutas['/permisos/editar/{id}'] = new Route(
+$listaDeRutas['/permisos/editar/{id}/rol/{rol}'] = new Route(
 
-  '/permisos/editar/{id}',
+  '/permisos/editar/{id}/rol/{rol}',
   [
     'controller' => permisosController::class,
     'method' => 'edit',
@@ -49,5 +49,13 @@ $listaDeRutas['/permisos/actualizar/{id}'] = new Route(
   [
     'controller' => permisosController::class,
     'method' => 'update',
+  ]
+);
+$listaDeRutas['/permisos/consultar/{id}'] = new Route(
+
+  '/permisos/consultar/{id}',
+  [
+    'controller' => permisosController::class,
+    'method' => 'consultar',
   ]
 );
