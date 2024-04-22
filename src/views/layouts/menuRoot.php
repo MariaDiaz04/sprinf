@@ -14,7 +14,12 @@
             <div data-i18n="Analytics">Estudiantes</div>
           </a>
         </li>
-
+        <li class="menu-item <?= $this->currentPath() == 'control_academico' ? 'active' : '' ?>">
+          <a href="<?= APP_URL .  $this->Route('control_academico') ?>" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-face"></i>
+            <div data-i18n="Analytics">Control academico</div>
+          </a>
+        </li>
 
         <li class="menu-header small text-uppercase">
           <span class="menu-header-text">Organización Docente</span>

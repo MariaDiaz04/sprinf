@@ -60,6 +60,7 @@ require __DIR__ . '/../config/routes/home.php';             ## HOME
 require __DIR__ . '/../config/routes/usuario.php';          ## usuario
 require __DIR__ . '/../config/routes/profesor.php';         ## PROFESOR
 require __DIR__ . '/../config/routes/estudiantes.php';      ## ESTUDIANTES
+require __DIR__ . '/../config/routes/controlAcademico.php';      ## ControlAcademico
 
 // Organizacion Docente
 require __DIR__ . '/../config/routes/seccion.php';          ## seccion

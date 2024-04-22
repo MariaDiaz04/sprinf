@@ -332,6 +332,13 @@ class controller
      * @var int
      */
     public  $modulo_respaldo = 21;
+    /**
+     * Modulo respaldo
+     * 
+     *
+     * @var int
+     */
+    public  $modulo_controlAcademico = 29;
 
 
 

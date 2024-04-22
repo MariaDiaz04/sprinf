@@ -1279,6 +1279,13 @@ FROM persona
 INNER JOIN profesor ON profesor.persona_id = persona.cedula
 LEFT JOIN usuario ON usuario.id = persona.usuario_id;
 
+DROP VIEW IF EXISTS detalles_control_academico;
+CREATE VIEW detalles_control_academico AS
+SELECT persona.*, usuario.email
+FROM persona
+INNER JOIN usuario ON usuario.id = persona.usuario_id
+WHERE usuario.rol_id = 6;
+
 DROP VIEW IF EXISTS detalles_trayecto;
 CREATE VIEW detalles_trayecto AS
 SELECT trayecto.*, periodo.fecha_inicio, periodo.fecha_cierre,
