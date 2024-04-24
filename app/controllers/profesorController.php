@@ -81,10 +81,6 @@ class profesorController extends controller
 
       $idUsuario = $this->usuario->save();
       $usuario_id = $idUsuario;
-      // // // encriptar datos de contacto
-      $telefono = $this->encriptar($telefono);
-      $direccion = $this->encriptar($direccion);
-
 
       $this->persona->setPersona([
         'cedula' => $cedula,
@@ -124,8 +120,8 @@ class profesorController extends controller
       $codigoProfesor = $profesor->request->get('codigo');
 
       $profesor = $this->profesor->find($codigoProfesor);
-      $telefono = $this->desencriptar($profesor['telefono']);
-      $direccion = $this->desencriptar($profesor['direccion']);
+       $telefono = $profesor['telefono'];
+      $direccion = $profesor['direccion']; 
       $this->ACCIONES->lastSave($this->modulo_docentes,$this->accion_consultar);
 
       http_response_code(200);
@@ -158,11 +154,7 @@ class profesorController extends controller
       $data = [];
       $codigo = $request->get('codigo');
       $profesor = $this->profesor->find($codigo);
-      $telefono = $this->desencriptar($profesor['telefono']);
-      $direccion = $this->desencriptar($profesor['direccion']);
       $data['profesor'] = $profesor;
-      $data['profesor']['telefono'] = $telefono;
-      $data['profesor']['direccion'] = $direccion;
       http_response_code(200);
       echo json_encode($data);
     } catch (Exception $e) {

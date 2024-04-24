@@ -52,8 +52,6 @@ class estudianteController extends controller
   public function store(Request $newestudiante)
   {
     try {
-      // DateValidator::checkPeriodDates($newestudiante->get('fecha_inicio'), $newestudiante->get('fecha_cierre'));
-
       // creación de usuario
       $email = $newestudiante->request->get('email');
       $contrasena = $newestudiante->request->get('cedula');
@@ -78,8 +76,6 @@ class estudianteController extends controller
       
       $this->checkData($cedula, $email, 'guardar');
       // creacion de persona
-
-
 
       $this->persona->setPersona([
         'cedula' => $cedula,

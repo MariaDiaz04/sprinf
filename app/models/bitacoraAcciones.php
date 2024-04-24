@@ -36,7 +36,7 @@ class bitacoraAcciones extends model
     public function bitacoraAcciones_all()
     {
         try {
-            $bitacoraall = $this->querys('SELECT * FROM `bitacora_acciones` ORDER BY bitacora_acciones.id DESC');
+            $bitacoraall = $this->querys('SELECT bitacora_acciones.id, bitacora_acciones.fecha, bitacora_acciones.navegador, bitacora_acciones.accion,persona.nombre, persona.apellido, persona.cedula, modulo.nombre AS nombmodulo FROM bitacora_acciones INNER JOIN persona ON bitacora_acciones.usuario_id = persona.usuario_id INNER JOIN modulo ON bitacora_acciones.modulo_id = modulo.id ORDER BY bitacora_acciones.id DESC');
             return $bitacoraall;
         } catch (\PDOException $th) {
             return $th;

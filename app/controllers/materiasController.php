@@ -43,6 +43,7 @@ class materiasController extends controller
         $materias = $this->MATERIAS->all();
         $trayectos = $this->TRAYECTO->all();
         $trayecto = $this->TRAYECTO->find($idTrayecto);
+        $trayectoByFase = $this->TRAYECTO->findByTrayecto($idTrayecto);
 
         return $this->view('materias/gestionar', [
             'trayecto' => $trayecto,
@@ -50,6 +51,7 @@ class materiasController extends controller
             'materias' => $materias,
             'trayectos' => $trayectos,
             'permisos' => $newpermisos,
+            'trayectoByFase' => $trayectoByFase,
         ]);
     }
 

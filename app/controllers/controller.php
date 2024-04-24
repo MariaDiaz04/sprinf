@@ -372,4 +372,13 @@ class controller
      * @var int
      */
     public  $accion_eliminar = 4;
+    
+    /**
+     * Accion Evaluar
+     * 
+     *
+     * @var int
+     */
+    public  $accion_evaluar = 5;
+
 }

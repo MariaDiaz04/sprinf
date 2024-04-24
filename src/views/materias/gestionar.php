@@ -23,7 +23,7 @@
     </div>
 
     <div class="card">
-      <h6 class="card-header bg-primary text-white">Unidades Curriculares</h6>
+      <h6 class="card-header bg-primary text-white">Unidades Curriculares </h6>
       <div class="card-body px-3 pt-3">
         <table id="example" class="table table-striped table-responsive" style="width:100%">
           <thead class="thead-dark">
@@ -61,11 +61,11 @@
                     <div class="col-lg-6">
                       <label class="form-label" for="trayecto_id">Trayectos *</label>
                       <select class="form-select" name="trayecto_id">
-                        <?php foreach ($trayectos as $trayecto) : ?>
+                        <?php foreach ($trayectoByFase as $trayecto) : ?>
                           <option value="<?= $trayecto->codigo ?>"><?= "$trayecto->nombre - $trayecto->fecha_inicio / $trayecto->fecha_cierre" ?></option>
                         <?php endforeach; ?>
                       </select>
-                    </div>
+                    </div>  
                     <div class="col-lg-6">
                       <label class="form-label" for="periodo">Periodo *</label>
                       <select class="form-select" id="periodo" name="periodo">

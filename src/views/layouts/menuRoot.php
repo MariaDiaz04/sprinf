@@ -198,7 +198,7 @@
             <ul class="menu-sub">
         <li class="menu-item <?= $this->currentPath() == 'configuracion' ? 'active' : '' ?>">
           <a href="<?= APP_URL . $this->Route('configuracion/aperturar-periodo') ?>" class="menu-link">
-            <div data-i18n="Without menu">Aperturar Lapso</div>
+            <div data-i18n="Without menu">Aperturar Periodo</div>
           </a>
         </li>
         <li class="menu-item <?= $this->currentPath() == 'respaldo' ? 'active' : '' ?>">
