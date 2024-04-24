@@ -1554,3 +1554,5 @@ m.nombre as municipio_nombre
 from consejo_comunal cc inner join sector_consejo_comunal scc ON scc.id = cc.sector_id 
 inner join parroquias p on p.id = scc.parroquia_id 
 inner join municipios m on m.id = p.municipio;
+
+CREATE VIEW detalles_sector_consejo_comunal AS SELECT sector_consejo_comunal.*, parroquias.nombre as parroquia_nombre FROM sector_consejo_comunal INNER JOIN parroquias ON parroquias.id = sector_consejo_comunal.parroquia_id;
