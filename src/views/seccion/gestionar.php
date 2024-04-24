@@ -308,7 +308,14 @@
             },
             success: function(data, status) {
               table.ajax.reload();
-              // usar sweetalerts
+              Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: 'Seccion agregada con exito',
+                showConfirmButton: false,
+                toast: true,
+                timer: 1500
+              })
               document.getElementById("guardar").reset();
               toggleLoading(false, '#guardar')
               $('#crear').modal('hide');

@@ -23,16 +23,16 @@ class permisosController extends controller
     // ======================== INDEX=========================
     public function index()
     {
-        $permisos = $this->PERMISOS->all();
-        return $this->view('permisos/permisos', ['permisos' => $permisos]);
+        $roles = $this->ROL->all();
+        return $this->view('permisos/index', ['roles' => $roles]);
     }
 
     // ======================== CREATE=========================
-    public function create($request)
+    public function create(Request $request, $id)
     {
-        $roles = $this->ROL->all();
+        $rol = $this->ROL->find($id);
         $modulos = $this->MODULO->all();
-        return $this->view('permisos/crear', ['roles' => $roles, 'modulos' => $modulos]);
+        return $this->view('permisos/crear', ['rol' => $rol->fillable, 'modulos' => $modulos]);
     }
 
     // ======================== STORE=========================
@@ -44,6 +44,7 @@ class permisosController extends controller
                 'actualizar' => $permisos->request->get('actualizar'),
                 'crear' => $permisos->request->get('crear'),
                 'eliminar' => $permisos->request->get('eliminar'),
+                'evaluar' => $permisos->request->get('evaluar'),
                 'rol_id' => $permisos->request->get('rol_id'),
                 'modulo_id' => $permisos->request->get('modulo_id'),
             ])->save();
@@ -57,13 +58,14 @@ class permisosController extends controller
     }
 
     // ======================== EDIT=========================
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $id, $rol)
     {
-        $roles = $this->ROL->all();
         $permisos = $this->PERMISOS->find($id);
+        $rol = $this->ROL->find($rol);
+
         $modulos = $this->MODULO->all();
         if ($permisos) {
-            return $this->view('permisos/editar', ['permisos' => $permisos->fillable, 'roles' => $roles, 'modulos' => $modulos]);
+            return $this->view('permisos/editar', ['permisos' => $permisos->fillable, 'rol' => $rol->fillable, 'modulos' => $modulos]);
         } else {
             return $this->page('errors/404');
         }
@@ -80,6 +82,7 @@ class permisosController extends controller
             'actualizar' => '"' . $request->request->get('actualizar') . '"',
             'crear' => '"' . $request->request->get('crear') . '"',
             'eliminar' => '"' .  $request->request->get('eliminar')  . '"',
+            'evaluar' => '"' .  $request->request->get('evaluar')  . '"',
             'rol_id' => '"' . $request->request->get('rol_id') . '"',
             'modulo_id' => '"' . $request->request->get('modulo_id') . '"',
         ]);
@@ -93,4 +96,16 @@ class permisosController extends controller
         $permisos = $this->PERMISOS->find($request->query->get('idpermisos'));
         return $permisos ? $permisos->eliminar() : $this->page('errors/404');
     }
-}// ========================/ CLASS=========================
+
+     // ========================Show =========================
+     public function consultar(Request $request, $id)
+     {
+         $permisos = $this->PERMISOS->findPermisionbyRol($id);
+         $rol = $this->ROL->find($id);
+
+
+             return $this->view('permisos/permisos', ['permisos' => $permisos,'rol' => $rol->fillable]);
+      
+     }
+}
+// ========================/ CLASS=========================

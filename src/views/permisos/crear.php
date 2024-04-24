@@ -1,5 +1,5 @@
 <h4 class="font-weight-bold py-3 mb-4">
-    <span class="text-muted font-weight-light">Control de Permisos /</span> Agregar
+    <span class="text-muted font-weight-light">Control de Permisos /</span> Agregar / <?=$rol->nombre?>
 </h4>
 <!-- Content -->
 <div class="card">
@@ -10,18 +10,7 @@
         <form action="<?= APP_URL.$this->Route('permisos/guardar') ?>" method="post" id="permisosguardar">
             <div class="container-fluid">
                 <div class="row pb-2">
-                    <div class="col-4">
-                        <div class="row form-group">
-                            <div class="col-lg-12">
-                                <label class="form-label">Usuario</label>
-                                <select class="form-select" name="rol_id" id="rol_id">
-                                    <?php foreach ($roles as $rol) : ?>
-                                        <option value="<?= $rol->id ?>"><?= $rol->nombre ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="hidden" name="rol_id" value="<?= $rol->id ?>">
                     <div class="col-4">
                         <div class="row form-group">
                             <div class="col-lg-12">
@@ -35,68 +24,72 @@
                             </div>
                         </div>
                     </div>
-                  <!--   <div class="col-4"> 
-                        <div class="row form-group">
-                            <div class="col-lg-12 pt-4 mt-2">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" name="idmodulo2[]" onclick="disabledSelect()">
-                                    <span class="custom-control-label">Dar todos los permisos</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div> -->
-                </div>
-                <div class="row pb-2">
-
-                    <div class="col-3">
+                    
+                    <div class="col-4">
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Crear</label>
                                 <select class="form-select" name="crear" id="crear">
                                     <option value="1"> Si </option>
-                                    <option value="2"> No </option>
+                                    <option value="0"> No </option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Consultar</label>
                                 <select class="form-select" name="consultar" id="consultar">
                                     <option value="1"> Si </option>
-                                    <option value="2"> No </option>
+                                    <option value="0"> No </option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                </div>
+                <div class="row pb-2">
+
+                    <div class="col-4">
 
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Actualizar</label>
                                 <select class="form-select" name="actualizar" id="actualizar">
                                     <option value="1"> Si </option>
-                                    <option value="2"> No </option>
+                                    <option value="0"> No </option>
                                 </select>
 
                             </div>
                         </div>
 
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="row form-group">
                             <div class="col-lg-12">
                                 <label class="form-label">Eliminar</label>
                                 <select class="form-select" name="eliminar" id="eliminar">
                                     <option value="1"> Si </option>
-                                    <option value="2"> No </option>
+                                    <option value="0"> No </option>
                                 </select>
 
                             </div>
                         </div>
                     </div>
+                    <div class="col-4">
+                        <div class="row form-group">
+                            <div class="col-lg-12">
+                                <label class="form-label">Evaluar</label>
+                                <select class="form-select" name="evaluar" id="evaluar">
+                                    <option value="1"> Si </option>
+                                    <option value="0"> No </option>
+                                </select>
+
+                            </div>
+                        </div>
+                         </div>
+                
 
                 </div>
                 <hr class="border-light m-0">

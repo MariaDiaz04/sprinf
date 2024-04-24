@@ -183,7 +183,7 @@ class sector extends model
         'dt'        => 0
       ),
       array(
-        'db'        => 'parroquia_id',
+        'db'        => 'parroquia_nombre',
         'dt'        => 1
       ),
       array(
@@ -191,6 +191,6 @@ class sector extends model
         'dt'        => 2
       )
     );
-    return $this->getSSP('sector_consejo_comunal', 'id', $columns);
+    return $this->getSSP('detalles_sector_consejo_comunal', 'id', $columns);
   }
 }

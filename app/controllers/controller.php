@@ -142,8 +142,32 @@ class controller
             exit();
         }
     }
+    public  function menuByRol($sessionRol)
+    {
 
-    
+        switch ($sessionRol) {
+            case 1:
+                return $this->layout('menuRoot');
+                break;
+            case 2:
+                return $this->layout('menuCoordinador');
+                break;
+            case 3:
+                return $this->layout('menuDocenteTrayecto');
+                break;
+            case 5:
+                return $this->layout('menuDocente');
+                break;
+            case 6:
+                return $this->layout('menuControlAcademico');
+                break;
+            default:
+                return $this->layout('menuRoot');
+                break;
+        }
+    }
+
+
     /**
      * Modulo Inicio
      *
@@ -205,7 +229,7 @@ class controller
      */
     public  $modulo_unidades_curriculares_TIV = 8;
 
-     /**
+    /**
      * Modulo Consejo comunal
      * 
      *
@@ -228,7 +252,7 @@ class controller
      * @var int
      */
     public  $modulo_baremos_TI = 11;
-    
+
     /**
      * Modulo baremos TII
      * 
@@ -244,7 +268,7 @@ class controller
      * @var int
      */
     public  $modulo_baremos_TIII = 13;
-    
+
     /**
      * Modulo Baremos TIV
      * 
@@ -269,7 +293,7 @@ class controller
      */
     public  $modulo_bitacora_session = 16;
 
-     /**
+    /**
      * Modulo Bitacora Acciones
      * 
      *
@@ -285,7 +309,7 @@ class controller
      */
     public  $modulo_permisos = 18;
 
-     /**
+    /**
      * Modulo Modulos
      * 
      *
@@ -293,7 +317,7 @@ class controller
      */
     public  $modulo_modulos = 19;
 
-      /**
+    /**
      * Modulo Aperturar lapso
      * 
      *
@@ -301,13 +325,20 @@ class controller
      */
     public  $modulo_aperturar_lapso = 20;
 
-     /**
+    /**
      * Modulo respaldo
      * 
      *
      * @var int
      */
     public  $modulo_respaldo = 21;
+    /**
+     * Modulo respaldo
+     * 
+     *
+     * @var int
+     */
+    public  $modulo_controlAcademico = 29;
 
 
 
@@ -341,8 +372,13 @@ class controller
      * @var int
      */
     public  $accion_eliminar = 4;
-
+    
+    /**
+     * Accion Evaluar
+     * 
+     *
+     * @var int
+     */
+    public  $accion_evaluar = 5;
 
 }
-
-

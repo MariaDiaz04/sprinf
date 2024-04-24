@@ -8,6 +8,7 @@ use Model\profesor;
 use Model\usuario;
 use Model\persona;
 use Traits\utility;
+use Model\bitacoraAcciones;
 
 
 use Exception;
@@ -24,6 +25,8 @@ class profesorController extends controller
   private $profesor;
   private $usuario;
   private $persona;
+  public $ACCIONES;
+
 
   function __construct()
   {
@@ -31,12 +34,14 @@ class profesorController extends controller
     $this->profesor = new profesor();
     $this->usuario = new usuario();
     $this->persona = new persona();
+    $this->ACCIONES = new bitacoraAcciones();
   }
 
   public function index()
   {
 
     $profesores = $this->profesor->all();
+    $this->ACCIONES->lastSave($this->modulo_docentes, $this->accion_consultar);
 
     return $this->view('profesor/gestionar', [
       'profesor' => $profesores,
@@ -75,10 +80,6 @@ class profesorController extends controller
 
       $idUsuario = $this->usuario->save();
       $usuario_id = $idUsuario;
-      // // // encriptar datos de contacto
-      $telefono = $this->encriptar($telefono);
-      $direccion = $this->encriptar($direccion);
-
 
       $this->persona->setPersona([
         'cedula' => $cedula,
@@ -95,6 +96,7 @@ class profesorController extends controller
       $this->profesor->setProfesorId();
       $codigoProfesor = $this->profesor->save();
 
+      $this->ACCIONES->lastSave($this->modulo_docentes, $this->accion_insertar);
 
       http_response_code(200);
       echo json_encode($codigoProfesor);
@@ -117,8 +119,9 @@ class profesorController extends controller
       $codigoProfesor = $profesor->request->get('codigo');
 
       $profesor = $this->profesor->find($codigoProfesor);
-      $telefono = $this->desencriptar($profesor['telefono']);
-      $direccion = $this->desencriptar($profesor['direccion']);
+      $telefono = $profesor['telefono'];
+      $direccion = $profesor['direccion'];
+      $this->ACCIONES->lastSave($this->modulo_docentes, $this->accion_consultar);
 
       http_response_code(200);
       echo json_encode([
@@ -150,11 +153,7 @@ class profesorController extends controller
       $data = [];
       $codigo = $request->get('codigo');
       $profesor = $this->profesor->find($codigo);
-      $telefono = $this->desencriptar($profesor['telefono']);
-      $direccion = $this->desencriptar($profesor['direccion']);
       $data['profesor'] = $profesor;
-      $data['profesor']['telefono'] = $telefono;
-      $data['profesor']['direccion'] = $direccion;
       http_response_code(200);
       echo json_encode($data);
     } catch (Exception $e) {
@@ -182,6 +181,8 @@ class profesorController extends controller
 
       // asignar valores de seccion
       $profesor->updateProfesor($nombre, $apellido, $email, $direccion, $telefono, $cedula);
+      $this->ACCIONES->lastSave($this->modulo_docentes, $this->accion_actualizar);
+
       if (empty($cedula)) throw new Exception('Error inesperado al actualizar el profesor.');
       http_response_code(200);
       echo json_encode($cedula);
@@ -206,7 +207,8 @@ class profesorController extends controller
       $this->checkDataDelete($codigo, 'eliminar');
       // realizar eliminacion
       $result = $this->profesor->deleteTransaction($codigo, $usuario_id);
-      return var_dump($result);
+      $this->ACCIONES->lastSave($this->modulo_docentes, $this->accion_eliminar);
+
       if (!$result) throw new Exception('Error inesperado al borrar el estudiante.');
       http_response_code(200);
       echo json_encode($cedula);

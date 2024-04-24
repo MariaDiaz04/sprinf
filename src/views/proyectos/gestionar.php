@@ -56,7 +56,7 @@
           </select>
         </div>
         <button class="btn btn-primary btn-round d-block ">
-          <span class="ion ion-md-add"></span>&nbsp; Matriz de proyecto </button>
+          <span class="ion ion-md-add"></span>&nbsp; Generar matriz de proyecto </button>
       </form>
     </div>
 

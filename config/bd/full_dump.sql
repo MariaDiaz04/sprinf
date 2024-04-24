@@ -1279,6 +1279,13 @@ FROM persona
 INNER JOIN profesor ON profesor.persona_id = persona.cedula
 LEFT JOIN usuario ON usuario.id = persona.usuario_id;
 
+DROP VIEW IF EXISTS detalles_control_academico;
+CREATE VIEW detalles_control_academico AS
+SELECT persona.*, usuario.email
+FROM persona
+INNER JOIN usuario ON usuario.id = persona.usuario_id
+WHERE usuario.rol_id = 6;
+
 DROP VIEW IF EXISTS detalles_trayecto;
 CREATE VIEW detalles_trayecto AS
 SELECT trayecto.*, periodo.fecha_inicio, periodo.fecha_cierre,
@@ -1547,3 +1554,5 @@ m.nombre as municipio_nombre
 from consejo_comunal cc inner join sector_consejo_comunal scc ON scc.id = cc.sector_id 
 inner join parroquias p on p.id = scc.parroquia_id 
 inner join municipios m on m.id = p.municipio;
+
+CREATE VIEW detalles_sector_consejo_comunal AS SELECT sector_consejo_comunal.*, parroquias.nombre as parroquia_nombre FROM sector_consejo_comunal INNER JOIN parroquias ON parroquias.id = sector_consejo_comunal.parroquia_id;
