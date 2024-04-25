@@ -83,6 +83,15 @@ class inscripcion extends model
     return !$inscripcion ? [] : $inscripcion;
   }
 
+  function findByStudentCedula(string $cedula)
+  {
+      $query = $this->prepare("SELECT seccion_id, nombre_estudiante, codigo_materia, nombre_materia FROM detalles_inscripciones WHERE cedula = :cedula;");
+      $query->bindParam(":cedula", $cedula);
+      $query->execute();
+      $result = $query->fetchAll(\PDO::FETCH_ASSOC); 
+      return ($result) ? $result : [];
+  }
+
   function findStudentSubject(string $codigoEstudiante, string $codigo_materia): array
   {
     $inscripcion = $this->selectOne('detalles_inscripciones', [['estudiante_id', '=', '"' . $codigoEstudiante . '"'], ['codigo_materia', '=', '"' . $codigo_materia . '"']]);

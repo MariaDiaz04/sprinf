@@ -30,7 +30,7 @@ class estudianteController extends controller
 
   function __construct()
   {
-    $this->tokenExist();
+    //$this->tokenExist();
     $this->estudiante = new estudiante();
     $this->usuario = new usuario();
     $this->persona = new persona();
@@ -403,6 +403,29 @@ class estudianteController extends controller
       $cedula = $request->get('cedula');
       $estudiante = $this->estudiante->findByCedulaQuery($cedula);
       $data['estudiante'] = $estudiante->fillable;
+      http_response_code(200);
+      echo json_encode($data);
+    } catch (Exception $e) {
+      http_response_code(500);
+      echo json_encode($e->getMessage());
+    }
+  }
+
+  
+  /**
+   * Obtiene la informacion necesaria para listar
+   * las unidades curriculares del estudiante retornado en formato JSON
+   *
+   * @param [type] $request
+   * @return void
+   */
+  function ver_uc($request): void
+  {
+    try {
+      $data = [];
+      $cedula = $request->get('cedula');
+      $inscripcion_estudiante = $this->inscripcion->findByStudentCedula($cedula);
+      $data['estudiante'] = $inscripcion_estudiante;
       http_response_code(200);
       echo json_encode($data);
     } catch (Exception $e) {

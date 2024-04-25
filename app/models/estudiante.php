@@ -235,16 +235,8 @@ class estudiante extends model
                 'dt'        => 4
             ),
             array(
-                'db'        => 'seccion_id',
-                'dt'        => 5
-            ),
-            array(
                 'db'        => 'nombre_proyecto',
-                'dt'        => 6
-            ),
-            array(
-                'db'        => 'integrante_id',
-                'dt'        => 7
+                'dt'        => 5
             ),
         );
         if (empty($idProyecto)) {

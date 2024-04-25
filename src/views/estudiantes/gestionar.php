@@ -21,7 +21,6 @@
             <th>Apellido</th>
             <th>Email</th>
             <th>Telefono</th>
-            <th>Seccion</th>
             <th>Proyecto</th>
             <th>Acción</th>
           </tr>
@@ -32,10 +31,12 @@
   <?php
   include 'modules/crear.php';
   include 'modules/actualizar.php';
+  include 'modules/listar_uc.php';
   ?>
 
   <script>
     let editUrl = "<?= APP_URL . $this->Route('estudiantes/edit') ?>";
+    let verUc = "<?= APP_URL . $this->Route('estudiantes/unidades-curriculares') ?>";
     let showDetailsUrl = "<?= APP_URL . $this->Route('estudiantes/showDetails') ?>";
     let noteUrl = "<?= APP_URL . $this->Route('notes/pdf') ?>";
     let notasProyectoUrl = "<?= APP_URL . $this->Route('proyectos/calificaciones') ?>";
@@ -83,11 +84,12 @@
                         
                         <a class="dropdown-item" " href="${notasProyectoUrl+'/'+row[7]}" target="_blank">Notas Proyecto</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="javascript:void(0)">Editar</a>
+                        <a class="dropdown-item" onClick="ver_uc('${row[0]}')" href="javascript:void(0)">Ver Unidades Curriculares</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="javascript:void(0)">Eliminar</a>
                       </div>
                     </div>`;
           }, // combino los botons de acción
-          targets: 7 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
+          targets: 6 // la columna que representa, empieza a contar desde 0, por lo que la columna de acciones es la 3ra
         }]
       });
 
@@ -374,6 +376,8 @@
 
     }
 
+
+
     function edit(id) {
       $.ajax({
         type: "POST",
@@ -395,6 +399,67 @@
           renderUpdateForm(JSON.parse(data))
         },
       });
+    }
+
+    function ver_uc(id) {
+      $.ajax({
+        type: "POST",
+        url: verUc,
+        data: {
+          'cedula': id
+        },
+        error: function(error, status) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+        },
+        success: function(data, status) {
+
+          $('#ver').modal('show');
+          var datos = JSON.parse(data);
+          console.log(datos);
+          var tbody = document.getElementById("listar_uc").getElementsByTagName('tbody')[0];
+
+          // Limpiar el contenido existente de la tabla
+          tbody.innerHTML = '';
+
+          // Recorrer los datos y agregar filas a la tabla
+          datos.estudiante.forEach(function(elemento) {
+              // Crear una nueva fila
+              var fila = document.createElement("tr");
+
+              // Crear celdas para cada propiedad del objeto
+              var seccion = document.createElement("td");
+              seccion.textContent = elemento.seccion_id;
+              var unidad_curricular = document.createElement("td");
+              unidad_curricular.textContent = elemento.codigo_materia;
+              var nombre_unidad = document.createElement("td");
+              nombre_unidad.textContent = elemento.nombre_materia;
+              var celdaDocente = document.createElement("td");
+              celdaDocente.textContent = elemento.nombre_estudiante;
+              
+
+              // Agregar las celdas a la fila
+              fila.appendChild(seccion);
+              fila.appendChild(unidad_curricular);
+              fila.appendChild(nombre_unidad);
+              fila.appendChild(celdaDocente);
+
+              // Agregar la fila a la tabla
+              tbody.appendChild(fila);
+          });
+        },
+      });
+    }
+
+    function renderListUC(data) {
+      $('#ver').modal('show');
+      // seleccionar trayecto
     }
 
     function remove(id) {

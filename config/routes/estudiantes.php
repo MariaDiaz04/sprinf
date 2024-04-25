@@ -21,6 +21,15 @@ $listaDeRutas['estudiante_edit'] =  new Route(
   ]
 );
 
+$listaDeRutas['estudiante_ver_uc'] =  new Route(
+
+  '/estudiantes/unidades-curriculares',
+  [
+    'controller' => estudianteController::class,
+    'method' => 'ver_uc',
+  ]
+);
+
 $listaDeRutas['estudiante_update'] =  new Route(
 
   '/estudiantes/update',
