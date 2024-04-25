@@ -79,7 +79,7 @@
                     <!-- los inputs son validados con las funciones que se extraeran del controlador de periodo -->
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Código *</label>
-                      <input type="text" class="form-control mb-1" placeholder="..." name="codigo" id="codigo">
+                      <input type="text" class="form-control mb-1" placeholder="..." name="codigo" id="codigo" maxlength="40">
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label" for="nombre">Nombre *</label>
@@ -91,16 +91,16 @@
                     <!-- horas -->
                     <div class="col-lg-4">
                       <label class="form-label" for="htasist">Horas Total Asist *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="htasist" id="htasist">
+                      <input type="number" class="form-control mb-1" placeholder="..." name="htasist" id="htasist" min="2" max="4" maxlength="2" >
                     </div>
                     <div class="col-lg-4">
                       <label class="form-label" for="htind">Horas Total ind *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="htind" id="htind">
+                      <input type="number" class="form-control mb-1" placeholder="..." name="htind" id="htind" min="2" max="4" maxlength="2">
                     </div>
 
                     <div class="col-lg-4">
                       <label class="form-label" for="ucredito">Horas Academicas *</label>
-                      <input type="number" class="form-control mb-1" placeholder="..." name="ucredito" id="ucredito">
+                      <input type="number" class="form-control mb-1" placeholder="..." name="ucredito" id="ucredito" min="2" max="6">
                     </div>
                   </div>
                   <div class="row form-group">

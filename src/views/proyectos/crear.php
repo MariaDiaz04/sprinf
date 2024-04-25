@@ -14,7 +14,7 @@
           <div class="col-12">
             <div class="row form-group">
               <div class="col-lg-6">
-                <label class="form-label" for="nombre">Nombre *</label>
+                <label class="form-label" for="nombre">Titulo *</label>
                 <input type="text" class="form-control mb-1" id="nombre" placeholder="..." name="nombre">
               </div>
 

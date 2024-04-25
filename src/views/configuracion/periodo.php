@@ -10,7 +10,7 @@
   </div>
 
   <div class="card">
-    <h6 class="card-header bg-primary text-white">Aperturar Nuevo Lapso</h1>
+    <h6 class="card-header bg-primary text-white">Aperturar Nuevo Periodo</h1>
     </h6>
     <div class="card-body px-3 pt-3">
       <div class="alert alert-primary" role="alert">

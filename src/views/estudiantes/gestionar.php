@@ -376,6 +376,29 @@
 
     }
 
+    function ver_uc(id) {
+      $.ajax({
+        type: "POST",
+        url: editUrl,
+        data: {
+          'cedula': id
+        },
+        error: function(error, status) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+        },
+        success: function(data, status) {
+          renderUpdateForm(JSON.parse(data))
+        },
+      });
+    }
+
 
 
     function edit(id) {
