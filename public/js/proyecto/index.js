@@ -182,34 +182,34 @@ $(document).ready(function (e) {
     toggleLoading(true, "#proyectoGuardarHistorico");
 
     // validaciones
-    let nombreTutorExterno = $("#proyectoGuardarHistorico #tutor_ex").val();
-    let telefonoTutorExterno = $("#proyectoGuardarHistorico #tlf_tex").val();
+    // let nombreTutorExterno = $("#proyectoGuardarHistorico #tutor_ex").val();
+    // let telefonoTutorExterno = $("#proyectoGuardarHistorico #tlf_tex").val();
 
-    if (!onlyLetters(nombreTutorExterno)) {
-      Swal.fire({
-        position: "bottom-end",
-        icon: "error",
-        title: "Nombre de tutor externo de proyecto no valido",
-        showConfirmButton: false,
-        toast: true,
-        timer: 2000,
-      });
-      toggleLoading(false);
-      return false;
-    }
+    // if (!onlyLetters(nombreTutorExterno)) {
+    //   Swal.fire({
+    //     position: "bottom-end",
+    //     icon: "error",
+    //     title: "Nombre de tutor externo de proyecto no valido",
+    //     showConfirmButton: false,
+    //     toast: true,
+    //     timer: 2000,
+    //   });
+    //   toggleLoading(false);
+    //   return false;
+    // }
 
-    if (!phoneNumbers(telefonoTutorExterno)) {
-      Swal.fire({
-        position: "bottom-end",
-        icon: "error",
-        title: "Numero de telefono de tutor externo no valido",
-        showConfirmButton: false,
-        toast: true,
-        timer: 2000,
-      });
-      toggleLoading(false);
-      return false;
-    }
+    // if (!phoneNumbers(telefonoTutorExterno)) {
+    //   Swal.fire({
+    //     position: "bottom-end",
+    //     icon: "error",
+    //     title: "Numero de telefono de tutor externo no valido",
+    //     showConfirmButton: false,
+    //     toast: true,
+    //     timer: 2000,
+    //   });
+    //   toggleLoading(false);
+    //   return false;
+    // }
 
     $(this).find("select").prop("disabled", false);
 
@@ -445,19 +445,19 @@ $(document).ready(function (e) {
       return false;
     }
 
-    let tutor_ex = $("#proyectoGuardar #tutor_ex").val();
-    if (!onlyLetters(tutor_ex)) {
-      Swal.fire({
-        position: "bottom-end",
-        icon: "error",
-        title: "Nombre de tutor externo no valido",
-        showConfirmButton: false,
-        toast: true,
-        timer: 2000,
-      });
-      toggleLoading(false);
-      return false;
-    }
+    // let tutor_ex = $("#proyectoGuardar #tutor_ex").val();
+    // if (!onlyLetters(tutor_ex)) {
+    //   Swal.fire({
+    //     position: "bottom-end",
+    //     icon: "error",
+    //     title: "Nombre de tutor externo no valido",
+    //     showConfirmButton: false,
+    //     toast: true,
+    //     timer: 2000,
+    //   });
+    //   toggleLoading(false);
+    //   return false;
+    // }
 
     let motor_productivo = $("#proyectoGuardar #motor_productivo").val();
     if (!onlyLetters(motor_productivo)) {
@@ -473,19 +473,19 @@ $(document).ready(function (e) {
       return false;
     }
 
-    let tlf_tex = $("#proyectoGuardar #tlf_tex").val();
-    if (!phoneNumbers(tlf_tex)) {
-      Swal.fire({
-        position: "bottom-end",
-        icon: "error",
-        title: "Numero de telefono de tutor externo no valido",
-        showConfirmButton: false,
-        toast: true,
-        timer: 2000,
-      });
-      toggleLoading(false);
-      return false;
-    }
+    // let tlf_tex = $("#proyectoGuardar #tlf_tex").val();
+    // if (!phoneNumbers(tlf_tex)) {
+    //   Swal.fire({
+    //     position: "bottom-end",
+    //     icon: "error",
+    //     title: "Numero de telefono de tutor externo no valido",
+    //     showConfirmButton: false,
+    //     toast: true,
+    //     timer: 2000,
+    //   });
+    //   toggleLoading(false);
+    //   return false;
+    // }
 
     for (const idIntegrante in items) {
       integrante = {};
@@ -623,19 +623,19 @@ $(document).ready(function (e) {
       return false;
     }
 
-    let tutor_ex = $("#proyectoActualizar #tutor_ex").val();
-    if (!onlyLetters(tutor_ex)) {
-      Swal.fire({
-        position: "bottom-end",
-        icon: "error",
-        title: "Nombre de tutor externo no valido",
-        showConfirmButton: false,
-        toast: true,
-        timer: 2000,
-      });
-      toggleLoading(false);
-      return false;
-    }
+    // let tutor_ex = $("#proyectoActualizar #tutor_ex").val();
+    // if (!onlyLetters(tutor_ex)) {
+    //   Swal.fire({
+    //     position: "bottom-end",
+    //     icon: "error",
+    //     title: "Nombre de tutor externo no valido",
+    //     showConfirmButton: false,
+    //     toast: true,
+    //     timer: 2000,
+    //   });
+    //   toggleLoading(false);
+    //   return false;
+    // }
 
     let motor_productivo = $("#proyectoActualizar #motor_productivo").val();
     if (!onlyLetters(motor_productivo)) {
@@ -651,19 +651,19 @@ $(document).ready(function (e) {
       return false;
     }
 
-    let tlf_tex = $("#proyectoActualizar #tlf_tex").val();
-    if (!phoneNumbers(tlf_tex)) {
-      Swal.fire({
-        position: "bottom-end",
-        icon: "error",
-        title: "Numero de telefono de tutor externo no valido",
-        showConfirmButton: false,
-        toast: true,
-        timer: 2000,
-      });
-      toggleLoading(false);
-      return false;
-    }
+    // let tlf_tex = $("#proyectoActualizar #tlf_tex").val();
+    // if (!phoneNumbers(tlf_tex)) {
+    //   Swal.fire({
+    //     position: "bottom-end",
+    //     icon: "error",
+    //     title: "Numero de telefono de tutor externo no valido",
+    //     showConfirmButton: false,
+    //     toast: true,
+    //     timer: 2000,
+    //   });
+    //   toggleLoading(false);
+    //   return false;
+    // }
 
     if ($("#cuerpoTablaActualizarEstudiante").children("tr").length <= 0) {
       Swal.fire({

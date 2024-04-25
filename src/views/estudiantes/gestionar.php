@@ -83,6 +83,7 @@
                         
                         <a class="dropdown-item" " href="${notasProyectoUrl+'/'+row[7]}" target="_blank">Notas Proyecto</a>
                         <a class="dropdown-item" onClick="edit('${row[0]}')" href="javascript:void(0)">Editar</a>
+                        <a class="dropdown-item" onClick="ver_uc('${row[0]}')" href="javascript:void(0)">Ver Unidades Curriculares</a>
                         <a class="dropdown-item text-danger" onClick="remove('${row[0]}')" href="javascript:void(0)">Eliminar</a>
                       </div>
                     </div>`;
@@ -372,6 +373,29 @@
       $(`#actualizar #telefonoEdit`).val(data.estudiante.telefono);
       $(`#actualizar #emailEdit`).val(data.estudiante.email);
 
+    }
+
+    function ver_uc(id) {
+      $.ajax({
+        type: "POST",
+        url: editUrl,
+        data: {
+          'cedula': id
+        },
+        error: function(error, status) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: error.responseText,
+            showConfirmButton: false,
+            toast: true,
+            timer: 2000
+          })
+        },
+        success: function(data, status) {
+          renderUpdateForm(JSON.parse(data))
+        },
+      });
     }
 
     function edit(id) {

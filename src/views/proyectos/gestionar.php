@@ -55,7 +55,7 @@
             <?php endforeach; ?>
           </select>
         </div>
-        <button class="btn btn-primary btn-round d-block ">
+        <button class="btn btn-outline-light ">
           <span class="ion ion-md-add"></span>&nbsp; Generar matriz de proyecto </button>
       </form>
     </div>
@@ -65,7 +65,7 @@
         <thead class="thead-dark">
           <tr>
             <th>ID</th>
-            <th>Nombre</th>
+            <th>Titulo</th>
             <th>Comunidad</th>
             <th>Trayecto</th>
             <th>Fase</th>

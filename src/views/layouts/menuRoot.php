@@ -16,8 +16,8 @@
         </li>
         <li class="menu-item <?= $this->currentPath() == 'control_academico' ? 'active' : '' ?>">
           <a href="<?= APP_URL .  $this->Route('control_academico') ?>" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-face"></i>
-            <div data-i18n="Analytics">Control academico</div>
+            <i class="menu-icon tf-icons bx bx-user"></i>
+            <div data-i18n="Analytics">Control Académico</div>
           </a>
         </li>
 
@@ -119,7 +119,7 @@
         <li class="menu-item <?= $this->currentPath() == 'historico' ? 'active' : '' ?>">
           <a href="<?= APP_URL .  $this->Route('historico') ?>" class="menu-link">
             <i class="menu-icon tf-icons bx bx-receipt"></i>
-            <div data-i18n="Analytics">Historico</div>
+            <div data-i18n="Analytics">Histórico</div>
           </a>
         </li>
         <li class="menu-header small text-uppercase">

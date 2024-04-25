@@ -19,7 +19,7 @@
                 </select>
               </div>
               <div class="col-lg-9">
-                <label class="form-label" for="nombre"><b>Nombre *</b></label>
+                <label class="form-label" for="nombre"><b>Titulo *</b></label>
                 <input type="text" aria-describedby="creacionNombreValidation" class="form-control mb-1" placeholder="..." id="nombre" required name="nombre" maxlength="255">
                 <div id="creacionNombreValidation" class="invalid-feedback">
                   Por favor proporcione una ciudad válida
@@ -28,7 +28,7 @@
             </div>
             <div class="row form-group mb-3">
               <div class="col-lg-6">
-                <label class="form-label" for="tutor_in"><b>Tutor Interno *</b></label>
+                <label class="form-label" for="tutor_in"><b>Tutor Interno</b></label>
                 <select class="form-select" name="tutor_in" id="selectFaseId">
 
                   <?php foreach ($profesores as $profesor) : ?>
@@ -38,8 +38,8 @@
               </div>
 
               <div class="col-lg-6">
-                <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo *</b></label>
-                <input type="text" aria-describedby="creacionNombreTutorValidation" class="form-control mb-1" placeholder="..." id="tutor_ex" required name="tutor_ex" maxlength="255">
+                <label class="form-label" for="tutor_ex"><b>Nombre Completo Tutor Externo</b></label>
+                <input type="text" aria-describedby="creacionNombreTutorValidation" class="form-control mb-1" placeholder="..." id="tutor_ex"  name="tutor_ex" maxlength="255">
                 <div id="creacionNombreTutorValidation" class="invalid-feedback">
                   Por favor, proporcione un nombre válido.
                 </div>
@@ -51,8 +51,8 @@
                 <textarea class="form-control" placeholder="..." required id="comunidad" name="comunidad" style="height: 50px " maxlength="255"></textarea>
               </div>
               <div class="col-lg-6">
-                <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo *</b></label>
-                <input type="text" aria-describedby="creacionTelefonoValidation" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX" required id="tlf_tex" name="tlf_tex">
+                <label class="form-label" for="tlf_tex"><b>Telefono Tutor Externo</b></label>
+                <input type="text" aria-describedby="creacionTelefonoValidation" inputmode="numeric" class="form-control mb-1" placeholder="0424XXXXXXX"  id="tlf_tex" name="tlf_tex">
                 <div id="creacionTelefonoValidation" class="invalid-feedback">
                   Por favor, proporcione un teléfono válido.
                 </div>
@@ -61,11 +61,11 @@
 
             <div class="row form-group mb-3">
               <div class="col-lg-6 mb-3">
-                <label class="form-label" for="direccion"><b>Dirección</b></label>
+                <label class="form-label" for="direccion"><b>Dirección *</b></label>
                 <textarea class="form-control" placeholder="..." required id="direccion" name="direccion" style="height: 50px" maxlength="255"></textarea>
               </div>
               <div class="col-lg-6 mb-3">
-                <label class="form-label" for="motor_productivo"><b>Motor Productivo</b></label>
+                <label class="form-label" for="motor_productivo"><b>Motor Productivo *</b></label>
                 <textarea class="form-control" placeholder="..." required id="motor_productivo" name="motor_productivo" style="height: 50px" maxlength="200"></textarea>
               </div>
             </div>
