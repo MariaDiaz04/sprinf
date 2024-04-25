@@ -175,7 +175,8 @@ CREATE TABLE `sprinf_bd`.`permisos` (
   `crear` bool,
   `consultar` bool,
   `actualizar` bool,
-  `eliminar` bool
+  `eliminar` bool,
+  `evaluar` bool
 );
 
 CREATE TABLE `sprinf_bd`.`proyecto_historico` (
@@ -236,6 +237,16 @@ CREATE TABLE `sprinf_bd`.`respuestas` (
   `pregunta_id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL
 );
+
+
+CREATE TABLE `sprinf_bd`.`bitacora_acciones` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(12) NOT NULL,
+  `modulo_id` int(12) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `navegador` varchar(105) NOT NULL,
+  `accion` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 ALTER TABLE `sprinf_bd`.`trayecto` ADD FOREIGN KEY (`periodo_id`) REFERENCES `sprinf_bd`.`periodo` (`id`);
@@ -313,15 +324,109 @@ delete from persona where true;
 delete from usuario where true;
 
 -- ROLES
-insert into roles (id, nombre) values (1, 'administrador'), (2, 'coordinador'), (3, 'docente de proyecto'), (4, 'estudiante'), (5, 'tutor'), (6, 'docente'), (7, 'secretaria');
-
+INSERT INTO `roles` (`id`, `nombre`) VALUES
+(1, 'administrador'),
+(2, 'coordinador'),
+(3, 'docente de proyecto'),
+(4, 'estudiante'),
+(5, 'docente'),
+(6, 'control academico');
 -- modulos
-insert into modulo (id, nombre) values (1, 'Proyecto');
-insert into modulo (id, nombre) values (2, 'Materias');
+INSERT INTO `modulo` (`id`, `nombre`) VALUES
+(1, 'Inicio'),
+(2, 'Docentes'),
+(3, 'Estudiantes'),
+(4, 'Secciones'),
+(5, 'Unidad curricular TI'),
+(6, 'Unidad curricular TII'),
+(7, 'Unidad curricular TIII'),
+(8, 'Unidad curricular TIV'),
+(9, 'Consejo Comunal'),
+(10, 'Sector'),
+(11, 'baremos TI'),
+(12, 'Baremos TII'),
+(13, 'Baremos TIII'),
+(14, 'Baremos TIV'),
+(15, 'Proyectos'),
+(16, 'Bitacora Session'),
+(17, 'Bitacora Acciones'),
+(18, 'Permisos'),
+(19, 'Modulos'),
+(20, 'Apertura de lapso'),
+(21, 'Respaldo'),
+(29, 'Control Académico');
 
 -- permisos
-insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo_id) values (1, 1, 1, 1, 1, 1, 1);
-insert into permisos (id, consultar, actualizar, crear, eliminar, rol_id, modulo_id) values (2, 1, 1, 1, 1, 1, 2);
+
+INSERT INTO `permisos` (`id`, `rol_id`, `modulo_id`, `crear`, `consultar`, `actualizar`, `eliminar`, `evaluar`) VALUES
+(1, 1, 1, 1, 1, 1, 1, 0),
+(2, 1, 2, 1, 1, 1, 1, 0),
+(3, 1, 3, 1, 1, 1, 1, 0),
+(4, 1, 4, 1, 1, 1, 1, 0),
+(5, 1, 5, 1, 1, 1, 1, 1),
+(6, 1, 6, 1, 1, 1, 1, 1),
+(7, 1, 7, 1, 1, 1, 1, 1),
+(8, 1, 8, 1, 1, 1, 1, 1),
+(9, 1, 9, 1, 1, 1, 1, 0),
+(10, 1, 10, 1, 1, 1, 1, 0),
+(11, 1, 11, 1, 1, 1, 1, 0),
+(12, 1, 12, 1, 1, 1, 1, 0),
+(13, 1, 7, 1, 1, 1, 1, 0),
+(14, 1, 14, 1, 1, 1, 1, 0),
+(15, 1, 15, 1, 1, 1, 1, 1),
+(16, 1, 16, 1, 1, 1, 1, 0),
+(17, 1, 17, 1, 1, 1, 1, 0),
+(18, 1, 18, 1, 1, 1, 1, 0),
+(19, 1, 19, 1, 1, 1, 1, 0),
+(20, 1, 20, 1, 1, 1, 1, 0),
+(21, 1, 21, 1, 1, 1, 1, 0),
+(22, 2, 1, 0, 1, 0, 0, 0),
+(23, 2, 2, 0, 0, 0, 0, 0),
+(24, 2, 4, 0, 0, 0, 0, 0),
+(25, 2, 5, 0, 1, 0, 0, 1),
+(26, 2, 6, 0, 1, 0, 0, 1),
+(27, 2, 7, 0, 1, 0, 0, 1),
+(28, 2, 8, 0, 1, 0, 0, 1),
+(29, 2, 9, 1, 1, 1, 1, 0),
+(30, 2, 10, 1, 1, 1, 1, 0),
+(31, 2, 11, 1, 1, 1, 1, 0),
+(32, 2, 12, 1, 1, 1, 1, 0),
+(33, 2, 13, 1, 1, 1, 1, 0),
+(34, 2, 14, 1, 1, 1, 1, 0),
+(35, 2, 15, 1, 1, 1, 1, 1),
+(36, 2, 16, 0, 0, 0, 0, 0),
+(37, 2, 17, 0, 0, 0, 0, 0),
+(38, 2, 18, 0, 0, 0, 0, 0),
+(39, 2, 19, 0, 0, 0, 0, 0),
+(40, 2, 20, 0, 0, 0, 0, 0),
+(41, 2, 21, 0, 0, 0, 0, 0),
+(43, 3, 1, 0, 1, 0, 0, 0),
+(44, 3, 2, 0, 0, 0, 0, 0),
+(45, 3, 3, 0, 0, 0, 0, 0),
+(46, 3, 4, 0, 0, 0, 0, 0),
+(47, 3, 5, 0, 0, 0, 1, 0),
+(48, 3, 6, 0, 0, 0, 1, 0),
+(49, 3, 7, 0, 0, 0, 1, 0),
+(50, 3, 8, 0, 0, 0, 1, 0),
+(51, 3, 9, 1, 1, 1, 1, 0),
+(52, 3, 10, 1, 1, 1, 1, 0),
+(53, 3, 11, 1, 1, 1, 1, 0),
+(54, 3, 12, 1, 1, 1, 1, 0),
+(55, 3, 13, 1, 1, 1, 1, 0),
+(56, 3, 14, 1, 1, 1, 1, 0),
+(57, 3, 15, 1, 1, 1, 1, 0),
+(58, 3, 16, 0, 0, 0, 0, 0),
+(59, 3, 17, 0, 0, 0, 0, 0),
+(60, 3, 18, 0, 0, 0, 0, 1),
+(61, 3, 19, 0, 0, 0, 0, 0),
+(62, 3, 20, 0, 0, 0, 0, 0),
+(63, 3, 21, 0, 0, 0, 0, 0),
+(64, 5, 1, 0, 1, 0, 0, 0),
+(65, 5, 2, 0, 0, 0, 0, 0),
+(66, 5, 3, 0, 0, 0, 0, 0),
+(67, 5, 4, 0, 0, 0, 0, 0),
+(68, 5, 5, 0, 0, 0, 1, 0),
+(69, 5, 12, 0, 0, 0, 1, 0);
 
 
 -- usuarios
@@ -1193,6 +1298,39 @@ insert into integrante_proyecto (proyecto_id, estudiante_id) values (1,'e-15408'
 
 INSERT INTO `pregunta` (`id`, `pregunta` ) VALUES (NULL, 'Nombre de tu mascota?'), (NULL, 'Donde estudiaste?'), (NULL, 'Color favorito?');
 INSERT INTO `respuestas` (`id`, `respuesta`, `pregunta_id`, `usuario_id`) VALUES (NULL, 'onix', '1', '1'), (NULL, 'juan jose landaeta', '2', '1'), (NULL, 'azul', '3', '1');
+
+-- bitacora de acciones
+INSERT INTO `bitacora_acciones` (`id`, `usuario_id`, `modulo_id`, `fecha`, `navegador`, `accion`) VALUES
+(1, 1, 4, '2024-03-21 11:26:11', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/', 2),
+(2, 1, 5, '2024-03-21 11:27:37', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/', 1),
+(3, 1, 18, '2024-04-01 11:20:09', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 1),
+(4, 1, 19, '2024-04-01 11:38:05', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 1),
+(6, 1, 19, '2024-04-02 12:23:00', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 1),
+(7, 1, 19, '2024-04-02 12:23:29', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 1),
+(8, 1, 19, '2024-04-02 12:24:32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 1),
+(13, 1, 19, '2024-04-02 12:31:48', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 2),
+(14, 1, 19, '2024-04-02 12:31:48', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 2),
+(15, 1, 19, '2024-04-02 12:40:34', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 2),
+(16, 1, 19, '2024-04-02 12:41:13', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 1),
+(17, 1, 19, '2024-04-02 12:43:19', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 2),
+(18, 1, 19, '2024-04-03 10:38:38', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 1),
+(19, 1, 19, '2024-04-03 10:39:50', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(20, 1, 1, '2024-04-03 10:47:50', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(21, 1, 2, '2024-04-03 10:56:26', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(22, 1, 2, '2024-04-03 10:57:32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 1),
+(23, 1, 2, '2024-04-03 11:01:28', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 4),
+(24, 1, 1, '2024-04-17 10:18:15', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(25, 1, 1, '2024-04-17 10:18:40', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(26, 1, 19, '2024-04-17 10:18:48', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(27, 1, 1, '2024-04-18 11:30:50', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(28, 1, 1, '2024-04-18 11:31:03', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(29, 1, 19, '2024-04-18 12:17:45', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(30, 1, 1, '2024-04-18 11:42:00', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(31, 1, 1, '2024-04-18 11:42:11', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(32, 1, 1, '2024-04-19 12:48:03', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(33, 1, 1, '2024-04-19 03:13:00', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3),
+(34, 1, 1, '2024-04-19 03:13:14', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/', 3);
+
 -- vistas
 DROP VIEW IF EXISTS detalles_inscripciones;
 CREATE VIEW detalles_inscripciones AS
