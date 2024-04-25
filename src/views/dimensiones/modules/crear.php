@@ -20,7 +20,7 @@
                       Ingrese nombre y ponderación de cada indicador de esta dimensión <?= $unidadCurricular->ponderado_baremos ?>.
                     </div>
                     <label class="form-label" for="nombre">Nombre Dimensión *</label>
-                    <input type="text" class="form-control mb-1" placeholder="Desempeño Individual..." name="nombre" id="nombre" onkeydown="return letterAndFewSpecial(event.key)" maxlength="255" required>
+                    <input type="text" class="form-control mb-1" placeholder="Desempeño Individual..." name="nombre" id="nombre" maxlength="255" required>
                     <div id="creacionNombreTutorValidation" class="invalid-feedback">
                       Por favor, proporcione un nombre de dimensión válido.
                     </div>

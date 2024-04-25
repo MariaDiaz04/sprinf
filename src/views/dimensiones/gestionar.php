@@ -333,6 +333,8 @@
 
         let nombreItem = $('#nombreItem').val();
         let ponderacionItem = parseFloat($('#ponderacionItem').val())
+        $('#nombreItem').val('');
+        $('#ponderacionItem').val('');
         if (nombreItem.length == 0) {
           Swal.fire({
             position: "bottom-end",
@@ -366,6 +368,7 @@
             timer: 2000,
           });
         }
+
 
       })
 

@@ -18,7 +18,7 @@
               </div>
               <div class="col-lg-3">
                 <label class="form-label" for="ponderacionItem">Ponderación (%) *</label>
-                <input type="number" class="form-control mb-1" min="0" step="0.01" name="ponderacion" placeholder="..." id="ponderacionItem" value="0" max="100">
+                <input type="number" class="form-control mb-1" min="1" step="0.01" name="ponderacion" placeholder="..." id="ponderacionItem" value="0" max="100">
               </div>
             </div>
           </div>
