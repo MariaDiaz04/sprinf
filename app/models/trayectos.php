@@ -45,6 +45,19 @@ class trayectos extends model
   }
 
   /**
+   * Obtener los detalles de un trayeco
+   * por su código de trayecto
+   *
+   * @param string $codigo
+   * @return array - es un array vacio en caso de que no consiga alguna coincidencia
+   */
+  public function findByTrayecto(string $codigo)
+  {
+    $trayectos = $this->select('detalles_trayecto', [['codigo', '=', '"' . $codigo . '"']]);
+    return $trayectos ? $trayectos : null;
+
+  }
+  /**
    * Obtener trayecto por codigo de fase
    *
    * @param string $codigoFase

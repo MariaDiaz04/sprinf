@@ -279,6 +279,7 @@ class ComposerStaticInitd992f0f84eb944fc783f652ba9c7b740
         'Controllers\\bitacoraController' => __DIR__ . '/../..' . '/app/controllers/bitacoraController.php',
         'Controllers\\configuracionController' => __DIR__ . '/../..' . '/app/controllers/configuracionController.php',
         'Controllers\\consejoComunalController' => __DIR__ . '/../..' . '/app/controllers/consejoComunalController.php',
+        'Controllers\\controlAcademicoController' => __DIR__ . '/../..' . '/app/controllers/controlAcademicoController.php',
         'Controllers\\controller' => __DIR__ . '/../..' . '/app/controllers/controller.php',
         'Controllers\\dimensionController' => __DIR__ . '/../..' . '/app/controllers/dimensionController.php',
         'Controllers\\estudianteController' => __DIR__ . '/../..' . '/app/controllers/estudianteController.php',

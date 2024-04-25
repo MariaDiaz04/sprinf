@@ -27,6 +27,7 @@ class moduloController extends controller
     public function index()
     {
         $modulo = $this->MODULO->all();
+        $this->ACCIONES->lastSave($this->modulo_modulos,$this->accion_consultar);
         return $this->view('modulo/modulo', ['modulo' => $modulo]);
     }
 

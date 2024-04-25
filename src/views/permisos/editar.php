@@ -2,7 +2,7 @@
   <!-- Content -->
   <div class="container-fluid flex-grow-1 container-p-y">
     <h4 class="font-weight-bold py-3 mb-4">
-      <span class="text-muted font-weight-light">Permisos/</span> Editar
+      <span class="text-muted font-weight-light">Permisos/</span> Editar / <strong><?=$rol->nombre?></strong>
     </h4>
   </div>
   <div class="card">
@@ -16,14 +16,6 @@
             <div class="col-12">
               <div class="row form-group">
                 <div class="col-lg-6">
-                  <label class="form-label">Rol</label>
-                  <select class="form-select" name="rol_id" id="rol_id">
-                    <?php foreach ($roles as $rol) : ?>
-                      <option <?php if ($permisos->rol_id == $rol->id) echo "selected"; ?>disabled readonly value="<?= $rol->id ?>"><?= $rol->nombre ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="col-lg-6">
                   <label class="form-label">Modulo</label>
                   <select class="form-select" name="modulo_id" id="modulo_id">
                     <?php foreach ($modulos as $modulo) : ?>
@@ -36,7 +28,7 @@
           </div>
           <div class="row pb-2">
 
-            <div class="col-3">
+            <div class="col-6">
               <div class="row form-group">
                 <div class="col-lg-12">
                   <label class="form-label">Consultar</label>
@@ -44,15 +36,15 @@
                     <?php if ($permisos->consultar == 1) : ?>
                       <option selected value="1" style="display:none;">Si</option>
                     <?php else : ?>
-                      <option selected value="2" style="display:none;">No</option>
+                      <option selected value="0" style="display:none;">No</option>
                     <?php endif; ?>
                     <option value="1">Si</option>
-                    <option value="2">No</option>
+                    <option value="0">No</option>
                   </select>
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-6">
               <div class="row form-group">
                 <div class="col-lg-12">
                   <label class="form-label">Crear</label>
@@ -60,15 +52,15 @@
                     <?php if ($permisos->crear == 1) : ?>
                       <option selected value="1" style="display:none;">Si</option>
                     <?php else : ?>
-                      <option selected value="2" style="display:none;">No</option>
+                      <option selected value="0" style="display:none;">No</option>
                     <?php endif; ?>
                     <option value="1">Si</option>
-                    <option value="2">No</option>
+                    <option value="0">No</option>
                   </select>
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-4">
               <div class="row form-group">
                 <div class="col-lg-12">
                   <label class="form-label">Actualizar</label>
@@ -76,15 +68,15 @@
                     <?php if ($permisos->actualizar == 1) : ?>
                       <option selected value="1" style="display:none;">Si</option>
                     <?php else : ?>
-                      <option selected value="2" style="display:none;">No</option>
+                      <option selected value="0" style="display:none;">No</option>
                     <?php endif; ?>
                     <option value="1">Si</option>
-                    <option value="2">No</option>
+                    <option value="0">No</option>
                   </select>
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-4">
               <div class="row form-group">
                 <div class="col-lg-12">
                   <label class="form-label">Eliminar</label>
@@ -92,20 +84,37 @@
                     <?php if ($permisos->eliminar == 1) : ?>
                       <option selected value="1" style="display:none;">Si</option>
                     <?php else : ?>
-                      <option selected value="2" style="display:none;">No</option>
+                      <option selected value="0" style="display:none;">No</option>
                     <?php endif; ?>
                     <option value="1">Si</option>
-                    <option value="2">No</option>
+                    <option value="0">No</option>
                   </select>
                 </div>
               </div>
             </div>
+            <div class="col-4">
+              <div class="row form-group">
+                <div class="col-lg-12">
+                  <label class="form-label">Evaluar</label>
+                  <select class="form-select" name="evaluar" id="evaluar">
+                    <?php if ($permisos->evaluar == 1) : ?>
+                      <option selected value="1" style="display:none;">Si</option>
+                    <?php else : ?>
+                      <option selected value="0" style="display:none;">No</option>
+                    <?php endif; ?>
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" name="rol_id" value="<?= $rol->id ?>">
 
           </div>
           <hr class="border-light m-0">
           <div class="text-right mt-3">
             <input type="submit" class="btn btn-primary" value='Guardar Configuración' />&nbsp;
-            <a href="<?= APP_URL . $this->Route('permisos') ?>" class="btn btn-outline-primary">Volver</a>
+            <a href="<?= APP_URL . $this->Route('permisos').'/consultar'.'/'.$rol->id ?>" class="btn btn-outline-primary">Volver</a>
           </div>
 
 
